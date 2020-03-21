@@ -1,0 +1,20 @@
+
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+
+es:
+  side_bar:
+    shipments: Embarques
+    new_shipments: Nuevo embarque
+    remisions: Remisiones
+  users:
+    index:
+      title: Usuarios
+  hello: "Hola mundo, k onda klos?"
