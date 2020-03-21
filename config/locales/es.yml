@@ -12,9 +12,13 @@
 es:
   side_bar:
     shipments: Embarques
-    new_shipments: Nuevo embarque
+    all_shipments: Ver todos los embarques
+    new_shipments: Crear un nuevo embarque
     remisions: Remisiones
   users:
     index:
       title: Usuarios
+      new: Crear usuario
+    new:
+      title: Nuevo usuario
   hello: "Hola mundo, k onda klos?"

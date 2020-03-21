@@ -1,8 +1,8 @@
-section.content-header
+section.content-header.pb-0
   .container-fluid
     .row.mb-2
       .col-sm-6
-        h1 = t('.title')
+        h4 = t('.title')
       .col-sm-6
         ol.breadcrumb.float-sm-right
           li.breadcrumb-item
@@ -14,7 +14,9 @@ section.content
       .col-md-12
         .card
           .card-header
-            h3.card-title Usuarios
+            .row
+              .col-lg-12.text-right
+                = link_to t('.new'), new_user_path, class: 'btn btn-sm btn-default'
           .card-body.table-responsive.p-0
             table.table.table-sm.table-hover.text-nowrap
               thead
