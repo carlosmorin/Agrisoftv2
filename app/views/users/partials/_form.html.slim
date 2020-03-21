@@ -2,10 +2,10 @@
   .row
     .col-lg-12  
       .form-group.mb-2
-        = f.input :name, required: true, autofocus: true, input_html: { class: "form-control form-control-sm" }
+        = f.input :name, autofocus: true, input_html: { class: "form-control form-control-sm" }
     .col-lg-12  
       .form-group.mb-2
-        = f.input :last_name, required: true, autofocus: true, input_html: { class: "form-control form-control-sm" }
+        = f.input :last_name, autofocus: true, input_html: { class: "form-control form-control-sm"}
     .col-lg-12
       .form-group.mb-2
         = f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email", class: "form-control form-control-sm" }
@@ -15,4 +15,4 @@
   hr
   .row
     .col-lg-12.text-right
-      = f.button :submit, 'Siguiente ->', class: "btn btn-sm btn-primary " 
+      = f.button :submit, 'Guardar', class: 'btn btn-sm btn-primary'

@@ -21,16 +21,26 @@ section.content
             table.table.table-sm.table-hover.text-nowrap
               thead
                 tr
-                  th style=("width: 10px")  #
+                  th style=("width: 5%")  #
                   th Email
-                  th Name
-                  th Last name
+                  th Nombre
                   th Phone
+                  th
               tbody
                 - @object_collection.each do |object|
                   tr
                     td = object.id
                     td = object.email
-                    td = object.last_name
+                    td = object.full_name
                     td = object.phone
-                    td = object.phone
+                    td.text-center 
+                      .btn-group
+                        button.btn.btn-sm.btn-default type="button"  Acciónes
+                        button.btn.btn-sm.btn-default.dropdown-toggle.dropdown-icon data-toggle="dropdown" type="button" 
+                          span.sr-only Toggle Dropdown
+                          .dropdown-menu role="menu"
+                            a.dropdown-item href="/users/1"  Detalle 
+                            a.dropdown-item href="#"  Another action
+                            a.dropdown-item href="#"  Something else here
+                            .dropdown-divider
+                            a.dropdown-item href="#"  Separated link

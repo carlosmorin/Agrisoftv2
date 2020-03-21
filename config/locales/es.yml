@@ -12,8 +12,8 @@
 es:
   side_bar:
     shipments: Embarques
-    all_shipments: Ver todos los embarques
-    new_shipments: Crear un nuevo embarque
+    all_shipments: Ver embarques
+    new_shipments: Nuevo embarque
     remisions: Remisiones
   users:
     index:
@@ -21,4 +21,5 @@ es:
       new: Crear usuario
     new:
       title: Nuevo usuario
-  hello: "Hola mundo, k onda klos?"
+    edit:
+      title: Editar usuario
