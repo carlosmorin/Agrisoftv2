@@ -1,0 +1,15 @@
+.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
+  a.brand-link href="index3.html" 
+    span.brand-text.font-weight-light Agri-Soft
+  .sidebar
+    .user-panel.mt-3.pb-3.mb-3.d-flex
+      .image
+        = image_tag('avatars/default.png', alt: 'User image', class: 'img-circle elevation-2')
+      .info
+        a.d-block href="#"  Jose Carlos Morin
+    nav.mt-2
+      ul.nav.nav-pills.nav-sidebar.flex-column data-accordion="false" data-widget="treeview" role="menu" 
+        li.nav-item
+          = link_to admin_users_path, class: 'nav-link' do  
+            i.nav-icon.fa.fa-users
+            p Usuarios

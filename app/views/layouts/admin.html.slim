@@ -2,7 +2,6 @@ doctype html
 html
   head
     title App
-    
     = csrf_meta_tags
     = csp_meta_tag 
     
@@ -12,8 +11,8 @@ html
   body class="#{ !user_signed_in? ? 'login-page' : '' }"
     - if user_signed_in?
       .wrapper
-        = render 'layouts/partials/navbar'
-        = render 'layouts/partials/sidebar'
+        = render 'layouts/partials/admin_navbar'
+        = render 'layouts/partials/admin_sidebar'
         .content-wrapper
           = yield
     - else
