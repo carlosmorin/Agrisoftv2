@@ -1,1 +1,252 @@
-h1 Show user
+section.content-header
+  .container-fluid
+    .row.mb-2
+      .col-sm-6
+        h1 Profile
+      .col-sm-6
+        ol.breadcrumb.float-sm-right
+          li.breadcrumb-item
+            a href="#"  Home
+          li.breadcrumb-item.active User Profile
+
+section.content
+  .container-fluid
+    .row
+      .col-md-3
+        /! Profile Image
+        .card.card-primary.card-outline
+          .card-body.box-profile
+            .text-center
+        			= image_tag('avatars/default.png', alt: 'User profile picture', class: 'profile-user-img img-fluid img-circle')
+            h3.profile-username.text-center Nina Mcintire
+            p.text-muted.text-center Software Engineer
+            ul.list-group.list-group-unbordered.mb-3
+              li.list-group-item
+                b Followers
+                a.float-right 1,322
+              li.list-group-item
+                b Following
+                a.float-right 543
+              li.list-group-item
+                b Friends
+                a.float-right 13,287
+            a.btn.btn-primary.btn-block href="#" 
+              b Follow
+  
+      .col-md-9
+        .card
+          .card-header.p-2
+            ul.nav.nav-pills
+              li.nav-item
+                a.nav-link.active data-toggle="tab" href="#activity"  Activity
+              li.nav-item
+                a.nav-link data-toggle="tab" href="#timeline"  Timeline
+              li.nav-item
+                a.nav-link data-toggle="tab" href="#settings"  Settings
+          /! /.card-header
+          .card-body
+            .tab-content
+              #activity.active.tab-pane
+                /! Post
+                .post
+                  .user-block
+                    img.img-circle.img-bordered-sm alt=("user image") src="../../dist/img/user1-128x128.jpg" /
+                    span.username
+                      a href="#"  Jonathan Burke Jr.
+                      a.float-right.btn-tool href="#" 
+                        i.fas.fa-times
+                    span.description Shared publicly - 7:30 PM today
+                  /! /.user-block
+                  p
+                    | Lorem ipsum represents a long-held tradition for designers,
+                    | typographers and the like. Some people hate it and argue for
+                    | its demise, but others ignore the hate as they create awesome
+                    | tools to help create filler text for everyone from bacon lovers
+                    | to Charlie Sheen fans.
+                  p
+                    a.link-black.text-sm.mr-2 href="#" 
+                      i.fas.fa-share.mr-1
+                      | Share
+                    a.link-black.text-sm href="#" 
+                      i.far.fa-thumbs-up.mr-1
+                      | Like
+                    span.float-right
+                      a.link-black.text-sm href="#" 
+                        i.far.fa-comments.mr-1
+                        | Comments (5)
+                  input.form-control.form-control-sm placeholder=("Type a comment") type="text" /
+                /! /.post
+                /! Post
+                .post.clearfix
+                  .user-block
+                    img.img-circle.img-bordered-sm alt=("User Image") src="../../dist/img/user7-128x128.jpg" /
+                    span.username
+                      a href="#"  Sarah Ross
+                      a.float-right.btn-tool href="#" 
+                        i.fas.fa-times
+                    span.description Sent you a message - 3 days ago
+                  /! /.user-block
+                  p
+                    | Lorem ipsum represents a long-held tradition for designers,
+                    | typographers and the like. Some people hate it and argue for
+                    | its demise, but others ignore the hate as they create awesome
+                    | tools to help create filler text for everyone from bacon lovers
+                    | to Charlie Sheen fans.
+                  form.form-horizontal
+                    .input-group.input-group-sm.mb-0
+                      input.form-control.form-control-sm placeholder="Response" /
+                      .input-group-append
+                        button.btn.btn-danger type="submit"  Send
+                /! /.post
+                /! Post
+                .post
+                  .user-block
+                    img.img-circle.img-bordered-sm alt=("User Image") src="../../dist/img/user6-128x128.jpg" /
+                    span.username
+                      a href="#"  Adam Jones
+                      a.float-right.btn-tool href="#" 
+                        i.fas.fa-times
+                    span.description Posted 5 photos - 5 days ago
+                  /! /.user-block
+                  .row.mb-3
+                    .col-sm-6
+                      img.img-fluid alt="Photo" src="../../dist/img/photo1.png" /
+                    /! /.col
+                    .col-sm-6
+                      .row
+                        .col-sm-6
+                          img.img-fluid.mb-3 alt="Photo" src="../../dist/img/photo2.png" /
+                          img.img-fluid alt="Photo" src="../../dist/img/photo3.jpg" /
+                        /! /.col
+                        .col-sm-6
+                          img.img-fluid.mb-3 alt="Photo" src="../../dist/img/photo4.jpg" /
+                          img.img-fluid alt="Photo" src="../../dist/img/photo1.png" /
+                        /! /.col
+                      /! /.row
+                    /! /.col
+                  /! /.row
+                  p
+                    a.link-black.text-sm.mr-2 href="#" 
+                      i.fas.fa-share.mr-1
+                      | Share
+                    a.link-black.text-sm href="#" 
+                      i.far.fa-thumbs-up.mr-1
+                      | Like
+                    span.float-right
+                      a.link-black.text-sm href="#" 
+                        i.far.fa-comments.mr-1
+                        | Comments (5)
+                  input.form-control.form-control-sm placeholder=("Type a comment") type="text" /
+                /! /.post
+              /! /.tab-pane
+              #timeline.tab-pane
+                /! The timeline
+                .timeline.timeline-inverse
+                  /! timeline time label
+                  .time-label
+                    span.bg-danger
+                      | 10 Feb. 2014
+                  /! /.timeline-label
+                  /! timeline item
+                  div
+                    i.fas.fa-envelope.bg-primary
+                    .timeline-item
+                      span.time
+                        i.far.fa-clock
+                        | 12:05
+                      h3.timeline-header
+                        a href="#"  Support Team
+                        | sent you an email
+                      .timeline-body
+                        | Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                        | weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                        | jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                        | quora plaxo ideeli hulu weebly balihoo...
+                      .timeline-footer
+                        a.btn.btn-primary.btn-sm href="#"  Read more
+                        a.btn.btn-danger.btn-sm href="#"  Delete
+                  /! END timeline item
+                  /! timeline item
+                  div
+                    i.fas.fa-user.bg-info
+                    .timeline-item
+                      span.time
+                        i.far.fa-clock
+                        | 5 mins ago
+                      h3.timeline-header.border-0
+                        a href="#"  Sarah Young
+                        | accepted your friend request
+                  /! END timeline item
+                  /! timeline item
+                  div
+                    i.fas.fa-comments.bg-warning
+                    .timeline-item
+                      span.time
+                        i.far.fa-clock
+                        | 27 mins ago
+                      h3.timeline-header
+                        a href="#"  Jay White
+                        | commented on your post
+                      .timeline-body
+                        | Take me to your leader!
+                        | Switzerland is small and neutral!
+                        | We are more like Germany, ambitious and misunderstood!
+                      .timeline-footer
+                        a.btn.btn-warning.btn-flat.btn-sm href="#"  View comment
+                  /! END timeline item
+                  /! timeline time label
+                  .time-label
+                    span.bg-success
+                      | 3 Jan. 2014
+                  /! /.timeline-label
+                  /! timeline item
+                  div
+                    i.fas.fa-camera.bg-purple
+                    .timeline-item
+                      span.time
+                        i.far.fa-clock
+                        | 2 days ago
+                      h3.timeline-header
+                        a href="#"  Mina Lee
+                        | uploaded new photos
+                      .timeline-body
+                        img alt="..." src="http://placehold.it/150x100" /
+                        img alt="..." src="http://placehold.it/150x100" /
+                        img alt="..." src="http://placehold.it/150x100" /
+                        img alt="..." src="http://placehold.it/150x100" /
+                  /! END timeline item
+                  div
+                    i.far.fa-clock.bg-gray
+              /! /.tab-pane
+              #settings.tab-pane
+                form.form-horizontal
+                  .form-group.row
+                    label.col-sm-2.col-form-label for="inputName"  Name
+                    .col-sm-10
+                      input#inputName.form-control placeholder="Name" type="email" /
+                  .form-group.row
+                    label.col-sm-2.col-form-label for="inputEmail"  Email
+                    .col-sm-10
+                      input#inputEmail.form-control placeholder="Email" type="email" /
+                  .form-group.row
+                    label.col-sm-2.col-form-label for="inputName2"  Name
+                    .col-sm-10
+                      input#inputName2.form-control placeholder="Name" type="text" /
+                  .form-group.row
+                    label.col-sm-2.col-form-label for="inputExperience"  Experience
+                    .col-sm-10
+                      textarea#inputExperience.form-control placeholder="Experience" 
+                  .form-group.row
+                    label.col-sm-2.col-form-label for="inputSkills"  Skills
+                    .col-sm-10
+                      input#inputSkills.form-control placeholder="Skills" type="text" /
+                  .form-group.row
+                    .offset-sm-2.col-sm-10
+                      .checkbox
+                        label
+                          input type="checkbox" /
+                          | I agree to the
+                          a href="#"  terms and conditions
+                  .form-group.row
+                    .offset-sm-2.col-sm-10
+                      button.btn.btn-danger type="submit"  Submit

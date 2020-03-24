@@ -1,7 +1,8 @@
 .form-group label{
-	font-size: 12px;
+	font-size: 14px;
 	padding-bottom: 0;
 	margin-bottom: 0;
+	font-weight: normal;
 }
 
 span.error{
@@ -11,4 +12,18 @@ span.error{
 
 span.error ~ input.form-control{
 	background: red;
+}
+
+
+///Helpers
+//// Font size
+.s-14{ font-size: 14px; }
+
+//Color
+.c-red{ color: #881822; }
+.bg-light-gray{ background: #f4f4f4;}
+.bg-light-red{ background: #fff0f0;}
+//
+a.nav-link.active{
+	font-weight: bold !important;
 }

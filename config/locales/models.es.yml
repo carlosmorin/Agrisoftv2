@@ -1,0 +1,18 @@
+es:
+  activerecord:
+    models:
+      user:
+        one: user
+        other: users
+      general_information:
+        one: Información general
+        other: Información general
+    attributes:
+      user: 
+        email: Email
+        password: Contraseña
+        password_confirmation: Confirmación
+      general_information:
+        name: Nombre
+        last_name: Apellido
+        name: Nombre

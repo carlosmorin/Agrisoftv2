@@ -6,8 +6,6 @@ class User < ApplicationRecord
   	:recoverable, :rememberable, :validatable, :trackable
   
   validates :email, :password, presence: true
-
-  def full_name
-  	"#{name} #{last_name}"
-  end
+  has_many :general_informations
+  accepts_nested_attributes_for :general_informations
 end
