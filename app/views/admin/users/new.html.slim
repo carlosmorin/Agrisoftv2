@@ -1,4 +1,4 @@
-section.content-header.pb-0
+section.content-header.pb-0  data-controller="users_admin"
 	.container-fluid
 		.row.mb-2
 			.col-sm-6
@@ -33,7 +33,7 @@ section.content
 								.row
 									div class="col-lg-6 #{ 'd-none' unless params[:t] == 'li' }"
 										= render '/admin/users/partials/login_form'
-									div class="col-lg-8 #{ 'd-none' unless params[:t] == 'g' }"
+									div class="col-lg-6 #{ 'd-none' unless params[:t] == 'g' }"
 										= render '/admin/users/partials/gral_info_form'
 									div class="col-lg-6 #{ 'd-none' unless params[:t] == 'c' } "
 										= render '/admin/users/partials/contact_form'

@@ -9,7 +9,9 @@
     "@rails/webpacker": "4.2.2",
     "admin-lte": "^3.0.2",
     "bootstrap": "^4.4.1",
+    "inputmask": "^5.0.3",
     "jquery": "^3.4.1",
+    "jquery-mask-plugin": "^1.14.16",
     "popper.js": "^1.16.1",
     "stimulus": "^1.1.1",
     "turbolinks": "^5.2.0"
