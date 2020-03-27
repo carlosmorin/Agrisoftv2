@@ -5,7 +5,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
   	:recoverable, :rememberable, :validatable, :trackable
   
-  validates :email, :password, presence: true
-  has_many :general_informations
-  accepts_nested_attributes_for :general_informations
+  validates :name, :last_name, :email, :password, presence: true
+
+  def full_name
+  	"#{name} #{last_name}"
+  end
 end
+

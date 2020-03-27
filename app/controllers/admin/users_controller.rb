@@ -8,21 +8,19 @@ module Admin
     end
 
   	def new
-    	@user = User.find_or_initialize_by(id: params[:i]) 
-      @gen_inf = GeneralInformation.find_or_initialize_by(id: params[:gi]) 
-	  end
+      @object = User.new
+    end
 
 	  def show; end
 	  def edit; end
 
 	  def create
-	    @user = User.new(object_params)
+	    @object = User.new(object_params)
 
-      if @user.save
-        redirect_to new_admin_user_path(t: params[:next_step], o: @user.id)
+      if @object.save
+        redirect_to admin_users_path
       else
-      	flash[:errors] = @user.errors.full_messages
-        redirect_to new_admin_user_path(t: params[:current_step])
+        render :new
       end
 	  end
 
@@ -50,16 +48,11 @@ module Admin
       end
     end
    	def set_object
-    	@user = User.find(params[:id])
+    	@object = User.find(params[:id])
   	end
 
     def object_params
-    	params.require(:user).permit( :email, :password, :password_confirmation)
+    	params.require(:user).permit( :name, :last_name, :email, :password, :password_confirmation)
   	end
-
-    def general_information_params
-      params.require(:general_information).permit(
-        :name, :last_name, :born_date, :alias, :level_studies, :school_name, :user_id)
-    end
   end
 end

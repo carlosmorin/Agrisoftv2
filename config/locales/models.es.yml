@@ -9,10 +9,8 @@ es:
         other: Información general
     attributes:
       user: 
-        email: Email
-        password: Contraseña
-        password_confirmation: Confirmación
-      general_information:
-        name: Nombre
-        last_name: Apellido
-        name: Nombre
+        name: 'Nombre:'
+        last_name: 'Apellidos:'
+        email: 'Email:'
+        password: 'Contraseña:'
+        password_confirmation: 'Confirmación:'

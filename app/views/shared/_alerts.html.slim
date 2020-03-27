@@ -1,0 +1,6 @@
+- if flash[:alert].present?
+	.callout.callout-danger.pb-2.pt-2.bg-light-red.c-red
+		b = alert
+- elsif flash[:notice].present?
+	.alert.alert-info role="alert"
+		= notice

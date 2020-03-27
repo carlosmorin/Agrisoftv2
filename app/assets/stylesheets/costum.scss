@@ -17,13 +17,21 @@ span.error ~ input.form-control{
 
 ///Helpers
 //// Font size
-.s-14{ font-size: 14px; }
+.s-14{ font-size: 15px !important; }
+.s-16{ font-size: 16px; }
+.s-20{ font-size: 20px; }
 
+///Font weight
+.bold{ font-weight: bold; }
 //Color
 .c-red{ color: #881822; }
-.bg-light-gray{ background: #f4f4f4;}
-.bg-light-red{ background: #fff0f0;}
+.bg-light-gray{ background: #f4f4f4 !important;}
+.bg-light-red{ background: #ffeaea !important; } 
+//
 //
 a.nav-link.active{
 	font-weight: bold !important;
 }
+
+///Icons
+.h-14{ height: 14px; } .h-15{ height: 15px; } .h-16{ height: 16px; }

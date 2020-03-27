@@ -1,4 +1,4 @@
-section.content-header.pb-0  data-controller="users_admin"
+section.content-header.pb-0
 	.container-fluid
 		.row.mb-2
 			.col-sm-6
@@ -11,7 +11,7 @@ section.content-header.pb-0  data-controller="users_admin"
 		.row
 			.col-lg-12
 				- flash[:error].present?
-					.alert.alert-info role="alert"
+					.alert.alert-dangery role="alert"
 						= flash[:error]
 
 section.content
@@ -19,21 +19,7 @@ section.content
 		.row
 			.col-12.col-sm-12.col-lg-12
 				.card.card-primary.card-outline.card-outline-tabs
-					.card-header.p-0.border-bottom-0
-						ul#custom-tabs-three-tab.nav.nav-tabs.s-14 role="tablist" 
-							li.nav-item
-								= link_to 'LogIn', new_admin_user_path(t: :li), class: "nav-link #{ params[:t] == 'li' ? 'active' : '' }"
-							li.nav-item
-								= link_to 'General', new_admin_user_path(t: :g), class: "nav-link #{ params[:t] == 'g' ? 'active' : '' }"
-							li.nav-item
-								= link_to 'Contacto', new_admin_user_path(t: :c), class: "nav-link #{ params[:t] == 'c' ? 'active' : '' }"
 					.card-body
-						#custom-tabs-three-tabContent.tab-content
-							#custom-tabs-three-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-three-home-tab" role="tabpanel"
-								.row
-									div class="col-lg-6 #{ 'd-none' unless params[:t] == 'li' }"
-										= render '/admin/users/partials/login_form'
-									div class="col-lg-6 #{ 'd-none' unless params[:t] == 'g' }"
-										= render '/admin/users/partials/gral_info_form'
-									div class="col-lg-6 #{ 'd-none' unless params[:t] == 'c' } "
-										= render '/admin/users/partials/contact_form'
+						.row
+							.col-lg-6
+								= render '/admin/users/partials/form'

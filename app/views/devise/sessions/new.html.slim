@@ -1,14 +1,13 @@
 .login-box
-  .login-logo
-
-    a href="../../index2.html"
-      = image_tag('logo', height: '100') 
-      br
-      b Agri 
-      | SOFT
   .card
-    .card-body.login-card-body
-      p.login-box-msg Sign in to start your session
+    .card-body.login-card-body.shadow
+      .login-logo
+        = image_tag('logo', height: '130') 
+        br
+        h3.bold
+          span AgriSOFT
+      p.login-box-msg Inicia sesión para comenzar
+      = render "shared/alerts"
       = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
         .form-group.mb-3
           = f.input :email,
@@ -25,7 +24,5 @@
               input#remember type="checkbox" /
               label for="remember" 
                 | Remember Me
-          .col-12
-            = render "devise/shared/links"
-          .col-12
+          .col-12.pb-3
             button.btn.btn-flat.btn-success.btn-block type="submit"  Entrar

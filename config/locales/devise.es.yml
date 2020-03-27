@@ -1,6 +1,6 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
-en:
+es:
   devise:
     confirmations:
       confirmed: "Your email address has been successfully confirmed."
@@ -14,10 +14,10 @@ en:
       last_attempt: "You have one more attempt before your account is locked."
       not_found_in_database: "Invalid %{authentication_keys} or password."
       timeout: "Your session expired. Please sign in again to continue."
-      unauthenticated: "You need to sign in or sign up before continuing."
+      unauthenticated: "Debe iniciar sesión para poder continuar"
       unconfirmed: "You have to confirm your email address before continuing."
       user:
-        invalid: K onda klos?
+        invalid: Correo o contraseña no válidos.
     mailer:
       confirmation_instructions:
         subject: "Confirmation instructions"

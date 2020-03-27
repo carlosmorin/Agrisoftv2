@@ -7,24 +7,19 @@
         = image_tag('avatars/default.png', alt: 'User image', class: 'img-circle elevation-2')
       .info
         a.d-block href="#"  Jose Carlos Morin
-    nav.mt-2
+    nav.mt-0
       ul.nav.nav-pills.nav-sidebar.flex-column data-accordion="false" data-widget="treeview" role="menu" 
         li.nav-item.has-treeview
-          a.nav-link href="#" 
-            i.nav-icon.fa.fa-th
-            p
-              = t('side_bar.shipments')
-              i.fa.fa-angle-left.right
+          a.nav-link.pt-1.pb-1.pl-2 href="#" 
+            i.nav-icon.fa.fa-th style="font-size: 16px;"
+            p.s-16 = t('side_bar.shipments')
+            i.fa.fa-angle-left.right style="font-size: 16px;"
           ul.nav.nav-treeview
-            li.nav-item style="font-size: 14px;"
-              a.nav-link href="pages/tables/simple.html" 
-                i.fa.fa-circle.nav-icon
-                p = t('side_bar.all_shipments')
-            li.nav-item style="font-size: 14px;"
-              a.nav-link href="pages/tables/simple.html" 
-                i.fa.fa-circle.nav-icon
-                p = t('side_bar.new_shipments')
-            li.nav-item.s-12n style="font-size: 14px;"
-              a.nav-link href="pages/tables/data.html"
-                i.fa.fa-circle.nav-icon
-                p = t('side_bar.remisions')
+            li.nav-item
+              a.nav-link.pt-0.pb-0.pl-2 href="pages/tables/simple.html"
+                i.fa.fa-circle.nav-icon style="font-size: 14px;"
+                p.s-14 = t('side_bar.all_shipments')
+            li.nav-item
+              a.nav-link.pt-0.pb-0.pl-2 href="pages/tables/simple.html" 
+                i.fa.fa-circle.nav-icon style="font-size: 14px;"
+                p.s-14 = t('side_bar.new_shipments')
