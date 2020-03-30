@@ -7,8 +7,16 @@ class User < ApplicationRecord
   
   validates :name, :last_name, :email, :password, presence: true
 
+  def active_for_authentication?
+    super && !deactivated
+  end
+
   def full_name
   	"#{name} #{last_name}"
+  end
+  
+  def destroy
+    update_attributes(deactivated: true) unless deactivated
   end
 end
 

@@ -7,14 +7,12 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light
       a.nav-link href="index3.html"  Home
     li.nav-item.d-none.d-sm-inline-block
       a.nav-link href="#"  Contact
-  
   form.form-inline.ml-3
     .input-group.input-group-sm
       input.form-control.form-control-navbar aria-label="Search" placeholder="Search" type="search" /
       .input-group-append
         button.btn.btn-navbar type="submit" 
           i.fa.fa-search
-
   ul.navbar-nav.ml-auto
     li.nav-item
       = link_to admin_root_path,  class: 'nav-link', title: 'Administración de sistema', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 

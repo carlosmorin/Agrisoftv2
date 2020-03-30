@@ -9,6 +9,10 @@ module Admin
 
   	def new
       @object = User.new
+      respond_to do |format|
+        format.html
+        format.js
+      end
     end
 
 	  def show; end
@@ -16,11 +20,16 @@ module Admin
 
 	  def create
 	    @object = User.new(object_params)
-
-      if @object.save
-        redirect_to admin_users_path
-      else
-        render :new
+      
+      respond_to do |format|
+        if @object.save
+          format.html { redirect_to @object.post, notice: 'Comment was successfully created.' }
+          format.js   { }
+          format.json { render :show, status: :created, location: @comment }
+        else
+          format.html { render :new }
+          format.json { render json: @object.errors, status: :unprocessable_entity }
+        end
       end
 	  end
 

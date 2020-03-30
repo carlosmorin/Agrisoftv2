@@ -14,10 +14,10 @@ span.error ~ input.form-control{
 	background: red;
 }
 
-
 ///Helpers
 //// Font size
-.s-14{ font-size: 15px !important; }
+.s-14{ font-size: 14px !important; }
+.s-15{ font-size: 15px !important; }
 .s-16{ font-size: 16px; }
 .s-20{ font-size: 20px; }
 
@@ -33,5 +33,9 @@ a.nav-link.active{
 	font-weight: bold !important;
 }
 
-///Icons
-.h-14{ height: 14px; } .h-15{ height: 15px; } .h-16{ height: 16px; }
+///Icons size
+.h-14{ height: 14px; } .h-15{ height: 15px; } .h-16{ height: 16px; } .h-20{ height: 20px;}
+body{
+	width: 100%;
+	overflow: hidden;
+}
