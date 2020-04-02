@@ -58,7 +58,7 @@ export default class extends Controller {
 						column.fadeOut('fast');
 					  toastr.options.preventDuplicates = true;
 						toastr.options.closeButton = true;
-						toastr.success('Usuario eliminado con exito', {timeOut: 2000})
+						toastr.success('Regisitro eliminado con exito', {timeOut: 2000})
 					});
 			  }
 			})

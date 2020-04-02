@@ -2,11 +2,11 @@ es:
   activerecord:
     models:
       user:
-        one: user
-        other: users
-      general_information:
-        one: Información general
-        other: Información general
+        one: usuario
+        other: usuarios
+      tax:
+        one: impuesto
+        other: impuestos
     attributes:
       user: 
         name: Nombre
@@ -14,3 +14,6 @@ es:
         email: Email
         password: Contraseña
         password_confirmation: Confirmación
+      tax:
+        name: Nombre
+        value: Porcentaje

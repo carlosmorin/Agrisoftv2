@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   	root to: "main#index"
   	resources :users
 	end
+  
+  resources :taxes
 	
 	devise_for :users
   root to: "dashboard#index"

@@ -83,12 +83,12 @@ h2.swal2-title{ margin-bottom: 0px; }
 
 .form-control.flat{	border-radius: 0px; }
 
-label.string, label.email, label.password{
+label.string, label.email, label.password, label.integer{
 	font-weight: normal !important;
   font-size: 14px;
   color: #4e4e4e;
 }
 .c-gray{ color: #4e4e4e; }
 .btn{
-	padding: 4px 20px !important;
-	font-size: 14px !important;}
+	padding: 6px 20px !important;
+	font-size: 14px !important;	}
