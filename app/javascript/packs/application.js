@@ -9,8 +9,8 @@ require("@rails/activestorage").start()
 require("channels")
 require("admin-lte")
 require('jquery')
-
-var inputmask = require('inputmask');
+var MicroModal = require('micromodal/dist/micromodal');
+var Inputmask = require('inputmask');
 import "bootstrap"
 import "../stylesheets/application"
 import { Application } from "stimulus"
@@ -27,5 +27,7 @@ document.addEventListener("turbolinks:load", () => {
 	var object = document.getElementsByClassName("mask") 
 	var im = new Inputmask();
 	im.mask(object);
+	MicroModal.init();
+
 })
 

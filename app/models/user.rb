@@ -1,11 +1,12 @@
 class User < ApplicationRecord
+  acts_as_paranoid
   default_scope { order(:created_at) }
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
   	:recoverable, :rememberable, :validatable, :trackable
   
-  validates :name, :last_name, :email, :password, presence: true
+  validates :name, :last_name, :email, presence: true
 
   def active_for_authentication?
     super && !deactivated
@@ -15,8 +16,5 @@ class User < ApplicationRecord
   	"#{name} #{last_name}"
   end
   
-  def destroy
-    update_attributes(deactivated: true) unless deactivated
-  end
 end
 

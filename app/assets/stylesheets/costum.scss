@@ -16,13 +16,15 @@ span.error ~ input.form-control{
 
 ///Helpers
 //// Font size
+.s-12{ font-size: 12px !important; }
 .s-14{ font-size: 14px !important; }
 .s-15{ font-size: 15px !important; }
 .s-16{ font-size: 16px; }
+.s-18{ font-size: 18px; }
 .s-20{ font-size: 20px; }
 
 ///Font weight
-.bold{ font-weight: bold; }
+.bold{ font-weight: bold !important; }
 //Color
 .c-red{ color: #881822; }
 .bg-light-gray{ background: #f4f4f4 !important;}
@@ -34,8 +36,59 @@ a.nav-link.active{
 }
 
 ///Icons size
-.h-14{ height: 14px; } .h-15{ height: 15px; } .h-16{ height: 16px; } .h-20{ height: 20px;}
+.h-14{ height: 14px; } .h-15{ height: 15px; } .h-16{ height: 16px; } 
+.h-20{ height: 20px; } .h-30{ height: 30px; }
+
+//Border radius
+.br-2{ border-radius: 2px !important; }
 body{
 	width: 100%;
-	overflow: hidden;
+	overflow: auto;
 }
+
+.erasable{
+	position: relative;
+}
+.erasable > span{
+	background: #ffc8c8;
+	position: absolute;
+	top: 7px;
+	right: 9px;
+	font-size: 8px;
+	width: 15px;
+	height: 15px;
+	text-align: center;
+	padding: 1px;
+	box-sizing: border-box;
+	border-radius: 50%;
+	color: #6f6f6f;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+//Width
+.w-300{ max-width: 300px; }
+
+h2.swal2-title{ margin-bottom: 0px; }
+
+// Backgrounds
+.bg-blue{ background-color: #0051a8; }
+
+//Colors
+.c-blue{ color: #0051a8; }
+.btn-dark-blue{ 
+	background-color: #0051a8 !important;
+	color: #e8e8e8 !important; }
+.bg-red{ background: red; }
+
+.form-control.flat{	border-radius: 0px; }
+
+label.string, label.email, label.password{
+	font-weight: normal !important;
+  font-size: 14px;
+  color: #4e4e4e;
+}
+.c-gray{ color: #4e4e4e; }
+.btn{
+	padding: 4px 20px !important;
+	font-size: 14px !important;}

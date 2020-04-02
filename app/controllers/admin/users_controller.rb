@@ -2,13 +2,15 @@ module Admin
   class UsersController < ApplicationController
     layout 'admin'
     before_action :set_object, only: %i[show edit update destroy]
+    before_action :index, only: %i[update]
 
     def index
-    	@object_collection = User.all
+    	@users = User.paginate(page: params[:page], per_page: 15)
+      search if params[:q].present?
     end
 
   	def new
-      @object = User.new
+      @user = User.new
       respond_to do |format|
         format.html
         format.js
@@ -19,45 +21,43 @@ module Admin
 	  def edit; end
 
 	  def create
-	    @object = User.new(object_params)
+	    @user = User.new(object_params)
       
       respond_to do |format|
-        if @object.save
-          format.html { redirect_to @object.post, notice: 'Comment was successfully created.' }
-          format.js   { }
-          format.json { render :show, status: :created, location: @comment }
+        if @user.save
+          format.js
+          format.json { render @user, status: :created }
         else
-          format.html { render :new }
-          format.json { render json: @object.errors, status: :unprocessable_entity }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       end
 	  end
 
     def update
-      if @user.update_attributes(object_params)
-        flash[:notice] = 'User updated'
-        redirect_to :action => "show", :id => @object.id
-      else
-        flash[:error] = 'Ocurrió un error'
-        render :new
+      respond_to do |format|
+        if @user.update_attributes(object_params)
+          format.js
+          format.json { render @users, status: :updated }
+        else
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
+    end
+
+    def destroy
+      @user.destroy
     end
 
     private
-   	
-    def create_general_information
-      @object = GeneralInformation.new(general_information_params)
 
-      if @object.save
-        format.html { redirect_to users_url, notice: 'User was created.' }
-        format.json { render :show, status: :created, location: @object }
-      else
-        flash[:errors] = @object.errors.full_messages
-        redirect_to new_admin_user_path(t: params[:current_step])
-      end
+    def search
+      q = Regexp.escape(params[:q])
+    
+      @users = @users.where("concat(name, ' ', last_name, ' ', email) ~* ?", q)
     end
+   	
    	def set_object
-    	@object = User.find(params[:id])
+    	@user = User.find(params[:id])
   	end
 
     def object_params

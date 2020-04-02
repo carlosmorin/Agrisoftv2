@@ -13,8 +13,11 @@
     "inputmask": "^5.0.3",
     "jquery": "^3.4.1",
     "jquery-mask-plugin": "^1.14.16",
+    "micromodal": "^0.4.6",
     "popper.js": "^1.16.1",
     "stimulus": "^1.1.1",
+    "sweetalert2": "^9.10.7",
+    "toastr": "^2.1.4",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
