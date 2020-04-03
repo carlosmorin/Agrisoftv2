@@ -2,11 +2,14 @@ es:
   activerecord:
     models:
       user:
-        one: usuario
-        other: usuarios
+        one: Usuario
+        other: Usuarios
       tax:
-        one: impuesto
-        other: impuestos
+        one: Impuesto
+        other: Impuestos
+      client:
+        one: Cliente
+        other: Clientes
     attributes:
       user: 
         name: Nombre
@@ -17,3 +20,11 @@ es:
       tax:
         name: Nombre
         value: Porcentaje
+      client:
+        name: Razón social
+        rfc: RFC
+        phone: Telefono
+        country: Pais
+        state: Estado
+        cp: Codigo postal
+        address: Dirección

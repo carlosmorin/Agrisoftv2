@@ -22,7 +22,7 @@
 			.col-lg-2
 				= f.label :country, class: "pt-1" 
 			.col-lg-10
-			  = f.country_select :country, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
+			  = f.country_select :country,  priority_countries = ["Mexico", "United States"], options = {}, html_options = { :class => 'form-control form-control-sm' }
 	.form-group  
 		.row
 			.col-lg-2
