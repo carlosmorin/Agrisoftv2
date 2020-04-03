@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 	end
   
   resources :taxes
+  resources :clients
 	
 	devise_for :users
   root to: "dashboard#index"
