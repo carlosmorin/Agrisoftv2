@@ -1,5 +1,5 @@
 class TaxesController < ApplicationController
-	before_action :set_object, only: %i[show edit update destroy]
+	before_action :set_object, only: %i[edit update destroy]
 	
 	def index
 		@taxes = Tax.all

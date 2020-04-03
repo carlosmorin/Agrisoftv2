@@ -23,8 +23,8 @@ es:
         subject: "Confirmation instructions"
       reset_password_instructions:
         subject: "Reset password instructions"
-      unlock_instructions:
-        subject: "Unlock instructions"
+      unsiddlock_instructions:
+        siddsubject: "Unlock instructions"
       email_changed:
         subject: "Email Changed"
       password_change:

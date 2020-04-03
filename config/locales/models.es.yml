@@ -28,3 +28,6 @@ es:
         state: Estado
         cp: Codigo postal
         address: Dirección
+      unit_brand:
+        name: Nombre
+        short_name: Abreviación

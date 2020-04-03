@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   	root to: "main#index"
   	resources :users
 	end
+
+  namespace :config do
+    resources :unit_brands
+  end
   
   resources :taxes
   resources :clients
