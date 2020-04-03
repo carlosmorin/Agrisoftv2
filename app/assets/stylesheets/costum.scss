@@ -27,13 +27,13 @@ span.error ~ input.form-control{
 .bold{ font-weight: bold !important; }
 //Color
 .c-red{ color: #881822; }
+.c-green{ color: #002400; }
 .bg-light-gray{ background: #f4f4f4 !important;}
-.bg-light-red{ background: #ffeaea !important; } 
+.bg-light-green{ background: #23923d24 !important;}
+.bg-light-red{ background: #ffeaea !important; }
 //
 //
-a.nav-link.active{
-	font-weight: bold !important;
-}
+a.nav-link.active{font-weight: bold !important;}
 
 ///Icons size
 .h-14{ height: 14px; } .h-15{ height: 15px; } .h-16{ height: 16px; } 
@@ -91,4 +91,15 @@ label.string, label.email, label.password, label.integer{
 .c-gray{ color: #4e4e4e; }
 .btn{
 	padding: 6px 20px !important;
-	font-size: 14px !important;	}
+	font-size: 14px !important;}
+
+div.hide-2s{
+	-webkit-animation: hideElement;
+  -webkit-animation-duration: 2s;
+}
+
+
+@keyframes hideElement {
+  from {background-color: red !important;}
+  to { display: none !important;}
+ }
