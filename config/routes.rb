@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :taxes
   resources :clients
   resources :carriers
+  resources :companies
 	
 	devise_for :users
   root to: "dashboard#index"

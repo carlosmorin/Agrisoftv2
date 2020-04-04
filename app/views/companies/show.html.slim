@@ -1,0 +1,59 @@
+section.content-header.pb-0
+  .container-fluid
+    .row.mb-2
+      .col-sm-6
+        h4 Empresas 
+      .col-sm-6
+        ol.breadcrumb.float-sm-right.s-12
+          li.breadcrumb-item
+            a href="../"  Inicio
+          li.breadcrumb-item.active Detalles
+section.content
+  .container-fluid
+  	.card
+  		.card-header.p-2.pb-1.bg-light-gray
+  			.card-body
+					.row
+						.col-lg-2
+							label Nombre:
+						.col-lg-7.text-left
+							p = @company.name
+					.row
+						.col-lg-2
+							label RFC:
+						.col-lg-7.text-left
+							p = @company.rfc
+					.row
+						.col-lg-2
+							label Teléfono:
+						.col-lg-7.text-left
+							p = @company.phone
+					.row
+						.col-lg-2
+							label País:
+						.col-lg-7.text-left
+							p = @company.country
+					.row
+						.col-lg-2
+							label Estado:
+						.col-lg-7.text-left
+							p = @company.state
+					.row
+						.col-lg-2
+							label Código Postal:
+						.col-lg-7.text-left
+							p = @company.cp
+					.row
+						.col-lg-2
+							label Dirección:
+						.col-lg-7.text-left
+							p = @company.address
+					.row
+						.col-lg-6
+							hr
+							.form-actions.text-left
+								= link_to companies_path, class: 'btn btn-default' do
+									svg.feather.feather-arrow-left.mr-2 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+										line x1="19" x2="5" y1="12" y2="12" 
+										polyline points=("12 19 5 12 12 5")
+									span Atrás
