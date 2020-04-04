@@ -1,16 +1,14 @@
 class ClientsController < ApplicationController
 	before_action :set_object, only: %i[show edit update destroy]
+  add_breadcrumb "Clientes", :clients_path
 
   def index
   	@clients = Client.all
   end
 
   def new
+    add_breadcrumb "Nuevo cliente"
   	@client = Client.new
-  end
-
-  def show
-    
   end
 
   def create
@@ -46,5 +44,4 @@ class ClientsController < ApplicationController
   def set_object
     @client = Client.find(params[:id])
   end
-
 end

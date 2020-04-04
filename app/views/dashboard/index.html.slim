@@ -1,7 +1,10 @@
-.content-header
+section.content-header.pb-0
   .container-fluid
     .row.mb-2
-      .col-lg-12
-        = render "shared/alerts"
       .col-sm-6
-        h1.m-0.text-dark Dashboard
+        h4 Dashboard
+      .col-sm-6.text-right.pr-2.s-12
+        = render_breadcrumbs :separator => ' / '
+    .row.mt-1
+    	.col-lg-12
+    		= render "shared/alerts"
