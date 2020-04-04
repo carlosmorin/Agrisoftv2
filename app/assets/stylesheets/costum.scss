@@ -2,13 +2,11 @@
 	font-size: 14px;
 	padding-bottom: 0;
 	margin-bottom: 0;
-	font-weight: normal;
-}
+	font-weight: normal; }
 
 span.error{
 	font-size: 12px;
-  color: red;
-}
+  color: red; }
 
 span.error ~ input.form-control{
 	background: red;
@@ -36,7 +34,8 @@ span.error ~ input.form-control{
 a.nav-link.active{font-weight: bold !important;}
 
 ///Icons size
-.h-14{ height: 14px; } .h-15{ height: 15px; } .h-16{ height: 16px; } 
+.h-12{ height: 12px; } .h-14{ height: 14px; } 
+.h-15{ height: 15px; } .h-16{ height: 16px; } 
 .h-20{ height: 20px; } .h-30{ height: 30px; }
 
 //Border radius

@@ -6,50 +6,41 @@
       .image
         = image_tag('avatars/default.png', alt: 'User image', class: 'img-circle elevation-2')
       .info
-        a.d-block href="#"  Jose Carlos Morin
+        a.d-block href="#" = current_user.full_name
     nav.mt-0
       ul.nav.nav-pills.nav-sidebar.flex-column data-accordion="false" data-widget="treeview" role="menu" 
         li.nav-item.has-treeview
           a.nav-link.pt-1.pb-1.pl-2 href="#" 
-            i.nav-icon.fa.fa-th style="font-size: 16px;"
-            p.s-16 = t('side_bar.shipments')
+            svg.feather.feather-package.mr-1 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+              line x1="16.5" x2="7.5" y1="9.4" y2="4.21" 
+              path d=("M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z") 
+              polyline points=("3.27 6.96 12 12.01 20.73 6.96") 
+              line x1="12" x2="12" y1="22.08" y2="12" 
+            p.s-14 Empaque
             i.fa.fa-angle-left.right style="font-size: 16px;"
           ul.nav.nav-treeview
             li.nav-item
-              a.nav-link.pt-0.pb-0.pl-2 href="pages/tables/simple.html"
-                i.fa.fa-circle.nav-icon style="font-size: 14px;"
-                p.s-14 = t('side_bar.all_shipments')
-            li.nav-item
-              a.nav-link.pt-0.pb-0.pl-2 href="pages/tables/simple.html" 
-                i.fa.fa-circle.nav-icon style="font-size: 14px;"
-                p.s-14 = t('side_bar.new_shipments')
+              a.nav-link.pt-0.pb-0.pl-3 href="pages/tables/simple.html"
+                svg.svg-inline--fa.fa-pallet.fa-w-20.h-12.mr-1 aria-hidden="true" data-icon="pallet" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 640 512") xmlns="http://www.w3.org/2000/svg" 
+                  path d=("M144 256h352c8.8 0 16-7.2 16-16V16c0-8.8-7.2-16-16-16H384v128l-64-32-64 32V0H144c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16zm480 128c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h48v64H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h608c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16h-48v-64h48zm-336 64H128v-64h160v64zm224 0H352v-64h160v64z") fill="currentColor" 
+                p.s-12 Embarques
         li.nav-item.has-treeview
           a.nav-link.pt-1.pb-1.pl-2 href="#"
-            svg.svg-inline--fa.fa-truck-moving.fa-w-20.h-14.mr-2.ml-1 aria-hidden="true" data-icon="truck-moving" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 640 512") xmlns="http://www.w3.org/2000/svg" 
-              path d=("M621.3 237.3l-58.5-58.5c-12-12-28.3-18.7-45.3-18.7H480V64c0-17.7-14.3-32-32-32H32C14.3 32 0 46.3 0 64v336c0 44.2 35.8 80 80 80 26.3 0 49.4-12.9 64-32.4 14.6 19.6 37.7 32.4 64 32.4 44.2 0 80-35.8 80-80 0-5.5-.6-10.8-1.6-16h163.2c-1.1 5.2-1.6 10.5-1.6 16 0 44.2 35.8 80 80 80s80-35.8 80-80c0-5.5-.6-10.8-1.6-16H624c8.8 0 16-7.2 16-16v-85.5c0-17-6.7-33.2-18.7-45.2zM80 432c-17.6 0-32-14.4-32-32s14.4-32 32-32 32 14.4 32 32-14.4 32-32 32zm128 0c-17.6 0-32-14.4-32-32s14.4-32 32-32 32 14.4 32 32-14.4 32-32 32zm272-224h37.5c4.3 0 8.3 1.7 11.3 4.7l43.3 43.3H480v-48zm48 224c-17.6 0-32-14.4-32-32s14.4-32 32-32 32 14.4 32 32-14.4 32-32 32z") fill="currentColor" 
-            p.s-16 Trasportistas
+            svg.feather.feather-truck.mr-1 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+              rect height="13" width="15" x="1" y="3" 
+              polygon points=("16 8 20 8 23 11 23 16 16 16 16 8") 
+              circle cx="5.5" cy="18.5" r="2.5" 
+              circle cx="18.5" cy="18.5" r="2.5" 
+            p.s-14 Logistica
             i.fa.fa-angle-left.right style="font-size: 16px;"
           ul.nav.nav-treeview
             li.nav-item
-              a.nav-link.pt-0.pb-0.pl-2 href="pages/tables/simple.html"
-                i.fa.fa-circle.nav-icon style="font-size: 14px;"
-                p.s-14 = t('side_bar.all_shipments')
+              a.nav-link.pt-0.pb-0.pl-3 href="pages/tables/simple.html"
+                svg.svg-inline--fa.fa-pallet.fa-w-20.h-12.mr-1 aria-hidden="true" data-icon="pallet" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 640 512") xmlns="http://www.w3.org/2000/svg" 
+                  path d=("M144 256h352c8.8 0 16-7.2 16-16V16c0-8.8-7.2-16-16-16H384v128l-64-32-64 32V0H144c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16zm480 128c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h48v64H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h608c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16h-48v-64h48zm-336 64H128v-64h160v64zm224 0H352v-64h160v64z") fill="currentColor" 
+                p.s-12 Fletes
             li.nav-item
-              a.nav-link.pt-0.pb-0.pl-2 href="pages/tables/simple.html" 
-                i.fa.fa-circle.nav-icon style="font-size: 14px;"
-                p.s-14 = t('side_bar.new_shipments')
-        li.nav-item.has-treeview
-          a.nav-link.pt-1.pb-1.pl-2 href="#" 
-            svg.svg-inline--fa.fa-briefcase.fa-w-16.h-14.mr-1 aria-hidden="true" data-icon="briefcase" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-              path d=("M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4  48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z") fill="currentColor" 
-            p.s-16 Clientes
-            i.fa.fa-angle-left.right style="font-size: 16px;"
-          ul.nav.nav-treeview
-            li.nav-item
-              a.nav-link.pt-0.pb-0.pl-2 href="pages/tables/simple.html"
-                i.fa.fa-circle.nav-icon style="font-size: 14px;"
-                p.s-14 = t('side_bar.all_shipments')
-            li.nav-item
-              a.nav-link.pt-0.pb-0.pl-2 href="pages/tables/simple.html" 
-                i.fa.fa-circle.nav-icon style="font-size: 14px;"
-                p.s-14 = t('side_bar.new_shipments')
+              a.nav-link.pt-0.pb-0.pl-3 href="pages/tables/simple.html"
+                svg.svg-inline--fa.fa-truck-moving.fa-w-20.h-12.mr-1 aria-hidden="true" data-icon="truck-moving" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 640 512") xmlns="http://www.w3.org/2000/svg" 
+                  path d=("M621.3 237.3l-58.5-58.5c-12-12-28.3-18.7-45.3-18.7H480V64c0-17.7-14.3-32-32-32H32C14.3 32 0 46.3 0 64v336c0 44.2 35.8 80 80 80 26.3 0 49.4-12.9 64-32.4 14.6 19.6 37.7 32.4 64 32.4 44.2 0 80-35.8 80-80 0-5.5-.6-10.8-1.6-16h163.2c-1.1 5.2-1.6 10.5-1.6 16 0 44.2 35.8 80 80 80s80-35.8 80-80c0-5.5-.6-10.8-1.6-16H624c8.8 0 16-7.2 16-16v-85.5c0-17-6.7-33.2-18.7-45.2zM80 432c-17.6 0-32-14.4-32-32s14.4-32 32-32 32 14.4 32 32-14.4 32-32 32zm128 0c-17.6 0-32-14.4-32-32s14.4-32 32-32 32 14.4 32 32-14.4 32-32 32zm272-224h37.5c4.3 0 8.3 1.7 11.3 4.7l43.3 43.3H480v-48zm48 224c-17.6 0-32-14.4-32-32s14.4-32 32-32 32 14.4 32 32-14.4 32-32 32z") fill="currentColor" 
+                p.s-12 Transportistas
