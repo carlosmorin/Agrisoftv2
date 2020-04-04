@@ -1,0 +1,11 @@
+= simple_form_for([:config, @box]) do |f|
+	.form-group  
+		.row
+			.col-lg-2
+				= f.label :name, class: "pt-1" 
+			.col-lg-10
+				= f.input :name, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
+	hr
+	.form-actions.text-center
+		= f.button :submit, "Guardar", class: 'btn btn-dark-blue mr-2'
+		= link_to 'Cancelar', config_box_types_path, class: 'btn btn-default'

@@ -2,7 +2,10 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light
   ul.navbar-nav
     li.nav-item
       a.nav-link data-widget="pushmenu" href="#" 
-        i.fa.fa-bars
+        svg.feather.feather-menu fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="18" xmlns="http://www.w3.org/2000/svg" 
+          line x1="3" x2="21" y1="12" y2="12" 
+          line x1="3" x2="21" y1="6" y2="6" 
+          line x1="3" x2="21" y1="18" y2="18" 
     li.nav-item.dropdown
       a#dropdownSubMenu1.nav-link.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#"
         svg.feather.feather-settings fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
@@ -25,18 +28,19 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light
         li.dropdown-divider.my-0
         /! Level two dropdown
         li.dropdown-submenu.dropdown-hover
-          a#dropdownSubMenu2.dropdown-item.dropdown-toggle.s-14.text-left.px-1 aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
+          a#dropdownSubMenu2.dropdown-item.dropdown-toggle.s-12.text-left.px-2 aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
             svg.feather.feather-truck.mr-1 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
               rect height="13" width="15" x="1" y="3" 
               polygon points=("16 8 20 8 23 11 23 16 16 16 16 8") 
               circle cx="5.5" cy="18.5" r="2.5" 
               circle cx="18.5" cy="18.5" r="2.5" 
             | Logistica
-          ul.dropdown-menu.border-0.shadow aria-labelledby="dropdownSubMenu2" 
+            
+          ul.dropdown-menu.border-0.shadow.p-0.text-left aria-labelledby="dropdownSubMenu2" 
             li
-              = link_to 'Marcas', config_unit_brands_path, class: 'dropdown-item s-14' 
+              = link_to 'Marcas de unidades', config_unit_brands_path, class: 'dropdown-item s-12 pl-2'
             li
-              a.dropdown-item.s-14 href="#" tabindex="-1"  Tipos de cajas
+              = link_to 'Tipos de cajas', config_box_types_path, class: 'dropdown-item s-12 pl-2' 
   ul.navbar-nav.ml-auto
     li.nav-item.pl-1
       = link_to admin_root_path,  class: 'nav-link pl-1', title: 'Sistema', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 

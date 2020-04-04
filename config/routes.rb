@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   namespace :config do
     resources :unit_brands
+    resources :box_types
   end
   
   resources :taxes
