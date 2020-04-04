@@ -40,10 +40,14 @@ section.content
                   - @carriers.each do |carrier|
                     tr
                       td = carrier.id
-                      td = carrier.name
+                      td = carrier.name.upcase!
                       td = carrier.rfc
                       td = carrier.phone
                       td.text-center
+                        = link_to carrier_path(carrier), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
+                         svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+                          path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+                          circle cx="12" cy="12" r="3"
                         = link_to edit_carrier_path(carrier), title: "Editar #{carrier.name}", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
                          svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
                           path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 

@@ -1,5 +1,5 @@
 class CarriersController < ApplicationController
-	before_action :set_object, only: %i[edit update destroy]
+	before_action :set_object, only: %i[show edit update destroy]
 	
 	def index
     @carriers = Carrier.all
@@ -21,26 +21,26 @@ class CarriersController < ApplicationController
   end
 
   def update
-    if @tax.update(tax_params)
-      flash[:notice] = "#{@tax.name} Actualizado"
-      redirect_to taxes_url
+    if @carrier.update(carrier_params)
+      flash[:notice] = "#{@carrier.name} Actualizado"
+      redirect_to carriers_url
     else
       render :edit
     end
   end
 
   def destroy
-    @tax.destroy
+    @carrier.destroy
   end
 	
   private
 
 	def carrier_params
     params.require(:carrier).permit(
-      :name, :rfc, :phone, :country, :state, :address, :cp)
+      :name, :rfc, :phone, :country, :state, :address, :cp, :municipality)
   end
 
   def set_object
-    @tax = Tax.find(params[:id])
+    @carrier = Carrier.find(params[:id])
   end
 end

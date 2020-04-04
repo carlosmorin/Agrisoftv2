@@ -42,5 +42,6 @@ es:
         state: Estado
         cp: Codigo postal
         address: Dirección
+        municipality: Municipio
 
 
