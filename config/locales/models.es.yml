@@ -10,6 +10,9 @@ es:
       client:
         one: Cliente
         other: Clientes
+      carrier:
+        one: Transportista
+        other: Transportistas
     attributes:
       user: 
         name: Nombre
@@ -31,3 +34,13 @@ es:
       unit_brand:
         name: Nombre
         short_name: Abreviación
+      carrier:
+        name: Razón social
+        rfc: Rfc
+        phone: Telefono
+        country: País
+        state: Estado
+        cp: Codigo postal
+        address: Dirección
+
+
