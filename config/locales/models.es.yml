@@ -13,6 +13,9 @@ es:
       carrier:
         one: Transportista
         other: Transportistas
+      driver:
+        one: Conductor
+        other: Conductores
     attributes:
       user: 
         name: Nombre
@@ -43,5 +46,12 @@ es:
         cp: Codigo postal
         address: Dirección
         municipality: Municipio
+      driver:
+        name: Nombre
+        last_name: Apellidos
+        phone: Telefono
+        licence: ' N° licencia'
+        carrier_id: Transportista
+
 
 

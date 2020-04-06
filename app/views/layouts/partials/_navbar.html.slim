@@ -37,9 +37,31 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
             
           ul.dropdown-menu.border-0.shadow.p-0.text-left aria-labelledby="dropdownSubMenu2" 
             li
-              = link_to 'Marcas de unidades', config_unit_brands_path, class: 'dropdown-item s-12 pl-2'
+              = link_to 'Trasportistas', carriers_path, class: 'dropdown-item s-12 pl-2'
             li
-              = link_to 'Tipos de cajas', config_box_types_path, class: 'dropdown-item s-12 pl-2' 
+              = link_to 'Conductores', config_drivers_path, class: 'dropdown-item s-12 pl-2'
+            li
+              = link_to 'Unidades', config_unit_brands_path, class: 'dropdown-item s-12 pl-2'
+            li
+              = link_to 'Cajas', config_unit_brands_path, class: 'dropdown-item s-12 pl-2'
+            li
+              = link_to 'Tipos de cajas', config_box_types_path, class: 'dropdown-item s-12 pl-2'
+            li
+              = link_to 'Marcas de unidades', config_unit_brands_path, class: 'dropdown-item s-12 pl-2'
+        li.dropdown-submenu.dropdown-hover
+          a#dropdownSubMenu2.dropdown-item.dropdown-toggle.s-12.text-left.px-2 aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
+            svg.feather.feather-package.mr-1 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+              line x1="16.5" x2="7.5" y1="9.4" y2="4.21" 
+              path d=("M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z") 
+              polyline points=("3.27 6.96 12 12.01 20.73 6.96") 
+              line x1="12" x2="12" y1="22.08" y2="12"
+            | Productos
+            
+          ul.dropdown-menu.border-0.shadow.p-0.text-left aria-labelledby="dropdownSubMenu2" 
+            li
+              = link_to 'Tamaños', config_unit_brands_path, class: 'dropdown-item s-12 pl-2'
+            li
+              = link_to 'Calidades', config_box_types_path, class: 'dropdown-item s-12 pl-2' 
   ul.navbar-nav.ml-auto
     li.nav-item.pl-1
       = link_to admin_root_path,  class: 'nav-link pl-1', title: 'Sistema', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 

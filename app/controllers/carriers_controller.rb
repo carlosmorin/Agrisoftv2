@@ -1,13 +1,23 @@
 class CarriersController < ApplicationController
 	before_action :set_object, only: %i[show edit update destroy]
+  add_breadcrumb "Transportistas", :carriers_path
 	
 	def index
     @carriers = Carrier.all
   end
 
 	def new
-		@carrier = Carrier.new
+    add_breadcrumb "Nuevo"
+    @carrier = Carrier.new
 	end
+
+  def edit
+    add_breadcrumb "Editar"
+  end
+
+  def show
+    add_breadcrumb "Detalle"
+  end
 
   def create
     @carrier = Carrier.new(carrier_params)

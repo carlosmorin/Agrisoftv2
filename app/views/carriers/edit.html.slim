@@ -3,11 +3,8 @@ section.content-header.pb-0
     .row.mb-2
       .col-sm-6
         h5 Editar transportista 
-      .col-sm-6
-        ol.breadcrumb.float-sm-right.s-12
-          li.breadcrumb-item
-            a href="#"  Inicio
-          li.breadcrumb-item.active Impuestos
+      .col-sm-6.text-right.pr-2.s-12
+        = render_breadcrumbs :separator => ' / '
 section.content
   .container-fluid
   	.card

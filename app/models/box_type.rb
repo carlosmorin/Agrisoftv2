@@ -1,4 +1,4 @@
 class BoxType < ApplicationRecord
-	default_scope { order(:created_at) }
+	default_scope { order(:id) }
 	validates :name, presence: true
 end

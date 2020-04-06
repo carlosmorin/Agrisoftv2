@@ -1,0 +1,43 @@
+= simple_form_for([:config, @driver]) do |f|
+	.form-group  
+		.row
+			.col-md-3
+				= f.label :carrier_id, class: "pt-1" 
+			.col-md-9
+				= f.input :carrier_id, collection: collection, label: false, input_html: { class: 'form-control form-control-sm ' }
+	.form-group  
+		.row
+			.col-md-3
+				= f.label :name, class: "pt-1" 
+			.col-md-9
+				= f.input :name, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
+	.form-group  
+		.row
+			.col-md-3
+				= f.label :last_name, class: "pt-1" 
+			.col-md-9
+				= f.input :last_name, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
+	.form-group  
+		.row
+			.col-md-3
+				= f.label :phone, class: "pt-1" 
+			.col-md-9
+				= f.input :phone, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
+	.form-group  
+		.row
+			.col-md-3
+				= f.label :licence, class: "pt-1" 
+			.col-md-9
+				= f.input :licence, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
+	.form-group  
+		.row
+			.col-md-3
+				= f.label "Fotografia de licencia", class: "pt-1" 
+			.col-md-9
+				= f.file_field :licence_imgs, multiple: true, label: false
+
+
+	hr
+	.form-actions.text-center
+		= f.button :submit, "Guardar", class: 'btn btn-dark-blue mr-2'
+		= link_to 'Cancelar', config_drivers_path, class: 'btn btn-default'

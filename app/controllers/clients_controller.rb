@@ -22,7 +22,7 @@ class ClientsController < ApplicationController
     end
   end
 
-   def update
+  def update
     if @client.update(client_params)
       flash[:notice] = "#{@client.name} Actualizado"
       redirect_to clients_url
