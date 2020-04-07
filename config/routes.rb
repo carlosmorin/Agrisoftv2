@@ -11,6 +11,12 @@ Rails.application.routes.draw do
     resources :drivers
     resources :taxes
   end
+
+  namespace :addresses do
+    resources :countries
+    resources :states
+    resources :municipalities
+  end
   
   resources :clients
   resources :carriers

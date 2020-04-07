@@ -16,6 +16,9 @@ es:
       driver:
         one: Conductor
         other: Conductores
+      state:
+        one: Estado
+        other: Estados
     attributes:
       user: 
         name: Nombre
@@ -52,6 +55,10 @@ es:
         phone: Telefono
         licence: ' N° licencia'
         carrier_id: Transportista
-
-
-
+      country:
+        name: Nombre
+        short_name: Abreviación
+      state:
+        country_id: Pais
+        name: Nombre
+        short_name: Abreviación
