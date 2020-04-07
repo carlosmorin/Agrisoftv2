@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :carriers
   resources :companies
   resources :vegetables
+  resources :sizes
 	
 	devise_for :users
   root to: "dashboard#index"
