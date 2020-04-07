@@ -2,7 +2,8 @@ module Config
   class DriversController < ApplicationController
 		before_action :set_object, only: %i[show edit update destroy]
 		before_action :set_carriers, only: %i[new edit index create]
-  	
+    add_breadcrumb "Conductores", :config_drivers_path
+
   	def index
   		@drivers = Driver.paginate(page: params[:page], per_page: 15)
       search if params[:q].present?
@@ -10,8 +11,18 @@ module Config
     end
 
   	def new
+      add_breadcrumb "Nuevo"
+
 			@driver = Driver.new
 		end
+
+    def show
+      add_breadcrumb "Detalle"
+    end
+
+    def edit
+      add_breadcrumb "Editar"
+    end
 
 	  def create
 	    @driver = Driver.new(driver_params)
