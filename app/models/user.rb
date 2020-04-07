@@ -7,6 +7,7 @@ class User < ApplicationRecord
   	:recoverable, :rememberable, :validatable, :trackable
   
   validates :name, :last_name, :email, presence: true
+  validates_uniqueness_of :email
 
   def active_for_authentication?
     super && !deactivated

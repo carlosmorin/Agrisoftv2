@@ -9,9 +9,9 @@ Rails.application.routes.draw do
     resources :unit_brands
     resources :box_types
     resources :drivers
+    resources :taxes
   end
   
-  resources :taxes
   resources :clients
   resources :carriers
 	
