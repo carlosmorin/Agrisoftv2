@@ -3,7 +3,8 @@ class CarriersController < ApplicationController
   add_breadcrumb "Transportistas", :carriers_path
 	
 	def index
-    @carriers = Carrier.all
+    @carriers = Carrier.paginate(page: params[:page], per_page: 18)
+    search if params[:q].present?
   end
 
 	def new
@@ -44,6 +45,12 @@ class CarriersController < ApplicationController
   end
 	
   private
+
+  def search
+    q = Regexp.escape(params[:q])
+    
+    @carriers = @carriers.where("concat(name, ' ', rfc, ' ', phone) ~* ?", q)
+  end
 
 	def carrier_params
     params.require(:carrier).permit(

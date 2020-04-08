@@ -3,4 +3,5 @@ class Carrier < ApplicationRecord
 	validates :name, :rfc, :phone, :country, :state, :address, :cp,
 		:municipality, presence: true
 	has_many :drivers, inverse_of: :carrier
+	has_many :units, inverse_of: :carrier
 end

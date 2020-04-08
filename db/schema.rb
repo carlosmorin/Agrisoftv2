@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_07_144142) do
+ActiveRecord::Schema.define(version: 2020_04_07_195530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,18 @@ ActiveRecord::Schema.define(version: 2020_04_07_144142) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "units", force: :cascade do |t|
+    t.string "model"
+    t.string "color"
+    t.string "year"
+    t.string "n_econ"
+    t.string "plate_number"
+    t.bigint "carrier_id", null: false
+    t.bigint "unit_brand_id", null: false
+    t.index ["carrier_id"], name: "index_units_on_carrier_id"
+    t.index ["unit_brand_id"], name: "index_units_on_unit_brand_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -177,4 +189,6 @@ ActiveRecord::Schema.define(version: 2020_04_07_144142) do
   add_foreign_key "drivers", "carriers"
   add_foreign_key "general_information", "users"
   add_foreign_key "states", "countries"
+  add_foreign_key "units", "carriers"
+  add_foreign_key "units", "unit_brands"
 end

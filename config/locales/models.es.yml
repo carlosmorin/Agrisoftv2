@@ -62,3 +62,12 @@ es:
         country_id: Pais
         name: Nombre
         short_name: Abreviación
+      unit:
+        model: Modelo
+        color: Color
+        year: Año
+        n_econ: N° economico
+        plate_number: N° de placas
+        carrier_id: Transportista
+        unit_brand_id: Marca
+

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :box_types
     resources :drivers
     resources :taxes
+    resources :units
   end
 
   namespace :addresses do

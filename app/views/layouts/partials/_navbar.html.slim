@@ -41,7 +41,7 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
             li
               = link_to 'Conductores', config_drivers_path, class: 'dropdown-item s-12 pl-2'
             li
-              = link_to 'Unidades', config_unit_brands_path, class: 'dropdown-item s-12 pl-2'
+              = link_to 'Unidades', config_units_path, class: 'dropdown-item s-12 pl-2'
             li
               = link_to 'Cajas', config_unit_brands_path, class: 'dropdown-item s-12 pl-2'
             li
@@ -51,24 +51,23 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
         li.dropdown-submenu.dropdown-hover
           a#dropdownSubMenu2.dropdown-item.dropdown-toggle.s-12.text-left.px-2 aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
             svg.feather.feather-package.mr-1 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-              line x1="16.5" x2="7.5" y1="9.4" y2="4.21" 
+              line x1="16.5" x2="7.5" y1="9.4" y2="4.21"
               path d=("M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z") 
-              polyline points=("3.27 6.96 12 12.01 20.73 6.96") 
+              polyline points=("3.27 6.96 12 12.01 20.73 6.96")
               line x1="12" x2="12" y1="22.08" y2="12"
             | Productos
-            
-          ul.dropdown-menu.border-0.shadow.p-0.text-left aria-labelledby="dropdownSubMenu2" 
+          ul.dropdown-menu.border-0.shadow.p-0.text-left aria-labelledby="dropdownSubMenu2"
             li
               = link_to 'Tamaños', config_unit_brands_path, class: 'dropdown-item s-12 pl-2'
             li
-              = link_to 'Calidades', config_box_types_path, class: 'dropdown-item s-12 pl-2' 
+              = link_to 'Calidades', config_box_types_path, class: 'dropdown-item s-12 pl-2'
         li.dropdown-divider.my-0
         li.dropdown-submenu.dropdown-hover
           a#dropdownSubMenu2.dropdown-item.dropdown-toggle.s-12.text-left.px-2 aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
-            svg.feather.feather-map.mr-1 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-              polygon points=("1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6") 
-              line x1="8" x2="8" y1="2" y2="18" 
-              line x1="16" x2="16" y1="6" y2="22" 
+            svg.feather.feather-map.mr-1 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg"
+              polygon points=("1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6")
+              line x1="8" x2="8" y1="2" y2="18"
+              line x1="16" x2="16" y1="6" y2="22"
             | Direcciones API
             
           ul.dropdown-menu.border-0.shadow.p-0.text-left aria-labelledby="dropdownSubMenu2" 
@@ -83,14 +82,14 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
   ul.navbar-nav.ml-auto
     li.nav-item.pl-1
       = link_to admin_root_path,  class: 'nav-link pl-1', title: 'Sistema', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 
-        svg.feather.feather-users fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-          path d=("M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2") 
-          circle cx="9" cy="7" r="4" 
-          path d=("M23 21v-2a4 4 0 0 0-3-3.87") 
-          path d=("M16 3.13a4 4 0 0 1 0 7.75") 
+        svg.feather.feather-users fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg"
+          path d=("M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2")
+          circle cx="9" cy="7" r="4"
+          path d=("M23 21v-2a4 4 0 0 0-3-3.87")
+          path d=("M16 3.13a4 4 0 0 1 0 7.75")
     li.nav-item
       = link_to destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "nav-link pl-0 ", title: 'Salir', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 
         svg.feather.feather-log-out fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
             path d=("M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4") 
             polyline points=("16 17 21 12 16 7") 
-            line x1="21" x2="9" y1="12" y2="12" 
+            line x1="21" x2="9" y1="12" y2="12"
