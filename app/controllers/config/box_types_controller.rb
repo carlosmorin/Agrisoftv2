@@ -1,13 +1,21 @@
 module Config
   class BoxTypesController < ApplicationController
 		before_action :set_object, only: %i[edit update destroy]
+  	add_breadcrumb "Config"
+  	add_breadcrumb "Cajas", :config_box_types_path
   	
   	def index
   		@boxes = BoxType.all
+  		search if params[:q].present?
   	end
 
   	def new
+  		add_breadcrumb "Nueva"
 			@box = BoxType.new
+		end
+
+		def edit
+			add_breadcrumb "Editar"
 		end
 
 	  def create
@@ -35,6 +43,11 @@ module Config
   	end
 	
 	  private
+
+	  def search
+      q = Regexp.escape(params[:q])
+      @boxes = @boxes.where("name ~* ?", q)
+    end
 
 	  def box_types_params
 			params.require(:box_type).permit(:name)

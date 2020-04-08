@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_07_195530) do
+ActiveRecord::Schema.define(version: 2020_04_08_165625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,19 @@ ActiveRecord::Schema.define(version: 2020_04_07_195530) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "boxes", force: :cascade do |t|
+    t.string "temperature"
+    t.string "plate_number"
+    t.string "n_econ"
+    t.bigint "carrier_id", null: false
+    t.bigint "box_type_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+    t.index ["box_type_id"], name: "index_boxes_on_box_type_id"
+    t.index ["carrier_id"], name: "index_boxes_on_carrier_id"
   end
 
   create_table "carriers", force: :cascade do |t|
@@ -186,6 +199,8 @@ ActiveRecord::Schema.define(version: 2020_04_07_195530) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "boxes", "box_types"
+  add_foreign_key "boxes", "carriers"
   add_foreign_key "drivers", "carriers"
   add_foreign_key "general_information", "users"
   add_foreign_key "states", "countries"

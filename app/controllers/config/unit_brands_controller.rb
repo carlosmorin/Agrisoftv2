@@ -1,13 +1,21 @@
 module Config
   class UnitBrandsController < ApplicationController
 		before_action :set_object, only: %i[edit update destroy]
+  	add_breadcrumb "Config"
+  	add_breadcrumb "Marcas unidades", :config_unit_brands_path
   	
   	def index
   		@brands = UnitBrand.all
+      search if params[:q].present?
   	end
 
   	def new
+  		add_breadcrumb "Nuevo"
 			@brand = UnitBrand.new
+		end
+
+		def edit
+  		add_breadcrumb "Editar"
 		end
 
 	  def create
@@ -35,6 +43,11 @@ module Config
   	end
 	
 	  private
+    
+    def search
+      q = Regexp.escape(params[:q])
+      @brands = @brands.where("concat(name, ' ', short_name) ~* ?", q)
+    end
 
 	  def unit_brand_params
 			params.require(:unit_brand).permit(:name, :short_name)

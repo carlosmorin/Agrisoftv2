@@ -69,5 +69,11 @@ es:
         n_econ: N° economico
         plate_number: N° de placas
         carrier_id: Transportista
-        unit_brand_id: Marca
+        unit_brand_id: Marca de unidad
+      box:
+        temperature: Temperatura promedio        
+        plate_number: N° de placas        
+        n_econ: N° economico
+        carrier_id: Transportista
+        box_type_id: Tipo de caja
 

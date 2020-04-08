@@ -1,0 +1,36 @@
+= simple_form_for([:config, @box]) do |f|
+	.form-group  
+		.row
+			.col-lg-3
+				= f.label :carrier_id, class: "pt-1" 
+			.col-lg-9
+				= f.input :carrier_id, collection: carriers, label: false, input_html: { class: 'form-control form-control-sm ' }
+	.form-group  
+		.row
+			.col-lg-3
+				= f.label :box_type_id, class: "pt-1" 
+			.col-lg-9
+				= f.input :box_type_id, collection: box_types, label: false, input_html: { class: 'form-control form-control-sm ' }
+
+	.form-group  
+		.row
+			.col-lg-3
+				= f.label :plate_number, class: "pt-1" 
+			.col-lg-9
+				= f.input :plate_number, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
+	.form-group  
+		.row
+			.col-lg-3
+				= f.label :temperature, class: "pt-1" 
+			.col-lg-9
+				= f.input :temperature, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
+	.form-group  
+		.row
+			.col-lg-3
+				= f.label :n_econ, class: "pt-1" 
+			.col-lg-9
+				= f.input :n_econ, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
+	hr
+	.form-actions.text-center
+		= f.button :submit, "Guardar", class: 'btn btn-dark-blue mr-2'
+		= link_to 'Cancelar', :back, class: 'btn btn-default'

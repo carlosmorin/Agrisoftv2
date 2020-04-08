@@ -1,13 +1,13 @@
 class ClientsController < ApplicationController
 	before_action :set_object, only: %i[show edit update destroy]
-  add_breadcrumb "Clientes", :config_drivers_path
+  add_breadcrumb "Clientes", :clients_path
 
   def index
   	@clients = Client.all
   end
 
   def new
-    add_breadcrumb "Nuevo cliente"
+    add_breadcrumb "Nuevo"
   	@client = Client.new
   end
 
@@ -20,6 +20,14 @@ class ClientsController < ApplicationController
         format.html { render :new }
       end
     end
+  end
+
+  def edit
+    add_breadcrumb "Editar"
+  end
+
+  def show
+    add_breadcrumb "Detalle"
   end
 
   def update

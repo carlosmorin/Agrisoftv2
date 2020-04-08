@@ -1,6 +1,7 @@
 module Config
   class TaxesController < ApplicationController
   	before_action :set_object, only: %i[edit update destroy]
+    add_breadcrumb "Config"
     add_breadcrumb "Impuestos", :config_taxes_path
 
   	def index

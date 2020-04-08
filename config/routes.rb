@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :drivers
     resources :taxes
     resources :units
+    resources :boxes
   end
 
   namespace :addresses do

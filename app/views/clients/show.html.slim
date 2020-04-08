@@ -2,7 +2,7 @@ section.content-header.pb-0
   .container-fluid
     .row.mb-2
       .col-sm-6
-        h4 Detalle de cliente 
+        h5 Detalle de cliente 
       .col-sm-6.text-right.pr-2.s-12
         = render_breadcrumbs :separator => ' / '
 section.content
@@ -46,11 +46,15 @@ section.content
 						.col-lg-7.text-left
 							p = @client.address
 					.row
-						.col-lg-6
+						.col-lg-12
 							hr
-							.form-actions.text-left
-								= link_to carriers_path, class: 'btn btn-default' do
-									svg.feather.feather-arrow-left.mr-2 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-										line x1="19" x2="5" y1="12" y2="12" 
-										polyline points=("12 19 5 12 12 5")
-									span Atrás
+					.row
+						.col-lg-12
+							= link_to config_drivers_path, title: "Volver", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: 'mr-2 btn btn-sm btn-default' do
+								svg.feather.feather-arrow-left fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+								  line x1="19" x2="5" y1="12" y2="12" 
+								  polyline points=("12 19 5 12 12 5") 
+							= link_to edit_client_path(@client), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: 'mr-2 btn btn-sm btn-success text-center pr-2' do
+								svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+									path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+									path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")

@@ -36,7 +36,6 @@ gem 'paranoia', '~> 2.4', '>= 2.4.2'
 gem 'paper_trail', '~> 10.3', '>= 10.3.1'
 gem 'active_storage_validations'
 gem 'devise'
-gem "breadcrumbs_on_rails"
 gem 'nested_form', '~> 0.3.2'
 gem 'cocoon', '~> 1.2', '>= 1.2.14'
 gem 'sassc-rails'

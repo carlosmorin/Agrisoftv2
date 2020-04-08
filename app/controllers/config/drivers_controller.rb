@@ -2,6 +2,7 @@ module Config
   class DriversController < ApplicationController
 		before_action :set_object, only: %i[show edit update destroy]
 		before_action :set_carriers, only: %i[new edit index create]
+    add_breadcrumb "Config"
     add_breadcrumb "Conductores", :config_drivers_path
 
   	def index
