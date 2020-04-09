@@ -3,7 +3,8 @@ class ClientsController < ApplicationController
   add_breadcrumb "Clientes", :clients_path
 
   def index
-  	@clients = Client.all
+  	@clients = Client.paginate(page: params[:page], per_page: 16)
+    search if params[:q].present?
   end
 
   def new
@@ -44,6 +45,12 @@ class ClientsController < ApplicationController
   end
 
 	private
+
+  def search
+    q = Regexp.escape(params[:q])
+    
+    @clients = @clients.where("concat(name, ' ', rfc, ' ', phone) ~* ?", q)
+  end
 
 	def client_params
     params.require(:client).permit(:name, :rfc, :phone, :country, :state, :cp, :address, :value)

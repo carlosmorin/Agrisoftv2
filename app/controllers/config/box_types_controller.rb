@@ -1,13 +1,14 @@
 module Config
   class BoxTypesController < ApplicationController
-		before_action :set_object, only: %i[edit update destroy]
-  	add_breadcrumb "Config"
-  	add_breadcrumb "Cajas", :config_box_types_path
-  	
-  	def index
-  		@boxes = BoxType.all
-  		search if params[:q].present?
-  	end
+    before_action :set_object, only: %i[edit update destroy]
+    add_breadcrumb "Config"
+    add_breadcrumb "Cajas", :config_box_types_path
+
+    def index
+      @boxes = BoxType.paginate(page: params[:page], per_page: 16)
+
+      search if params[:q].present?
+    end
 
   	def new
   		add_breadcrumb "Nueva"

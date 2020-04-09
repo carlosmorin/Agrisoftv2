@@ -5,7 +5,7 @@ module Config
   	add_breadcrumb "Unidades", :config_units_path
 
   	def index
-  		@units = Unit.paginate(page: params[:page], per_page: 18)
+  		@units = Unit.paginate(page: params[:page], per_page: 16)
   		search if params[:q].present?
       search_by_carrier if params[:c].present?
   	end

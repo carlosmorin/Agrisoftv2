@@ -5,7 +5,8 @@ module Config
     add_breadcrumb "Impuestos", :config_taxes_path
 
   	def index
-  		@taxes = Tax.all
+  		@taxes = Tax.paginate(page: params[:page], per_page: 16)
+      search if params[:q].present?
   	end
 
   	def new
@@ -44,8 +45,14 @@ module Config
     end
   	
     private
-
-  	def tax_params
+    
+    def search
+      q = Regexp.escape(params[:q])
+    
+      @taxes = @taxes.where("concat(name, ' ', value) ~* ?", q)
+    end
+  	
+    def tax_params
       params.require(:tax).permit(:name, :value)
     end
 

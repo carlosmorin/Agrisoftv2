@@ -6,7 +6,7 @@ module Config
     add_breadcrumb "Conductores", :config_drivers_path
 
   	def index
-  		@drivers = Driver.paginate(page: params[:page], per_page: 15)
+  		@drivers = Driver.paginate(page: params[:page], per_page: 16)
       search if params[:q].present?
       search_by_carrier if params[:c].present?
     end

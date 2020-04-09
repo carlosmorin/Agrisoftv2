@@ -5,7 +5,8 @@ module Config
   	add_breadcrumb "Marcas unidades", :config_unit_brands_path
   	
   	def index
-  		@brands = UnitBrand.all
+      @brands = UnitBrand.paginate(page: params[:page], per_page: 16)
+
       search if params[:q].present?
   	end
 

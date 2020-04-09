@@ -30,10 +30,7 @@ section.content
                       button.btn.btn-sm.btn-flat.btn-default.bold type="submit"  
                         svg.svg-inline--fa.fa-filter.fa-w-16.h-14 aria-hidden="true" data-icon="filter" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
                           path d=("M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z") fill="currentColor" 
-              .col-md-4.col-sm-6.text-center
-                .apple_pagination.mt-2
-                  = will_paginate @units, :container => false, :page_links => true
-              .col-md-2.col-sm-6.text-right.pt-1
+              .col-md-6.col-sm-6.text-right.pt-1
                 = link_to new_config_unit_path, class: 'btn btn-success' do 
                   svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
                     path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
@@ -79,3 +76,9 @@ section.content
                           path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 
                           line x1="10" x2="10" y1="11" y2="17" 
                           line x1="14" x2="14" y1="11" y2="17"
+                          line x1="14" x2="14" y1="11" y2="17"
+          .card-footer.p-2.pb-1.bg-light-gray
+            .row
+              .col-lg-12.d-flex.justify-content-center
+                .digg_pagination.mt-2.s-14
+                  = will_paginate @units, :container => false, :page_links => true

@@ -6,7 +6,8 @@ module Config
   	add_breadcrumb "Cajas", :config_boxes_path
 
   	def index
-  		@boxes = Box.paginate(page: params[:page], per_page: 18) 
+  		@boxes = Box.paginate(page: params[:page], per_page: 16)
+
 			search if params[:q].present?
 			search_by_carrier if params[:c].present?
 			search_by_box_type if params[:b_t].present?

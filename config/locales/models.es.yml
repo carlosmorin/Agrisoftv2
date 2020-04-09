@@ -70,6 +70,8 @@ es:
         plate_number: N° de placas
         carrier_id: Transportista
         unit_brand_id: Marca de unidad
+      box_type:
+        name: Nombre
       box:
         temperature: Temperatura promedio        
         plate_number: N° de placas        
