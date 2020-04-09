@@ -102,3 +102,9 @@ div.hide-2s{
   from {background-color: red !important;}
   to { display: none !important;}
  }
+
+
+.form-control-sm{
+	height: calc(1.8125rem + 0px) !important;
+	border-color: #ddd;
+}

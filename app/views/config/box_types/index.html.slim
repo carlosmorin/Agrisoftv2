@@ -27,14 +27,14 @@ section.content
                 = link_to new_config_box_type_path, class: 'btn btn-success' do 
                   svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
                     path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-                  span.pl-2 Nueva tipo de caja
+                  span.pl-2 Nuevo tipo de caja
           .card-body.table-responsive.p-0
             table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
               thead
                 tr.bg-light-gray
                   th style=("width: 5%")  #
                   th Nombre
-                  th.text-center colspan="2" style=("width: 12%") Acciones
+                  th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody
                 - if @boxes.empty?
                   tr

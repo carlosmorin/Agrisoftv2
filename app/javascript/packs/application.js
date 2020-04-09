@@ -15,6 +15,7 @@ import "bootstrap"
 import "../stylesheets/application"
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
+import SlimSelect from 'slim-select'
 
 const application = Application.start()
 const context = require.context("controllers", true, /.js$/)
@@ -28,6 +29,9 @@ document.addEventListener("turbolinks:load", () => {
 	var im = new Inputmask();
 	im.mask(object);
 	MicroModal.init();
+	new SlimSelect({
+  	select: '.slim-select'
+	})
 
 })
 

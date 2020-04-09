@@ -21,9 +21,9 @@ section.content
                     .col-4
                       = text_field_tag(:q, value, class: 'form-control form-control-sm', placeholder: 'Buscar por N° de placas y/o N° economico')
                     .col-3
-                      	= select_tag :c, options_for_select(@carriers, selected: params[:c]), include_blank: 'Transportistas', class: 'form-control form-control-sm'
+                      	= select_tag :c, options_for_select(@carriers, selected: params[:c]), include_blank: 'Transportistas', class: 's-14 slim-select'
                     .col-3
-                      	= select_tag :b_t, options_for_select(@box_types, selected: params[:b_t]), include_blank: 'Tipos de caja', class: 'form-control form-control-sm'
+                      	= select_tag :b_t, options_for_select(@box_types, selected: params[:b_t]), include_blank: 'Tipos de caja', class: 's-14 form-control form-control-sm'
                     .col-2.my-1
                       button.btn.btn-sm.btn-flat.btn-default.bold type="submit"  
                         svg.svg-inline--fa.fa-filter.fa-w-16.h-14 aria-hidden="true" data-icon="filter" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
@@ -43,8 +43,8 @@ section.content
                   th Tipo de caja
                   th N° de placas
                   th N° economico
-                  th Trasoportista
-                  th.text-center colspan="2" style=("width: 12%") Acciones
+                  th Transportista
+                  th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody
                 - if @boxes.empty?
                   tr

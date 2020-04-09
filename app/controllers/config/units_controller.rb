@@ -2,6 +2,7 @@ module Config
   class UnitsController < ApplicationController
   	before_action :set_catalogs, only: %i[index new edit create update]
   	before_action :set_object, only: %i[show edit update destroy]
+    add_breadcrumb "Config"
   	add_breadcrumb "Unidades", :config_units_path
 
   	def index
