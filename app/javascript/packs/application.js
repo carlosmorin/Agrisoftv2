@@ -9,31 +9,13 @@ require("@rails/activestorage").start()
 require("channels")
 require("admin-lte")
 require('jquery')
-var MicroModal = require('micromodal/dist/micromodal');
-var Inputmask = require('inputmask');
 import "bootstrap"
 import "../stylesheets/application"
-import { Application } from "stimulus"
-import { definitionsFromContext } from "stimulus/webpack-helpers"
-import SlimSelect from 'slim-select'
-
-const application = Application.start()
-const context = require.context("controllers", true, /.js$/)
-application.load(definitionsFromContext(context))
 
 document.addEventListener("turbolinks:load", () => {
-  $('[data-toggle="tooltip"]').tooltip()
-  $('[data-toggle="popover"]').popover()
-
-	var object = document.getElementsByClassName("mask") 
-	var im = new Inputmask();
-	im.mask(object);
-	MicroModal.init();
-	new SlimSelect({
-  	select: '.slim-select'
-	})
-
+	$('[data-toggle="tooltip"]').tooltip()
+	$('[data-toggle="popover"]').popover()
 })
 
-
 import "controllers"
+

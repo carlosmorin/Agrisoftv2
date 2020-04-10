@@ -1,47 +1,58 @@
-= simple_form_for(@client) do |f|
+= simple_form_for(@client, data: { controller: 'masks address' }, html: { autocomplete: 'off' }) do |f|
 	.form-group  
 		.row
-			.col-lg-2
+			.col-lg-3
 				= f.label :name, class: "pt-1" 
-			.col-lg-10
+			.col-lg-9
 				= f.input :name, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
 	.form-group  
 		.row
-			.col-lg-2
+			.col-lg-3
 				= f.label :rfc, class: "pt-1" 
-			.col-lg-10
-				= f.input :rfc, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
+			.col-lg-9
+				= f.input :rfc, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ', maxlength: "13", placeholder: "XAXX010101000" }
 	.form-group  
 		.row
-			.col-lg-2
+			.col-lg-3
 				= f.label :phone, class: "pt-1" 
-			.col-lg-10
-				= f.input :phone, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm'}
+			.col-lg-9
+				= f.input :phone, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm phone_mask'}
 	.form-group  
 		.row
-			.col-lg-2
+			.col-lg-3
 				= f.label :country, class: "pt-1" 
-			.col-lg-10
-			  = f.country_select :country, priority_countries = ["Mexico", "United States"], options = {}, html_options = { :class => 'form-control form-control-sm' }
+			.col-lg-9
+			  = f.input :country, collection: Country.all, label: false, selected: 1,	 input_html: { class: 'form-control form-control-sm'}
 	.form-group  
 		.row
-			.col-lg-2
+			.col-lg-3
 				= f.label :state, class: "pt-1" 
-			.col-lg-10
+			.col-lg-9
 				= f.input :state, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
 	.form-group  
 		.row
-			.col-lg-2
-				= f.label :cp, class: "pt-1" 
-			.col-lg-10
-				= f.input :cp, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
+			.col-lg-3
+				= f.label :address, class: "pt-1" 
+			.col-lg-9
+				= f.input :address, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
 	.form-group  
 		.row
-			.col-lg-2
-				= f.label :address, class: "pt-1" 
-			.col-lg-10
-				= f.input :address, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
+			.col-lg-3
+				= f.label :cp, class: "pt-1" 
+			.col-lg-9
+				= f.input :cp, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm cp_mask'  }
 	hr
 	.form-actions.text-center
-		= f.button :submit, "Guardar", class: 'btn btn-dark-blue mr-2'
-		= link_to 'Cancelar', clients_path, notice: 'Are you sure?', class: 'btn btn-default'
+		button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
+			svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+			  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
+			  polyline points=("17 21 17 13 7 13 7 21") 
+			  polyline points=("7 3 7 8 15 8") 
+			span Guardar
+
+		= link_to clients_path, notice: 'Are you sure?', class: 'btn btn-default btn-sm pl-1' do
+			svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+			  rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
+			  line x1="9" x2="15" y1="9" y2="15" 
+			  line x1="15" x2="9" y1="9" y2="15" 
+			span Cancelar

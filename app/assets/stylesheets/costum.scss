@@ -88,23 +88,11 @@ label.string, label.email, label.password, label.integer, label{
   color: #4e4e4e;
 }
 .c-gray{ color: #4e4e4e; }
-.btn{
-	padding: 5px 16px !important;
-	font-size: 14px !important;}
-
-div.hide-2s{
-	-webkit-animation: hideElement;
-  -webkit-animation-duration: 2s;
-}
-
-
-@keyframes hideElement {
-  from {background-color: red !important;}
-  to { display: none !important;}
- }
 
 
 .form-control-sm{
 	height: calc(1.8125rem + 0px) !important;
 	border-color: #ddd;
 }
+
+input[type="text"], select, select > option 	{ text-transform: uppercase !important;}
