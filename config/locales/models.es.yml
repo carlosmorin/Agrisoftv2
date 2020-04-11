@@ -42,13 +42,17 @@ es:
         short_name: Abreviación
       carrier:
         name: Razón social
-        rfc: Rfc
+        rfc: RFC
         phone: Telefono
         country: País
         state: Estado
         cp: Codigo postal
         address: Dirección
         municipality: Municipio
+        caat: CAAT
+        alpha: ALPHA
+        iccmx: ICCMX
+        usdot: US DOT
       driver:
         name: Nombre
         last_name: Apellidos
@@ -78,4 +82,10 @@ es:
         n_econ: N° economico
         carrier_id: Transportista
         box_type_id: Tipo de caja
+      shipment:
+        carrier: Transportista
+        driver: Conductor
+        unit: Unidad
+        box: Caja
+
 

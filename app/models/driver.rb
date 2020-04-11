@@ -4,6 +4,8 @@ class Driver < ApplicationRecord
   belongs_to :carrier, inverse_of: :drivers
   validates :name, :last_name, :phone, :licence, :carrier_id, presence: true
   has_many_attached :licence_imgs
+	has_many :shipments, inverse_of: :driver
+
 
   def full_name
   	"#{name} #{last_name}".upcase

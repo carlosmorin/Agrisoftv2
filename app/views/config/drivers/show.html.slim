@@ -6,59 +6,59 @@ section.content-header.pb-0
       .col-sm-6.text-right.pr-2.s-12
         = render_breadcrumbs :separator => ' / '
 section.content
-  .container-fluid
-  	.card
-  		.card-header.p-2.pb-1.bg-light-gray
-  			.card-body.pb-2.pl-2
-					.row
-						.col-lg-6
-							.row
-								.col-lg-3
-									label Nombre:
-								.col-lg-9.text-left
-									p.s-14 = @driver.name.upcase
-							.row
-								.col-lg-3
-									label Apellidos:
-								.col-lg-9.text-left
-									p.s-14 = @driver.last_name.upcase
-							.row
-								.col-lg-3
-									label Teléfono:
-								.col-lg-9.text-left
-									p.s-14 = @driver.phone
-							.row
-								.col-lg-3
-									label N° licencia:
-								.col-lg-9.text-left
-									p.s-14 = @driver.licence.upcase
-							.row
-								.col-lg-3
-									label Trasportista:
-								.col-lg-9.text-left
-									p.s-14 = @driver.carrier.name.upcase
-						.col-lg-6
-							- if @driver.licence_imgs.attached?
-								label Licencia:
-								br
-								.img
-									- @driver.licence_imgs.each do |img|
-										= image_tag(img, class: "img-thumbnail", size: "300")
-										= link_to img, target: "_blank", class: 'btn btn-sm btn-outline-info adjust_btn_download ml-2', title: 'Descargar', data: {toggle: 'tooltip', placement: 'bottom'} do
-											svg.feather.feather-download fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-											  path d=("M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4") 
-											  polyline points=("7 10 12 15 17 10") 
-											  line x1="12" x2="12" y1="15" y2="3" 
-					.row
-						.col-lg-12
-							hr
-					.row
-						.col-lg-12
-							= link_to config_drivers_path, title: "Volver", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: 'mr-2 btn btn-sm btn-default' do
-								svg.feather.feather-arrow-left fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-								  line x1="19" x2="5" y1="12" y2="12" 
-								  polyline points=("12 19 5 12 12 5") 
-							= link_to edit_config_driver_path(@driver), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: 'mr-2 btn btn-sm btn-success text-center pr-2' do
-								svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-									path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-									path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+	.container-fluid
+		.card
+			.card-header.p-2.pb-1
+				.row
+					.col-md-12
+						= link_to edit_config_driver_path(@driver), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
+							svg.feather.feather-edit.mr-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+								path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+								path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+								span Editar
+						= link_to config_drivers_path, class: 'mr-2 btn btn-sm btn-default s-12 pl-0' do
+							svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+							  line x1="19" x2="5" y1="12" y2="12" 
+							  polyline points=("12 19 5 12 12 5") 
+							  span Atras
+			.card-body.s-14.p-3
+				.row
+					.col-lg-6
+						.row
+							.col-lg-3
+								label.mb-1 Nombre:
+							.col-lg-9.text-left
+								p.mb-1 = @driver.name.upcase
+						.row
+							.col-lg-3
+								label.mb-1 Apellidos:
+							.col-lg-9.text-left
+								p.mb-1 = @driver.last_name.upcase
+						.row
+							.col-lg-3
+								label.mb-1 Teléfono:
+							.col-lg-9.text-left
+								p.mb-1 = @driver.phone
+						.row
+							.col-lg-3
+								label.mb-1 N° licencia:
+							.col-lg-9.text-left
+								p.mb-1 = @driver.licence.upcase
+						.row
+							.col-lg-3
+								label.mb-1 Trasportista:
+							.col-lg-9.text-left
+								p.mb-1 = @driver.carrier.name.upcase
+						.row
+							.col-lg-3
+								label.mb-1 Licencia:
+							.col-lg-9.text-left
+								- if @driver.licence_imgs.attached?
+									.img
+										- @driver.licence_imgs.each do |img|
+											= image_tag(img, class: "img-thumbnail", size: "250")
+											= link_to img, target: "_blank", class: 'btn btn-sm btn-outline-info adjust_btn_download ml-2', title: 'Descargar', data: {toggle: 'tooltip', placement: 'bottom'} do
+												svg.feather.feather-download fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+												  path d=("M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4") 
+												  polyline points=("7 10 12 15 17 10") 
+												  line x1="12" x2="12" y1="15" y2="3" 

@@ -10,6 +10,7 @@ class CarriersController < ApplicationController
 	def new
     add_breadcrumb "Nuevo"
     @carrier = Carrier.new
+    @countries = Country.new
 	end
 
   def edit
@@ -54,7 +55,7 @@ class CarriersController < ApplicationController
 
 	def carrier_params
     params.require(:carrier).permit(
-      :name, :rfc, :phone, :country, :state, :address, :cp, :municipality)
+      :name, :rfc, :phone, :country, :state, :address, :cp, :municipality, :caat, :alpha, :iccmx, :usdot)
   end
 
   def set_object

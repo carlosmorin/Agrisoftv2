@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_08_165625) do
+ActiveRecord::Schema.define(version: 2020_04_10_191815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,10 @@ ActiveRecord::Schema.define(version: 2020_04_08_165625) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "municipality"
+    t.string "caat"
+    t.string "alpha"
+    t.string "iccmx"
+    t.string "usdot"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -140,6 +144,23 @@ ActiveRecord::Schema.define(version: 2020_04_08_165625) do
     t.integer "active", default: 1, null: false
   end
 
+  create_table "shipments", force: :cascade do |t|
+    t.bigint "carrier_id", null: false
+    t.bigint "driver_id", null: false
+    t.bigint "unit_id", null: false
+    t.bigint "box_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "status"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["box_id"], name: "index_shipments_on_box_id"
+    t.index ["carrier_id"], name: "index_shipments_on_carrier_id"
+    t.index ["driver_id"], name: "index_shipments_on_driver_id"
+    t.index ["unit_id"], name: "index_shipments_on_unit_id"
+    t.index ["user_id"], name: "index_shipments_on_user_id"
+  end
+
   create_table "states", id: false, force: :cascade do |t|
     t.integer "id", null: false
     t.string "key", limit: 2, null: false
@@ -203,6 +224,11 @@ ActiveRecord::Schema.define(version: 2020_04_08_165625) do
   add_foreign_key "boxes", "carriers"
   add_foreign_key "drivers", "carriers"
   add_foreign_key "general_information", "users"
+  add_foreign_key "shipments", "boxes"
+  add_foreign_key "shipments", "carriers"
+  add_foreign_key "shipments", "drivers"
+  add_foreign_key "shipments", "units"
+  add_foreign_key "shipments", "users"
   add_foreign_key "states", "countries"
   add_foreign_key "units", "carriers"
   add_foreign_key "units", "unit_brands"

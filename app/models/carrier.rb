@@ -5,5 +5,6 @@ class Carrier < ApplicationRecord
 	has_many :drivers, inverse_of: :carrier
 	has_many :units, inverse_of: :carrier
 	has_many :boxes, inverse_of: :carrier
+	has_many :shipments, inverse_of: :carrier
 
 end

@@ -6,68 +6,68 @@ section.content-header.pb-0
       .col-sm-6.text-right.pr-2.s-12
         = render_breadcrumbs :separator => ' / '
 section.content
-  .container-fluid
-  	.card
-  		.card-header.p-2.pb-1.bg-light-gray
-  			.card-body
-					.row
-						.col-lg-6
-							.row
-								.col-lg-3
-									label Modelo:
-								.col-lg-9.text-left
-									p.s-14 = @unit.model.upcase
-							.row
-								.col-lg-3
-									label Marca:
-								.col-lg-9.text-left
-									p.s-14 = @unit.unit_brand.name.upcase
-							.row
-								.col-lg-3
-									label Color:
-								.col-lg-9.text-left
-									p.s-14 = @unit.color.upcase
-							.row
-								.col-lg-3
-									label Año:
-								.col-lg-9.text-left
-									p.s-14 = @unit.year.upcase
-							.row
-								.col-lg-3
-									label N° economico:
-								.col-lg-9.text-left
-									p.s-14 = @unit.n_econ.upcase
-							.row
-								.col-lg-3
-									label N° placas:
-								.col-lg-9.text-left
-									p.s-14 = @unit.plate_number.upcase
-							.row
-								.col-lg-3
-									label Transportistas:
-								.col-lg-9.text-left
-									p.s-14 = @unit.carrier.name
-						.col-lg-6
-							- if @unit.picture.attached?
-								label Fotografia:
-								br
+	.container-fluid
+		.card
+			.card-header.p-2.pb-1
+				.row
+					.col-md-12
+						= link_to edit_config_unit_path(@unit), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
+							svg.feather.feather-edit.mr-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+								path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+								path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+								span Editar
+						= link_to config_units_path, class: 'mr-2 btn btn-sm btn-default s-12 pl-0' do
+							svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+							  line x1="19" x2="5" y1="12" y2="12" 
+							  polyline points=("12 19 5 12 12 5") 
+							  span Atras
+			.card-body.s-14.p-3
+				.row
+					.col-lg-6
+						.row
+							.col-lg-3
+								label.mb-1 Modelo:
+							.col-lg-9.text-left
+								p.mb-1 = @unit.model.upcase
+						.row
+							.col-lg-3
+								label.mb-0 Marca:
+							.col-lg-9.text-left
+								p.mb-1 = @unit.unit_brand.name.upcase
+						.row
+							.col-lg-3
+								label.mb-1 Color:
+							.col-lg-9.text-left
+								p.mb-1 = @unit.color.upcase
+						.row
+							.col-lg-3
+								label.mb-1 Año:
+							.col-lg-9.text-left
+								p.mb-1 = @unit.year.upcase
+						.row
+							.col-lg-3
+								label.mb-1 N° economico:
+							.col-lg-9.text-left
+								p.mb-1 = @unit.n_econ.upcase
+						.row
+							.col-lg-3
+								label.mb-1 N° placas:
+							.col-lg-9.text-left
+								p.mb-1 = @unit.plate_number.upcase
+						.row
+							.col-lg-3
+								label.mb-1 Transportistas:
+							.col-lg-9.text-left
+								p.mb-1 = @unit.carrier.name
+						.row
+							.col-lg-3
+								label.mb-1 Transportistas:
+							.col-lg-9.text-left
 								.img
-									= image_tag(@unit.picture, class: "img-thumbnail", size: "300")
+									= image_tag(@unit.picture, class: "img-thumbnail", size: "250")
 									= link_to @unit.picture, target: "_blank", class: 'btn btn-sm btn-outline-info adjust_btn_download ml-2', title: 'Descargar', data: {toggle: 'tooltip', placement: 'bottom'} do
 										svg.feather.feather-download fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
 										  path d=("M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4") 
 										  polyline points=("7 10 12 15 17 10") 
 										  line x1="12" x2="12" y1="15" y2="3"
 										.row
-						.col-lg-12
-							hr
-					.row
-						.col-lg-12
-							= link_to config_units_path, title: "Volver", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: 'mr-2 btn btn-sm btn-default' do
-								svg.feather.feather-arrow-left fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-								  line x1="19" x2="5" y1="12" y2="12" 
-								  polyline points=("12 19 5 12 12 5") 
-							= link_to edit_config_unit_path(@unit), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: 'mr-2 btn btn-sm btn-success text-center pr-2' do
-								svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-									path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-									path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
