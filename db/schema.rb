@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_10_191815) do
+ActiveRecord::Schema.define(version: 2020_04_11_113632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,18 @@ ActiveRecord::Schema.define(version: 2020_04_10_191815) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "delivery_addresses", force: :cascade do |t|
+    t.bigint "client_id", null: false
+    t.bigint "country_id", null: false
+    t.bigint "state_id", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_delivery_addresses_on_client_id"
+    t.index ["country_id"], name: "index_delivery_addresses_on_country_id"
+    t.index ["state_id"], name: "index_delivery_addresses_on_state_id"
+  end
+
   create_table "drivers", force: :cascade do |t|
     t.string "name"
     t.string "last_name"
@@ -161,8 +173,7 @@ ActiveRecord::Schema.define(version: 2020_04_10_191815) do
     t.index ["user_id"], name: "index_shipments_on_user_id"
   end
 
-  create_table "states", id: false, force: :cascade do |t|
-    t.integer "id", null: false
+  create_table "states", id: :integer, default: nil, force: :cascade do |t|
     t.string "key", limit: 2, null: false
     t.string "name", limit: 40, null: false
     t.string "short_name", limit: 10, null: false
@@ -222,6 +233,9 @@ ActiveRecord::Schema.define(version: 2020_04_10_191815) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "boxes", "box_types"
   add_foreign_key "boxes", "carriers"
+  add_foreign_key "delivery_addresses", "clients"
+  add_foreign_key "delivery_addresses", "countries"
+  add_foreign_key "delivery_addresses", "states"
   add_foreign_key "drivers", "carriers"
   add_foreign_key "general_information", "users"
   add_foreign_key "shipments", "boxes"

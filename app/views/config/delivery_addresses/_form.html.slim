@@ -1,0 +1,19 @@
+= simple_form_for([:config, @address], data: { controller: "address" }) do |f|
+	.form-group  
+		.row
+			.col-md-3
+				= f.label :client, class: "pt-1" 
+			.col-md-9
+				= f.input :client, collection: Client.all, label: false, input_html: { class: 'form-control form-control-sm ' }
+	.form-group  
+		.row
+			.col-md-3
+				= f.label :country, class: "pt-1" 
+			.col-md-9
+				= f.input :country, collection: Country.all, label: false, input_html: { class: 'form-control form-control-sm ', data: { action: "change->address#filter_by_country" } }
+	.form-group  
+		.row
+			.col-md-3
+				= f.label :state, class: "pt-1" 
+			.col-md-9
+				= f.input :state, collection: [], label: false, input_html: { class: 'form-control form-control-sm ' }

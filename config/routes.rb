@@ -12,12 +12,14 @@ Rails.application.routes.draw do
     resources :taxes
     resources :units
     resources :boxes
+    resources :delivery_addresses
   end
 
   namespace :addresses do
     resources :countries
     resources :states
     resources :municipalities
+    get '/addresses/states', to: 'addresses#states'
   end
   
   resources :clients
