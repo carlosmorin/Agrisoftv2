@@ -45,7 +45,7 @@ section.content
               tbody#tbody
                 - if @units.empty?
                   tr
-                    td.text-center colspan="6"
+                    td.text-center colspan="7"
                       = link_to 'Nuevo registro', new_config_unit_path, class: "s-12" 
                 - else
                   - @units.each do |unit|

@@ -4,7 +4,7 @@ section.content-header.pb-0
       .col-sm-6
         h5 Cajas 
       .col-sm-6.text-right.pr-2.s-12
-				= render_breadcrumbs :separator => ' / '
+        = render_breadcrumbs :separator => ' / '
 section.content
   .container-fluid
     .row
@@ -15,15 +15,15 @@ section.content
           .card-header.p-2.pb-1.bg-light-gray
             .row
               .col-md-10.col-sm-12
-                = form_tag(config_boxes_path, method: "GET") do
+                = form_tag(config_boxes_path, method: "GET", data: { controller: 'boxes' }) do
                   - value = params[:q].present? ? params[:q] : ''
                   .form-row.align-items-center
                     .col-4
                       = text_field_tag(:q, value, class: 'form-control form-control-sm', placeholder: 'Buscar por N° de placas y/o N° economico')
                     .col-3
-                      	= select_tag :c, options_for_select(@carriers, selected: params[:c]), include_blank: 'Transportistas', class: 's-14 slim-select'
+                      = select_tag :c, options_for_select(@carriers, selected: params[:c]), include_blank: 'Transportistas', class: 's-12', id: 'box_carrier_id'
                     .col-3
-                      	= select_tag :b_t, options_for_select(@box_types, selected: params[:b_t]), include_blank: 'Tipos de caja', class: 's-14 form-control form-control-sm'
+                      = select_tag :b_t, options_for_select(@box_types, selected: params[:b_t]), include_blank: 'Tipos de caja', class: 's-12', id: 'box_box_type_id'
                     .col-2.my-1
                       button.btn.btn-sm.btn-flat.btn-default.bold type="submit"  
                         svg.svg-inline--fa.fa-filter.fa-w-16.h-12 aria-hidden="true" data-icon="filter" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 

@@ -1,42 +1,41 @@
-= simple_form_for([:config, @unit]) do |f|
-	.form-group  
+= simple_form_for([:config, @unit], data: { controller: 'units' } ) do |f|
+	.form-group.mb-1   
 		.row
 			.col-lg-3
 				= f.label :carrier_id, class: "pt-1" 
 			.col-lg-9
-				= f.input :carrier_id, collection: carriers, label: false, input_html: { class: 'form-control form-control-sm ' }
-	.form-group  
+				= f.input :carrier_id, collection: carriers, label: false, input_html: { class: 's-12' }
+	.form-group.mb-1  
 		.row
 			.col-lg-3
 				= f.label :unit_brand_id, class: "pt-1" 
 			.col-lg-9
-				= f.input :unit_brand_id, collection: brands, label: false, input_html: { class: 'form-control form-control-sm ' }
-
-	.form-group  
+				= f.input :unit_brand_id, collection: brands, label: false, input_html: { class: 's-12' }
+	.form-group.mb-1  
 		.row
 			.col-lg-3
 				= f.label :model, class: "pt-1" 
 			.col-lg-9
 				= f.input :model, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
-	.form-group  
+	.form-group.mb-1  
 		.row
 			.col-lg-3
 				= f.label :color, class: "pt-1" 
 			.col-lg-9
 				= f.input :color, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
-	.form-group  
+	.form-group.mb-1  
 		.row
 			.col-lg-3
 				= f.label :year, class: "pt-1" 
 			.col-lg-9
 				= f.input :year, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
-	.form-group
+	.form-group.mb-1
 		.row
 			.col-lg-3
 				= f.label :plate_number, class: "pt-1" 
 			.col-lg-9
 				= f.input :plate_number, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
-	.form-group
+	.form-group.mb-1
 		.row
 			.col-lg-3
 				= f.label :n_econ, class: "pt-1" 
