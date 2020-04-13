@@ -36,6 +36,7 @@ a.nav-link.active{font-weight: bold !important;}
 ///Icons size
 .h-12{ height: 12px; } .h-14{ height: 14px; } 
 .h-15{ height: 15px; } .h-16{ height: 16px; } 
+.h-18{ height: 18px; }
 .h-20{ height: 20px; } .h-30{ height: 30px; }
 
 //Border radius
@@ -93,9 +94,22 @@ label{
 .form-control-sm{
 	height: calc(1.8125rem + 0px) !important;
 	border-color: #ddd;
+	font-size: 12px !important;
+	color: #616161; 
 }
 
 input[type="text"], select, select > option 	{ text-transform: uppercase !important;}
+input[type="text"]::placeholder { /* Edge */
+  text-transform: capitalize !important;
+  font-size: 12px;
+}
 
-.card, .form-control{ border-radius: 1px !important; }
+.card, .form-control{ border-radius: 2px !important; }
 .btn{ border-radius: 2px !important;}
+
+//Costum select
+
+.ss-single-selected{
+	border-radius: 2px !important;
+	border-color: #ced4da !important;
+}

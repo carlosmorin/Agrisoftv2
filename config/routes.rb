@@ -19,7 +19,10 @@ Rails.application.routes.draw do
     resources :countries
     resources :states
     resources :municipalities
+    ##End points to addres
     get '/addresses/states', to: 'addresses#states'
+    get '/addresses/municipalities', to: 'addresses#municipalities'
+    get '/addresses/locations', to: 'addresses#locations'
   end
   
   resources :clients

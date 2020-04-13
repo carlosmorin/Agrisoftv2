@@ -27,10 +27,10 @@ section.content
                 tr.bg-light-gray
                   th style=("width: 5%")  #
                   th Cliente
-                  th N° de placas
-                  th N° economico
-                  th Transportista
-                  th.text-center colspan="2" style=("width: 12%") Acciónes
+                  th Estado
+                  th Municipio
+                  th Dirección
+                  th.text-cener colspan="2" style=("width: 12%") Acciónes
               tbody#tbody
                 - if @delivery_addresses.empty?
                   tr
@@ -41,19 +41,19 @@ section.content
                     tr
                       td = da.id
                       td = da.client.name.upcase
-                      td = box.plate_number.upcase
-                      td = box.n_econ.upcase
-                      td = box.carrier.name.upcase
+                      td = da.state.name.upcase
+                      td = da.municipality.name.upcase
+                      td = da.address.upcase
                       td.text-center
-                        = link_to config_box_path(box), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
+                        = link_to config_delivery_address_path(da), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
                          svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
                           path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
                           circle cx="12" cy="12" r="3"
-                        = link_to edit_config_box_path(box), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
+                        = link_to edit_config_delivery_address_path(da), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
                           svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
                             path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
                             path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
-                        = link_to config_box_path(box), title: "Eliminar", data: { placement: 'left', toggle: 'tooltip', controller: 'users', behavior: 'delete' }  do
+                        = link_to config_delivery_address_path(da), title: "Eliminar", data: { placement: 'left', toggle: 'tooltip', controller: 'users', behavior: 'delete' }  do
                          svg.feather.feather-trash-2.text-danger fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
                           polyline points=("3 6 5 6 21 6") 
                           path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 

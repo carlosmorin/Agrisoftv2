@@ -1,5 +1,7 @@
 class CarriersController < ApplicationController
 	before_action :set_object, only: %i[show edit update destroy]
+  before_action :set_catalogs, only: %i[edit update]
+  
   add_breadcrumb "Transportistas", :carriers_path
 	
 	def index
@@ -55,10 +57,19 @@ class CarriersController < ApplicationController
 
 	def carrier_params
     params.require(:carrier).permit(
-      :name, :rfc, :phone, :country, :state, :address, :cp, :municipality, :caat, :alpha, :iccmx, :usdot)
+      :name, :rfc, :phone, :country_id, :state_id, :address, :cp, 
+      :municipality_id, :caat, :alpha, :iccmx, :usdot)
   end
 
   def set_object
     @carrier = Carrier.find(params[:id])
+  end
+
+  def set_catalogs
+    country = Country.find(@carrier.country_id)
+    state = State.find(@carrier.state_id)
+
+    @states = country.states
+    @municipalities = state.municipalities
   end
 end

@@ -1,5 +1,5 @@
 = simple_form_for([:config, @tax], data: { controller: 'masks' }) do |f|
-	.form-group  
+	.form-group.mb-1
 		.row
 			.col-lg-2
 				= f.label :name, class: "pt-1" 
@@ -20,7 +20,7 @@
 			  polyline points=("7 3 7 8 15 8") 
 			span Guardar
 
-		= link_to :back, class: 'btn btn-default btn-sm pl-1' do
+		= link_to config_taxes_path, class: 'btn btn-default btn-sm pl-1' do
 			svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
 			  rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
 			  line x1="9" x2="15" y1="9" y2="15" 

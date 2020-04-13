@@ -37,6 +37,11 @@ es:
         state: Estado
         cp: Codigo postal
         address: Dirección
+        country_id: País
+        state_id: Estado
+        municipality_id: Municipio / condado
+        conact_name: Persona de contacto
+        email: Correo electronico
       unit_brand:
         name: Nombre
         short_name: Abreviación
@@ -44,15 +49,16 @@ es:
         name: Razón social
         rfc: RFC
         phone: Telefono
-        country: País
-        state: Estado
+        country_id: País
+        state_id: Estado
         cp: Codigo postal
         address: Dirección
-        municipality: Municipio
+        municipality_id: Municipio / condado
         caat: CAAT
         alpha: ALPHA
         iccmx: ICCMX
         usdot: US DOT
+        contact_name: Persona de contacto
       driver:
         name: Nombre
         last_name: Apellidos
@@ -87,5 +93,19 @@ es:
         driver: Conductor
         unit: Unidad
         box: Caja
+      delivery_address:
+        client_id: Cliente
+        country_id: País
+        state_id: Estado
+        municipality_id: Municipio
+        address: Dirección
+        name: Nombre
+        address: Dirección
+        phone: Telefono 
+        comments: Indicaciónes adicionales
+        email: Correo electronico
+        contact_name: Persona de contacto
+
+
 
 

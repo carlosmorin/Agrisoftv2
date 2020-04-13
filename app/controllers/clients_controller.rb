@@ -1,5 +1,7 @@
 class ClientsController < ApplicationController
 	before_action :set_object, only: %i[show edit update destroy]
+  before_action :set_catalogs, only: %i[edit update]
+
   add_breadcrumb "Clientes", :clients_path
 
   def index
@@ -16,7 +18,8 @@ class ClientsController < ApplicationController
   	@client = Client.new(client_params)
     respond_to do |format|
       if @client.save
-        format.html { redirect_to clients_url, notice: 'El cliente fue registrado exitosamente.' }
+        format.html { redirect_to clients_url, 
+          notice: 'El cliente fue registrado exitosamente.' }
       else
         format.html { render :new }
       end
@@ -53,10 +56,19 @@ class ClientsController < ApplicationController
   end
 
 	def client_params
-    params.require(:client).permit(:name, :rfc, :phone, :country, :state, :cp, :address, :value)
+    params.require(:client).permit(:name, :rfc, :phone, :country_id, :state_id, 
+      :municipality_id, :cp, :address, :email, :conact_name)
   end
 
   def set_object
     @client = Client.find(params[:id])
+  end
+
+  def set_catalogs
+    country = Country.find(@client.country_id)
+    state = State.find(@client.state_id)
+
+    @states = country.states
+    @municipalities = state.municipalities
   end
 end

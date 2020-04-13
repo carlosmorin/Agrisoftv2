@@ -37,6 +37,7 @@ section.content
                   th Razón social
                   th RFC
                   th Teléfono
+                  th Correo
                   th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody
                 - if @clients.empty?
@@ -50,6 +51,7 @@ section.content
                       td = client.name.upcase
                       td = client.rfc.upcase
                       td = client.phone.upcase
+                      td = client.email? ? client.email : '--'
                       td.text-center
                         = link_to client_path(client), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
                           svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 

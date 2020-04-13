@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_113632) do
+ActiveRecord::Schema.define(version: 2020_04_13_224105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,24 +65,37 @@ ActiveRecord::Schema.define(version: 2020_04_11_113632) do
     t.string "cp"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "municipality"
     t.string "caat"
     t.string "alpha"
     t.string "iccmx"
     t.string "usdot"
+    t.bigint "country_id", null: false
+    t.bigint "state_id", null: false
+    t.bigint "municipality_id", null: false
+    t.string "email"
+    t.string "contact_name"
+    t.index ["country_id"], name: "index_carriers_on_country_id"
+    t.index ["municipality_id"], name: "index_carriers_on_municipality_id"
+    t.index ["state_id"], name: "index_carriers_on_state_id"
   end
 
   create_table "clients", force: :cascade do |t|
     t.string "name"
     t.string "rfc"
     t.string "phone"
-    t.string "country"
-    t.string "state"
-    t.string "cp"
     t.string "address"
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "email"
+    t.bigint "state_id"
+    t.bigint "country_id"
+    t.bigint "municipality_id"
+    t.string "cp"
+    t.string "conact_name"
+    t.index ["country_id"], name: "index_clients_on_country_id"
+    t.index ["municipality_id"], name: "index_clients_on_municipality_id"
+    t.index ["state_id"], name: "index_clients_on_state_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -99,8 +112,16 @@ ActiveRecord::Schema.define(version: 2020_04_11_113632) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "municipality_id", null: false
+    t.string "address"
+    t.string "phone"
+    t.text "comments"
+    t.string "name"
+    t.string "contact_name"
+    t.string "email"
     t.index ["client_id"], name: "index_delivery_addresses_on_client_id"
     t.index ["country_id"], name: "index_delivery_addresses_on_country_id"
+    t.index ["municipality_id"], name: "index_delivery_addresses_on_municipality_id"
     t.index ["state_id"], name: "index_delivery_addresses_on_state_id"
   end
 
@@ -129,31 +150,14 @@ ActiveRecord::Schema.define(version: 2020_04_11_113632) do
     t.index ["user_id"], name: "index_general_information_on_user_id"
   end
 
-  create_table "localities", id: false, force: :cascade do |t|
-    t.integer "id", null: false
-    t.integer "municipality_id", null: false
-    t.string "key", null: false
-    t.string "name", null: false
-    t.string "latitude", null: false
-    t.string "length", null: false
-    t.string "alt", null: false
-    t.string "card", null: false
-    t.string "ambit", null: false
-    t.integer "population", null: false
-    t.integer "male", null: false
-    t.integer "female", null: false
-    t.integer "households", null: false
-    t.decimal "lat", precision: 10, scale: 7, null: false
-    t.decimal "lng", precision: 10, scale: 7, null: false
-    t.integer "active", default: 1, null: false
-  end
-
-  create_table "municipalities", id: false, force: :cascade do |t|
-    t.integer "id", null: false
-    t.integer "state_id", null: false
-    t.string "key", limit: 3, null: false
-    t.string "name", limit: 100, null: false
-    t.integer "active", default: 1, null: false
+  create_table "municipalities", force: :cascade do |t|
+    t.bigint "state_id", null: false
+    t.string "key"
+    t.string "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "active"
+    t.index ["state_id"], name: "index_municipalities_on_state_id"
   end
 
   create_table "shipments", force: :cascade do |t|
@@ -173,10 +177,13 @@ ActiveRecord::Schema.define(version: 2020_04_11_113632) do
     t.index ["user_id"], name: "index_shipments_on_user_id"
   end
 
-  create_table "states", id: :integer, default: nil, force: :cascade do |t|
-    t.string "key", limit: 2, null: false
-    t.string "name", limit: 40, null: false
-    t.string "short_name", limit: 10, null: false
+  create_table "states", force: :cascade do |t|
+    t.string "key"
+    t.string "name"
+    t.string "short_name"
+    t.boolean "active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.bigint "country_id"
     t.index ["country_id"], name: "index_states_on_country_id"
   end
@@ -233,11 +240,19 @@ ActiveRecord::Schema.define(version: 2020_04_11_113632) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "boxes", "box_types"
   add_foreign_key "boxes", "carriers"
+  add_foreign_key "carriers", "countries"
+  add_foreign_key "carriers", "municipalities"
+  add_foreign_key "carriers", "states"
+  add_foreign_key "clients", "countries"
+  add_foreign_key "clients", "municipalities"
+  add_foreign_key "clients", "states"
   add_foreign_key "delivery_addresses", "clients"
   add_foreign_key "delivery_addresses", "countries"
+  add_foreign_key "delivery_addresses", "municipalities"
   add_foreign_key "delivery_addresses", "states"
   add_foreign_key "drivers", "carriers"
   add_foreign_key "general_information", "users"
+  add_foreign_key "municipalities", "states"
   add_foreign_key "shipments", "boxes"
   add_foreign_key "shipments", "carriers"
   add_foreign_key "shipments", "drivers"
