@@ -10,8 +10,9 @@
 			.col-md-3
 				= f.label :client_id, class: "pt-1" 
 			.col-md-9
-				- client = params[:c].present? ? params[:c] : ""
-				= f.input :client_id, collection: Client.all, selected: client, label: false,include_blank: 'SELECCIONA',input_html: { class: 's-12', include_blank: 'SELECCIONA'}
+				- client_id = params[:c].present? ? params[:c] : ''
+				- client_id = @address.client_id.present? ? @address.client_id : client_id
+				= f.input :client_id, collection: Client.all, selected: client_id, label: false,include_blank: 'SELECCIONA',input_html: { class: 's-12', include_blank: 'SELECCIONA'}
 	.form-group.mb-1.mb-1
 		.row
 			.col-md-3

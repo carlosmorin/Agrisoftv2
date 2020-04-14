@@ -7,6 +7,7 @@ class Client < ApplicationRecord
 	belongs_to :country
 	belongs_to :state
 	belongs_to :municipality
+	has_many :client_brands, inverse_of: :client
 
 	validates_uniqueness_of :phone, :email, case_sensitive: false
 end

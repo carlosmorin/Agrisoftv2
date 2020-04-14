@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_14_162318) do
+ActiveRecord::Schema.define(version: 2020_04_14_185002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,14 @@ ActiveRecord::Schema.define(version: 2020_04_14_162318) do
     t.index ["country_id"], name: "index_carriers_on_country_id"
     t.index ["municipality_id"], name: "index_carriers_on_municipality_id"
     t.index ["state_id"], name: "index_carriers_on_state_id"
+  end
+
+  create_table "client_brands", force: :cascade do |t|
+    t.string "name"
+    t.bigint "client_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_client_brands_on_client_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -276,6 +284,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_162318) do
   add_foreign_key "carriers", "countries"
   add_foreign_key "carriers", "municipalities"
   add_foreign_key "carriers", "states"
+  add_foreign_key "client_brands", "clients"
   add_foreign_key "clients", "countries"
   add_foreign_key "clients", "municipalities"
   add_foreign_key "clients", "states"

@@ -116,3 +116,6 @@ es:
         address: Dirección
         email: Correo electronico
         contact_name: Persona de contacto
+      client_brand:
+        name: Nombre
+        client_id: Cliente
