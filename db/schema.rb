@@ -98,6 +98,23 @@ ActiveRecord::Schema.define(version: 2020_04_13_224105) do
     t.index ["state_id"], name: "index_clients_on_state_id"
   end
 
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.string "rfc"
+    t.string "phone"
+    t.bigint "country_id", null: false
+    t.bigint "state_id", null: false
+    t.bigint "municipality_id", null: false
+    t.string "cp", null: false
+    t.string "address"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_companies_on_country_id"
+    t.index ["municipality_id"], name: "index_companies_on_municipality_id"
+    t.index ["state_id"], name: "index_companies_on_state_id"
+  end
+
   create_table "countries", force: :cascade do |t|
     t.string "name"
     t.string "short_name"
@@ -246,6 +263,9 @@ ActiveRecord::Schema.define(version: 2020_04_13_224105) do
   add_foreign_key "clients", "countries"
   add_foreign_key "clients", "municipalities"
   add_foreign_key "clients", "states"
+  add_foreign_key "companies", "countries"
+  add_foreign_key "companies", "municipalities"
+  add_foreign_key "companies", "states"
   add_foreign_key "delivery_addresses", "clients"
   add_foreign_key "delivery_addresses", "countries"
   add_foreign_key "delivery_addresses", "municipalities"
