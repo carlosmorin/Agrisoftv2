@@ -1,0 +1,29 @@
+section.content-header.pb-0
+  .container-fluid
+    .row.mb-2
+      .col-sm-6
+        h4 Cultivo
+      .col-sm-6
+        ol.breadcrumb.float-sm-right.s-12
+          li.breadcrumb-item
+            a href="../"  Inicio
+          li.breadcrumb-item.active Detalles
+section.content
+  .container-fluid
+  	.card
+  		.card-header.p-2.pb-1.bg-light-gray
+  			.card-body
+					.row
+						.col-lg-2
+							label Nombre:
+						.col-lg-7.text-left
+							p = @crop.name
+					.row
+						.col-lg-6
+							hr
+							.form-actions.text-left
+								= link_to crops_path, class: 'btn btn-default' do
+									svg.feather.feather-arrow-left.mr-2 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+										line x1="19" x2="5" y1="12" y2="12" 
+										polyline points=("12 19 5 12 12 5")
+									span Atrás

@@ -25,6 +25,27 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
               circle cx="6.5" cy="6.5" r="2.5" 
               circle cx="17.5" cy="17.5" r="2.5" 
             | Impuestos
+        li
+          = link_to crops_path, class: 'dropdown-item s-12 text-left px-1' do
+            svg.feather.feather-sun fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+              circle cx="12" cy="12" r="5" 
+              line x1="12" x2="12" y1="1" y2="3" 
+              line x1="12" x2="12" y1="21" y2="23" 
+              line x1="4.22" x2="5.64" y1="4.22" y2="5.64" 
+              line x1="18.36" x2="19.78" y1="18.36" y2="19.78" 
+              line x1="1" x2="3" y1="12" y2="12" 
+              line x1="21" x2="23" y1="12" y2="12" 
+              line x1="4.22" x2="5.64" y1="19.78" y2="18.36" 
+              line x1="18.36" x2="19.78" y1="5.64" y2="4.22" 
+            | Cultivos
+        li
+          = link_to sizes_path, class: 'dropdown-item s-12 text-left px-1' do
+            svg.feather.feather-maximize-2 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+              polyline points=("15 3 21 3 21 9") 
+              polyline points=("9 21 3 21 3 15") 
+              line x1="21" x2="14" y1="3" y2="10" 
+              line x1="3" x2="10" y1="21" y2="14" 
+            | Tamaños
         li.dropdown-divider.my-0
         li.dropdown-submenu.dropdown-hover
           a#dropdownSubMenu2.dropdown-item.dropdown-toggle.s-12.text-left.px-2 aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
@@ -90,6 +111,7 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
               = link_to 'Municipios', config_box_types_path, class: 'dropdown-item s-12 pl-2' 
             li
               = link_to 'Localidades', config_box_types_path, class: 'dropdown-item s-12 pl-2' 
+
   ul.navbar-nav.ml-auto
     li.nav-item.pl-1
       = link_to admin_root_path,  class: 'nav-link pl-1', title: 'Sistema', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 

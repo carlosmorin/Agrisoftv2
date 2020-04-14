@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   resources :carriers
   resources :shipments
   resources :companies
+  resources :crops
+  resources :sizes
 	
 	devise_for :users
   root to: "dashboard#index"
