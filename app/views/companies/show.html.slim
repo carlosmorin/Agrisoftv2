@@ -32,12 +32,17 @@ section.content
 						.col-lg-2
 							label País:
 						.col-lg-7.text-left
-							p = @company.country
+							p = @company.country.name
 					.row
 						.col-lg-2
 							label Estado:
 						.col-lg-7.text-left
-							p = @company.state
+							p = @company.state.name
+					.row
+						.col-lg-2
+							label Municipio / Condado:
+						.col-lg-7.text-left
+							p = @company.municipality.name
 					.row
 						.col-lg-2
 							label Código Postal:

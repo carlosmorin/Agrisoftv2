@@ -9,6 +9,7 @@ class State < ApplicationRecord
   has_many :clients, inverse_of: :state
   has_many :states, inverse_of: :state
   has_many :carriers, inverse_of: :state
+  has_many :companies, inverse_of: :state
 	
 	validates :name, :short_name, :country_id, presence: true
 

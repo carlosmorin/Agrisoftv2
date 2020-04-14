@@ -5,5 +5,6 @@ class Municipality < ApplicationRecord
   has_many :delivery_addresses, inverse_of: :municipality
   has_many :clients, inverse_of: :municipality
   has_many :carriers, inverse_of: :municipality
+  has_many :companies, inverse_of: :municipality
 
 end

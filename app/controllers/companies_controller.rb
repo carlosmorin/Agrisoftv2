@@ -15,18 +15,17 @@ before_action :set_object, only: %i[show edit update destroy]
 
   def create
   	@company = Company.new(company_params)
-    respond_to do |format|
       if @company.save
-        format.html { redirect_to companies_url, notice: 'La empresa fue registrada exitosamente.' }
+        flash[:notice] = "La empresa fue registrada exitosamente."
+        redirect_to companies_url
       else
-        format.html { render :new }
+        render :new
       end
-    end
   end
 
    def update
     if @company.update(company_params)
-      flash[:notice] = "#{@company.name} Actualizada"
+      flash[:notice] = "Comprañia Actualizada"
       redirect_to companies_url
     else
       render :edit
@@ -40,7 +39,8 @@ before_action :set_object, only: %i[show edit update destroy]
 	private
 
 	def company_params
-    params.require(:company).permit(:name, :rfc, :phone, :country, :state, :cp, :address, :value)
+    params.require(:company).permit(:name, :rfc, :phone, :country_id, 
+      :state_id, :cp, :municipality_id, :address, :value)
   end
 
   def set_object
