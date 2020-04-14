@@ -517,8 +517,8 @@ INSERT INTO municipalities (id, state_id, key, name, active, created_at, updated
 (461, 13, '009', 'El Arenal', 1,  NOW(),  NOW()),
 (462, 13, '010', 'Atitalaquia', 1,  NOW(),  NOW()),
 (463, 13, '011', 'Atlapexco', 1,  NOW(),  NOW()),
-(464, 13, '012', 'Atotonilco el Grande', 1),
-(465, 13, '013', 'Atotonilco de Tula', 1),
+(464, 13, '012', 'Atotonilco el Grande', 1, NOW(), NOW()),
+(465, 13, '013', 'Atotonilco de Tula', 1, NOW(), NOW()),
 (466, 13, '014', 'Calnali', 1, NOW(), NOW()),
 (467, 13, '015', 'Cardonal', 1, NOW(), NOW()),
 (468, 13, '016', 'Cuautepec de Hinojosa', 1, NOW(), NOW()),
@@ -1068,7 +1068,7 @@ INSERT INTO municipalities (id, state_id, key, name, active, created_at, updated
 (1006, 20, '003', 'Asunción Cacalotepec', 1, NOW(), NOW()),
 (1007, 20, '004', 'Asunción Cuyotepeji', 1, NOW(), NOW()),
 (1008, 20, '005', 'Asunción Ixtaltepec', 1, NOW(), NOW()),
-(1009, 20, '006', 'Asunción Nochixtlán', 1),
+(1009, 20, '006', 'Asunción Nochixtlán', 1, NOW(), NOW()),
 (1010, 20, '007', 'Asunción Ocotlán', 1, NOW(), NOW()),
 (1011, 20, '008', 'Asunción Tlacolulita', 1, NOW(), NOW()),
 (1012, 20, '009', 'Ayotzintepec', 1, NOW(), NOW()),
@@ -2534,8 +2534,8 @@ INSERT INTO municipalities (id, state_id, key, name, active, created_at, updated
 (2463, 32, '058', 'Santa María de la Paz', 1, NOW(), NOW());";
 
 municipalities_usa_query = "
-INSERT INTO municipalities (id, state_id, key, name, active) VALUES
-(1, 33, '059', 'McLennan', 1, NOW(), NOW())";
+INSERT INTO municipalities (id, state_id, key, name, active, created_at, updated_at) VALUES
+(2464, 33, '059', 'McLennan', 1, NOW(), NOW())";
 ActiveRecord::Base.connection.execute(municipalities_mx_query_1)
 ActiveRecord::Base.connection.execute(municipalities_mx_query_2)
 ActiveRecord::Base.connection.execute(municipalities_mx_query_3)
