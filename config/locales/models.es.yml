@@ -105,7 +105,14 @@ es:
         comments: Indicaciónes adicionales
         email: Correo electronico
         contact_name: Persona de contacto
-
-
-
-
+      company:
+        name: Razón social
+        rfc: RFC
+        phone: Teléfono
+        country_id: País
+        state_id: Estado
+        municipality_id: Municipio / condado
+        cp: Código postal
+        address: Dirección
+        email: Correo electronico
+        contact_name: Persona de contacto
