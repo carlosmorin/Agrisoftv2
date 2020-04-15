@@ -124,3 +124,5 @@ es:
       client_brand:
         name: Nombre
         client_id: Cliente
+      quality:
+        name: Nombre

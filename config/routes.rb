@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :companies
   resources :crops
   resources :sizes
+  resources :qualities
 	
 	devise_for :users
   root to: "dashboard#index"
