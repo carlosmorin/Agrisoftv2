@@ -7,5 +7,6 @@ class Unit < ApplicationRecord
 	belongs_to :carrier
 	has_one_attached :picture
 	has_many :shipments, inverse_of: :unit
+	has_many :remissions, inverse_of: :unit
 
 end

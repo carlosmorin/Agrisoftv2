@@ -5,6 +5,5 @@ class ShipmentsController < ApplicationController
 
   def new
   	@shipment = Shipment.new
-  	@carriers = Carrier.all
   end
  end
