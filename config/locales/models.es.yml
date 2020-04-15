@@ -126,3 +126,5 @@ es:
         client_id: Cliente
       quality:
         name: Nombre
+      color:
+        name: Nombre

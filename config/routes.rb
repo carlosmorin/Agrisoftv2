@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   resources :crops
   resources :sizes
   resources :qualities
+  resources :colors
 	
 	devise_for :users
   root to: "dashboard#index"
