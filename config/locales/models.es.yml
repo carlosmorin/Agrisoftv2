@@ -116,3 +116,8 @@ es:
         address: Dirección
         email: Correo electronico
         contact_name: Persona de contacto
+      crop:
+        name: Nombre
+      size:
+        name: Nombre
+        short_name: Abreviación

@@ -1,15 +1,24 @@
 class CropsController < ApplicationController
-before_action :set_object, only: %i[show edit update destroy]
+  before_action :set_object, only: %i[show edit update destroy]
+
+  add_breadcrumb "Cultivos", :crops_path
 
   def index
-  	@crops = Crop.all
+  	@crops = Crop.paginate(page: params[:page], per_page: 16)
+    search if params[:q].present?
   end
 
   def new
+    add_breadcrumb "Nuevo"
   	@crop = Crop.new
   end
 
-  def show    
+  def edit
+    add_breadcrumb "Editar"
+  end
+
+  def show
+    add_breadcrumb "Detalle"   
   end
 
   def create
@@ -37,8 +46,14 @@ before_action :set_object, only: %i[show edit update destroy]
 
 	private
 
+  def search
+    q = Regexp.escape(params[:q])
+    
+    @crops = @crops.where("name ~* ?", q)
+  end
+
 	def crop_params
-    params.require(:crop).permit(:name, :value)
+    params.require(:crop).permit(:name)
   end
 
   def set_object

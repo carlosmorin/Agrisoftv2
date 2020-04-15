@@ -1,16 +1,24 @@
 class SizesController < ApplicationController
 	before_action :set_object, only: %i[show edit update destroy]
 
+  add_breadcrumb "Tamaños", :sizes_path
+
   def index
-  	@sizes = Size.all
+  	@sizes = Size.paginate(page: params[:page], per_page: 16)
+    search if params[:q].present?
   end
 
   def new
+    add_breadcrumb "Nuevo"
   	@size = Size.new
   end
 
+  def edit
+    add_breadcrumb "Editar"
+  end
+
   def show
-    
+    add_breadcrumb "Detalle" 
   end
 
   def create
@@ -39,8 +47,14 @@ class SizesController < ApplicationController
 
 	private
 
+  def search
+    q = Regexp.escape(params[:q])
+    
+    @sizes = @sizes.where("name ~* ?", q)
+  end
+
 	def size_params
-    params.require(:size).permit(:name, :value)
+    params.require(:size).permit(:name, :short_name)
   end
 
   def set_object
