@@ -9,4 +9,10 @@ class Unit < ApplicationRecord
 	has_many :shipments, inverse_of: :unit
 	has_many :remissions, inverse_of: :unit
 
+	def full_name
+		brand = 
+			unit_brand.short_name.present? ? unit_brand.short_name : unit_brand.name  
+		"#{brand}-#{color}-#{model}-#{year}".upcase
+	end
+
 end

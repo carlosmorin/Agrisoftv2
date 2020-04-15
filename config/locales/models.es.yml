@@ -89,10 +89,10 @@ es:
         carrier_id: Transportista
         box_type_id: Tipo de caja
       shipment:
-        carrier: Transportista
-        driver: Conductor
-        unit: Unidad
-        box: Caja
+        carrier_id: Transportista
+        driver_id: Conductor
+        unit_id: Unidad
+        box_id: Caja
       delivery_address:
         client_id: Cliente
         country_id: País
@@ -124,3 +124,7 @@ es:
       client_brand:
         name: Nombre
         client_id: Cliente
+      remission:
+        client_id: Cliente
+        company_id: Empresa remisionista
+

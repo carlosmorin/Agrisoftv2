@@ -1,5 +1,6 @@
 class CarriersController < ApplicationController
-	before_action :set_object, only: %i[show edit update destroy]
+	before_action :set_object, 
+    only: %i[show edit update destroy get_drivers get_units get_boxes]
   before_action :set_catalogs, only: %i[edit update]
   
   add_breadcrumb "Transportistas", :carriers_path
@@ -46,6 +47,29 @@ class CarriersController < ApplicationController
   def destroy
     @carrier.destroy
   end
+
+  def get_drivers
+    drivers = @carrier.drivers
+    render json: drivers
+  end
+
+  def get_units
+    units = @carrier.units
+    data = []
+    units.each do |unit|
+      data << { id: unit.id, name: unit.full_name }
+    end
+    render json: data
+  end
+
+  def get_boxes
+    boxes = @carrier.boxes
+    data = []
+    boxes.each do |box|
+      data << { id: box.id, name: box.full_name }
+    end
+    render json: data
+  end
 	
   private
 
@@ -62,7 +86,8 @@ class CarriersController < ApplicationController
   end
 
   def set_object
-    @carrier = Carrier.find(params[:id])
+    id = params[:id].present? ? params[:id] : params[:carrier_id] 
+    @carrier = Carrier.find(id)
   end
 
   def set_catalogs

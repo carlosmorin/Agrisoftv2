@@ -27,7 +27,12 @@ Rails.application.routes.draw do
   end
   
   resources :clients
-  resources :carriers
+  resources :carriers do
+    get '/get_drivers', to: 'carriers#get_drivers'
+    get '/get_units', to: 'carriers#get_units'
+    get '/get_boxes', to: 'carriers#get_boxes'
+  end
+
   resources :shipments
   resources :companies
   resources :crops

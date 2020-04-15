@@ -10,8 +10,5 @@ class Carrier < ApplicationRecord
 	belongs_to :country
 	belongs_to :state
 	belongs_to :municipality
-
 	validates_uniqueness_of :rfc, case_sensitive: false
-
-
 end

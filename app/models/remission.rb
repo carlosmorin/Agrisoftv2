@@ -5,4 +5,6 @@ class Remission < ApplicationRecord
   belongs_to :unit
   belongs_to :box
   belongs_to :delivery_address
+  belongs_to :shipment
+  validates :client_id, :company_id, presence: true
 end
