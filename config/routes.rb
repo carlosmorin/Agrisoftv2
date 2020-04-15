@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   resources :sizes
   resources :qualities
   resources :colors
+  resources :packages
 	
 	devise_for :users
   root to: "dashboard#index"

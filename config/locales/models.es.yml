@@ -128,3 +128,5 @@ es:
         name: Nombre
       color:
         name: Nombre
+      package:
+        name: Nombre
