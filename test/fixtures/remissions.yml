@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company: one
+  client: one
+  carrier: one
+  unit: one
+  box: one
+  delivery_address: one
+  user: 
+  pay_freight: false
+  comments: MyText
+
+two:
+  company: two
+  client: two
+  carrier: two
+  unit: two
+  box: two
+  delivery_address: two
+  user: 
+  pay_freight: false
+  comments: MyText

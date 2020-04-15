@@ -121,3 +121,6 @@ es:
       size:
         name: Nombre
         short_name: Abreviación
+      client_brand:
+        name: Nombre
+        client_id: Cliente

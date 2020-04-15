@@ -1,30 +1,28 @@
-= simple_form_for(@shipment) do |f|
+= simple_form_for(@shipment, data: { controller: 'shipments' } ) do |f|
 	= f.input :user, as: :hidden, input_html: { class: 'form-control form-control-sm', value: current_user.id }
-	.form-group  
+	.form-group.mb-1  
 		.row
 			.col-lg-12
-				= f.label :carrier, class: "pt-1" 
-				= f.input :carrier, collection: carriers, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
-	.row
-		.col-md-6
-			.form-group  
-				= f.input :driver, collection: carriers, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
-		.col-md-6
-			.form-group  
-				= f.input :unit, collection: carriers, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
-	.row
-		.col-lg-6
-			.form-group  
-				= f.input :box, collection: carriers, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+				= f.label :carrier_id, class: "pt-1" 
+				= f.input :carrier_id, collection: Carrier.all, autofocus: true, label: false, input_html: { class: 's-12 ' }
+	.form-group.mb-1  
+		.row
+			.col-md-6
+					= f.input :driver, collection: carriers, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+			.col-md-6
+					= f.input :unit, collection: carriers, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+	.form-group.mb-1  
+		.row
+			.col-lg-6
+					= f.input :box, collection: carriers, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
 	.row
 		.col-lg-12
 			hr.my-2
 	.row
 		.col-lg-12
-			.form-actions.text-center
+			.form-actions.text-right
 				button type="submit" class='btn btn-dark-blue mr-2 btn-sm s-14'
 					span Siguiente 
 					svg.feather.feather-arrow-right fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
 					  line x1="5" x2="19" y1="12" y2="12" 
 					  polyline points=("12 5 19 12 12 19")
-				= link_to 'Cancelar', :back, class: 'btn btn-default btn-sm'

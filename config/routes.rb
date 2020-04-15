@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :units
     resources :boxes
     resources :delivery_addresses
+    resources :client_brands
   end
 
   namespace :addresses do

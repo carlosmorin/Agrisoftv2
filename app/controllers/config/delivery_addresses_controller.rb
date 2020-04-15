@@ -7,7 +7,9 @@ module Config
     add_breadcrumb "Direcciónes de entrega", :config_delivery_addresses_path
 
   	def index
-  		@delivery_addresses = DeliveryAddress.all
+  		@delivery_addresses = DeliveryAddress.paginate(page: params[:page], per_page: 16)
+      search if params[:q].present?
+      search_by_client if params[:c].present?
   	end
 
 		def new
@@ -43,10 +45,22 @@ module Config
     end
 
     def destroy
-      @carrier.destroy
+      @address.destroy
     end
 
     private
+    
+    def search
+      q = Regexp.escape(params[:q])
+      
+      @delivery_addresses = @delivery_addresses.where("concat(name, ' ', phone, ' ', contact_name) ~* ?", q)
+    end
+
+    def search_by_client
+      client_id = Regexp.escape(params[:c])
+      
+      @delivery_addresses = @delivery_addresses.where(client_id: client_id)
+    end
 
     def address_params
       params.require(:delivery_address).permit(

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_14_202950) do
+ActiveRecord::Schema.define(version: 2020_04_14_235803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,14 @@ ActiveRecord::Schema.define(version: 2020_04_14_202950) do
     t.index ["country_id"], name: "index_carriers_on_country_id"
     t.index ["municipality_id"], name: "index_carriers_on_municipality_id"
     t.index ["state_id"], name: "index_carriers_on_state_id"
+  end
+
+  create_table "client_brands", force: :cascade do |t|
+    t.string "name"
+    t.bigint "client_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_client_brands_on_client_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -186,6 +194,28 @@ ActiveRecord::Schema.define(version: 2020_04_14_202950) do
     t.index ["state_id"], name: "index_municipalities_on_state_id"
   end
 
+  create_table "remissions", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.bigint "client_id", null: false
+    t.bigint "carrier_id", null: false
+    t.bigint "unit_id", null: false
+    t.bigint "box_id", null: false
+    t.bigint "delivery_address_id", null: false
+    t.bigint "user_id"
+    t.boolean "pay_freight"
+    t.text "comments"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["box_id"], name: "index_remissions_on_box_id"
+    t.index ["carrier_id"], name: "index_remissions_on_carrier_id"
+    t.index ["client_id"], name: "index_remissions_on_client_id"
+    t.index ["company_id"], name: "index_remissions_on_company_id"
+    t.index ["delivery_address_id"], name: "index_remissions_on_delivery_address_id"
+    t.index ["unit_id"], name: "index_remissions_on_unit_id"
+    t.index ["user_id"], name: "index_remissions_on_user_id"
+  end
+
   create_table "shipments", force: :cascade do |t|
     t.bigint "carrier_id", null: false
     t.bigint "driver_id", null: false
@@ -277,6 +307,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_202950) do
   add_foreign_key "carriers", "countries"
   add_foreign_key "carriers", "municipalities"
   add_foreign_key "carriers", "states"
+  add_foreign_key "client_brands", "clients"
   add_foreign_key "clients", "countries"
   add_foreign_key "clients", "municipalities"
   add_foreign_key "clients", "states"
@@ -290,6 +321,12 @@ ActiveRecord::Schema.define(version: 2020_04_14_202950) do
   add_foreign_key "drivers", "carriers"
   add_foreign_key "general_information", "users"
   add_foreign_key "municipalities", "states"
+  add_foreign_key "remissions", "boxes"
+  add_foreign_key "remissions", "carriers"
+  add_foreign_key "remissions", "clients"
+  add_foreign_key "remissions", "companies"
+  add_foreign_key "remissions", "delivery_addresses"
+  add_foreign_key "remissions", "units"
   add_foreign_key "shipments", "boxes"
   add_foreign_key "shipments", "carriers"
   add_foreign_key "shipments", "drivers"
