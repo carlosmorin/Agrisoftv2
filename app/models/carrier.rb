@@ -13,5 +13,11 @@ class Carrier < ApplicationRecord
 
 	validates_uniqueness_of :rfc, case_sensitive: false
 
+	def short_address
+		state_name = state.name
+		mun = municipality.name
+		"#{state_name}, #{mun}, #{address}"
+	end
+
 
 end

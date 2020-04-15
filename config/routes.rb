@@ -16,6 +16,10 @@ Rails.application.routes.draw do
     resources :client_brands
   end
 
+  namespace :directories do
+    resources :carriers
+  end
+
   namespace :addresses do
     resources :countries
     resources :states
