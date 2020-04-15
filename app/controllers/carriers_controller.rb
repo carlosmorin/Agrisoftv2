@@ -82,7 +82,7 @@ class CarriersController < ApplicationController
 	def carrier_params
     params.require(:carrier).permit(
       :name, :rfc, :phone, :country_id, :state_id, :address, :cp, 
-      :municipality_id, :caat, :alpha, :iccmx, :usdot)
+      :municipality_id, :email, :contact_name, :caat, :alpha, :iccmx, :usdot)
   end
 
   def set_object
