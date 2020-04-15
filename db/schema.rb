@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_15_202201) do
-
+ActiveRecord::Schema.define(version: 2020_04_15_171133) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -106,6 +105,13 @@ ActiveRecord::Schema.define(version: 2020_04_15_202201) do
     t.index ["state_id"], name: "index_clients_on_state_id"
   end
 
+  create_table "colors", force: :cascade do |t|
+    t.string "name"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.string "rfc"
@@ -192,6 +198,20 @@ ActiveRecord::Schema.define(version: 2020_04_15_202201) do
     t.datetime "updated_at"
     t.integer "active"
     t.index ["state_id"], name: "index_municipalities_on_state_id"
+  end
+
+  create_table "packages", force: :cascade do |t|
+    t.string "name"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "qualities", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
   end
 
   create_table "remissions", force: :cascade do |t|

@@ -16,6 +16,10 @@ Rails.application.routes.draw do
     resources :client_brands
   end
 
+  namespace :directories do
+    resources :carriers
+  end
+
   namespace :addresses do
     resources :countries
     resources :states
@@ -37,6 +41,9 @@ Rails.application.routes.draw do
   resources :companies
   resources :crops
   resources :sizes
+  resources :qualities
+  resources :colors
+  resources :packages
 	
 	devise_for :users
   root to: "dashboard#index"
