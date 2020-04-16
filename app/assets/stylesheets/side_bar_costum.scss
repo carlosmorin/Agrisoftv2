@@ -1,0 +1,23 @@
+.sidebar-dark-primary{
+	background: #293742 !important;
+}
+.user-panel img {
+	width: 25px !important;
+}
+
+.nav-link{
+	border-radius: 0px !important;
+}
+.nav-link i.right{
+	transform: translateY(-3px);
+}
+
+.nav-link:hover{
+	background: transparent !important;
+
+}
+.menu-open > .nav-link{	background: transparent !important;}
+.nav-link.active{
+	background: transparent !important; 
+	color: white !important;
+}

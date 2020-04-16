@@ -17,7 +17,7 @@ span.error ~ input.form-control{
 .s-12{ font-size: 12px !important; }
 .s-14{ font-size: 14px !important; }
 .s-15{ font-size: 15px !important; }
-.s-16{ font-size: 16px; }
+.s-16{ font-size: 16px !important; }
 .s-18{ font-size: 18px; }
 .s-20{ font-size: 20px; }
 
@@ -27,7 +27,7 @@ span.error ~ input.form-control{
 .c-red{ color: #881822; }
 .c-green{ color: #002400; }
 .bg-light-gray{ background: #f4f4f4 !important;}
-.bg-light-green{ background: #23923d24 !important;}
+.bg-light-green{ background: #fff !important;}
 .bg-light-red{ background: #ffeaea !important; }
 //
 //
@@ -37,10 +37,13 @@ a.nav-link.active{font-weight: bold !important;}
 .h-12{ height: 12px; } .h-14{ height: 14px; } 
 .h-15{ height: 15px; } .h-16{ height: 16px; } 
 .h-18{ height: 18px; }
-.h-20{ height: 20px; } .h-30{ height: 30px; }
+.h-20{ height: 20px; }
+.h-25{ height: 25px !important; }
+.h-30{ height: 30px; }
 
 //Border radius
 .br-2{ border-radius: 2px !important; }
+.br-0{ border-radius: 0px !important; }
 body{
 	width: 100%;
 	overflow: auto;
@@ -87,6 +90,9 @@ label{
 	font-weight: normal !important;
   font-size: 12px !important;
   color: #4e4e4e;
+}
+label.select{
+	margin-bottom: 0px;
 }
 .c-gray{ color: #4e4e4e; }
 

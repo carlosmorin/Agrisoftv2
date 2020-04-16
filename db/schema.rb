@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_15_171133) do
+ActiveRecord::Schema.define(version: 2020_04_16_180304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,24 @@ ActiveRecord::Schema.define(version: 2020_04_15_171133) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
+  end
+
+  create_table "crops_colors", force: :cascade do |t|
+    t.bigint "crop_id", null: false
+    t.bigint "color_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["color_id"], name: "index_crops_colors_on_color_id"
+    t.index ["crop_id"], name: "index_crops_colors_on_crop_id"
+  end
+
+  create_table "crops_sizes", force: :cascade do |t|
+    t.bigint "crop_id", null: false
+    t.bigint "size_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["crop_id"], name: "index_crops_sizes_on_crop_id"
+    t.index ["size_id"], name: "index_crops_sizes_on_size_id"
   end
 
   create_table "delivery_addresses", force: :cascade do |t|
@@ -338,6 +356,10 @@ ActiveRecord::Schema.define(version: 2020_04_15_171133) do
   add_foreign_key "companies", "countries"
   add_foreign_key "companies", "municipalities"
   add_foreign_key "companies", "states"
+  add_foreign_key "crops_colors", "colors"
+  add_foreign_key "crops_colors", "crops"
+  add_foreign_key "crops_sizes", "crops"
+  add_foreign_key "crops_sizes", "sizes"
   add_foreign_key "delivery_addresses", "clients"
   add_foreign_key "delivery_addresses", "countries"
   add_foreign_key "delivery_addresses", "municipalities"

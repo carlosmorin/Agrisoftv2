@@ -10,7 +10,11 @@ class CropsController < ApplicationController
 
   def new
     add_breadcrumb "Nuevo"
-  	@crop = Crop.new
+    @crop = Crop.new
+    @crop.crops_colors.build
+    @crop.crops_sizes.build
+    @crop.crops_qualities.build
+    @crop.crops_packages.build
   end
 
   def edit
@@ -53,7 +57,11 @@ class CropsController < ApplicationController
   end
 
 	def crop_params
-    params.require(:crop).permit(:name)
+    params.require(:crop).permit(:name, 
+      crops_sizes_attributes: [:id, :crop_id, :size_id, :_destroy],
+      crops_qualities_attributes: [:id, :crop_id, :quality_id, :_destroy],
+      crops_packages_attributes: [:id, :crop_id, :package_id, :weight, :unit_meassure, :_destroy],
+      crops_colors_attributes: [:id, :crop_id, :color_id, :_destroy])
   end
 
   def set_object

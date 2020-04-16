@@ -4,13 +4,13 @@ const axios = require('axios');
 
 export default class extends Controller {
 	static targets = [ "carrierId" ]
-
 	initialize() {
 		new SlimSelect({select: '#shipment_carrier_id'})
 		new SlimSelect({select: '#shipment_driver_id'})
 		new SlimSelect({select: '#shipment_unit_id'})
 		new SlimSelect({select: '#shipment_box_id'})
-
+		new SlimSelect({select: '#shipment_remissions_attributes_0_company_id'})
+		new SlimSelect({select: '#shipment_remissions_attributes_0_client_id'})
 	}
 
 	filter_by_carrier(){

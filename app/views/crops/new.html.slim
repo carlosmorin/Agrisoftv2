@@ -1,17 +1,18 @@
 section.content-header.pb-0
-  .container-fluid
+  .container
     .row.mb-2
       .col-sm-6
-        h6. Nueva Hortaliza
+        h5 Nuevo cultivo
       .col-sm-6
         ol.breadcrumb.float-sm-right.s-12
           li.breadcrumb-item
             a href="#"  Inicio
           li.breadcrumb-item.active Hortalizas
 section.content
-  .container-fluid
+  .container
+    = render "shared/form_info"
   	.card
   		.card-body
   			.row
-					.col-lg-6
+					.col-lg-10
 						= render 'form'
