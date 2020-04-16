@@ -1,10 +1,10 @@
 section.content-header.pb-0
-  .container-fluid
-    .row.mb-2
-      .col-sm-6
-        h5 Detalle de transportista 
-      .col-sm-6.text-right.pr-2.s-12
-        = render_breadcrumbs :separator => ' / '
+	.container-fluid
+		.row.mb-2
+			.col-sm-6
+				h5 Detalle de transportista 
+			.col-sm-6.text-right.pr-2.s-12
+				= render_breadcrumbs :separator => ' / '
 section.content
 	.container-fluid
 		.card
@@ -119,5 +119,3 @@ section.content
 						label.mb-1 US DOT:
 					.col-lg-7.text-left
 						p.mb-1 = @carrier.usdot.present? ? @carrier.usdot.upcase : '--'
-
-

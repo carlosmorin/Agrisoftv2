@@ -11,6 +11,7 @@ require("admin-lte")
 require('jquery')
 import "bootstrap"
 import "../stylesheets/application"
+import 'cocoon-js'
 
 document.addEventListener("turbolinks:load", () => {
 	$('[data-toggle="tooltip"]').tooltip()

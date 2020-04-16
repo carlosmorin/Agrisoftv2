@@ -8,4 +8,8 @@ class Box < ApplicationRecord
 
   belongs_to :carrier
   belongs_to :box_type
+
+  def full_name
+  	"#{box_type.name}-#{plate_number}"
+  end
 end

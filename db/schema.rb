@@ -228,11 +228,14 @@ ActiveRecord::Schema.define(version: 2020_04_15_171133) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status"
+    t.bigint "shipment_id", null: false
     t.index ["box_id"], name: "index_remissions_on_box_id"
     t.index ["carrier_id"], name: "index_remissions_on_carrier_id"
     t.index ["client_id"], name: "index_remissions_on_client_id"
     t.index ["company_id"], name: "index_remissions_on_company_id"
     t.index ["delivery_address_id"], name: "index_remissions_on_delivery_address_id"
+    t.index ["shipment_id"], name: "index_remissions_on_shipment_id"
     t.index ["unit_id"], name: "index_remissions_on_unit_id"
     t.index ["user_id"], name: "index_remissions_on_user_id"
   end
@@ -347,6 +350,7 @@ ActiveRecord::Schema.define(version: 2020_04_15_171133) do
   add_foreign_key "remissions", "clients"
   add_foreign_key "remissions", "companies"
   add_foreign_key "remissions", "delivery_addresses"
+  add_foreign_key "remissions", "shipments"
   add_foreign_key "remissions", "units"
   add_foreign_key "shipments", "boxes"
   add_foreign_key "shipments", "carriers"
