@@ -6,5 +6,5 @@ class Shipment < ApplicationRecord
   belongs_to :box
   belongs_to :user
   has_many :remissions, inverse_of: :shipment
-	accepts_nested_attributes_for :remissions
+	accepts_nested_attributes_for :remissions, allow_destroy: true
 end

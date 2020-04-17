@@ -1,5 +1,5 @@
-= simple_form_for(@shipment, data: { controller: 'shipments' } ) do |f|
-	input type="hidden" name="user_id" value="#{current_user.id}"
+= simple_form_for(@shipment, data: { controller: 'shipments' } ) do |form|
+	= form.input :user_id, as: :hidden, input_html: {value: current_user.id}
 	.row
 		.col-lg-12
 			h6.s-16
@@ -9,14 +9,14 @@
 	.form-group.mb-1  
 		.row
 			.col-md-4
-				= f.label :carrier_id, class: "pt-1" 
-				= f.input :carrier_id, collection: Carrier.all, autofocus: true, label: false, input_html: { class: 's-12 ', data: { action: "change->shipments#filter_by_carrier", target: "shipments.carrierId" } }
+				= form.label :carrier_id, class: "pt-1" 
+				= form.input :carrier_id, collection: Carrier.all, autofocus: true, label: false, input_html: { class: 's-12 ', data: { action: "change->shipments#filter_by_carrier", target: "shipments.carrierId" } }
 			.col-md-3
-					= f.input :driver_id, collection: [], autofocus: true, input_html: { class: 's-12' }
+					= form.input :driver_id, collection: [], autofocus: true, input_html: { class: 's-12' }
 			.col-md-3
-					= f.input :unit_id, collection: [], autofocus: true, input_html: { class: 's-12' }
+					= form.input :unit_id, collection: [], autofocus: true, input_html: { class: 's-12' }
 			.col-md-2
-					= f.input :box_id, collection: [], autofocus: true, input_html: { class: 's-12' }
+					= form.input :box_id, collection: [], autofocus: true, input_html: { class: 's-12' }
 	.row
 		.col-lg-12
 	hr.my-2
@@ -28,25 +28,24 @@
 						path d=("M288 256H96v64h192v-64zm89-151L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-153 31V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 64c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm256 304c0 4.42-3.58 8-8 8h-80c-4.42 0-8-3.58-8-8v-16c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16zm0-200v96c0 8.84-7.16 16-16 16H80c-8.84 0-16-7.16-16-16v-96c0-8.84 7.16-16 16-16h224c8.84 0 16 7.16 16 16z") fill="currentColor" 
 					span Remisiones
 			.col-md-6.text-right
-				= link_to_add_association f, :remissions, class: "btn btn-sm btn-default s-12", data: {association_insertion_node: '.remissions', association_insertion_method: :append } do
+				= link_to_add_association form, :remissions, class: "btn btn-sm btn-primary s-12", data: {association_insertion_node: '.remissions', association_insertion_method: :append } do
 					svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
 						path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
 					span.pl-2 Agregar remision 
-		#remissions.remissions
-			= f.fields_for :remissions do |remission|
-				= render partial: 'remission_fields', locals: { f: remission, i: remission.index } 
-		hr
+	#remissions.remissions
+		= form.fields_for :remissions do |remission|
+			= render 'remission_fields', f: remission 
+	hr
 	.form-actions.text-center
 		button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
 			svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-			  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
-			  polyline points=("17 21 17 13 7 13 7 21") 
-			  polyline points=("7 3 7 8 15 8") 
+				path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
+				polyline points=("17 21 17 13 7 13 7 21") 
+				polyline points=("7 3 7 8 15 8") 
 			span Guardar
-
 		= link_to companies_path, notice: 'Are you sure?', class: 'btn btn-default btn-sm pl-1' do
 			svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-			  rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
-			  line x1="9" x2="15" y1="9" y2="15" 
-			  line x1="15" x2="9" y1="9" y2="15" 
+				rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
+				line x1="9" x2="15" y1="9" y2="15" 
+				line x1="15" x2="9" y1="9" y2="15" 
 			span Cancelar

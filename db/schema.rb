@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_16_225439) do
+ActiveRecord::Schema.define(version: 2020_04_17_181807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -255,6 +255,7 @@ ActiveRecord::Schema.define(version: 2020_04_16_225439) do
     t.bigint "client_brand_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
     t.index ["client_brand_id"], name: "index_products_on_client_brand_id"
     t.index ["color_id"], name: "index_products_on_color_id"
     t.index ["crop_id"], name: "index_products_on_crop_id"
@@ -273,9 +274,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_225439) do
   create_table "remissions", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.bigint "client_id", null: false
-    t.bigint "carrier_id", null: false
-    t.bigint "unit_id", null: false
-    t.bigint "box_id", null: false
     t.bigint "delivery_address_id", null: false
     t.bigint "user_id"
     t.boolean "pay_freight"
@@ -285,14 +283,21 @@ ActiveRecord::Schema.define(version: 2020_04_16_225439) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status"
     t.bigint "shipment_id", null: false
-    t.index ["box_id"], name: "index_remissions_on_box_id"
-    t.index ["carrier_id"], name: "index_remissions_on_carrier_id"
     t.index ["client_id"], name: "index_remissions_on_client_id"
     t.index ["company_id"], name: "index_remissions_on_company_id"
     t.index ["delivery_address_id"], name: "index_remissions_on_delivery_address_id"
     t.index ["shipment_id"], name: "index_remissions_on_shipment_id"
-    t.index ["unit_id"], name: "index_remissions_on_unit_id"
     t.index ["user_id"], name: "index_remissions_on_user_id"
+  end
+
+  create_table "remissions_products", force: :cascade do |t|
+    t.bigint "remission_id", null: false
+    t.bigint "product_id", null: false
+    t.integer "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_remissions_products_on_product_id"
+    t.index ["remission_id"], name: "index_remissions_products_on_remission_id"
   end
 
   create_table "shipments", force: :cascade do |t|
@@ -414,13 +419,12 @@ ActiveRecord::Schema.define(version: 2020_04_16_225439) do
   add_foreign_key "products", "packages"
   add_foreign_key "products", "qualities"
   add_foreign_key "products", "sizes"
-  add_foreign_key "remissions", "boxes"
-  add_foreign_key "remissions", "carriers"
   add_foreign_key "remissions", "clients"
   add_foreign_key "remissions", "companies"
   add_foreign_key "remissions", "delivery_addresses"
   add_foreign_key "remissions", "shipments"
-  add_foreign_key "remissions", "units"
+  add_foreign_key "remissions_products", "products"
+  add_foreign_key "remissions_products", "remissions"
   add_foreign_key "shipments", "boxes"
   add_foreign_key "shipments", "carriers"
   add_foreign_key "shipments", "drivers"

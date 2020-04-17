@@ -32,7 +32,9 @@ Rails.application.routes.draw do
     get '/addresses/locations', to: 'addresses#locations'
   end
   
-  resources :clients
+  resources :clients do
+    get '/get_delivery_address', to: 'clients#get_delivery_address'
+  end
   resources :carriers do
     get '/get_drivers', to: 'carriers#get_drivers'
     get '/get_units', to: 'carriers#get_units'

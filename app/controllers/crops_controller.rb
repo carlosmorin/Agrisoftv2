@@ -1,7 +1,6 @@
 class CropsController < ApplicationController
   before_action :set_object, only: %i[show edit update destroy get_colors 
     get_qualities get_sizes get_packages]
-
   add_breadcrumb "Cultivos", :crops_path
 
   def index

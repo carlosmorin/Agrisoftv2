@@ -127,6 +127,7 @@ es:
       remission:
         client_id: Cliente
         company_id: Empresa remisionista
+        delivery_address_id: Direccion de entrega
       quality:
         name: Nombre
       color:
