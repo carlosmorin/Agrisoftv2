@@ -35,6 +35,7 @@ section.content
                 tr.bg-light-gray
                   th style=("width: 5%")  #
                   th Nombre
+                  th Abreviación
                   th.text-center colspan="2" style=("width: 12%") Acciones
               tbody#tbody
                 - if @qualities.empty?
@@ -46,6 +47,7 @@ section.content
                     tr
                       td = quality.id
                       td = quality.name.upcase
+                      td = quality.short_name.present? ? quality.short_name.upcase : '--'
                       td.text-center
                         = link_to edit_quality_path(quality), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
                          svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
