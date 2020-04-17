@@ -2,19 +2,70 @@ section.content-header.pb-0
   .container-fluid
     .row.mb-2
       .col-sm-6
-        h4 Cultivo
+        h6 
+         span.bold Cultivo: 
+         span = @crop.name.upcase
       .col-sm-6.text-right.pr-2.s-12
         = render_breadcrumbs :separator => ' / '
 section.content
-  .container-fluid
-  	.card
-  		.card-header.p-2.pb-1.bg-light-gray
-  			.card-body
+	.container-fluid
+		.card
+			.card-header.p-2.pb-1.bg-light-gray
+				.card-body
 					.row
-						.col-lg-2
-							label Nombre:
+					.col-lg-12
+						h6.s-16
+							svg.svg-inline--fa.fa-info-circle.fa-w-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="info-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z") fill="currentColor" 
+							span Tamaños
+					.row
 						.col-lg-7.text-left
-							p = @crop.name.upcase
+							- @crop.sizes.each do |size|
+								.btn-group.mr-2
+									button.btn.btn-default.btn-sm.s-12.px-3 type="button" 
+										b = size.name
+					hr
+					.row
+					.col-lg-12
+						h6.s-16
+							svg.svg-inline--fa.fa-seedling.fa-w-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="seedling" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M64 96H0c0 123.7 100.3 224 224 224v144c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V320C288 196.3 187.7 96 64 96zm384-64c-84.2 0-157.4 46.5-195.7 115.2 27.7 30.2 48.2 66.9 59 107.6C424 243.1 512 147.9 512 32h-64z") fill="currentColor" 
+							span Variedades
+					.row
+						.col-lg-7.text-left
+							- @crop.colors.each do |color|
+								.btn-group.mr-2
+									button.btn.btn-default.btn-sm.s-12.px-3 type="button" 
+										b = color.name
+					hr
+					.row
+					.col-lg-12
+						h6.s-16
+							svg.svg-inline--fa.fa-copyright.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="copyright" data-prefix="far" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z") fill="currentColor" 
+							span Calidades
+					.row
+						.col-lg-7.text-left
+							- @crop.qualities.each do |quality|
+								.btn-group.mr-2
+									button.btn.btn-default.btn-sm.s-12.px-3 type="button" 
+										b = quality.name
+					hr
+					.row
+					.col-lg-12
+						h6.s-16
+							svg.feather.feather-package.fa-w-16.h-16.mr-2.mb-1 fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+							  line x1="16.5" x2="7.5" y1="9.4" y2="4.21" 
+							  path d=("M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z") 
+							  polyline points=("3.27 6.96 12 12.01 20.73 6.96") 
+							  line x1="12" x2="12" y1="22.08" y2="12" 
+							span Empaques
+					.row
+						.col-lg-7.text-left
+							- @crop.packages.each do |package|
+								.btn-group.mr-2
+									button.btn.btn-default.btn-sm.s-12.px-3 type="button" 
+										b = package.name
 					.row
 						.col-lg-6
 							hr

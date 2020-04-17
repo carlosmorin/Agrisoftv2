@@ -29,7 +29,7 @@ module Config
 	  def create
 	    @box = Box.new(box_params)
       if @box.save
-        redirect_to config_boxes_url, notice: 'Caja creada'
+        redirect_to config_box_url(@box), notice: 'Caja creada'
       else
         render :new, carriers: @carriers, box_types: @box_types
       end
@@ -38,7 +38,7 @@ module Config
 		def update
     	if @box.update(box_params)
       	flash[:notice] = "Caja actualizada"
-      	redirect_to config_boxes_url
+      	redirect_to config_box_url(@box)
     	else
       	render :edit, carriers: @carriers, box_types: @box_types
     	end

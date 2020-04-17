@@ -23,7 +23,7 @@ module Config
     def create
       @unit = Unit.new(unit_params)
       if @unit.save
-        redirect_to config_units_url, notice: 'Unidad creada'
+        redirect_to config_unit_url(@unit), notice: 'Unidad creada'
       else
         render :new
       end
@@ -32,7 +32,7 @@ module Config
     def update
 	    if @unit.update(unit_params)
 	      flash[:notice] = "Unidad actualizada"
-	    	redirect_to config_units_url, notice: 'Unidad actualizada'
+	    	redirect_to config_unit_url(@unit), notice: 'Unidad actualizada'
 	    else
 	      render :edit
 	    end

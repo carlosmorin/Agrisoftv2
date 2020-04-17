@@ -28,7 +28,7 @@ class CarriersController < ApplicationController
     @carrier = Carrier.new(carrier_params)
     respond_to do |format|
       if @carrier.save
-        format.html { redirect_to carriers_url, notice: 'Transportista creado' }
+        format.html { redirect_to carrier_url(@carrier), notice: 'Transportista creado' }
       else
         format.html { render :new }
       end
@@ -38,7 +38,7 @@ class CarriersController < ApplicationController
   def update
     if @carrier.update(carrier_params)
       flash[:notice] = "#{@carrier.name} Actualizado"
-      redirect_to carriers_url
+      redirect_to carrier_url(@carrier)
     else
       render :edit
     end

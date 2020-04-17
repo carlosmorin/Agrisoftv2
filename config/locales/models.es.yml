@@ -129,6 +129,7 @@ es:
         company_id: Empresa remisionista
       quality:
         name: Nombre
+        short_name: Abreviación
       color:
         name: Nombre
       package:

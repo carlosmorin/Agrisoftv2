@@ -7,6 +7,9 @@ section.content-header.pb-0
         = render_breadcrumbs :separator => ' / '
 section.content
 	.container-fluid
+		.row
+			.col-lg-12
+				= render "shared/alerts"
 		.card
 			.card-header.p-2.pb-1
 				.row
@@ -20,7 +23,7 @@ section.content
 							svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
 							  line x1="19" x2="5" y1="12" y2="12" 
 							  polyline points=("12 19 5 12 12 5") 
-							span Atras
+							span Volver al listado
 			.card-body.s-14.p-3
 				.row
 					.col-lg-6
@@ -59,15 +62,16 @@ section.content
 								label.mb-1 Transportistas:
 							.col-lg-9.text-left
 								p.mb-1 = @unit.carrier.name
-						.row
-							.col-lg-3
-								label.mb-1 Transportistas:
-							.col-lg-9.text-left
-								.img
-									= image_tag(@unit.picture, class: "img-thumbnail", size: "250")
-									= link_to @unit.picture, target: "_blank", class: 'btn btn-sm btn-outline-info adjust_btn_download ml-2', title: 'Descargar', data: {toggle: 'tooltip', placement: 'bottom'} do
-										svg.feather.feather-download fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-										  path d=("M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4") 
-										  polyline points=("7 10 12 15 17 10") 
-										  line x1="12" x2="12" y1="15" y2="3"
-										.row
+						- if @unit.picture.attached?
+							.row
+								.col-lg-3
+									label.mb-1 Fotografía:
+								.col-lg-9.text-left
+									.img
+										= image_tag(@unit.picture, class: "img-thumbnail", size: "250")
+										= link_to @unit.picture, target: "_blank", class: 'btn btn-sm btn-outline-info adjust_btn_download ml-2', title: 'Descargar', data: {toggle: 'tooltip', placement: 'bottom'} do
+											svg.feather.feather-download fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+											  path d=("M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4") 
+											  polyline points=("7 10 12 15 17 10") 
+											  line x1="12" x2="12" y1="15" y2="3"
+											.row

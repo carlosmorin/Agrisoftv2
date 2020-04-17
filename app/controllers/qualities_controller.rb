@@ -50,7 +50,7 @@ def create
   end
 
 	def quality_params
-    params.require(:quality).permit(:name)
+    params.require(:quality).permit(:name, :short_name)
   end
 
   def set_object
