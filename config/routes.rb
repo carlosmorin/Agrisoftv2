@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     resources :boxes
     resources :delivery_addresses
     resources :client_brands
+    resources :client_brands
+    resources :products
   end
 
   namespace :directories do
@@ -39,7 +41,12 @@ Rails.application.routes.draw do
 
   resources :shipments
   resources :companies
-  resources :crops
+  resources :crops do
+    get '/get_colors', to: 'crops#get_colors'
+    get '/get_qualities', to: 'crops#get_qualities'
+    get '/get_sizes', to: 'crops#get_sizes'
+    get '/get_packages', to: 'crops#get_packages'
+  end
   resources :sizes
   resources :qualities
   resources :colors

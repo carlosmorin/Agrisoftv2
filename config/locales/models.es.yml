@@ -133,3 +133,10 @@ es:
         name: Nombre
       package:
         name: Nombre
+      product:
+        crop_id: Producto
+        color_id: Variedad
+        quality_id: Calidad
+        size_id: Tamaño
+        package_id: Empaque
+        client_brand_id: Marca

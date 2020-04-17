@@ -1,5 +1,6 @@
 class CropsController < ApplicationController
-  before_action :set_object, only: %i[show edit update destroy]
+  before_action :set_object, only: %i[show edit update destroy get_colors 
+    get_qualities get_sizes get_packages]
 
   add_breadcrumb "Cultivos", :crops_path
 
@@ -48,6 +49,28 @@ class CropsController < ApplicationController
     @crop.destroy
   end
 
+  ##End points
+  def get_colors
+    colors = @crop.colors
+    render json: colors 
+  end
+
+  def get_qualities
+    qualities = @crop.qualities
+    render json: qualities 
+  end
+    
+  def get_sizes
+    sizes = @crop.sizes
+    render json: sizes 
+  end
+
+  def get_packages
+    packages = @crop.packages
+    render json: packages
+  end
+
+
 	private
 
   def search
@@ -65,6 +88,7 @@ class CropsController < ApplicationController
   end
 
   def set_object
-    @crop = Crop.find(params[:id])
+    id = params[:id].present? ? params[:id] : params[:crop_id]
+    @crop = Crop.find(id)
   end
 end
