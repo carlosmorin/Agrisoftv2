@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_04_17_172113) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +248,23 @@ ActiveRecord::Schema.define(version: 2020_04_17_172113) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "products", force: :cascade do |t|
+    t.bigint "crop_id", null: false
+    t.bigint "color_id", null: false
+    t.bigint "quality_id", null: false
+    t.bigint "size_id", null: false
+    t.bigint "package_id", null: false
+    t.bigint "client_brand_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_brand_id"], name: "index_products_on_client_brand_id"
+    t.index ["color_id"], name: "index_products_on_color_id"
+    t.index ["crop_id"], name: "index_products_on_crop_id"
+    t.index ["package_id"], name: "index_products_on_package_id"
+    t.index ["quality_id"], name: "index_products_on_quality_id"
+    t.index ["size_id"], name: "index_products_on_size_id"
+  end
+
   create_table "qualities", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -392,6 +411,12 @@ ActiveRecord::Schema.define(version: 2020_04_17_172113) do
   add_foreign_key "drivers", "carriers"
   add_foreign_key "general_information", "users"
   add_foreign_key "municipalities", "states"
+  add_foreign_key "products", "client_brands"
+  add_foreign_key "products", "colors"
+  add_foreign_key "products", "crops"
+  add_foreign_key "products", "packages"
+  add_foreign_key "products", "qualities"
+  add_foreign_key "products", "sizes"
   add_foreign_key "remissions", "boxes"
   add_foreign_key "remissions", "carriers"
   add_foreign_key "remissions", "clients"
