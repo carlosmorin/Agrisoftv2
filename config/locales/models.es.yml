@@ -141,3 +141,5 @@ es:
         size_id: Tamaño
         package_id: Empaque
         client_brand_id: Marca
+        weight: Peso
+        unit_meassure: Unidad de medida

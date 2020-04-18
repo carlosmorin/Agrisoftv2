@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_17_181807) do
+ActiveRecord::Schema.define(version: 2020_04_18_164212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,8 +158,6 @@ ActiveRecord::Schema.define(version: 2020_04_17_181807) do
   create_table "crops_packages", force: :cascade do |t|
     t.bigint "crop_id", null: false
     t.bigint "package_id", null: false
-    t.integer "weight"
-    t.integer "unit_meassure"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["crop_id"], name: "index_crops_packages_on_crop_id"
@@ -256,6 +254,8 @@ ActiveRecord::Schema.define(version: 2020_04_17_181807) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
+    t.integer "weight"
+    t.integer "unit_meassure"
     t.index ["client_brand_id"], name: "index_products_on_client_brand_id"
     t.index ["color_id"], name: "index_products_on_color_id"
     t.index ["crop_id"], name: "index_products_on_crop_id"
@@ -269,6 +269,7 @@ ActiveRecord::Schema.define(version: 2020_04_17_181807) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
+    t.string "short_name"
   end
 
   create_table "remissions", force: :cascade do |t|
@@ -296,6 +297,7 @@ ActiveRecord::Schema.define(version: 2020_04_17_181807) do
     t.integer "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "quantity"
     t.index ["product_id"], name: "index_remissions_products_on_product_id"
     t.index ["remission_id"], name: "index_remissions_products_on_remission_id"
   end

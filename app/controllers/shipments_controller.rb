@@ -20,6 +20,15 @@ class ShipmentsController < ApplicationController
     end
   end
 
+  def update
+    if @shipment.update(shipment_params)
+      flash[:notice] = "Embarque <b>190274</b> actualizado exitosamente"
+      redirect_to shipment_url(@shipment)
+    else
+      render :edit
+    end
+  end
+
   private
 
   def set_object
@@ -30,7 +39,7 @@ class ShipmentsController < ApplicationController
   	params.require(:shipment).permit(
       :carrier_id, :driver_id, :unit_id, :box_id, :user_id,
         remissions_attributes: [:id, :company_id, :client_id, :delivery_address_id, :comments, :_destroy, :pay_freight,
-          remissions_products_attributes: [:id, :price, :remission_id, :product_id, :_destroy]]
+          remissions_products_attributes: [:id, :price, :quantity, :remission_id, :product_id, :_destroy]]
     )
   end
 end

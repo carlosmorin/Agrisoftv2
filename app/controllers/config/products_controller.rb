@@ -69,7 +69,8 @@ module Config
     end
 
     def product_params
-      params.require(:product).permit(:crop_id, :color_id, :quality_id, :size_id, :package_id, :client_brand_id)
+      params.require(:product).permit(:crop_id, :color_id, :quality_id, 
+        :size_id, :package_id, :client_brand_id, :weight, :unit_meassure)
     end
 
     def set_object

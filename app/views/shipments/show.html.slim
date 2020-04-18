@@ -1,1 +1,99 @@
-h1 Detalle
+section.content-header.pb-0
+  .container-fluid
+    .row.mb-2
+      .col-sm-6
+        h5 Detalle de embarque
+      .col-sm-6.text-right.pr-2.s-12
+section.content
+	.container-fluid
+		.row
+			.col-lg-12
+				= render "shared/alerts"
+		.card
+			.card-header.p-2.pb-1
+				.row
+					.col-md-12
+						= link_to edit_shipment_path(@shipment), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
+							svg.feather.feather-edit.mr-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+								path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+								path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+							span Editar
+						= link_to shipments_path, class: 'mr-2 btn btn-sm btn-default s-12 pl-0' do
+							svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+							  line x1="19" x2="5" y1="12" y2="12" 
+							  polyline points=("12 19 5 12 12 5") 
+							span Volver al listado
+			.card-body.s-14.p-3
+				.row
+					.col-lg-12
+						h6.s-16
+							svg.svg-inline--fa.fa-info-circle.fa-w-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="info-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z") fill="currentColor" 
+							span Información de embarque
+				.row
+					.col-lg-2
+						label.mb-1 Transportista:
+					.col-lg-9.text-left
+						p.mb-1 = @shipment.carrier.name.upcase
+				.row
+					.col-lg-2
+						label.mb-1 Conductor:
+					.col-lg-9.text-left
+						- driver  = @shipment.driver
+						p.mb-1 = "#{driver.full_name.upcase}, # LIC: #{driver.licence.upcase}"
+				.row
+					.col-lg-2
+						label.mb-1 Unidad:
+					.col-lg-9.text-left
+						p.mb-1 = "#{@shipment.unit.full_name.upcase}"
+				.row
+					.col-lg-2
+						label.mb-1 Caja:
+					.col-lg-9.text-left
+						p.mb-1 = "#{@shipment.box.full_name.upcase}"
+				.row
+					.col-lg-12
+						hr.my-1
+				.row
+					.col-lg-12
+						h6.s-16.mt-2
+							svg.svg-inline--fa.fa-file-invoice.fa-w-12.h-16.mr-2.mb-1 aria-hidden="true" data-icon="file-invoice" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M288 256H96v64h192v-64zm89-151L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-153 31V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 64c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm256 304c0 4.42-3.58 8-8 8h-80c-4.42 0-8-3.58-8-8v-16c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16zm0-200v96c0 8.84-7.16 16-16 16H80c-8.84 0-16-7.16-16-16v-96c0-8.84 7.16-16 16-16h224c8.84 0 16 7.16 16 16z") fill="currentColor" 
+							span Remisiones
+				- @shipment.remissions.each do |remission|
+					.row
+						.col-md-10
+							.card
+								.card-body
+									.row
+										.col-md-6
+											label.mb-1.d-block Empresa remisionista 
+											= remission.company.name.upcase
+										.col-md-6
+											label.mb-1.d-block Cliente 
+											= remission.client.name.upcase
+									.row.mt-2
+										.col-md-12
+											label.mb-0.d-block Dirección de entrega
+											= remission.delivery_address.full_address.upcase
+
+									section.products.mt-4
+										table.table.table-striped.table-sm
+											thead
+												tr
+													th width="60%" scope="col"  Producto
+													th scope="col"  Cantidad
+													th scope="col"  Precio
+													th scope="col"  Importe
+											tbody
+												- remission.remissions_products.each do |object|
+													tr
+														td = object.product.name.upcase
+														td = object.quantity
+														td = object.price
+														td = object.price
+									section.commets.mt-4
+										.row
+											.col-lg-12
+												label.mb-1.d-block Comentarios
+												= remission.comments.upcase

@@ -10,4 +10,8 @@ class DeliveryAddress < ApplicationRecord
   belongs_to :municipality
 
 	has_many :remissions, inverse_of: :delivery_address
+
+	def full_address
+		"#{municipality.name}, #{state.name}, #{address}, #{country.name}"
+	end
 end
