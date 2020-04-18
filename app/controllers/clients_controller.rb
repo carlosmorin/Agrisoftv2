@@ -18,7 +18,7 @@ class ClientsController < ApplicationController
   	@client = Client.new(client_params)
     respond_to do |format|
       if @client.save
-        format.html { redirect_to clients_url, 
+        format.html { redirect_to client_url(@client), 
           notice: 'El cliente fue registrado exitosamente.' }
       else
         format.html { render :new }
@@ -36,8 +36,8 @@ class ClientsController < ApplicationController
 
   def update
     if @client.update(client_params)
-      flash[:notice] = "#{@client.name} Actualizado"
-      redirect_to clients_url
+      flash[:notice] = "El cliente fue actualizado exitosamente"
+      redirect_to client_url(@client)
     else
       render :edit
     end

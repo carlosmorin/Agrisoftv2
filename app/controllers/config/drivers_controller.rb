@@ -29,7 +29,7 @@ module Config
 	    @driver = Driver.new(driver_params)
       if @driver.save
       	flash[:notice] = "Conductor creado"
-    		redirect_to config_drivers_url
+    		redirect_to config_driver_url(@driver)
       else
         render :new, collection: @carriers
       end
@@ -38,7 +38,7 @@ module Config
 	  def update
     	if @driver.update(driver_params)
       	flash[:notice] = "Conductor actualizado"
-      	redirect_to config_drivers_url
+      	redirect_to config_driver_url(@driver)
     	else
       	render :edit, collection: @carriers
     	end
