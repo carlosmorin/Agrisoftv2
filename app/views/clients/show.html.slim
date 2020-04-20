@@ -104,7 +104,7 @@ section.content
 					.col-lg-2
 						label.mb-1 Persona de contacto:
 					.col-lg-7.text-left
-						p.mb-1 = @client.conact_name.present? ? @client.conact_name.upcase : '--'
+						p.mb-1 = @client.contact_name.present? ? @client.contact_name.upcase : '--'
 				- if @client.client_brands.present?
 					hr.my-0
 					.row

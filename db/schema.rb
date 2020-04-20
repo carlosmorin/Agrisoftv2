@@ -100,9 +100,13 @@ ActiveRecord::Schema.define(version: 2020_04_20_212642) do
     t.bigint "country_id"
     t.bigint "municipality_id"
     t.string "cp"
+<<<<<<< HEAD
     t.string "conact_name"
     t.string "code"
     t.string "shipments"
+=======
+    t.string "contact_name"
+>>>>>>> 3f76548623294aba0766f77fe9fecfac4cfe9ae1
     t.index ["country_id"], name: "index_clients_on_country_id"
     t.index ["municipality_id"], name: "index_clients_on_municipality_id"
     t.index ["state_id"], name: "index_clients_on_state_id"
