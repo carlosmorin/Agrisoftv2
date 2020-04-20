@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   namespace :directories do
     resources :carriers
+    resources :clients
   end
 
   namespace :addresses do

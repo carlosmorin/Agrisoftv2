@@ -111,14 +111,6 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
               = link_to 'Municipios', config_box_types_path, class: 'dropdown-item s-12 pl-2' 
             li
               = link_to 'Localidades', config_box_types_path, class: 'dropdown-item s-12 pl-2' 
-    li.nav-item.dropdown
-      a#dropdownSubMenu1.nav-link.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#"
-        svg.feather.feather-book fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg"
-          path d=("M4 19.5A2.5 2.5 0 0 1 6.5 17H20") 
-          path d=("M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z") 
-      ul.dropdown-menu.border-0.shadow.py-0 aria-labelledby="dropdownSubMenu1" 
-        li 
-          = link_to 'Trasportistas', directories_carriers_path, class: 'dropdown-item s-12 pl-2'
   ul.navbar-nav.ml-auto
     li.nav-item.pl-1
       = link_to admin_root_path,  class: 'nav-link pl-0', title: 'Sistema', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 
