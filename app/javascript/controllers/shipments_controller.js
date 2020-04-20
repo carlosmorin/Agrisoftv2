@@ -3,7 +3,7 @@ import SlimSelect from 'slim-select'
 const axios = require('axios');
 
 export default class extends Controller {
-	static targets = [ "carrierId" ]
+	static targets = [ "carrierId" , "clientId" ]
 	initialize() {
 		new SlimSelect({select: '#shipment_carrier_id'})
 		new SlimSelect({select: '#shipment_driver_id'})
@@ -72,6 +72,26 @@ export default class extends Controller {
 			console.log(options)
 			carriersSelect.append(options);
 		});		
+	}
+
+	getDeliveryAddress(){
+		// da = DeliveryAddress
+		var daSelect = $('select#shipment_remissions_attributes_0_delivery_address_id')
+		daSelect.empty().prop( "disabled", false )
+		var url = `/clients/${this.clientIdTarget.value}/get_delivery_address`
+		var options = "";
+		axios({
+			method: 'GET',
+			url: url
+		})
+		.then(function (response) {
+			for (var key in response.data){
+				options += "<option value='"+ response.data[key].id +"'>" + response.data[key].name +  "</option>";
+			}
+			console.log(options)
+			daSelect.append(options);
+		});		
+
 	}
 
 }

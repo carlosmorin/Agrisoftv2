@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-	before_action :set_object, only: %i[show edit update destroy]
+	before_action :set_object, only: %i[show edit update destroy get_delivery_address]
   before_action :set_catalogs, only: %i[edit update]
 
   add_breadcrumb "Clientes", :clients_path
@@ -47,6 +47,12 @@ class ClientsController < ApplicationController
     @client.destroy
   end
 
+  def get_delivery_address
+    ## da = delivery_address
+    da = @client.delivery_addresses
+    render json: da
+  end
+
 	private
 
   def search
@@ -61,7 +67,8 @@ class ClientsController < ApplicationController
   end
 
   def set_object
-    @client = Client.find(params[:id])
+    id = params[:id].present? ? params[:id] : params[:client_id] 
+    @client = Client.find(id)
   end
 
   def set_catalogs

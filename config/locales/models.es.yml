@@ -127,6 +127,7 @@ es:
       remission:
         client_id: Cliente
         company_id: Empresa remisionista
+        delivery_address_id: Direccion de entrega
       quality:
         name: Nombre
         short_name: Abreviación
@@ -141,3 +142,5 @@ es:
         size_id: Tamaño
         package_id: Empaque
         client_brand_id: Marca
+        weight: Peso
+        unit_meassure: Unidad de medida

@@ -1,7 +1,6 @@
 class CropsController < ApplicationController
   before_action :set_object, only: %i[show edit update destroy get_colors 
     get_qualities get_sizes get_packages]
-
   add_breadcrumb "Cultivos", :crops_path
 
   def index
@@ -83,7 +82,7 @@ class CropsController < ApplicationController
     params.require(:crop).permit(:name, 
       crops_sizes_attributes: [:id, :crop_id, :size_id, :_destroy],
       crops_qualities_attributes: [:id, :crop_id, :quality_id, :_destroy],
-      crops_packages_attributes: [:id, :crop_id, :package_id, :weight, :unit_meassure, :_destroy],
+      crops_packages_attributes: [:id, :crop_id, :package_id, :_destroy],
       crops_colors_attributes: [:id, :crop_id, :color_id, :_destroy])
   end
 

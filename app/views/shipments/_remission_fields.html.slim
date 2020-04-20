@@ -2,10 +2,7 @@
 	.card.p-3.br-0
 		.row
 			.col-md-10
-				h6.s-16
-					svg.svg-inline--fa.fa-comments.fa-w-18.h-16.mr-2 aria-hidden="true" data-icon="comments" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 576 512") xmlns="http://www.w3.org/2000/svg" 
-						path d=("M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z") fill="currentColor" 
-					span Empresas
+				h6.s-16 Información de empresas
 			.col-md-2.text-right
 				= link_to_remove_association f, class: "btn btn-danger btn-xs s-12 " do
 					svg.feather.feather-trash-2 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
@@ -13,57 +10,52 @@
 						path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 
 						line x1="10" x2="10" y1="11" y2="17" 
 						line x1="14" x2="14" y1="11" y2="17"
+
 		.row
 			.col-md-5
-				= f.input :company_id, collection: Company.all, class: "s-12"
-			.col-md-5
-				= f.input :client_id, collection: Client.all, class: "s-12"
-			.col-md-2.text-right
+				= f.input :company_id, collection: Company.all, input_html: { class: "s-12" }
+			.col-md-4
+				= f.input :client_id, collection: Client.all, input_html: { class: "s-12", data: { action: 'change->shipments#getDeliveryAddress', target: 'shipments.clientId'} }
+			.col-md-3
+				= f.input :delivery_address_id, collection: [], input_html: { class: "s-12m form-control form-control-sm", disabled: true }
+			.col-lg-12
+				hr.my-2
 		.row
 			.col-lg-12.mt-3
 				section
 					.row
 						.col-lg-10
-							h6.s-16
-								svg.svg-inline--fa.fa-pepper-hot.fa-w-16.h-16.mr-2.mb- aria-hidden="true" data-icon="pepper-hot" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-									path d=("M330.67 263.12V173.4l-52.75-24.22C219.44 218.76 197.58 400 56 400a56 56 0 0 0 0 112c212.64 0 370.65-122.87 419.18-210.34l-37.05-38.54zm131.09-128.37C493.92 74.91 477.18 26.48 458.62 3a8 8 0 0 0-11.93-.59l-22.9 23a8.06 8.06 0 0 0-.89 10.23c6.86 10.36 17.05 35.1-1.4 72.32A142.85 142.85 0 0 0 364.34 96c-28 0-54 8.54-76.34 22.59l74.67 34.29v78.24h89.09L506.44 288c3.26-12.62 5.56-25.63 5.56-39.31a154 154 0 0 0-50.24-113.94z") fill="currentColor" 
-								span Productos 
+							h6.s-16 Productos 
 						.col-lg-2.text-right
-							a.btn.btn-xs.btn-primary.s-12 href=""
-								svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+							= link_to_add_association f, :remissions_products, class: "btn btn-sm btn-xs btn-primary s-12", data: {association_insertion_node: '#products', association_insertion_method: :append } do
+								svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
 									path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-								span.ml-1 Nuevo producto
-					.row.ml-2
+								span.pl-2 Nuevo producto
+
+					.row.ml-2.bg-light-gray
 						.col-lg-5
-							b.s-14 PRODUCTO
+							b.s-12 Producto
 						.col-lg-2
-							b.s-14 CANTIDAD
+							b.s-12 Cantidad
 						.col-lg-2
-							b.s-14 PRECIO
+							b.s-12 Precio
 						.col-lg-1
-					.row	
 						.col-lg-12
 							hr.my-0
-					.row
-						.col-lg-5.px-3.py-1
-							input type="text" class="form-control form-control-sm "
-						.col-lg-2.px-3.py-1
-							input type="text" class="form-control form-control-sm "
-						.col-lg-2.px-3.py-1
-							input type="text" class="form-control form-control-sm "
-						.col-lg-1
+					.row	
+						.col-lg-12
+							#products
+								= f.fields_for :remissions_products do |ff|
+									= render 'remissions_product_fields', f: ff
 		.row
 			.col-lg-12.mt-3
 				section
 					.row
 						.col-lg-12
-							h6.s-16
-								svg.svg-inline--fa.fa-comments.fa-w-18.h-16.mr-2 aria-hidden="true" data-icon="comments" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 576 512") xmlns="http://www.w3.org/2000/svg" 
-									path d=("M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z") fill="currentColor" 
-								span Comentarios
+							h6.s-16.mb-0 Comentarios sobre el embarque
 					.row
-						.col-lg-10.p-2
-							textarea.form-control
+						.col-lg-10.p-2.mb-3
+							= f.input :comments, label: false, input_html: { class: "form-control s-12", placeholder: "Ej. " }
 
 							
 

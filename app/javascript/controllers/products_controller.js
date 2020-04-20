@@ -23,7 +23,7 @@ export default class extends Controller {
 		var colorsSelect = $('select#product_color_id')
 		colorsSelect.empty()
 		var url = `/crops/${cropId}/get_colors`
-		var options = "";
+		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',
 			url: url
@@ -40,7 +40,7 @@ export default class extends Controller {
 		var qualitySelect = $('select#product_quality_id')
 		qualitySelect.empty()
 		var url = `/crops/${cropId}/get_qualities`
-		var options = "";
+		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',
 			url: url
@@ -57,7 +57,7 @@ export default class extends Controller {
 		var sizeSelect = $('select#product_size_id')
 		sizeSelect.empty()
 		var url = `/crops/${cropId}/get_sizes`
-		var options = "";
+		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',
 			url: url
@@ -74,7 +74,7 @@ export default class extends Controller {
 		var packagesSelect = $('select#product_package_id')
 		packagesSelect.empty()
 		var url = `/crops/${cropId}/get_packages`
-		var options = "";
+		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',
 			url: url
