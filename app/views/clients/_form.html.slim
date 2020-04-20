@@ -1,4 +1,4 @@
-= simple_form_for(@client, data: { controller: 'masks address clients' }, html: { autocomplete: 'off' }) do |f|
+= simple_form_for(@client, data: { controller: 'masks address' }, html: { autocomplete: 'off' }) do |f|
 	.row
 		.col-lg-12
 			h6.s-16
@@ -7,16 +7,15 @@
 				span General
 	.form-group.mb-1  
 		.row
-			.col-lg-3
-				= f.label :name, class: "pt-1" 
-			.col-lg-9
-				= f.input :name, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
+
+			.col-lg-10
+				= f.input :name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+			.col-lg-2
+				= f.input :code, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
 	.form-group.mb-1  
 		.row
-			.col-lg-3
-				= f.label :rfc, class: "pt-1" 
-			.col-lg-9
-				= f.input :rfc, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ', maxlength: "13", placeholder: "XAXX010101000" }
+			.col-lg-10
+				= f.input :rfc, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ', maxlength: "13", placeholder: "XAXX010101000" }
 	hr.my-2
 	.row.mt-2
 		.col-lg-12

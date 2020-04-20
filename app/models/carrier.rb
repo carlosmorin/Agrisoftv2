@@ -5,8 +5,8 @@ class Carrier < ApplicationRecord
 	has_many :drivers, inverse_of: :carrier
 	has_many :units, inverse_of: :carrier
 	has_many :boxes, inverse_of: :carrier
+	has_many :freights, inverse_of: :carrier
 	has_many :shipments, inverse_of: :carrier
-	has_many :remissions, inverse_of: :carrier
 	belongs_to :country
 	belongs_to :state
 	belongs_to :municipality

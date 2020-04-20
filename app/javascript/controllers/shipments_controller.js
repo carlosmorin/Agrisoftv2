@@ -1,17 +1,17 @@
 import { Controller } from "stimulus"
 import SlimSelect from 'slim-select'
 const axios = require('axios');
+const $ = require('jquery');
 
 export default class extends Controller {
 	static targets = [ "carrierId" , "clientId" ]
 	initialize() {
-		new SlimSelect({select: '#shipment_carrier_id'})
-		new SlimSelect({select: '#shipment_driver_id'})
-		new SlimSelect({select: '#shipment_unit_id'})
-		new SlimSelect({select: '#shipment_box_id'})
-		new SlimSelect({select: '#shipment_remissions_attributes_0_company_id'})
-		new SlimSelect({select: '#shipment_remissions_attributes_0_client_id'})
+		const ids = [...document.getElementsByTagName('select')].map(el => el.id);
+		for (var i=0, max=ids.length; i < max; i++) {
+			new SlimSelect({select: `#${ids[i]}`})
+		}
 	}
+
 
 	filter_by_carrier(){
 		var carrierId = this.carrierIdTarget.value
@@ -21,11 +21,11 @@ export default class extends Controller {
 	}
 
 	filter_drivers(carrierId){
-		var driversSelect = $('select#shipment_driver_id')
+		var driversSelect = $('select#freight_driver_id')
 		driversSelect.empty()
 		var url = `/carriers/${carrierId}/get_drivers`
 		console.log(url)
-		var options = "";
+		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',
 			url: url
@@ -40,10 +40,10 @@ export default class extends Controller {
 	}
 
 	filter_units(carrierId){
-		var unitsSelect = $('select#shipment_unit_id')
+		var unitsSelect = $('select#freight_unit_id')
 		unitsSelect.empty()
 		var url = `/carriers/${carrierId}/get_units`
-		var options = "";
+		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',
 			url: url
@@ -57,10 +57,10 @@ export default class extends Controller {
 	}
 
 	filter_boxes(carrierId){
-		var carriersSelect = $('select#shipment_box_id')
+		var carriersSelect = $('select#freight_box_id')
 		carriersSelect.empty()
 		var url = `/carriers/${carrierId}/get_boxes`
-		var options = "";
+		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',
 			url: url
@@ -69,17 +69,16 @@ export default class extends Controller {
 			for (var key in response.data){
 				options += "<option value='"+ response.data[key].id +"'>" + response.data[key].name +  "</option>";
 			}
-			console.log(options)
 			carriersSelect.append(options);
 		});		
 	}
 
 	getDeliveryAddress(){
 		// da = DeliveryAddress
-		var daSelect = $('select#shipment_remissions_attributes_0_delivery_address_id')
-		daSelect.empty().prop( "disabled", false )
+		var daSelect = $('select#freight_shipments_attributes_0_delivery_address_id')
+		daSelect.empty()
 		var url = `/clients/${this.clientIdTarget.value}/get_delivery_address`
-		var options = "";
+		var options = "<option>SELECCIONA</option>";
 		axios({
 			method: 'GET',
 			url: url

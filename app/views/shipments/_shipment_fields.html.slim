@@ -17,7 +17,7 @@
 			.col-md-4
 				= f.input :client_id, collection: Client.all, input_html: { class: "s-12", data: { action: 'change->shipments#getDeliveryAddress', target: 'shipments.clientId'} }
 			.col-md-3
-				= f.input :delivery_address_id, collection: [], input_html: { class: "s-12m form-control form-control-sm", disabled: true }
+				= f.input :delivery_address_id, collection: [], input_html: { class: "s-12" }
 			.col-lg-12
 				hr.my-2
 		.row
@@ -27,11 +27,10 @@
 						.col-lg-10
 							h6.s-16 Productos 
 						.col-lg-2.text-right
-							= link_to_add_association f, :remissions_products, class: "btn btn-sm btn-xs btn-primary s-12", data: {association_insertion_node: '#products', association_insertion_method: :append } do
+							= link_to_add_association f, :shipments_products, class: "btn btn-sm btn-xs btn-primary s-12", data: {association_insertion_node: '#products', association_insertion_method: :append } do
 								svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
 									path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
 								span.pl-2 Nuevo producto
-
 					.row.ml-2.bg-light-gray
 						.col-lg-5
 							b.s-12 Producto
@@ -45,17 +44,14 @@
 					.row	
 						.col-lg-12
 							#products
-								= f.fields_for :remissions_products do |ff|
-									= render 'remissions_product_fields', f: ff
+								= f.fields_for :shipments_products do |ff|
+									= render 'shipments_product_fields', f: ff
 		.row
 			.col-lg-12.mt-3
 				section
 					.row
-						.col-lg-12
-							h6.s-16.mb-0 Comentarios sobre el embarque
-					.row
 						.col-lg-10.p-2.mb-3
-							= f.input :comments, label: false, input_html: { class: "form-control s-12", placeholder: "Ej. " }
+							= f.input :comments, input_html: { class: "form-control s-12", placeholder: "Ej. " }
 
 							
 

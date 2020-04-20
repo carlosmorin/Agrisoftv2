@@ -14,8 +14,14 @@ import "../stylesheets/application"
 import 'cocoon-js'
 
 document.addEventListener("turbolinks:load", () => {
+	$('#shipments').on('cocoon:after-insert', function(e, insertedItem) {
+  	alert("aasdoiasdnioasdn");
+  });
 	$('[data-toggle="tooltip"]').tooltip()
 	$('[data-toggle="popover"]').popover()
+	$(document).on("cocoon:before-insert", function() {
+		alert("lago pasa :o!")
+	})
 })
 
 import "controllers"
