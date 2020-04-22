@@ -117,7 +117,7 @@ table.s-14 width="100%"
 						- total_quantity = 0
 						- n_products = @shipment.shipments_products.size
 						- @shipment.shipments_products.each do |product|
-							- total_quantity += product.quantity
+							- total_quantity += product.quantity.to_i
 							tr
 								td.text-left
 									span.text-normal.s-13 = product.product.name.upcase
@@ -169,6 +169,18 @@ table.s-14 width="100%"
 							span.text-normal.pr-3.mr-2 = @freight.carrier.rfc.upcase
 							b.mt-1.mr-1 TELÉFONO:
 							span.text-normal.pr-3 = @freight.carrier.phone.upcase
+		tr
+			th
+				table.mt-2 width="100%"
+					tr
+						th.text-right width="13%"
+							b.mt-1.mr-1 OPERADOR:
+						th.text-left width="87%"
+							span.text-normal.pr-3.mr-2 = @freight.driver.full_name.upcase
+							b.mt-1.mr-1 # LICENCIA:
+							span.text-normal.pr-3.mr-2 = @freight.driver.licence.upcase
+							b.mt-1.mr-1 TELÉFONO:
+							span.text-normal.pr-3 = @freight.driver.licence.upcase
 		tr
 			th
 				table width="100%"
