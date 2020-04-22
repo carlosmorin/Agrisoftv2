@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_20_155940) do
+ActiveRecord::Schema.define(version: 2020_04_20_212642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(version: 2020_04_20_155940) do
     t.bigint "municipality_id"
     t.string "cp"
     t.string "contact_name"
+    t.string "code"
+    t.string "shipments"
     t.index ["country_id"], name: "index_clients_on_country_id"
     t.index ["municipality_id"], name: "index_clients_on_municipality_id"
     t.index ["state_id"], name: "index_clients_on_state_id"
@@ -214,6 +216,24 @@ ActiveRecord::Schema.define(version: 2020_04_20_155940) do
     t.index ["carrier_id"], name: "index_drivers_on_carrier_id"
   end
 
+  create_table "freights", force: :cascade do |t|
+    t.bigint "carrier_id", null: false
+    t.bigint "driver_id", null: false
+    t.bigint "unit_id", null: false
+    t.bigint "box_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "status"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "folio"
+    t.index ["box_id"], name: "index_freights_on_box_id"
+    t.index ["carrier_id"], name: "index_freights_on_carrier_id"
+    t.index ["driver_id"], name: "index_freights_on_driver_id"
+    t.index ["unit_id"], name: "index_freights_on_unit_id"
+    t.index ["user_id"], name: "index_freights_on_user_id"
+  end
+
   create_table "general_information", force: :cascade do |t|
     t.string "name"
     t.string "last_name"
@@ -272,51 +292,35 @@ ActiveRecord::Schema.define(version: 2020_04_20_155940) do
     t.string "short_name"
   end
 
-  create_table "remissions", force: :cascade do |t|
+  create_table "shipments", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.bigint "client_id", null: false
     t.bigint "delivery_address_id", null: false
-    t.bigint "user_id"
     t.boolean "pay_freight"
     t.text "comments"
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status"
-    t.bigint "shipment_id", null: false
-    t.index ["client_id"], name: "index_remissions_on_client_id"
-    t.index ["company_id"], name: "index_remissions_on_company_id"
-    t.index ["delivery_address_id"], name: "index_remissions_on_delivery_address_id"
-    t.index ["shipment_id"], name: "index_remissions_on_shipment_id"
-    t.index ["user_id"], name: "index_remissions_on_user_id"
+    t.bigint "freight_id", null: false
+    t.integer "n_products"
+    t.string "folio"
+    t.string "client_folio"
+    t.index ["client_id"], name: "index_shipments_on_client_id"
+    t.index ["company_id"], name: "index_shipments_on_company_id"
+    t.index ["delivery_address_id"], name: "index_shipments_on_delivery_address_id"
+    t.index ["freight_id"], name: "index_shipments_on_freight_id"
   end
 
-  create_table "remissions_products", force: :cascade do |t|
-    t.bigint "remission_id", null: false
+  create_table "shipments_products", force: :cascade do |t|
+    t.bigint "shipment_id", null: false
     t.bigint "product_id", null: false
     t.integer "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "quantity"
-    t.index ["product_id"], name: "index_remissions_products_on_product_id"
-    t.index ["remission_id"], name: "index_remissions_products_on_remission_id"
-  end
-
-  create_table "shipments", force: :cascade do |t|
-    t.bigint "carrier_id", null: false
-    t.bigint "driver_id", null: false
-    t.bigint "unit_id", null: false
-    t.bigint "box_id", null: false
-    t.bigint "user_id", null: false
-    t.integer "status"
-    t.datetime "deleted_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["box_id"], name: "index_shipments_on_box_id"
-    t.index ["carrier_id"], name: "index_shipments_on_carrier_id"
-    t.index ["driver_id"], name: "index_shipments_on_driver_id"
-    t.index ["unit_id"], name: "index_shipments_on_unit_id"
-    t.index ["user_id"], name: "index_shipments_on_user_id"
+    t.index ["product_id"], name: "index_shipments_products_on_product_id"
+    t.index ["shipment_id"], name: "index_shipments_products_on_shipment_id"
   end
 
   create_table "sizes", force: :cascade do |t|
@@ -413,6 +417,11 @@ ActiveRecord::Schema.define(version: 2020_04_20_155940) do
   add_foreign_key "delivery_addresses", "municipalities"
   add_foreign_key "delivery_addresses", "states"
   add_foreign_key "drivers", "carriers"
+  add_foreign_key "freights", "boxes"
+  add_foreign_key "freights", "carriers"
+  add_foreign_key "freights", "drivers"
+  add_foreign_key "freights", "units"
+  add_foreign_key "freights", "users"
   add_foreign_key "general_information", "users"
   add_foreign_key "municipalities", "states"
   add_foreign_key "products", "client_brands"
@@ -421,17 +430,12 @@ ActiveRecord::Schema.define(version: 2020_04_20_155940) do
   add_foreign_key "products", "packages"
   add_foreign_key "products", "qualities"
   add_foreign_key "products", "sizes"
-  add_foreign_key "remissions", "clients"
-  add_foreign_key "remissions", "companies"
-  add_foreign_key "remissions", "delivery_addresses"
-  add_foreign_key "remissions", "shipments"
-  add_foreign_key "remissions_products", "products"
-  add_foreign_key "remissions_products", "remissions"
-  add_foreign_key "shipments", "boxes"
-  add_foreign_key "shipments", "carriers"
-  add_foreign_key "shipments", "drivers"
-  add_foreign_key "shipments", "units"
-  add_foreign_key "shipments", "users"
+  add_foreign_key "shipments", "clients"
+  add_foreign_key "shipments", "companies"
+  add_foreign_key "shipments", "delivery_addresses"
+  add_foreign_key "shipments", "freights"
+  add_foreign_key "shipments_products", "products"
+  add_foreign_key "shipments_products", "shipments"
   add_foreign_key "states", "countries"
   add_foreign_key "units", "carriers"
   add_foreign_key "units", "unit_brands"

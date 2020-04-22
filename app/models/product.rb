@@ -11,8 +11,8 @@ class Product < ApplicationRecord
   belongs_to :package
   belongs_to :client_brand
 
-  has_many :remissions_products, inverse_of: :product
-  has_many :remissions, through: :remissions_products
+  has_many :shipments_products, inverse_of: :product
+  has_many :shipments, through: :shipments_products
 
   private
 

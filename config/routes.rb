@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+  Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace :admin do
   	root to: "main#index"
@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     get '/get_boxes', to: 'carriers#get_boxes'
   end
 
+  resources :freights
   resources :shipments
   resources :companies
   resources :crops do

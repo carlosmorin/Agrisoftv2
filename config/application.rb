@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 module Agrisoft
   class Application < Rails::Application
+    config.time_zone = 'America/Monterrey'
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
     

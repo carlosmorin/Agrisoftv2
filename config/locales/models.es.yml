@@ -42,6 +42,7 @@ es:
         municipality_id: Municipio / condado
         conact_name: Persona de contacto
         email: Correo electronico
+        code: Codigo
       unit_brand:
         name: Nombre
         short_name: Abreviación
@@ -88,7 +89,7 @@ es:
         n_econ: N° economico
         carrier_id: Transportista
         box_type_id: Tipo de caja
-      shipment:
+      freight:
         carrier_id: Transportista
         driver_id: Conductor
         unit_id: Unidad
@@ -124,10 +125,11 @@ es:
       client_brand:
         name: Nombre
         client_id: Cliente
-      remission:
+      shipment:
         client_id: Cliente
         company_id: Empresa remisionista
         delivery_address_id: Direccion de entrega
+        comments: Comentarios
       quality:
         name: Nombre
         short_name: Abreviación

@@ -7,10 +7,10 @@ export default class extends Controller {
   static targets = [ "countryId", "stateId", "municipalityId"]
 
 	initialize(){
-		new SlimSelect({select: '#delivery_address_client_id'})
-		new SlimSelect({select: '#delivery_address_country_id'})
-		new SlimSelect({select: '#delivery_address_state_id'})
-		new SlimSelect({select: '#delivery_address_municipality_id'})
+		const ids = [...document.getElementsByTagName('select')].map(el => el.id);
+		for (var i=0, max=ids.length; i < max; i++) {
+			new SlimSelect({select: `#${ids[i]}`})
+		}
 	}
 
 	filter_by_country(){
