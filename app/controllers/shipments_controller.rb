@@ -1,5 +1,5 @@
 class ShipmentsController < ApplicationController
-  before_action :set_object, only: %i[show edit update destroy]
+  before_action :set_object, only: %i[show edit update destroy print]
 
   def index
     @shipments = Shipment.all
@@ -29,10 +29,26 @@ class ShipmentsController < ApplicationController
     end
   end
 
+  def print
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "Remision N° #{@shipment}",
+        page_size: 'A4',
+        template: "shipments/print.html.slim",
+        layout: "pdf.html",
+        lowquality: true,
+        zoom: 1,
+        dpi: 75
+      end
+    end
+  end
+
   private
 
   def set_object
-    @shipment = Shipment.find(params[:id])
+    id = params[:id].present? ? params[:id] : params[:shipment_id] 
+    @shipment = Shipment.find(id)
     @freight = @shipment.freight
   end
 

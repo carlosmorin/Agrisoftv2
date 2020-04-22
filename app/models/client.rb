@@ -11,4 +11,8 @@ class Client < ApplicationRecord
 	has_many :shipments, inverse_of: :client
 
 	validates_uniqueness_of :phone, :email, :code, case_sensitive: false
+	
+	def full_address
+		"#{municipality.name}, #{state.name}, #{address}, #{country.name}"
+	end
 end

@@ -27,14 +27,14 @@ class Shipment < ApplicationRecord
 		year =  Time.now.year.to_s[2, 2]
 		code_client = client.code
 
-		self.client_folio = "#{year}-#{code_client}-#{shipments}"
+		self.client_folio = "FC-#{year}-#{code_client}-#{shipments}"
 	end
 
 	def set_folio
 		year =  Time.now.year
 		shipments = get_total_shipments(year)
 		year = Time.now.year.to_s[2, 2]
-		self.folio = "#{year}-#{shipments}"
+		self.folio = "FE-#{year}-#{shipments}"
 	end
 
 	def update_shipments(shipments)
