@@ -43,7 +43,9 @@
   end
 
   resources :freights
-  resources :shipments
+  resources :shipments do
+    get '/print', to: 'shipments#print'
+  end
   resources :companies
   resources :crops do
     get '/get_colors', to: 'crops#get_colors'

@@ -15,6 +15,7 @@ span.error ~ input.form-control{
 ///Helpers
 //// Font size
 .s-12{ font-size: 12px !important; }
+.s-13{ font-size: 13px !important; }
 .s-14{ font-size: 14px !important; }
 .s-15{ font-size: 15px !important; }
 .s-16{ font-size: 16px !important; }
@@ -40,6 +41,8 @@ a.nav-link.active{font-weight: bold !important;}
 .h-20{ height: 20px; }
 .h-25{ height: 25px !important; }
 .h-30{ height: 30px; }
+//Whidths
+.m-w-7rm{ min-width: 7rem !important;}
 
 //Border radius
 .br-2{ border-radius: 2px !important; }

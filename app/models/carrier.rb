@@ -18,4 +18,8 @@ class Carrier < ApplicationRecord
 		"#{state_name}, #{mun}, #{address}"
 	end
 
+	def full_address
+		"#{municipality.name}, #{state.name}, #{address}, #{country.name}"
+	end
+
 end

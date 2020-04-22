@@ -42,6 +42,8 @@ gem 'sassc-rails'
 gem 'rails-i18n'
 gem 'country_select'
 gem 'breadcrumbs_on_rails'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

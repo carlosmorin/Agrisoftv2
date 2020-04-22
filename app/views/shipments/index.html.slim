@@ -21,18 +21,18 @@ section.content
                     path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
                   span.pl-2 Nuevo embarque
           .card-body.table-responsive.p-0
-            table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+            table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
               thead
                 tr.bg-light-gray
-                  th Fecha de envio
-                  th F. flete
-                  th F. embarque
-                  th F. cliente
+                  th.text-center Fecha de envio
+                  th.text-center F. flete
+                  th.text-center F. embarque
+                  th.text-center F. cliente
                   th Remisionista
                   th Cliente
-                  th # bultos
+                  th.text-center # bultos
                   th.text-center colspan="2" style=("width: 12%") Acciónes
-              tbody#tbody
+              tbody#tbody.s-13
                 - if @shipments.empty?
                   tr
                     td.text-center colspan="9"
@@ -40,13 +40,14 @@ section.content
                 - else
                   - @shipments.each do |shipment|
                     tr
-                      td = shipment.created_at.strftime("%m/%d/%Y - %I:%M%p")
-                      td = shipment.freight.folio
-                      td = shipment.folio
-                      td = shipment.client_folio
+                      td.text-center 
+                        b = shipment.created_at.strftime("%m/%d/%Y")
+                      td.text-center = shipment.freight.folio
+                      td.text-center = shipment.folio
+                      td.text-center = shipment.client_folio
                       td = shipment.company.name
                       td = shipment.client.name
-                      td = "56"
+                      td.text-center = "56"
                       td.text-center
                         = link_to shipment_path(shipment), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
                           svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
