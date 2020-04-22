@@ -1,5 +1,6 @@
 - url = @shipment.new_record? ? shipments_path : shipment_path
-= simple_form_for(@shipment, url: url, data: { controller: 'shipments' } ) do |form|
+- object = @shipment.new_record? ? @shipment : @freight
+= simple_form_for(object, url: url, data: { controller: 'shipments' } ) do |form|
 	= form.input :user_id, as: :hidden, input_html: { value: current_user.id }
 	.row
 		.col-lg-12
