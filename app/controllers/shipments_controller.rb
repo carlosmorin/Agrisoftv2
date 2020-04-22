@@ -1,5 +1,5 @@
 class ShipmentsController < ApplicationController
-  before_action :set_object, only: %i[show edit update destroy print]
+  before_action :set_object, only: %i[show edit update destroy print print_responsive]
 
   def index
     @shipments = Shipment.all
@@ -13,7 +13,7 @@ class ShipmentsController < ApplicationController
   def create
     @shipment = Freight.new(shipment_params)
     if @shipment.save
-      flash[:notice] = "Embarque <b>190274</b> creado exitosamente"
+      flash[:notice] = "Embarque #{@shipment.folio.upcase} creada exitosamente"
       redirect_to shipment_url(@shipment)
     else
       render :new
@@ -22,7 +22,7 @@ class ShipmentsController < ApplicationController
 
   def update
     if @shipment.update(shipment_params)
-      flash[:notice] = "Embarque <b>190274</b> actualizado exitosamente"
+      flash[:notice] = "Embarque #{@shipment.folio.upcase} actualizado exitosamente"
       redirect_to shipment_url(@shipment)
     else
       render :edit
@@ -33,7 +33,7 @@ class ShipmentsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "Remision N° #{@shipment}",
+        render pdf: "Remision N° #{@shipment.folio}",
         page_size: 'A4',
         template: "shipments/print.html.slim",
         layout: "pdf.html",
@@ -42,6 +42,26 @@ class ShipmentsController < ApplicationController
         dpi: 75
       end
     end
+  end
+
+  def print_responsive
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "Responsiva N° #{@shipment.folio}",
+        page_size: 'A4',
+        template: "shipments/print_responsive.html.slim",
+        layout: "pdf.html",
+        lowquality: true,
+        zoom: 1,
+        dpi: 75
+      end
+    end
+  end
+
+  def destroy
+    @shipment.destroy
+    @freight.destroy
   end
 
   private

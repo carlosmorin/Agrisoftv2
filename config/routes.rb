@@ -45,6 +45,7 @@
   resources :freights
   resources :shipments do
     get '/print', to: 'shipments#print'
+    get '/print_responsive', to: 'shipments#print_responsive'
   end
   resources :companies
   resources :crops do

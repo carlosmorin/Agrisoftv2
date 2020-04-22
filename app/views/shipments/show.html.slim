@@ -31,9 +31,9 @@ section.content
 								rect height="8" width="12" x="6" y="14" 
 						ul.dropdown-menu.border-0.shadow.py-0.m-w-7rm aria-labelledby="dropdownSubMenu1" 
 						  li
-						    = link_to 'Remisión', shipment_print_path(@shipment, format: :pdf), class: 'dropdown-item s-12 text-left px-2'
+						    = link_to 'Remisión', shipment_print_path(@shipment, format: :pdf), target: "_blank", class: 'dropdown-item s-12 text-left px-2'
 						  li
-						    = link_to 'Responnsiva', config_taxes_path,class: 'dropdown-item s-12 text-left px-2'
+						    = link_to 'Responsiva', shipment_print_responsive_path(@shipment, format: :pdf), target: "_blank", class: 'dropdown-item s-12 text-left px-2'
 			.card-body.s-14.p-3
 				.row
 					.col-lg-8
