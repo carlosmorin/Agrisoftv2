@@ -1,7 +1,7 @@
 module Addresses
   class CountriesController < ApplicationController
   	before_action :set_object, only: %i[edit update destroy]
-    add_breadcrumb "Ṕaises", :addresses_countries_path
+    add_breadcrumb "Paises", :addresses_countries_path
 
   	def index
   		@countries = Country.all
