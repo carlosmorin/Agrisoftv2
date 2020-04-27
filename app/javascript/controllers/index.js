@@ -9,6 +9,6 @@ application.load(definitionsFromContext(context))
 
 document.addEventListener("turbolinks:load", () => {
 	new SlimSelect({
-  	select: '.slim-select'
+		select: '.slim-select'
 	})
 })

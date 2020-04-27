@@ -1,23 +1,23 @@
 module Config
-	class ProductsController < ApplicationController
-		before_action :set_object, only: %i[edit update destroy show]
+  class ProductsController < ApplicationController
+    before_action :set_object, only: %i[edit update destroy show]
     before_action :set_catalogs, only: %i[update]
 
-  	add_breadcrumb "Config"
+    add_breadcrumb "Config"
     add_breadcrumb "Productos", :config_products_path
 
-  	def index
-  		@products = Product.paginate(page: params[:page], per_page: 16)
+    def index
+      @products = Product.paginate(page: params[:page], per_page: 16)
 
       search_by_crop if params[:c].present?
       search_by_quality if params[:q].present?
       search_by_client_brand if params[:cb].present?
-  	end
+    end
 
-		def new
+    def new
       add_breadcrumb "Nuevo"
-			@product = Product.new
-		end
+      @product = Product.new
+    end
 
     def edit
       add_breadcrumb "Editar"
@@ -57,13 +57,13 @@ module Config
       @products = @products.where(crop_id: crop_id)
     end
 
-		def search_by_quality
+    def search_by_quality
       quality_id = Regexp.escape(params[:q])
       @products = @products.where(quality_id: quality_id)
     end
 
-		def search_by_client_brand
-			## cb = client_brand abrebation
+    def search_by_client_brand
+      ## cb = client_brand abrebation
       cb_id = Regexp.escape(params[:cb])
       @products = @products.where(client_brand_id: cb_id)
     end

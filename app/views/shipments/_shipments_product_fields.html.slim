@@ -1,12 +1,12 @@
 .nested-fields
 	.row
-		.col-md-5.px-3.py-1.px-4
-			= f.input :product_id, collection: Product.all, label: false, input_html: { class: 's-12 h-25 form-control form-control-sm' }
+		.col-md-8.px-3.py-1.px-4
+			= f.input :product_id, collection: Product.all, label: false, input_html: { class: 's-12 small' }
 		.col-md-2.px-3.py-1
 			= f.input :quantity, label: false, input_html: { class: 's-12 form-control form-control-sm h-25'  }
-		.col-md-2.px-3.py-1
+		.col-md-1.px-3.py-1
 			= f.input :price, label: false, input_html: { class: 's-12 form-control form-control-sm h-25', value: "00.00", readonly: true }
-		.col-md-2.pt-1.text-center
+		.col-md-1.pt-1.text-center
 			= link_to_remove_association f, class: "btn btn-danger btn-xs s-12 mt-1" do
 				svg.feather.feather-trash-2 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
 					polyline points=("3 6 5 6 21 6") 

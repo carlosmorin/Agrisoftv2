@@ -1,13 +1,17 @@
 section.content-header.pb-0
-  .container
-    .row.mb-2
-      .col-sm-6
-        h5 Nuevo embarque 
+	.container
+		.row.mb-2
+			.col-sm-6
+				h5 Nuevo embarque 
 section.content
-  .container
-    = render "shared/form_info"
-    .card
-      .card-body
-        .row
-          .col-md-12
-            = render 'form'
+	.container
+		= render "shared/form_info"
+		.row
+			.col-md-12
+				= render 'form'
+#modal-window.modal.fade
+	.modal-dialog.modal-lg
+		.modal-content.br-2
+			.modal-header
+				h6.bold.mb-0 Nuevo producto 
+			#modal-body.modal-body

@@ -2,7 +2,7 @@ section.content-header.pb-0
   .container-fluid
     .row.mb-2
       .col-sm-6
-        h5 Detalle de direccón 
+        h5 Detalle de dirección 
       .col-sm-6.text-right.pr-2.s-12
         = render_breadcrumbs :separator => ' / '
 section.content
@@ -93,6 +93,11 @@ section.content
 						label.mb-1 Persona de contacto:
 					.col-lg-7.text-left
 						p.mb-1 = @address.contact_name.present? ? @address.contact_name.upcase : '--'
+				.row
+					.col-lg-2
+						label.mb-1 Dirección de terceros:
+					.col-lg-7.text-left
+						p.mb-1 = @address.external.present? ? "SI" : "NO"
 
 				
 				

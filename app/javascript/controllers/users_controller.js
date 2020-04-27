@@ -18,6 +18,7 @@ const swalWithBootstrapButtons = Swal.mixin({
 
 export default class extends Controller {
 	initialize(){
+		console.log("coneted")
 		$(".erasable > input").keyup(function () {
 			if($(this).val().length >= 2){
 				$(".erasable > span").removeClass("d-none");
@@ -66,7 +67,8 @@ export default class extends Controller {
 
 	}
 
-	openModal() {
+	openModal(e) {
+		e.preventDefault()
 		$(".modal-body").empty()
 		$('#modal-window').modal('show')
 	}

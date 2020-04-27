@@ -4,12 +4,20 @@ const axios = require('axios');
 const $ = require('jquery');
 
 export default class extends Controller {
-	static targets = [ "carrierId" , "clientId" ]
+	static targets = [ "carrierId" , "clientId", "productsContainer" ]
 	initialize() {
+		let container = this.productsContainerTarget
+		$("#products").on('cocoon:after-insert', function(e, insertedItem, originalEvent) {
+			let select = $(insertedItem).find("select").attr("id")
+			new SlimSelect({select: `#${select}`})
+			
+		});
+
 		const ids = [...document.getElementsByTagName('select')].map(el => el.id);
 		for (var i=0, max=ids.length; i < max; i++) {
 			new SlimSelect({select: `#${ids[i]}`})
 		}
+
 	}
 
 

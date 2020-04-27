@@ -106,6 +106,7 @@ es:
         comments: Indicaciónes adicionales
         email: Correo electronico
         contact_name: Persona de contacto
+        external: Dirección de terceros
       company:
         name: Razón social
         rfc: RFC

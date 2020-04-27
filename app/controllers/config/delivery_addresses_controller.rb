@@ -65,7 +65,7 @@ module Config
     def address_params
       params.require(:delivery_address).permit(
         :client_id, :country_id, :state_id, :municipality_id, :address, 
-        :comments, :phone, :name, :contact_name, :email)
+        :comments, :phone, :name, :contact_name, :email, :external)
     end
 
     def set_object

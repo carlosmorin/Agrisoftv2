@@ -82,6 +82,13 @@
 				= f.label :contact_name, class: "pt-1" 
 			.col-md-9
 				= f.input :contact_name, label: false, input_html: { class: 'form-control form-control-sm' }
+	.form-group.mb-1  
+		.row
+			.col-md-3
+				= f.label :external, class: "pt-1" 
+			.col-md-9
+				= f.input :external, as: :boolean, label: false
+
 
 	hr
 	.form-actions.text-center

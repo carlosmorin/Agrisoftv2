@@ -3,6 +3,8 @@ class ShipmentsController < ApplicationController
 
   def index
     @shipments = Shipment.all
+
+    search if params[:q].present? 
   end
 
   def new
@@ -21,7 +23,7 @@ class ShipmentsController < ApplicationController
   end
 
   def update
-    if @shipment.update(shipment_params)
+    if @freight.update(shipment_params)
       flash[:notice] = "Embarque #{@shipment.folio.upcase} actualizado exitosamente"
       redirect_to shipment_url(@shipment)
     else
@@ -46,7 +48,7 @@ class ShipmentsController < ApplicationController
 
   def print_responsive
     respond_to do |format|
-      format.html
+      format.html 
       format.pdf do
         render pdf: "Responsiva N° #{@shipment.folio}",
         page_size: 'A4',
@@ -65,6 +67,12 @@ class ShipmentsController < ApplicationController
   end
 
   private
+
+  def search
+    query = Regexp.escape(params[:q])
+
+    @shipments = @shipments.where("concat(folio, ' ', client_folio, ' ', contact_name) ~* ?", query)
+  end
 
   def set_object
     id = params[:id].present? ? params[:id] : params[:shipment_id] 
