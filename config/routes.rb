@@ -15,7 +15,8 @@
     resources :delivery_addresses
     resources :client_brands
     resources :client_brands
-    resources :products
+    resources :products 
+
   end
 
   namespace :directories do

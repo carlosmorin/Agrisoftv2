@@ -29,9 +29,10 @@ module Config
 
     def create
       @product = Product.new(product_params)
+
       if @product.save
-        flash[:notice] = 'Producto creado exitosamente'
-        redirect_to config_product_path(@product.id)
+        redirect_to config_product_path(@product), notice: 
+          'Producto creado exitosamente.'
       else
         render :new
       end

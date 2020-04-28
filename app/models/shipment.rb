@@ -1,7 +1,9 @@
 class Shipment < ApplicationRecord
 	before_create :set_products
 	before_create :set_folio 
+	before_create :set_freight_folio 
 	before_create :set_client_folio 
+	before_create :set_status
 
 	belongs_to :company
 	belongs_to :client
@@ -13,12 +15,24 @@ class Shipment < ApplicationRecord
 	has_many :products, through: :shipments_products
 	accepts_nested_attributes_for :shipments_products, allow_destroy: true
 
+	enum status: { sent: 0, in_reporting_process: 1, in_payment_process: 2,
+		liquidated: 3, canceled: 4 }
+
+
 	private
+
+	def set_status
+		self.status = 0
+	end
 
 	def set_products
 		sum = 0
 		shipments_products.each { |a| sum+=a.quantity }
 		self.n_products = sum
+	end
+
+	def set_freight_folio
+		self.freight_folio = freight.folio
 	end
 
 	def set_client_folio

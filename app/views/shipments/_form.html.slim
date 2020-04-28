@@ -16,25 +16,25 @@
 						= form.label :carrier_id, class: "pt-1" 
 						= form.input :carrier_id, collection: Carrier.all, autofocus: true, label: false, input_html: { class: 's-12 ', data: { action: "change->shipments#filter_by_carrier", target: "shipments.carrierId" } }
 					.col-md-3
-	  						= form.input :driver_id, collection: [], autofocus: true, input_html: { class: 's-12' }
+	  						= form.input :driver_id, collection: @drivers, autofocus: true, input_html: { class: 's-12' }
 					.col-md-3
-							= form.input :unit_id, collection: [], autofocus: true, input_html: { class: 's-12' }
+						= form.input :unit_id, collection: @units, autofocus: true, input_html: { class: 's-12' }
 					.col-md-2
-							= form.input :box_id, collection: [], autofocus: true, input_html: { class: 's-12' }
+							= form.input :box_id, collection: @boxes, autofocus: true, input_html: { class: 's-12' }
 			.row
 				.col-lg-12
 	section.ml-3.mt-3
-		.row
+		.row.d-none
 			.col-md-6.pl-0
 			.col-md-6.text-right
 				= link_to new_config_product_path, class: 'btn btn-sm btn-info s-12 mr-2', remote: true, data: { action: "users#openModal" }  do 
 					svg.svg-inline--fa.fa-box.fa-w-16.h-12 aria-hidden="true" data-icon="box" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
 					  path d=("M509.5 184.6L458.9 32.8C452.4 13.2 434.1 0 413.4 0H272v192h238.7c-.4-2.5-.4-5-1.2-7.4zM240 0H98.6c-20.7 0-39 13.2-45.5 32.8L2.5 184.6c-.8 2.4-.8 4.9-1.2 7.4H240V0zM0 224v240c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V224H0z") fill="currentColor" 
 					span.pl-2 Nuevo producto
-				= link_to_add_association form, :shipments, class: "btn btn-sm btn-primary s-12", data: { association_insertion_node: '.shipments', association_insertion_method: :append } do
+				//**= link_to_add_association form, :shipments, class: "btn btn-sm btn-primary s-12", data: { association_insertion_node: '.shipments', association_insertion_method: :append } do
 					svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
 						path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-					span.pl-2 Nuevo embarque
+					span.pl-2 Nuevo embarque**//
 	#shipments.shipments
 		= form.fields_for :shipments do |shipment|
 			= render 'shipment_fields', f: shipment 

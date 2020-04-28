@@ -4,6 +4,7 @@ section.content-header.pb-0
 			.col-sm-6
 				h5 Detalle de embarque
 			.col-sm-6.text-right.pr-2.s-12
+				= render_breadcrumbs :separator => ' / '	
 section.content
 	.container
 		.row
@@ -58,12 +59,12 @@ section.content
 							.col-lg-2
 								label.mb-1 Unidad:
 							.col-lg-9.text-left
-								p.mb-1 = "#{@freight.unit.full_name.upcase}"
+								p.mb-1 = "#{@freight.unit.name.upcase}"
 						.row
 							.col-lg-2
 								label.mb-1 Caja:
 							.col-lg-9.text-left
-								p.mb-1 = "#{@freight.box.full_name.upcase}"
+								p.mb-1 = "#{@freight.box.name.upcase}"
 					.col-lg-4
 						.row
 							.col-md-12.text-right

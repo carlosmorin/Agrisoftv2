@@ -4,7 +4,7 @@
 			.col-md-10
 				h6.s-14.bold Embarque
 			.col-md-2.text-right
-				= link_to_remove_association f, class: "btn btn-danger btn-xs s-12 " do
+				//= link_to_remove_association f, class: "btn btn-danger btn-xs s-12 " do
 					svg.feather.feather-trash-2 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
 						polyline points=("3 6 5 6 21 6") 
 						path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 
@@ -17,7 +17,7 @@
 			.col-md-4
 				= f.input :client_id, collection: Client.all, input_html: { class: "s-12", data: { action: 'change->shipments#getDeliveryAddress', target: 'shipments.clientId'} }
 			.col-md-3
-				= f.input :delivery_address_id, collection: [], input_html: { class: "s-12" }
+				= f.input :delivery_address_id, collection: @delivery_addresses, input_html: { class: "s-12" }
 			.col-lg-12
 				hr.my-2
 		.row
@@ -35,8 +35,6 @@
 					.row.ml-2.bg-light-gray
 						.col-lg-8
 							b.s-12 Producto
-
-
 						.col-lg-2
 							b.s-12 Cantidad
 						.col-lg-1

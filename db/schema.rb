@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_23_184631) do
+ActiveRecord::Schema.define(version: 2020_04_27_214708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 2020_04_23_184631) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
+    t.string "name"
     t.index ["box_type_id"], name: "index_boxes_on_box_type_id"
     t.index ["carrier_id"], name: "index_boxes_on_carrier_id"
   end
@@ -307,6 +308,7 @@ ActiveRecord::Schema.define(version: 2020_04_23_184631) do
     t.integer "n_products"
     t.string "folio"
     t.string "client_folio"
+    t.string "freight_folio"
     t.index ["client_id"], name: "index_shipments_on_client_id"
     t.index ["company_id"], name: "index_shipments_on_company_id"
     t.index ["delivery_address_id"], name: "index_shipments_on_delivery_address_id"
@@ -366,6 +368,7 @@ ActiveRecord::Schema.define(version: 2020_04_23_184631) do
     t.string "plate_number"
     t.bigint "carrier_id", null: false
     t.bigint "unit_brand_id", null: false
+    t.string "name"
     t.index ["carrier_id"], name: "index_units_on_carrier_id"
     t.index ["unit_brand_id"], name: "index_units_on_unit_brand_id"
   end

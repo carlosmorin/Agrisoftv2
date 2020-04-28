@@ -10,7 +10,6 @@ export default class extends Controller {
 		$("#products").on('cocoon:after-insert', function(e, insertedItem, originalEvent) {
 			let select = $(insertedItem).find("select").attr("id")
 			new SlimSelect({select: `#${select}`})
-			
 		});
 
 		const ids = [...document.getElementsByTagName('select')].map(el => el.id);
@@ -32,7 +31,6 @@ export default class extends Controller {
 		var driversSelect = $('select#freight_driver_id')
 		driversSelect.empty()
 		var url = `/carriers/${carrierId}/get_drivers`
-		console.log(url)
 		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',
@@ -42,7 +40,6 @@ export default class extends Controller {
 			for (var key in response.data){
 				options += "<option value='"+ response.data[key].id +"'>" + response.data[key].name +  "</option>";
 			}
-			console.log(options)
 			driversSelect.append(options);
 		});
 	}
@@ -95,7 +92,6 @@ export default class extends Controller {
 			for (var key in response.data){
 				options += "<option value='"+ response.data[key].id +"'>" + response.data[key].name +  "</option>";
 			}
-			console.log(options)
 			daSelect.append(options);
 		});		
 

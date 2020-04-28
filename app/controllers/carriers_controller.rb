@@ -55,20 +55,12 @@ class CarriersController < ApplicationController
 
   def get_units
     units = @carrier.units
-    data = []
-    units.each do |unit|
-      data << { id: unit.id, name: unit.full_name }
-    end
-    render json: data
+    render json: units
   end
 
   def get_boxes
     boxes = @carrier.boxes
-    data = []
-    boxes.each do |box|
-      data << { id: box.id, name: box.full_name }
-    end
-    render json: data
+    render json: boxes
   end
 	
   private

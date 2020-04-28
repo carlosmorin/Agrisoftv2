@@ -57,7 +57,6 @@ export default class extends Controller {
 		location_select.empty()
 		var location_id = this.municipalityIdTarget.value
 		var url = "/addresses/addresses/locations?location_id=" + location_id;
-		console.log("URL:", url);
 		var options = "";
 
 		axios({

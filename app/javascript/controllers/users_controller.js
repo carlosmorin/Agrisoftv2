@@ -18,7 +18,6 @@ const swalWithBootstrapButtons = Swal.mixin({
 
 export default class extends Controller {
 	initialize(){
-		console.log("coneted")
 		$(".erasable > input").keyup(function () {
 			if($(this).val().length >= 2){
 				$(".erasable > span").removeClass("d-none");
@@ -39,21 +38,21 @@ export default class extends Controller {
    	 	var title = "<h4 class='s-18 bold pb-0 c-blue'>Esta seguro?</h4>";
    	 	var desc = "<p4 class='s-14'>Los cambios no podrán ser revertidos!</p>";
 	   	swalWithBootstrapButtons.fire({
-			  title: title,
-			  html:  desc,
-			  icon: false,
-			  showCancelButton: true,
-			  width: '300px',
-			  animation: false,
-			  confirmButtonText: 'Confirmar!',
-			  cancelButtonText: 'Cancelar',
+				title: title,
+				html:  desc,
+				icon: false,
+				showCancelButton: true,
+				width: '300px',
+				animation: false,
+				confirmButtonText: 'Confirmar!',
+				cancelButtonText: 'Cancelar',
 			}).then((result) => {
-			  if (result.value) {
-			  	axios({
-			  		method: 'DELETE',
+				if (result.value) {
+					axios({
+						method: 'DELETE',
 						dataType: "JSON",
-					  url: url,
-					  data: { authenticity_token: $('[name="csrf-token"]')[0].content},
+						url: url,
+						data: { authenticity_token: $('[name="csrf-token"]')[0].content},
 					})
 					.then(function (response) {
 						column.fadeOut('fast');
@@ -63,7 +62,7 @@ export default class extends Controller {
 					});
 			  }
 			})
-	  });
+		});
 
 	}
 

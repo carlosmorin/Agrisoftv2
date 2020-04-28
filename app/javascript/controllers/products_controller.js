@@ -1,14 +1,44 @@
 import { Controller } from "stimulus"
 import SlimSelect from 'slim-select'
 const axios = require('axios');
+const toastr = require('toastr');
 
 export default class extends Controller {
 	static targets = [ "cropId" ]
 
 	initialize() {
-		new SlimSelect({select: '#product_id'})
-		new SlimSelect({select: '#quality_id'})
-		new SlimSelect({select: '#client_brand_id'})
+		const ids = [...document.getElementsByTagName('select')].map(el => el.id);
+		for (var i=0, max=ids.length; i < max; i++) {
+			new SlimSelect({select: `#${ids[i]}`})
+		}
+  }
+
+  saveProduct(e){
+  	e.preventDefault();
+		var form = $("#new_product")
+    var url = form.attr('action')
+		$.ajax({
+      type: "POST",
+      url: url,
+      data: form.serialize(),
+      success: function(data){
+        toastr.options.preventDuplicates = true;
+				toastr.options.closeButton = true;
+				toastr.success('Producto registrado con exito', {timeOut: 2000})
+				$('#modal-window').modal('hide')
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        var response = xhr.responseJSON;
+				var validations = "<ul class='pl-2 mb-1'>";        
+        for(var key in response)
+				{
+					validations += "<li class='s-12'>" + response[key][0] + "</li>";
+				}
+				validations += "</ul>";        
+				$(".callout-danger").removeClass("d-none").empty().html(validations)
+        return false;
+      }
+    });
   }
 
   filterColorsByCropId(){
