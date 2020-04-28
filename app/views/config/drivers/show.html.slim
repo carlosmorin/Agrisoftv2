@@ -1,0 +1,81 @@
+section.content-header.pb-0
+  .container-fluid
+    .row.mb-2
+      .col-sm-6
+        h5 Detalle de conductor 
+      .col-sm-6.text-right.pr-2.s-12
+        = render_breadcrumbs :separator => ' / '
+section.content
+	.container-fluid
+		.row
+			.col-lg-12
+				= render "shared/alerts"
+		.card
+			.card-header.p-2.pb-1
+				.row
+					.col-md-12
+						= link_to edit_config_driver_path(@driver), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
+							svg.feather.feather-edit.mr-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+								path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+								path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+							span Editar
+						= link_to config_drivers_path, class: 'mr-2 btn btn-sm btn-default s-12 pl-0' do
+							svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+							  line x1="19" x2="5" y1="12" y2="12" 
+							  polyline points=("12 19 5 12 12 5") 
+							span Volver al listado
+			.card-body.s-14.p-3
+				.row
+					.col-lg-6
+						.row
+							.col-lg-12
+								h6.s-16
+									svg.svg-inline--fa.fa-info-circle.fa-w-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="info-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+										path d=("M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z") fill="currentColor" 
+									span General
+						.row
+							.col-lg-3
+								label.mb-1 Trasportista:
+							.col-lg-9.text-left
+								p.mb-1 = @driver.carrier.name.upcase
+						.row
+							.col-lg-3
+								label.mb-1 Nombre:
+							.col-lg-9.text-left
+								p.mb-1 = @driver.name.upcase
+						.row
+							.col-lg-3
+								label.mb-1 Apellidos:
+							.col-lg-9.text-left
+								p.mb-1 = @driver.last_name.upcase
+						hr.my-0
+						.row
+							.col-12
+								h6.mb-0.mt-2
+									svg.svg-inline--fa.fa-phone-square-alt.fa-w-14.h-14.mr-2.mb-1 aria-hidden="true" data-icon="phone-square-alt" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 448 512") xmlns="http://www.w3.org/2000/svg" 
+										path d=("M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48zm-16.39 307.37l-15 65A15 15 0 0 1 354 416C194 416 64 286.29 64 126a15.7 15.7 0 0 1 11.63-14.61l65-15A18.23 18.23 0 0 1 144 96a16.27 16.27 0 0 1 13.79 9.09l30 70A17.9 17.9 0 0 1 189 181a17 17 0 0 1-5.5 11.61l-37.89 31a231.91 231.91 0 0 	0 110.78 110.78l31-37.89A17 17 0 0 1 299 291a17.85 17.85 0 0 1 5.91 1.21l70 30A16.25 16.25 0 0 1 384 336a17.41 17.41 0 0 1-.39 3.37z") fill="currentColor" 
+									span.pt-2 Contacto
+						.row
+							.col-lg-3
+								label.mb-1 Teléfono:
+							.col-lg-9.text-left
+								p.mb-1 = @driver.phone
+						.row
+							.col-lg-3
+								label.mb-1 N° licencia:
+							.col-lg-9.text-left
+								p.mb-1 = @driver.licence.upcase
+
+						.row
+							.col-lg-3
+								label.mb-1 Licencia:
+							.col-lg-9.text-left
+								- if @driver.licence_imgs.attached?
+									.img
+										- @driver.licence_imgs.each do |img|
+											= image_tag(img, class: "img-thumbnail", size: "250")
+											= link_to img, target: "_blank", class: 'btn btn-sm btn-outline-info adjust_btn_download ml-2', title: 'Descargar', data: {toggle: 'tooltip', placement: 'bottom'} do
+												svg.feather.feather-download fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+												  path d=("M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4") 
+												  polyline points=("7 10 12 15 17 10") 
+												  line x1="12" x2="12" y1="15" y2="3" 

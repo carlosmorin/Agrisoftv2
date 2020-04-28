@@ -36,11 +36,14 @@ gem 'paranoia', '~> 2.4', '>= 2.4.2'
 gem 'paper_trail', '~> 10.3', '>= 10.3.1'
 gem 'active_storage_validations'
 gem 'devise'
-gem "breadcrumbs_on_rails"
 gem 'nested_form', '~> 0.3.2'
 gem 'cocoon', '~> 1.2', '>= 1.2.14'
 gem 'sassc-rails'
 gem 'rails-i18n'
+gem 'country_select'
+gem 'breadcrumbs_on_rails'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -55,6 +58,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'pry', '~> 0.12.2'
+  gem 'awesome_print', '~> 1.8'
 end
 
 group :test do

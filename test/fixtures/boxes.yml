@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  temperature: MyString
+  plate_number: MyString
+  n_econ: MyString
+  carrier: one
+  box_type: one
+
+two:
+  temperature: MyString
+  plate_number: MyString
+  n_econ: MyString
+  carrier: two
+  box_type: two

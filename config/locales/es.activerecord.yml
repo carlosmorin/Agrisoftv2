@@ -1,0 +1,32 @@
+es:
+  activerecord:
+    attributes:
+      user:
+        email: "E-mail"
+        name: "Nombre"
+        last_name: "Apellidos"
+        password: "Contraseña"
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "Nombre: no puede estar en blanco"
+            last_name:
+              blank: "Apellidos: no puede estar en blanco"
+            email:
+              blank: "Email: no puede estar en blanco"
+              invalid: "Email: no es valido"
+            password:
+              blank: "Contraseña: no puede estar en blanco"
+        products:
+          attributes:
+            crop_id:
+              blank: "Variedad: no puede estar en blanco"
+            last_name:
+              blank: "Apellidos: no puede estar en blanco"
+            email:
+              blank: "Email: no puede estar en blanco"
+              invalid: "Email: no es valido"
+            password:
+              blank: "Contraseña: no puede estar en blanco"

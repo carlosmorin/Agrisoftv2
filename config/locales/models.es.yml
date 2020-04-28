@@ -1,0 +1,149 @@
+es:
+  activerecord:
+    models:
+      user:
+        one: Usuario
+        other: Usuarios
+      tax:
+        one: Impuesto
+        other: Impuestos
+      client:
+        one: Cliente
+        other: Clientes
+      carrier:
+        one: Transportista
+        other: Transportistas
+      driver:
+        one: Conductor
+        other: Conductores
+      state:
+        one: Estado
+        other: Estados
+    attributes:
+      user: 
+        name: Nombre
+        last_name: Apellidos
+        email: Email
+        password: Contraseña
+        password_confirmation: Confirmación
+      tax:
+        name: Nombre
+        value: Porcentaje
+      client:
+        name: Razón social
+        rfc: RFC
+        phone: Telefono
+        country: Pais
+        state: Estado
+        cp: Codigo postal
+        address: Dirección
+        country_id: País
+        state_id: Estado
+        municipality_id: Municipio / condado
+        conact_name: Persona de contacto
+        email: Correo electronico
+        code: Codigo
+      unit_brand:
+        name: Nombre
+        short_name: Abreviación
+      carrier:
+        name: Razón social
+        rfc: RFC
+        phone: Telefono
+        country_id: País
+        state_id: Estado
+        cp: Codigo postal
+        address: Dirección
+        municipality_id: Municipio / condado
+        caat: CAAT
+        alpha: ALPHA
+        iccmx: ICCMX
+        usdot: US DOT
+        contact_name: Persona de contacto
+      driver:
+        name: Nombre
+        last_name: Apellidos
+        phone: Telefono
+        licence: ' N° licencia'
+        carrier_id: Transportista
+      country:
+        name: Nombre
+        short_name: Abreviación
+      state:
+        country_id: Pais
+        name: Nombre
+        short_name: Abreviación
+      unit:
+        model: Modelo
+        color: Color
+        year: Año
+        n_econ: N° economico
+        plate_number: N° de placas
+        carrier_id: Transportista
+        unit_brand_id: Marca de unidad
+      box_type:
+        name: Nombre
+      box:
+        temperature: Temperatura promedio        
+        plate_number: N° de placas        
+        n_econ: N° economico
+        carrier_id: Transportista
+        box_type_id: Tipo de caja
+      freight:
+        carrier_id: Transportista
+        driver_id: Conductor
+        unit_id: Unidad
+        box_id: Caja
+      delivery_address:
+        client_id: Cliente
+        country_id: País
+        state_id: Estado
+        municipality_id: Municipio
+        address: Dirección
+        name: Nombre
+        address: Dirección
+        phone: Telefono 
+        comments: Indicaciónes adicionales
+        email: Correo electronico
+        contact_name: Persona de contacto
+        external: Dirección de terceros
+      company:
+        name: Razón social
+        rfc: RFC
+        phone: Teléfono
+        country_id: País
+        state_id: Estado
+        municipality_id: Municipio / condado
+        cp: Código postal
+        address: Dirección
+        email: Correo electronico
+        contact_name: Persona de contacto
+      crop:
+        name: Nombre
+      size:
+        name: Nombre
+        short_name: Abreviación
+      client_brand:
+        name: Nombre
+        client_id: Cliente
+      shipment:
+        client_id: Cliente
+        company_id: Empresa remisionista
+        delivery_address_id: Direccion de entrega
+        comments: Comentarios
+      quality:
+        name: Nombre
+        short_name: Abreviación
+      color:
+        name: Nombre
+      package:
+        name: Nombre
+      product:
+        crop_id: Producto
+        color_id: Variedad
+        quality_id: Calidad
+        size_id: Tamaño
+        package_id: Empaque
+        client_brand_id: Marca
+        weight: Peso
+        unit_meassure: Unidad de medida

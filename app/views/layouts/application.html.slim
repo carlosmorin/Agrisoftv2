@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title App
+    title AgriSoft
     
     = csrf_meta_tags
     = csp_meta_tag 
@@ -9,9 +9,12 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' 
     = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' 
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' 
-  body.hold-transition.sidebar-mini
-    .wrapper
-      = render 'layouts/partials/navbar'
-      = render 'layouts/partials/sidebar'
-      .content-wrapper
-         = yield
+  body class="#{ !user_signed_in? ? 'login-page' : '' }"
+    - if user_signed_in?
+      .wrapper
+        = render 'layouts/partials/navbar'
+        = render 'layouts/partials/sidebar'
+        .content-wrapper
+          = yield
+    - else
+      = yield

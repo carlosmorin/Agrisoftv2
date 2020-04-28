@@ -1,0 +1,3 @@
+var tbody = document.getElementById("tbody"); 
+tbody.innerHTML = "";
+tbody.insertAdjacentHTML("beforeend", "<%= j render 'admin/users/users', collection: @users %>");

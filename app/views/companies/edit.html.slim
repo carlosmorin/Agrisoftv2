@@ -1,0 +1,17 @@
+section.content-header.pb-0
+  .container-fluid
+    .row.mb-2
+      .col-sm-6
+        h5 Editar empresa
+      .col-sm-6.text-right.pr-2.s-12
+        = render_breadcrumbs :separator => ' / '
+section.content
+  .container-fluid
+    = render "shared/form_info"
+    .row
+      .col-md-12
+        .card
+          .card-body
+            .row
+              .col-lg-7
+                = render 'form', states: @states, municipalities: @municipalities

@@ -1,0 +1,5 @@
+es:
+  will_paginate:
+    previous_label: "<i class='fa fa-chevron-left s-12'></i>"
+    next_label: "<i class='fa fa-chevron-right s-12'></i>"
+    page_gap: "&hellip;"

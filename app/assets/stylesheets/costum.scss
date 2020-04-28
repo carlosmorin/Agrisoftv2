@@ -1,14 +1,136 @@
 .form-group label{
-	font-size: 12px;
+	font-size: 14px;
 	padding-bottom: 0;
 	margin-bottom: 0;
-}
+	font-weight: normal; }
 
 span.error{
 	font-size: 12px;
-  color: red;
-}
+  color: red; }
 
 span.error ~ input.form-control{
 	background: red;
+}
+
+///Helpers
+//// Font size
+.s-12{ font-size: 12px !important; }
+.s-13{ font-size: 13px !important; }
+.s-14{ font-size: 14px !important; }
+.s-15{ font-size: 15px !important; }
+.s-16{ font-size: 16px !important; }
+.s-18{ font-size: 18px; }
+.s-20{ font-size: 20px; }
+
+///Font weight
+.bold{ font-weight: bold !important; }
+//Color
+.c-red{ color: #881822; }
+.c-green{ color: #002400; }
+.bg-light-gray{ background: #f4f4f4 !important;}
+.bg-light-green{ background: #fff !important;}
+.bg-light-red{ background: #ffeaea !important; }
+//
+//
+a.nav-link.active{font-weight: bold !important;}
+
+///Icons size
+.h-10{ height: 10px !important; }
+.h-12{ height: 12px !important; } .h-14{ height: 14px; } 
+.h-15{ height: 15px; } .h-16{ height: 16px; } 
+.h-18{ height: 18px; }
+.h-20{ height: 20px; }
+.h-25{ height: 25px !important; }
+.h-30{ height: 30px; }
+//Whidths
+.m-w-7rm{ min-width: 7rem !important;}
+
+//Border radius
+.br-2{ border-radius: 2px !important; }
+.br-0{ border-radius: 0px !important; }
+body{
+	width: 100%;
+	overflow: auto;
+}
+
+.erasable{
+	position: relative;
+}
+.erasable > span{
+	background: #ffc8c8;
+	position: absolute;
+	top: 7px;
+	right: 9px;
+	font-size: 8px;
+	width: 15px;
+	height: 15px;
+	text-align: center;
+	padding: 1px;
+	box-sizing: border-box;
+	border-radius: 50%;
+	color: #6f6f6f;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+//Width
+.w-300{ max-width: 300px; }
+
+h2.swal2-title{ margin-bottom: 0px; }
+
+// Backgrounds
+.bg-blue{ background-color: #0051a8; }
+
+//Colors
+.c-blue{ color: #0051a8; }
+.btn-dark-blue{ 
+	background-color: #0051a8 !important;
+	color: #e8e8e8 !important; }
+.bg-red{ background: red; }
+
+.form-control.flat{	border-radius: 0px; }
+
+label{
+	font-weight: normal !important;
+  font-size: 12px !important;
+  color: #4e4e4e;
+}
+label.select{
+	margin-bottom: 0px;
+}
+.c-gray{ color: #4e4e4e; }
+
+.select.small > .ss-single-selected{
+	height: 1.5rem !important;
+}
+.form-control-sm{
+	height: calc(1.8125rem + 0px) !important;
+	border-color: #ddd;
+	font-size: 12px !important;
+	color: #616161; 
+}
+
+input[type="text"], select, select > option 	{ text-transform: uppercase !important;}
+input[type="text"]::placeholder { /* Edge */
+  text-transform: capitalize !important;
+  font-size: 12px;
+}
+
+.card, .form-control{ border-radius: 2px !important; }
+.btn{ border-radius: 2px !important;}
+
+//Costum select
+
+.ss-single-selected{
+	border-radius: 2px !important;
+	border-color: #ced4da !important;
+}
+
+.ss-search input{
+background: red;
+height: 25px !important;
+font-size: 12px !important;}
+.ss-option{
+	padding: 4px 7px !important;
+	font-size: 10px;
 }

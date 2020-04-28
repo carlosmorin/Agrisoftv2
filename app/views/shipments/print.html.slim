@@ -1,0 +1,284 @@
+table.s-14 width="100%"
+	thead
+		tr
+			th width="100%"
+				img src="http://lasalbardas.com/ADMIN/VIEWS/resources/IMG//logo.jpg" alt="LOGO" height="80"/
+				h3.my-0 AGRICOLA LAS ALBARDAS
+		tr
+			th width="100%"
+				table width="100%"
+					tr
+						td.text-left width="70%"
+							h1 REMISI&Oacute;N DE SALIDA
+							
+						td width="30%"
+							table.s-12 width="100%"
+								tr
+									th.text-right width="20%"
+										span.text-normal Fecha:
+									th.text-left.pr-2 width="80%"
+										span = @shipment.created_at.strftime("%m/%d/%Y  %I:%M%p")
+								tr
+									th.text-right
+										span.text-normal Folio:
+									th.text-left
+										span FE-190271
+				
+								tr
+									th.text-right width="40%"
+										span.text-normal F. cliente:
+									th.text-left width="60%"
+										span FC-20-AP-001
+								tr
+									th.text-right width="50%"
+										span.text-normal F. flete:
+									th.text-left width="50%"
+										span.s-12 FF-20-001
+					tr
+						th width="100%" colspan="2"
+							hr.my-0
+	tbody.mt-0.pt-0 
+		tr
+			th
+				table.pt-0 width="100%"
+					tr
+						th.text-left width="100%"
+							table width="100%"
+								tr
+									th.text-right width="13%"
+										b.mt-1.mr-1 REMITENTE:
+									th width="87%"
+										span.text-normal.pr-3 = @shipment.company.name.upcase
+								tr
+									th.text-right width="15%"
+										b.mt-1.mr-1 DOMICILIO:
+									th width="85%"
+										span.text-normal.pr-3 = @shipment.company.full_address.upcase
+								tr
+									th.text-right width="15%"
+										b.mt-1.mr-1 RFC:
+									th width="85%"
+										span.text-normal.pr-3.mr-2 = @shipment.company.rfc.upcase
+										b.mt-1.mr-1 TELÉFONO:
+										span.text-normal.pr-3 = @shipment.company.phone.upcase
+					tr
+						th
+							hr
+					tr
+						th.text-left width="100%"
+							table width="100%"
+								tr
+									th.text-right width="15%"
+										b.mt-1.mr-1 DESTINATARIO:
+									th width="85%"
+										span.text-normal.pr-3 = @shipment.client.name.upcase
+								tr
+									th.text-right width="15%"
+										b.mt-1.mr-1 DOMICILIO:
+									th width="85%"
+										span.text-normal.pr-3 = @shipment.client.full_address.upcase
+								tr
+									th.text-right width="15%"
+										b.mt-1.mr-1 RFC:
+									th width="85%"
+										span.text-normal.pr-3.mr-2 = @shipment.client.rfc.upcase
+										b.mt-1.mr-1 TELÉFONO:
+										span.text-normal.pr-3 = @shipment.client.phone.upcase
+					tr
+						th
+							hr
+				table.pt-0.mt-0 width="100%"
+					tr
+						th.text-left.pt-0.mt-0.text-left width="50%"
+							h4.mb-1.mt-0 ORIGEN
+							span.text-normal.pr-3 Parras de la Fuente, Coahuila, México, Agricola las albardas.
+							br
+							span TELÉFONO: 
+							span.text-normal 844 122-1235
+						th.text-left.pt-0.mt-0 width="50%"
+							h4.mb-1.mt-0 DESTINO
+							span.text-normal.pr-3 = @shipment.delivery_address.full_address
+							br
+							span TELÉFONO: 
+							span.text-normal = @shipment.delivery_address.phone
+
+				table.mt-2.pdf_table width="100%"
+					thead
+						tr
+							th.text-left width="64%"
+								b DESCRIPCIÓN DEL PRODUCTO
+							th width="12%"
+								b CANTIDAD
+							th width="12%"
+								b PRECIO
+							th width="12%"
+								b TOTAL 	
+					tbody
+						- total_quantity = 0
+						- n_products = @shipment.shipments_products.size
+						- @shipment.shipments_products.each do |product|
+							- total_quantity += product.quantity.to_i
+							tr
+								td.text-left
+									span.text-normal.s-13 = product.product.name.upcase
+								td
+									span.text-normal = product.quantity
+								td
+									span.text-normal $0.00
+								td
+									span.text-normal $0.00
+						tr style="background: #fff;"
+							- height = "" 
+							- height = n_products < 8 ? 'h-2' : '' 
+							- height = n_products < 5 ? 'h-10' : '' 
+							td class="#{height}" colspan="4"
+								br
+						tr style="background: #fff;"
+							td style="border: none; background: #fff;"
+							td 
+								b = total_quantity
+							td
+							td
+						tr style="background: #fff;"
+							td style="border: none;" colspan="2"
+							td.text-right SUBTOTAL
+							td
+								b $0.00
+						tr style=" background: #f2f2f2;"
+							td style="border: none; background: #fff;" colspan="2"
+							td.text-right TOTAL
+							td
+								b $0.00
+		tr
+			th
+				table.mt-2 width="100%"
+					tr
+						th.text-right width="13%"
+							b.mt-1.mr-1 TRANSPORTISTA:
+						th.text-left width="87%"
+							span.text-normal.pr-3 = @freight.carrier.name.upcase
+					tr
+						th.text-right width="15%"
+							b.mt-1.mr-1 DOMICILIO:
+						th.text-left width="85%"
+							span.text-normal.pr-3 = @freight.carrier.full_address.upcase
+					tr
+						th.text-right width="15%"
+							b.mt-1.mr-1 RFC:
+						th.text-left width="85%"
+							span.text-normal.pr-3.mr-2 = @freight.carrier.rfc.upcase
+							b.mt-1.mr-1 TELÉFONO:
+							span.text-normal.pr-3 = @freight.carrier.phone.upcase
+		tr
+			th
+				table.mt-2 width="100%"
+					tr
+						th.text-right width="13%"
+							b.mt-1.mr-1 OPERADOR:
+						th.text-left width="87%"
+							span.text-normal.pr-3.mr-2 = @freight.driver.full_name.upcase
+							b.mt-1.mr-1 # LICENCIA:
+							span.text-normal.pr-3.mr-2 = @freight.driver.licence.upcase
+							b.mt-1.mr-1 TELÉFONO:
+							span.text-normal.pr-3 = @freight.driver.licence.upcase
+		tr
+			th
+				table width="100%"
+					tr
+						th.text-left width="30%"
+							h4.mb-0 PERMISOS
+							table.mt-1 width="100%"
+								tr
+									th width="25%"
+										span CAAT:
+									th width="75%"
+										span.text-normal = @freight.carrier.caat.present? ? @freight.carrier.caat : '--'
+								tr
+									th width="25%"
+										span ALPHA:
+									th width="75%"
+										span.text-normal = @freight.carrier.alpha.present? ? @freight.carrier.alpha : '--'
+								tr
+									th width="25%"
+										span ICCMX:
+									th width="75%"
+										span.text-normal = @freight.carrier.iccmx.present? ? @freight.carrier.iccmx : '--'
+								tr
+									th width="25%"
+										span USDOT:
+									th width="75%"
+										span.text-normal = @freight.carrier.usdot.present? ? @freight.carrier.usdot : '--'
+
+						th.text-left width="35%"
+							h4.mb-0 UNIDAD
+							table.mt-1 width="100%"
+								tr
+									th width="30%"
+										span MARCA:
+									th width="70%"
+										span.text-normal = @freight.unit.unit_brand.present? ? @freight.unit.unit_brand.name : '--'
+								tr
+									th width="30%"
+										span MODELO:
+									th width="70%"
+										span.text-normal = @freight.unit.model.present? ? @freight.unit.model : '--'
+										span.text-normal = @freight.unit.year.present? ? " #{@freight.unit.year}" : '--'
+								tr
+									th width="30%"
+										span N° ECON:
+									th width="70%"
+										span.text-normal = @freight.unit.n_econ.present? ? @freight.unit.n_econ : '--'
+								tr
+									th width="30%"
+										span N° PLACAS:
+									th width="70%"
+										span.text-normal = @freight.unit.plate_number.present? ? @freight.unit.plate_number : '--'
+						th.text-left width="35%"
+							h4.mb-0 CAJA
+							table.mt-1 width="100%"
+								tr
+									th width="30%"
+										span TIPO:
+									th width="70%"
+										span.text-normal = @freight.box.box_type.present? ? @freight.box.box_type.name : '--'
+								tr
+									th width="30%"
+										span N° ECON:
+									th width="70%"
+										span.text-normal = @freight.box.n_econ? ? @freight.box.n_econ : '--'
+								tr
+									th width="30%"
+										span N° PLACAS:
+									th width="70%"
+										span.text-normal = @freight.box.plate_number.present? ? @freight.box.plate_number : '--'
+								tr
+									th width="30%"
+										span TEMPERATURA:
+									th width="70%"
+										span.text-normal = @freight.box.temperature.present? ? "#{@freight.box.temperature}° c" : '--'
+		tr
+			th
+				hr
+		tr
+			th.text-left
+				b.mt-1.mr-1 COMENTARIOS
+				br
+				span.text-normal = @shipment.comments.upcase
+
+	tfoot
+		tr
+			td width="100%"
+				table width="100%"
+					tr
+						th.text-center.pt-4 width="50%"
+							span __________________________________________
+							br
+							span = @freight.user.full_name
+							br
+							small REMISIONISTA 
+						th.text-center.pt-4 width="50%"
+							span __________________________________________
+							br
+							span = @freight.driver.full_name 
+							br
+							small OPERADOR

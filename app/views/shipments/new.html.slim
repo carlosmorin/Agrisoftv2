@@ -1,0 +1,19 @@
+section.content-header.pb-0
+	.container
+		.row.mb-2
+			.col-sm-6
+				h5 Nuevo embarque
+			.col-sm-6.text-right.pr-2.s-12
+				= render_breadcrumbs :separator => ' / ' 
+section.content
+	.container
+		= render "shared/form_info"
+		.row
+			.col-md-12
+				= render 'form'
+#modal-window.modal.fade
+	.modal-dialog.modal-lg
+		.modal-content.br-2
+			.modal-header
+				h6.bold.mb-0 Nuevo producto 
+			#modal-body.modal-body

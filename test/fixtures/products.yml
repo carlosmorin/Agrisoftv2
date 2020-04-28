@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  crop: one
+  color: one
+  quality: one
+  size: one
+  package: one
+
+two:
+  crop: two
+  color: two
+  quality: two
+  size: two
+  package: two
