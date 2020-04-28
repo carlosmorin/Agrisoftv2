@@ -253,8 +253,8 @@ ActiveRecord::Schema.define(version: 2020_04_27_214708) do
     t.bigint "state_id", null: false
     t.string "key"
     t.string "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.integer "active"
     t.index ["state_id"], name: "index_municipalities_on_state_id"
   end
