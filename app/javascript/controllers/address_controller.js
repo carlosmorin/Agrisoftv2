@@ -19,6 +19,8 @@ export default class extends Controller {
 		var country_id = this.countryIdTarget.value
 		var url = "/addresses/addresses/states?country_id=" + country_id;
 		var options = "";
+		var options = "<option value=''>SELECCIONA</option>";
+		
 		axios({
   		method: 'GET',
 			dataType: "JSON",
@@ -38,6 +40,7 @@ export default class extends Controller {
 		var state_id = this.stateIdTarget.value
 		var url = "/addresses/addresses/municipalities?state_id=" + state_id;
 		var options = "";
+		var options = "<option value=''>SELECCIONA</option>";
 		axios({
   		method: 'GET',
 			dataType: "JSON",
@@ -58,7 +61,8 @@ export default class extends Controller {
 		var location_id = this.municipalityIdTarget.value
 		var url = "/addresses/addresses/locations?location_id=" + location_id;
 		var options = "";
-
+		var options = "<option value=''>SELECCIONA</option>";
+		
 		axios({
   		method: 'GET',
 			dataType: "JSON",
