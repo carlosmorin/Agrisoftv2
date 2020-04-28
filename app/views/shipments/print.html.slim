@@ -2,16 +2,18 @@ table.s-14 width="100%"
 	thead
 		tr
 			th width="100%"
-				img src="http://lasalbardas.com/ADMIN/VIEWS/resources/IMG//logo.jpg" alt="LOGO" height="80"/
-				h3.my-0 AGRICOLA LAS ALBARDAS
+				table width="100%"
+					th.text-left width="35%"
+						img src="http://lasalbardas.com/ADMIN/VIEWS/resources/IMG//logo.jpg" alt="LOGO" height="60"/
+					th.text-left width="65%"
+						h3.my-0 AGRICOLA LAS ALBARDAS
 		tr
 			th width="100%"
 				table width="100%"
 					tr
-						td.text-left width="70%"
+						td.text-left width="65%"
 							h1 REMISI&Oacute;N DE SALIDA
-							
-						td width="30%"
+						td width="35%"
 							table.s-12 width="100%"
 								tr
 									th.text-right width="20%"
@@ -46,7 +48,7 @@ table.s-14 width="100%"
 							table width="100%"
 								tr
 									th.text-right width="13%"
-										b.mt-1.mr-1 REMITENTE:
+										b.mt-0.mr-1.pt-0 REMITENTE:
 									th width="87%"
 										span.text-normal.pr-3 = @shipment.company.name.upcase
 								tr
@@ -130,7 +132,7 @@ table.s-14 width="100%"
 						tr style="background: #fff;"
 							- height = "" 
 							- height = n_products < 8 ? 'h-2' : '' 
-							- height = n_products < 5 ? 'h-10' : '' 
+							- height = n_products < 4 ? 'h-6' : '' 
 							td class="#{height}" colspan="4"
 								br
 						tr style="background: #fff;"

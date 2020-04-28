@@ -11,13 +11,13 @@
       = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
         .form-group.mb-3
           = f.input :email,
-                required: false,
-                autofocus: true,
-                input_html: { autocomplete: "email", class: 'form-control w-full', placeholder: 'Ej. admin@gmail.com' }
+            required: false,
+            autofocus: true,
+            input_html: { autocomplete: "email", class: 'form-control w-full', placeholder: 'Ej. admin@gmail.com' }
         .form-group.mb-3
           = f.input :password,
-                required: false,
-                input_html: { autocomplete: "current-password", class: 'form-control w-full', placeholder: '*******'}
+            required: false,
+            input_html: { autocomplete: "current-password", class: 'form-control w-full', placeholder: '*******'}
         .row
           .col-12
             .icheck-primary
