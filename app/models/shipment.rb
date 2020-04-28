@@ -18,7 +18,6 @@ class Shipment < ApplicationRecord
 	enum status: { sent: 0, in_reporting_process: 1, in_payment_process: 2,
 		liquidated: 3, canceled: 4 }
 
-
 	private
 
 	def set_status
