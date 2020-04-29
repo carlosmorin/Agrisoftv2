@@ -57,12 +57,12 @@ section.content data-controller="products"
 									- @products.each do |product|
 										tr
 											td = product.id
-											td = product.crop.name
-											td = product.client_brand.name
-											td = product.quality.name
-											td = product.color.name
-											td = product.size.name
-											td = product.package.name
+											td = product.crop.name.upcase
+											td = product.client_brand.name.upcase
+											td = product.quality.name.upcase
+											td = product.color.name.upcase
+											td = product.size.name.upcase
+											td = product.package.name.upcase
 											td.text-center
 												= link_to config_product_path(product), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
 													svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 

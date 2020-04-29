@@ -60,3 +60,8 @@ section.content
 								label.mb-1 Marca:
 							.col-lg-9.text-left
 								p.mb-1 = @product.client_brand.name.upcase
+						.row
+							.col-lg-3
+								label.mb-1 Peso:
+							.col-lg-9.text-left
+								p.mb-1 = "#{@product.weight} #{@product.unit_meassure}".upcase
