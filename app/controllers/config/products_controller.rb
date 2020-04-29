@@ -1,7 +1,6 @@
 module Config
   class ProductsController < ApplicationController
     before_action :set_object, only: %i[edit update destroy show]
-    before_action :set_catalogs, only: %i[update]
 
     add_breadcrumb "Config"
     add_breadcrumb "Productos", :config_products_path
@@ -80,14 +79,6 @@ module Config
 
     def set_crop
       @crop = Crop.find(params[:crop_id])
-    end
-
-    def set_catalogs
-      country = Country.find(@address.country_id)
-      state = State.find(@address.state_id)
-
-      @states = country.states
-      @municipalities = state.municipalities
     end
 	end
 end

@@ -17,7 +17,9 @@ class Product < ApplicationRecord
   private
 
   def set_name
-    self.name = "#{crop.name} #{color.name} #{quality.name} #{size.name} 
+    size_name = size.short_name.present? ? size.short_name : size.name
+    quality_name = quality.short_name.present? ? quality.short_name : quality.name
+    self.name = "#{crop.name} #{color.name} #{quality_name} #{size_name} 
       #{package.name} #{client_brand.name}"
   end
 end
