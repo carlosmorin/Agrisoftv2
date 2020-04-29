@@ -24,18 +24,18 @@ table.s-14 width="100%"
 									th.text-right
 										span.text-normal Folio:
 									th.text-left
-										span FE-190271
+										span  = @shipment.folio
 				
 								tr
 									th.text-right width="40%"
 										span.text-normal F. cliente:
 									th.text-left width="60%"
-										span FC-20-AP-001
+										span = @shipment.client_folio
 								tr
 									th.text-right width="50%"
 										span.text-normal F. flete:
 									th.text-left width="50%"
-										span.s-12 FF-20-001
+										span.s-12 = @shipment.freight_folio
 					tr
 						th width="100%" colspan="2"
 							hr.my-0
@@ -96,7 +96,7 @@ table.s-14 width="100%"
 							span.text-normal.pr-3 Parras de la Fuente, Coahuila, México, Agricola las albardas.
 							br
 							span TELÉFONO: 
-							span.text-normal 844 122-1235
+							span.text-normal = @shipment.company.phone
 						th.text-left.pt-0.mt-0 width="50%"
 							h4.mb-1.mt-0 DESTINO
 							span.text-normal.pr-3 = @shipment.delivery_address.full_address
@@ -215,26 +215,25 @@ table.s-14 width="100%"
 							h4.mb-0 UNIDAD
 							table.mt-1 width="100%"
 								tr
-									th width="30%"
+									th width="35%"
 										span MARCA:
-									th width="70%"
-										span.text-normal = @freight.unit.unit_brand.present? ? @freight.unit.unit_brand.name : '--'
+									th width="65%"
+										span.text-normal = @freight.unit.unit_brand.present? ? @freight.unit.unit_brand.name.upcase : '--'
 								tr
-									th width="30%"
-										span MODELO:
-									th width="70%"
-										span.text-normal = @freight.unit.model.present? ? @freight.unit.model : '--'
+									th width="35%"
+										span AÑO:
+									th width="65%"
 										span.text-normal = @freight.unit.year.present? ? " #{@freight.unit.year}" : '--'
 								tr
-									th width="30%"
+									th width="35%"
 										span N° ECON:
-									th width="70%"
-										span.text-normal = @freight.unit.n_econ.present? ? @freight.unit.n_econ : '--'
+									th width="65%"
+										span.text-normal = @freight.unit.n_econ.present? ? @freight.unit.n_econ.upcase : '--'
 								tr
-									th width="30%"
+									th width="35%"
 										span N° PLACAS:
-									th width="70%"
-										span.text-normal = @freight.unit.plate_number.present? ? @freight.unit.plate_number : '--'
+									th width="65%"
+										span.text-normal = @freight.unit.plate_number.present? ? @freight.unit.plate_number.upcase : '--'
 						th.text-left width="35%"
 							h4.mb-0 CAJA
 							table.mt-1 width="100%"
@@ -257,7 +256,7 @@ table.s-14 width="100%"
 									th width="30%"
 										span TEMPERATURA:
 									th width="70%"
-										span.text-normal = @freight.box.temperature.present? ? "#{@freight.box.temperature}° c" : '--'
+										span.text-normal = @freight.box.temperature.present? ? "#{@freight.box.temperature} °F" : '--'
 		tr
 			th
 				hr
@@ -266,7 +265,6 @@ table.s-14 width="100%"
 				b.mt-1.mr-1 COMENTARIOS
 				br
 				span.text-normal = @shipment.comments.upcase
-
 	tfoot
 		tr
 			td width="100%"
@@ -275,12 +273,12 @@ table.s-14 width="100%"
 						th.text-center.pt-4 width="50%"
 							span __________________________________________
 							br
-							span = @freight.user.full_name
+							small = @freight.user.full_name
 							br
 							small REMISIONISTA 
 						th.text-center.pt-4 width="50%"
 							span __________________________________________
 							br
-							span = @freight.driver.full_name 
+							small = @freight.driver.full_name 
 							br
 							small OPERADOR
