@@ -9,13 +9,13 @@
 				= f.input :crop_id, collection: Crop.all, input_html: { class: 's-12', data: { action: 'change->products#filterColorsByCropId', target: 'products.cropId' } }
 		.row.mb-1
 			.col-md-6
-				= f.input :color_id, collection: [], input_html: { class: 's-12' }
+				= f.input :color_id, collection: Color.all, input_html: { class: 's-12' }
 			.col-md-6
-				= f.input :quality_id, collection: [], input_html: { class: 's-12' }
+				= f.input :quality_id, collection: Quality.all, input_html: { class: 's-12' }
 			.col-md-6
-				= f.input :size_id, collection: [], input_html: { class: 's-12' }
+				= f.input :size_id, collection: Size.all, input_html: { class: 's-12' }
 			.col-md-6
-				= f.input :package_id, collection: [], input_html: { class: 's-12' }
+				= f.input :package_id, collection: Package.all, input_html: { class: 's-12' }
 			.col-md-8
 				= f.input :weight, input_html: { class: 's-12 form-control form-control-sm' }
 			.col-md-4
