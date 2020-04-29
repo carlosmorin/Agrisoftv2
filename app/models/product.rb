@@ -14,6 +14,9 @@ class Product < ApplicationRecord
   has_many :shipments_products, inverse_of: :product
   has_many :shipments, through: :shipments_products
 
+  enum unit_meassure: { lbs: 0, kg: 1, granel: 2 }
+  ## STATUS => lbs = libras, kg: kilogramas, granel: agrenel
+
   private
 
   def set_name
@@ -22,4 +25,5 @@ class Product < ApplicationRecord
     self.name = "#{crop.name} #{color.name} #{quality_name} #{size_name} 
       #{package.name} #{client_brand.name} #{weight} #{unit_meassure} "
   end
+
 end
