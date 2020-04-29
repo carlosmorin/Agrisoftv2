@@ -14,6 +14,6 @@ class Box < ApplicationRecord
   belongs_to :box_type
 
   def set_name
-  	self.name = "#{box_type.name}-#{plate_number}"
+  	self.name = "#{box_type.name}, PLACAS: #{plate_number}".upcase
   end
 end

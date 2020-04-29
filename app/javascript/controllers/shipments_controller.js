@@ -38,7 +38,7 @@ export default class extends Controller {
 		})
 		.then(function (response) {
 			for (var key in response.data){
-				options += "<option value='"+ response.data[key].id +"'>" + response.data[key].name +  "</option>";
+				options += "<option value='"+ response.data[key].id +"'>" + response.data[key].name + ' ' + response.data[key].last_name +  "</option>";
 			}
 			driversSelect.append(options);
 		});
@@ -90,7 +90,7 @@ export default class extends Controller {
 		})
 		.then(function (response) {
 			for (var key in response.data){
-				options += "<option value='"+ response.data[key].id +"'>" + response.data[key].name +  "</option>";
+				options += "<option value='"+ response.data[key].id +"'>" + response.data[key].name + "</option>";
 			}
 			daSelect.append(options);
 		});		
