@@ -84,7 +84,7 @@ class ShipmentsController < ApplicationController
   private
 
   def set_collections
-    @drivers = Driver.all.pluck(:full_name, :id)
+    @drivers = Driver.all.pluck(:name, :id)
     @units = Unit.all.pluck(:name, :id)
     @boxes = Box.all.pluck(:name, :id)
     @delivery_addresses = DeliveryAddress.all.pluck(:name, :id)
