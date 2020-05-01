@@ -4,7 +4,7 @@ const axios = require('axios');
 const $ = require('jquery');
 
 export default class extends Controller {
-	static targets = [ "carrierId" , "clientId", "productsContainer" ]
+	static targets = [ "carrierId" , "clientId", "productsContainer", "costInput"]
 	initialize() {
 		let container = this.productsContainerTarget
 		$("#products").on('cocoon:after-insert', function(e, insertedItem, originalEvent) {
@@ -95,6 +95,13 @@ export default class extends Controller {
 			daSelect.append(options);
 		});		
 
+	}
+
+	validateCost(){
+		if (this.costInputTarget.value >= 0){
+			$(".freight_pay_company").removeAttr("disabled")
+			
+		}
 	}
 
 }

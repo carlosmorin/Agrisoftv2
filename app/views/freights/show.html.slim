@@ -1,0 +1,128 @@
+section.content-header.pb-0
+  .container-fluid
+    .row.mb-2
+      .col-sm-6
+        h5 Detalle de flete
+      .col-sm-6.text-right.pr-2.s-12
+        = render_breadcrumbs :separator => ' / '
+section.content
+	.container-fluid
+		.row
+			.col-lg-12
+				= render "shared/alerts"
+    .card
+      .card-header.p-2.pb-1
+        .row
+          .col-md-12
+            = link_to edit_freight_path(@freight), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
+              svg.feather.feather-edit.mr-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+              span Editar
+            = link_to freights_path, class: 'mr-2 btn btn-sm btn-default s-12 pl-0' do
+              svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+                line x1="19" x2="5" y1="12" y2="12" 
+                polyline points=("12 19 5 12 12 5") 
+              span Volver al listado
+      .card-body.s-14.p-3
+        .row
+          .col-lg-12
+            h6.s-16
+              svg.svg-inline--fa.fa-info-circle.fa-w-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="info-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+                path d=("M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z") fill="currentColor" 
+              span General
+        .row
+          .col-lg-2
+            label.mb-1 Folio:
+          .col-lg-7.text-left
+            p.mb-1.bold = link_to shipments_path(q: @freight.folio ) do
+              span = @freight.folio.upcase
+              svg.feather.feather-external-link fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+                path d=("M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6") 
+                polyline points=("15 3 21 3 21 9") 
+                line x1="10" x2="21" y1="14" y2="3" 
+
+        .row
+          .col-lg-2
+            label.mb-1 Transportista:
+          .col-lg-7.text-left
+            p.mb-1 = @freight.carrier.name.upcase
+        .row
+          .col-lg-2
+            label.mb-1 Operador:
+          .col-lg-7.text-left
+            p.mb-1 = @freight.driver.full_name.upcase
+        .row
+          .col-lg-2
+            label.mb-1 Unidad:
+          .col-lg-7.text-left
+            p.mb-1 = @freight.unit.name.upcase
+        .row
+          .col-lg-2
+            label.mb-1 Caja:
+          .col-lg-7.text-left
+            p.mb-1 = @freight.box.name.upcase
+        .row.mt-2
+          .col-lg-12
+            h6.s-16
+              svg.svg-inline--fa.fa-route.fa-w-16.h-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="route" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+                  path d=("M416 320h-96c-17.6 0-32-14.4-32-32s14.4-32 32-32h96s96-107 96-160-43-96-96-96-96 43-96 96c0 25.5 22.2 63.4 45.3 96H320c-52.9 0-96 43.1-96 96s43.1 96 96 96h96c17.6 0 32 14.4 32 32s-14.4 32-32 32H185.5c-16 24.8-33.8 47.7-47.3 64H416c52.9 0 96-43.1 96-96s-43.1-96-96-96zm0-256c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM96 256c-53 0-96 43-96 96s96 160 96 160 96-107 96-160-43-96-96-96zm0 128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z") fill="currentColor" 
+              span Direcciones
+        .row
+          .col-lg-2
+            label.mb-1 Origen:
+          .col-lg-7.text-left
+            svg.feather.feather-map-pin.mr-1 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+              path d=("M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z") 
+              circle cx="12" cy="10" r="3" 
+            span Parras de la Fuente, Coahuila, México, Agricola las albardas.
+        .row
+          .col-lg-2
+            label.mb-1 Destino:
+          .col-lg-7.text-left
+            svg.feather.feather-map-pin.mr-1 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+                path d=("M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z") 
+                circle cx="12" cy="10" r="3" 
+            span = @freight.shipments.first.delivery_address.full_address
+        .row.mt-2
+          .col-lg-12
+            h6.s-16
+              svg.svg-inline--fa.fa-file-invoice-dollar.fa-w-12.h-16.mr-2.mb-1 aria-hidden="true" data-icon="file-invoice-dollar" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
+                path d=("M377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-153 31V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 80v-16c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8zm144 263.88V440c0 4.42-3.58 8-8 8h-16c-4.42 0-8-3.58-8-8v-24.29c-11.29-.58-22.27-4.52-31.37-11.35-3.9-2.93-4.1-8.77-.57-12.14l11.75-11.21c2.77-2.64 6.89-2.76 10.13-.73 3.87 2.42 8.26 3.72 12.82 3.72h28.11c6.5 0 11.8-5.92 11.8-13.19 0-5.95-3.61-11.19-8.77-12.73l-45-13.5c-18.59-5.58-31.58-23.42-31.58-43.39 0-24.52 19.05-44.44 42.67-45.07V232c0-4.42 3.58-8 8-8h16c4.42 0 8 3.58 8 8v24.29c11.29.58 22.27 4.51 31.37 11.35 3.9 2.93 4.1 8.77.57 12.14l-11.75 11.21c-2.77 2.64-6.89 2.76-10.13.73-3.87-2.43-8.26-3.72-12.82-3.72h-28.11c-6.5 0-11.8 5.92-11.8 13.19 0 5.95 3.61 11.19 8.77 12.73l45 13.5c18.59 5.58 31.58 23.42 31.58 43.39 0 24.53-19.05 44.44-42.67 45.07z") fill="currentColor" 
+              span Costos
+        .row
+          .col-lg-2
+            label.mb-1 Costo:
+          .col-lg-7.text-left
+            p.mb-1 = "$ 0.00"
+        .row
+          .col-lg-2
+            label.mb-1 Deudor:
+          .col-lg-7.text-left
+            p.mb-1  Lorem ipsum dolor sit amet.
+        .row.mt-2
+          .col-lg-12
+            h6.s-16
+              svg.svg-inline--fa.fa-file-invoice.fa-w-12.h-16.mr-2.mb-1 aria-hidden="true" data-icon="file-invoice" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
+                path d=("M288 256H96v64h192v-64zm89-151L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-153 31V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 64c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm256 304c0 4.42-3.58 8-8 8h-80c-4.42 0-8-3.58-8-8v-16c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16zm0-200v96c0 8.84-7.16 16-16 16H80c-8.84 0-16-7.16-16-16v-96c0-8.84 7.16-16 16-16h224c8.84 0 16 7.16 16 16z") fill="currentColor" 
+                span Facturación
+        .row
+          .col-lg-2
+            label.mb-1 Folio de factura:
+          .col-lg-7.text-left
+            p.mb-1 = "RM-50050"
+        .row
+          .col-lg-2
+            label.mb-1 Monto de factura:
+          .col-lg-7.text-left
+            p.mb-1 = "$ 0.00"
+        .row
+          .col-lg-2
+            label.mb-1 Factura PDF:
+          .col-lg-7.text-left
+            p.mb-1 = "$ 0.00"
+        .row
+          .col-lg-2
+            label.mb-1 Factura XML:
+          .col-lg-7.text-left
+            p.mb-1  Lorem ipsum dolor sit amet.

@@ -14,4 +14,8 @@ class DeliveryAddress < ApplicationRecord
 	def full_address
 		"#{municipality.name}, #{state.name}, #{address}, #{country.name}"
 	end
+
+  def short_address
+    "#{state.name}, #{municipality.name}"
+  end
 end

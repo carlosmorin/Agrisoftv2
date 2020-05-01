@@ -23,7 +23,7 @@ class Product < ApplicationRecord
     size_name = size.short_name.present? ? size.short_name : size.name
     quality_name = quality.short_name.present? ? quality.short_name : quality.name
     self.name = "#{crop.name} #{color.name} #{quality_name} #{size_name} 
-      #{package.name} #{client_brand.name} #{weight} #{unit_meassure} "
+      #{package.name} #{client_brand.name} #{weight} #{unit_meassure}".upcase
   end
 
 end

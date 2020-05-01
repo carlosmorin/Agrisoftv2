@@ -84,7 +84,7 @@ class ShipmentsController < ApplicationController
   private
 
   def set_collections
-    @drivers = Driver.all.pluck(:full_name, :id)
+    @drivers = Driver.all.pluck(:name, :id)
     @units = Unit.all.pluck(:name, :id)
     @boxes = Box.all.pluck(:name, :id)
     @delivery_addresses = DeliveryAddress.all.pluck(:name, :id)
@@ -111,7 +111,8 @@ class ShipmentsController < ApplicationController
 
   def shipment_params
   	params.require(:freight).permit(
-      :carrier_id, :driver_id, :unit_id, :box_id, :user_id,
+      :carrier_id, :driver_id, :unit_id, :box_id, :user_id, :pay_client,
+        :pay_company, :cost, :currency,
           shipments_attributes: [:id, :company_id, :client_id,
             :delivery_address_id, :comments, :_destroy, :pay_freight,
           shipments_products_attributes: [:id, :price, :quantity, :shipment_id,

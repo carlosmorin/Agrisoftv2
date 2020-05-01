@@ -1,6 +1,6 @@
 class Freight < ApplicationRecord
 	before_create :set_folio
-	validates :carrier_id, :driver_id, :unit_id, :box_id, presence: true
+	validates :carrier_id, :driver_id, :cost, :unit_id, :box_id, presence: true
 	belongs_to :carrier
 	belongs_to :driver
 	belongs_to :unit
