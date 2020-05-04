@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_29_215814) do
+ActiveRecord::Schema.define(version: 2020_05_04_211502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -234,11 +234,23 @@ ActiveRecord::Schema.define(version: 2020_04_29_215814) do
     t.boolean "pay_company"
     t.decimal "cost"
     t.integer "currency"
+    t.string "invoice_serie"
+    t.integer "invoice_total"
     t.index ["box_id"], name: "index_freights_on_box_id"
     t.index ["carrier_id"], name: "index_freights_on_carrier_id"
     t.index ["driver_id"], name: "index_freights_on_driver_id"
     t.index ["unit_id"], name: "index_freights_on_unit_id"
     t.index ["user_id"], name: "index_freights_on_user_id"
+  end
+
+  create_table "freights_taxes", force: :cascade do |t|
+    t.bigint "freight_id", null: false
+    t.bigint "tax_id", null: false
+    t.decimal "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["freight_id"], name: "index_freights_taxes_on_freight_id"
+    t.index ["tax_id"], name: "index_freights_taxes_on_tax_id"
   end
 
   create_table "general_information", force: :cascade do |t|
@@ -431,6 +443,8 @@ ActiveRecord::Schema.define(version: 2020_04_29_215814) do
   add_foreign_key "freights", "drivers"
   add_foreign_key "freights", "units"
   add_foreign_key "freights", "users"
+  add_foreign_key "freights_taxes", "freights"
+  add_foreign_key "freights_taxes", "taxes"
   add_foreign_key "general_information", "users"
   add_foreign_key "municipalities", "states"
   add_foreign_key "products", "client_brands"

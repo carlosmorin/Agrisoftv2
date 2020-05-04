@@ -33,6 +33,7 @@ section.content
                   th style=("width: 5%")  #
                   th Razón social
                   th RFC
+                  th N° embarques
                   th Teléfono
                   th Correo
                   th.text-center colspan="2" style=("width: 12%") Acciónes
@@ -47,6 +48,7 @@ section.content
                       td = client.id
                       td = client.name.upcase
                       td = client.rfc.upcase
+                      td = client.shipments.size
                       td = client.phone.upcase
                       td = client.email? ? client.email : '--'
                       td.text-center

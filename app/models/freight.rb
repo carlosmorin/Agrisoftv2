@@ -7,7 +7,12 @@ class Freight < ApplicationRecord
 	belongs_to :box
 	belongs_to :user
 	has_many :shipments, inverse_of: :freight
+	has_many :freights_taxes, inverse_of: :freight
 	accepts_nested_attributes_for :shipments, allow_destroy: true
+	accepts_nested_attributes_for :freights_taxes, allow_destroy: true
+  has_one_attached :pdf_invoice
+  has_one_attached :xml_invoice
+
 
 	private
 

@@ -57,8 +57,8 @@ section.content
                 - else
                   - @shipments.each do |shipment|
                     tr
-                      td = shipment.company.name
-                      td = shipment.client.name
+                      td = shipment.company.name.upcase
+                      td = shipment.client.name.upcase
                       td.text-center = shipment.freight.folio.present? ? shipment.freight.folio.upcase : '--'
                       td.text-center = shipment.folio.present? ? shipment.folio.upcase : '--'
                       td.text-center = shipment.client_folio.present? ? shipment.client_folio.upcase : '--' 

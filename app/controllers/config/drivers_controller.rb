@@ -63,7 +63,7 @@ module Config
 
 	  def driver_params
 			params.require(:driver).permit(
-				:name, :last_name, :phone, :licence, :carrier_id, licence_imgs: [])
+				:name, :last_name, :phone, :licence, :carrier_id, :licence_img)
 	  end
 
 	  def set_object

@@ -94,6 +94,11 @@ es:
         driver_id: Conductor
         unit_id: Unidad
         box_id: Caja
+        invoice_serie: Numero de factura
+        invoice_total: Monto de factura
+        pdf_invoice: PDF
+        xml_invoice: XML
+        cost: Costo
       delivery_address:
         client_id: Cliente
         country_id: País
