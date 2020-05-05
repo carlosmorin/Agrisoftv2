@@ -19,7 +19,7 @@ class Freight < ApplicationRecord
 	def set_folio
 		year = Time.now.year
 		total_freight = get_total_freight(year.to_s)
-		year =  year.to_s[2, 2]
+		year = year.to_s[2, 2]
 		self.folio = "FF-#{year}-#{total_freight}"
 	end
 

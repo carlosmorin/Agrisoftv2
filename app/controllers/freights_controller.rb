@@ -10,9 +10,19 @@ class FreightsController < ApplicationController
 
   def edit
     add_breadcrumb "Editar"
-    iva_id = Tax.find_by_name("iva").id
+    iva_id = Tax.find_by_name("IVA").id
     @freight.freights_taxes.build(tax_id: iva_id)
-	end
+  end
+
+  def update
+    if @freight.update(frieght_params)
+      flash[:notice] = "Felete <b>#{@freight.folio.upcase}</b> actualizado
+        exitosamente"
+      redirect_to freight_url(@freight)
+    else
+      render :edit
+    end
+  end
   
   def show
     add_breadcrumb "Detalle" 
@@ -26,7 +36,7 @@ class FreightsController < ApplicationController
     @freights = @freights.where("concat(folio) ~* ?", q)
   end
 
-  def driver_params
+  def frieght_params
     params.require(:freight).permit(
       :carrier_id, :driver_id, :unit_id, :box_id, :folio, :pay_client, 
       :pay_company, :cost, :invoice_serie, :invoice_total, :pdf_invoice, 
