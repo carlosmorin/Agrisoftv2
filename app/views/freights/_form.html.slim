@@ -1,43 +1,51 @@
 = simple_form_for(@freight, data: { controller: "freights" }) do |f|
-	.form-group
-		.row
-			.col-lg-12
-				h6.s-16
-					svg.svg-inline--fa.fa-info-circle.fa-w-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="info-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-						path d=("M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z") fill="currentColor" 
-					span General
-		.row
-			.col-md-3
-				= f.label :folio, class: "pt-1" 
-			.col-md-9
-				= f.input :folio, label: false, disabled: true, input_html: { class: 's-12 slim-select form-control form-control-sm' }
-		.row.mt-1
-			.col-md-3
-				= f.label :carrier_id, class: "pt-1" 
-			.col-md-9
-				= f.input :carrier_id, collection: Carrier.all, label: false, input_html: { class: 's-12 slim-select' }
-		.row.mt-1
-			.col-md-3
-				= f.label :driver_id, class: "pt-1" 
-			.col-md-9
-				= f.input :driver_id, collection: Driver.all, label: false, input_html: { class: 's-12 slim-select' }
-		.row.mt-1
-			.col-md-3
-				= f.label :unit_id, class: "pt-1" 
-			.col-md-9
-				= f.input :unit_id, collection: Unit.all, label: false, input_html: { class: 's-12 slim-select' }
-		.row.mt-1
-			.col-md-3
-				= f.label :box_id, class: "pt-1" 
-			.col-md-9
-				= f.input :box_id, collection: Box.all, label: false, input_html: { class: 's-12 slim-select' }
-	.form-group
-		.row
-			.col-lg-12
-				h6.s-16
-					svg.svg-inline--fa.fa-file-invoice-dollar.fa-w-12.h-16.mr-2.mb-1 aria-hidden="true" data-icon="file-invoice-dollar" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
-						path d=("M377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-153 31V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 80v-16c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8zm144 263.88V440c0 4.42-3.58 8-8 8h-16c-4.42 0-8-3.58-8-8v-24.29c-11.29-.58-22.27-4.52-31.37-11.35-3.9-2.93-4.1-8.77-.57-12.14l11.75-11.21c2.77-2.64 6.89-2.76 10.13-.73 3.87 2.42 8.26 3.72 12.82 3.72h28.11c6.5 0 11.8-5.92 11.8-13.19 0-5.95-3.61-11.19-8.77-12.73l-45-13.5c-18.59-5.58-31.58-23.42-31.58-43.39 0-24.52 19.05-44.44 42.67-45.07V232c0-4.42 3.58-8 8-8h16c4.42 0 8 3.58 8 8v24.29c11.29.58 22.27 4.51 31.37 11.35 3.9 2.93 4.1 8.77.57 12.14l-11.75 11.21c-2.77 2.64-6.89 2.76-10.13.73-3.87-2.43-8.26-3.72-12.82-3.72h-28.11c-6.5 0-11.8 5.92-11.8 13.19 0 5.95 3.61 11.19 8.77 12.73l45 13.5c18.59 5.58 31.58 23.42 31.58 43.39 0 24.53-19.05 44.44-42.67 45.07z") fill="currentColor" 
-					span Costos
+	.card
+		.card-body.p-3
+			.form-group
+				.row
+					.col-lg-12
+						h6.s-16
+							svg.svg-inline--fa.fa-info-circle.fa-w-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="info-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z") fill="currentColor" 
+							span Información general
+				.row
+					.col-md-6
+						= f.label :folio, class: "pt-1" 
+						= f.input :folio, label: false, disabled: true, input_html: { class: 's-12 slim-select form-control form-control-sm' }
+				.row.mt-4
+					.col-md-12
+						= f.label :carrier_id, class: "pt-1" 
+						= f.input :carrier_id, collection: Carrier.all, label: false, input_html: { class: 's-12 slim-select' }
+				.row.mt-2
+					.col-md-12
+						= f.label :driver_id, class: "pt-1" 
+						= f.input :driver_id, collection: Driver.all, label: false, input_html: { class: 's-12 slim-select' }
+				.row.mt-2
+					.col-md-6
+						= f.label :unit_id, class: "pt-1" 
+						= f.input :unit_id, collection: Unit.all, label: false, input_html: { class: 's-12 slim-select' }
+					.col-md-6
+						= f.label :box_id, class: "pt-1" 
+						= f.input :box_id, collection: Box.all, label: false, input_html: { class: 's-12 slim-select' }
+				.row.mt-2
+					.col-lg-12
+						hr.mb-0
+	.card
+		.card-body.p-3
+			.form-group.mb-0
+				.row
+					.col-lg-12
+						h6.s-16
+							svg.svg-inline--fa.fa-file-invoice-dollar.fa-w-12.h-16.mr-2.mb-1 aria-hidden="true" data-icon="file-invoice-dollar" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-153 31V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 80v-16c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8zm144 263.88V440c0 4.42-3.58 8-8 8h-16c-4.42 0-8-3.58-8-8v-24.29c-11.29-.58-22.27-4.52-31.37-11.35-3.9-2.93-4.1-8.77-.57-12.14l11.75-11.21c2.77-2.64 6.89-2.76 10.13-.73 3.87 2.42 8.26 3.72 12.82 3.72h28.11c6.5 0 11.8-5.92 11.8-13.19 0-5.95-3.61-11.19-8.77-12.73l-45-13.5c-18.59-5.58-31.58-23.42-31.58-43.39 0-24.52 19.05-44.44 42.67-45.07V232c0-4.42 3.58-8 8-8h16c4.42 0 8 3.58 8 8v24.29c11.29.58 22.27 4.51 31.37 11.35 3.9 2.93 4.1 8.77.57 12.14l-11.75 11.21c-2.77 2.64-6.89 2.76-10.13.73-3.87-2.43-8.26-3.72-12.82-3.72h-28.11c-6.5 0-11.8 5.92-11.8 13.19 0 5.95 3.61 11.19 8.77 12.73l45 13.5c18.59 5.58 31.58 23.42 31.58 43.39 0 24.53-19.05 44.44-42.67 45.07z") fill="currentColor" 
+							span Costos
+			.row.mt-0
+				.col-md-12
+					= f.label :cost, class: "pt-1" 
+					= f.input :cost, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+				.col-md-6
+					= f.label :cost, class: "pt-0" 
+					= f.input :cost,label: false, input_html: { class: 's-12 form-control form-control-sm ' }
 	.form-group
 		.row
 			.col-lg-12
@@ -45,3 +53,60 @@
 					svg.svg-inline--fa.fa-file-invoice.fa-w-12.h-16.mr-2.mb-1 aria-hidden="true" data-icon="file-invoice" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
 						path d=("M288 256H96v64h192v-64zm89-151L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-153 31V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 64c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm256 304c0 4.42-3.58 8-8 8h-80c-4.42 0-8-3.58-8-8v-16c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16zm0-200v96c0 8.84-7.16 16-16 16H80c-8.84 0-16-7.16-16-16v-96c0-8.84 7.16-16 16-16h224c8.84 0 16 7.16 16 16z") fill="currentColor" 
 					span Facturación
+		.row
+			.col-md-5
+				= f.label :invoice_serie, class: "pt-1" 
+				= f.input :invoice_serie, label: false, input_html: { class: 's-12 slim-select form-control form-control-sm' }
+			.col-md-5
+				= f.label :invoice_total, class: "pt-1" 
+				= f.input :invoice_total, label: false, input_html: { class: 's-12 slim-select form-control form-control-sm' }
+		.row#taxes.taxes.mt-2
+			.col-lg-10
+				.card.p-3
+					.row
+						.col-lg-12
+							h6.s-14.bold IMPUESTOS
+					.row
+						.col-lg-6.text-left.pl-4
+							label.bold Impuesto
+						.col-lg-3.text-left.pl-4
+							label.bold Valor
+						.col-lg-3.text-right
+							= link_to_add_association f, :freights_taxes, class: "btn btn-sm btn-xs btn-primary s-12", data: {association_insertion_node: '#freights_taxes', association_insertion_method: :append } do
+									svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+										path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
+									span Agregar
+
+					.row
+						.col-lg-12
+							hr.my-2
+						.col-lg-12#freights_taxes
+							= f.fields_for :freights_taxes do |ft|
+								= render 'freights_tax_fields', f: ft 	
+		.row
+			.col-md-10.s-12
+				.card.p-3
+					= f.label :pdf_invoice, class: "pt-1 bold" 
+					br
+					= f.file_field :pdf_invoice, label: false, input_html: { class: 's-12 slim-select form-control form-control-sm' }
+			.col-md-10.s-12
+				.card.p-3
+					= f.label :xml_invoice, class: "pt-1 bold"
+					br 
+					= f.file_field :xml_invoice, label: false, input_html: { class: 's-12 slim-select form-control form-control-sm' }
+
+		hr
+		.form-actions.text-center
+			button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
+				svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+				  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
+				  polyline points=("17 21 17 13 7 13 7 21") 
+				  polyline points=("7 3 7 8 15 8") 
+				span Guardar
+
+			= link_to companies_path, notice: 'Are you sure?', class: 'btn btn-default btn-sm pl-1' do
+				svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+				  rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
+				  line x1="9" x2="15" y1="9" y2="15" 
+				  line x1="15" x2="9" y1="9" y2="15" 
+				span Cancelar

@@ -1,5 +1,5 @@
 section.content-header.pb-0
-  .container-fluid
+  .container
     .row.mb-2
       .col-sm-6
         h5 Detalle de flete
@@ -84,6 +84,8 @@ section.content
                 path d=("M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z") 
                 circle cx="12" cy="10" r="3" 
             span = @freight.shipments.first.delivery_address.full_address
+    .card
+      .card-body
         .row.mt-2
           .col-lg-12
             h6.s-16
@@ -118,11 +120,11 @@ section.content
             p.mb-1 = "$ 0.00"
         .row
           .col-lg-2
-            label.mb-1 Factura PDF:
+            label.mb-1 PDF:
           .col-lg-7.text-left
             p.mb-1 = "$ 0.00"
         .row
           .col-lg-2
-            label.mb-1 Factura XML:
+            label.mb-1 XML:
           .col-lg-7.text-left
             p.mb-1  Lorem ipsum dolor sit amet.
