@@ -29,7 +29,7 @@ class Freight < ApplicationRecord
       "000#{total_freight.to_i + 1 }"
     when 2
      "00#{total_freight.to_i + 1 }"
-    when 3	
+    when 3
       "0#{total_freight.to_i + 1 }"
     when 4
       "#{total_freight.to_i + 1 }"
