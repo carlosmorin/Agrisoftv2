@@ -10,7 +10,7 @@ section.content
 		.row
 			.col-lg-12
 				= render "shared/alerts"
-		.card
+		.card.mb-2
 			.card-header.p-2.pb-1
 				.row
 					.col-md-10
@@ -88,76 +88,80 @@ section.content
 						.row
 							.col-md-12.text-right
 								label.mb-1.mr-1 Folio cliente:
-								span.mb-1.bold = @shipment.client_folio
+								span.mb-1.bold = @shipment.client_folio.upcase
 						.row
 							.col-md-12.text-right
 								label.mb-1.mr-1 Fecha envio:
 								span.mb-1.bold = @shipment.created_at.strftime("%m/%d/%Y")
+				.row
+					.col-lg-12
+						label.mb-2.mr-1 Origen:
+						span.mb-1.bold = @freight.shipments.first.delivery_address.full_address
+					.col-lg-12
 
-	
+		.card
+			.card-body
 				- @freight.shipments.each do |shipment|
 					.row
 						.col-md-12
-							.card
-								.card-body
-									.row
-										.col-md-5
-											label.mb-1.d-block Empresa remisionista 
-											= shipment.company.name.upcase
-										.col-md-5
-											label.mb-1.d-block Cliente 
-											= shipment.client.name.upcase
-									.row.mt-2
-										.col-md-12
-											label.mb-0.d-block Dirección de entrega
-											= shipment.delivery_address.full_address.upcase
-									section.products.mt-4
-										table.table.table-striped.table-sm.mb-1
-											thead
-												tr
-													th width="60%" scope="col"  Producto
-													th.text-center scope="col"  Cantidad
-													th.text-right scope="col"  Precio
-													th.text-center scope="col"  Total
-											tbody
-												- total_quantity = 0
-												- shipment.shipments_products.each do |object|
-													- total_quantity += object.quantity.nil? ? 0 : object.quantity
-													tr
-														td = object.product.name.upcase
-														td.text-center = object.quantity
-														td.text-right = "$ #{object.price}"
-														td.text-center $ 0
-											tfoot
-												tr
-													td
-													td.text-center
-														b = total_quantity 
-													td.text-right
-														b $ 0
-													td.text-center
-														b $ 0
-												tr
-													td
-													td
-													td.text-right 
-														b Subtotal
-													td.text-center $ 0
-												tr
-													td
-													td
-													td.text-right
-														b IVA
-													td.text-center 0%
-												tr.bg-light-gray
-													td
-													td
-													td.text-right 
-														b TOTAL
-													td.text-center 	
-														b $ 0.00
-									section.commets.mt-3
-										.row
-											.col-lg-12
-												label.mb-1.d-block Comentarios
-												= shipment.comments.upcase
+							.row
+								.col-md-5
+									label.mb-0.d-block Empresa remisionista 
+									span.s-14 = shipment.company.name.upcase
+								.col-md-5
+									label.mb-0.d-block Cliente 
+									span.s-14 = shipment.client.name.upcase
+							.row.mt-2
+								.col-md-12
+									label.mb-0.d-block Dirección de entrega
+									span.s-14 = shipment.delivery_address.full_address.upcase
+							section.products.mt-4
+								table.table.table-striped.table-sm.mb-1
+									thead
+										tr
+											th.s-14 width="60%" scope="col"  Producto
+											th.s-14.text-center scope="col"  Cantidad
+											th.s-14.text-right scope="col"  Precio
+											th.s-14.text-center scope="col"  Total
+									tbody
+										- total_quantity = 0
+										- shipment.shipments_products.each do |object|
+											- total_quantity += object.quantity.nil? ? 0 : object.quantity
+											tr
+												td.s-14 = object.product.name.upcase
+												td.s-14.text-center = object.quantity
+												td.s-14.text-right = "$ #{object.price}"
+												td.s-14.text-center $ 0
+									tfoot
+										tr
+											td
+											td.text-center
+												b.s-14 = total_quantity 
+											td.text-right
+												b.s-14 $ 0
+											td.text-center
+												b.s-14 $ 0
+										tr
+											td
+											td
+											td.text-right 
+												b.s-14 Subtotal
+											td.s-14.text-center $ 0
+										tr
+											td
+											td
+											td.text-right
+												b.s-14 IVA
+											td.s-14.text-center 0%
+										tr.bg-light-gray
+											td
+											td
+											td.text-right 
+												b.s-14 TOTAL
+											td.text-center 	
+												b.s-14 $ 0.00
+							section.commets.mt-3
+								.row
+									.col-lg-12
+										label.mb-1.d-block Comentarios
+										span.s-14 = shipment.comments.upcase

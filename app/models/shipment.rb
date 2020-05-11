@@ -1,9 +1,11 @@
 class Shipment < ApplicationRecord
+  default_scope { order(:created_at) }
 	before_create :set_products
 	before_create :set_folio 
 	before_create :set_freight_folio 
 	before_create :set_client_folio 
 	before_create :set_status
+	before_create :set_debtable
 
 	belongs_to :company
 	belongs_to :client
@@ -75,11 +77,21 @@ class Shipment < ApplicationRecord
 		when 1
 			"000#{total_shipments.to_i + 1 }"
 		when 2
-		  "00#{total_shipments.to_i + 1 }"
+			"00#{total_shipments.to_i + 1 }"
 		when 3	
 			"0#{total_shipments.to_i + 1 }"
 		when 4
 			"#{total_shipments.to_i + 1 }"
+		end
+	end
+
+	def set_debtable
+		if self.freight.pay_freight == 1
+			self.freight.update(debtable_type: self.company.model_name, 
+				debtable_id: self.company.id )
+		elsif self.freight.pay_freight == 2
+			self.freight.update(debtable_type: self.client.model_name, 
+				debtable_id: self.client.id )
 		end
 	end
 end

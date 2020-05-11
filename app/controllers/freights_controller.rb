@@ -10,8 +10,9 @@ class FreightsController < ApplicationController
 
   def edit
     add_breadcrumb "Editar"
-    iva_id = Tax.find_by_name("IVA").id
-    @freight.freights_taxes.build(tax_id: iva_id)
+    if @freight.freights_taxes.empty?
+      @freight.freights_taxes.build
+    end
   end
 
   def update
@@ -40,7 +41,7 @@ class FreightsController < ApplicationController
     params.require(:freight).permit(
       :carrier_id, :driver_id, :unit_id, :box_id, :folio, :pay_client, 
       :pay_company, :cost, :invoice_serie, :invoice_total, :pdf_invoice, 
-      :xml_invoice, freights_taxes_attributes: [:freight_id, :tax_id, :value])
+      :xml_invoice, freights_taxes_attributes: [:id, :freight_id, :tax_id, :value, :_destroy])
   end
 
   def set_object

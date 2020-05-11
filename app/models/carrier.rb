@@ -22,4 +22,7 @@ class Carrier < ApplicationRecord
 		"#{municipality.name}, #{state.name}, #{address}, #{country.name}"
 	end
 
+	def full_name
+		"#{name}, RFC: #{ rfc }"
+	end
 end

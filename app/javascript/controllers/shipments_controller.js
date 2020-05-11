@@ -4,8 +4,9 @@ const axios = require('axios');
 const $ = require('jquery');
 
 export default class extends Controller {
-	static targets = [ "carrierId" , "clientId", "productsContainer", "costInput"]
-	initialize() {
+	static targets = [ "carrierId" , "clientId", "productsContainer", "costInput", "coments"]
+	
+	connect() {
 		let container = this.productsContainerTarget
 		$("#products").on('cocoon:after-insert', function(e, insertedItem, originalEvent) {
 			let select = $(insertedItem).find("select").attr("id")
@@ -16,7 +17,6 @@ export default class extends Controller {
 		for (var i=0, max=ids.length; i < max; i++) {
 			new SlimSelect({select: `#${ids[i]}`})
 		}
-
 	}
 
 
@@ -98,10 +98,24 @@ export default class extends Controller {
 	}
 
 	validateCost(){
+		console.log(this.costInputTarget.value)
 		if (this.costInputTarget.value >= 0){
-			$(".freight_pay_company").removeAttr("disabled")
-			
+			$(".radio_buttons").removeAttr("disabled")
 		}
 	}
 
+	addPayComments(){
+
+		var company = document.getElementById("freight_pay_client_1")
+		var client = document.getElementById("freight_pay_client_2")
+		const comments =  this.commentsTarget
+		if(company.checked){
+			var msg = "ESTE FLETE NO GENERA GASTOS POR CONCEPTO DE ENVIÓ AL CLIENTE."
+			$("textarea").val(msg)
+		}else if(client.checked){
+			var msg = "ESTE FLETE SERÁ PAGADO EN DESTINO POR EL "
+			msg += `CLIENTE ANTES MENCIONADO, POR LA CANTIDAD DE: $ ${parseFloat(this.costInputTarget.value).toFixed(2)} MXN.`
+			$("textarea").val(msg)
+		}
+	}
 }

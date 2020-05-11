@@ -14,6 +14,8 @@ span.error ~ input.form-control{
 
 ///Helpers
 //// Font size
+.s-8{ font-size: 8px !important; }
+.s-10{ font-size: 10px !important; }
 .s-12{ font-size: 12px !important; }
 .s-13{ font-size: 13px !important; }
 .s-14{ font-size: 14px !important; }
@@ -24,6 +26,7 @@ span.error ~ input.form-control{
 
 ///Font weight
 .bold{ font-weight: bold !important; }
+.f-normal{ font-weight: normal !important; }
 //Color
 .c-red{ color: #881822; }
 .c-green{ color: #002400; }
@@ -83,6 +86,7 @@ h2.swal2-title{ margin-bottom: 0px; }
 
 //Colors
 .c-blue{ color: #0051a8; }
+.c-black{ color: #000; }
 .btn-dark-blue{ 
 	background-color: #0051a8 !important;
 	color: #e8e8e8 !important; }
@@ -133,4 +137,22 @@ font-size: 12px !important;}
 .ss-option{
 	padding: 4px 7px !important;
 	font-size: 10px;
+}
+span.notificator{
+	float: right;
+  background: #0c131a;
+  font-size: 10px;
+  padding: 3px 5px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: #c2c7d0;
+}
+.costum-options label.radio_buttons{
+	font-size: 12px !important;
+  font-weight: bold !important;
+  margin-right: 70px;
+}
+
+.costum-options span.radio{
+	padding: 0px 5px;
 }

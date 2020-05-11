@@ -55,7 +55,9 @@ section.content
                     td.text-center colspan="9"
                       = link_to 'Nuevo registro', new_shipment_path, class: "s-12"
                 - else
+                  - n_products = 0
                   - @shipments.each do |shipment|
+                    - n_products += shipment.n_products
                     tr
                       td = shipment.company.name.upcase
                       td = shipment.client.name.upcase
@@ -80,6 +82,12 @@ section.content
                             path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 
                             line x1="10" x2="10" y1="11" y2="17" 
                             line x1="14" x2="14" y1="11" y2="17"
+                tfoot
+                  tr
+                    th.pl-3 colspan="5" 
+                      i.text-lght.f-normal = raw "Total: <b>#{@shipments.size}</b> embarques"
+                    th.text-center = n_products
+                    th colspan="3"
           .card-footer.p-2.pb-1.bg-light-gray
             .row
               .col-lg-12.d-flex.justify-content-center

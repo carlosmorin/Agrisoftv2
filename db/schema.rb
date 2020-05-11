@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_04_211502) do
+ActiveRecord::Schema.define(version: 2020_05_09_174616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -230,14 +230,17 @@ ActiveRecord::Schema.define(version: 2020_05_04_211502) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "folio"
-    t.boolean "pay_client"
+    t.integer "pay_freight"
     t.boolean "pay_company"
     t.decimal "cost"
     t.integer "currency"
     t.string "invoice_serie"
     t.integer "invoice_total"
+    t.string "debtable_type"
+    t.bigint "debtable_id"
     t.index ["box_id"], name: "index_freights_on_box_id"
     t.index ["carrier_id"], name: "index_freights_on_carrier_id"
+    t.index ["debtable_type", "debtable_id"], name: "index_freights_on_debtable_type_and_debtable_id"
     t.index ["driver_id"], name: "index_freights_on_driver_id"
     t.index ["unit_id"], name: "index_freights_on_unit_id"
     t.index ["user_id"], name: "index_freights_on_user_id"
@@ -315,7 +318,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_211502) do
     t.bigint "company_id", null: false
     t.bigint "client_id", null: false
     t.bigint "delivery_address_id", null: false
-    t.boolean "pay_freight"
+    t.integer "pay_freight"
     t.text "comments"
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false

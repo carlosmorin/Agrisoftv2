@@ -28,6 +28,7 @@ class ShipmentsController < ApplicationController
   
   def create
     @shipment = Freight.new(shipment_params)
+    @shipment = @shipment.shipments.first
     if @shipment.save
       flash[:notice] = "Embarque <b>#{@shipment.folio.upcase}</b> creada exitosamente"
       redirect_to shipment_url(@shipment)
@@ -111,8 +112,8 @@ class ShipmentsController < ApplicationController
 
   def shipment_params
   	params.require(:freight).permit(
-      :carrier_id, :driver_id, :unit_id, :box_id, :user_id, :pay_client,
-        :pay_company, :cost, :currency,
+      :carrier_id, :driver_id, :unit_id, :box_id, :user_id, :pay_freight,
+        :cost, :currency,
           shipments_attributes: [:id, :company_id, :client_id,
             :delivery_address_id, :comments, :_destroy, :pay_freight,
           shipments_products_attributes: [:id, :price, :quantity, :shipment_id,

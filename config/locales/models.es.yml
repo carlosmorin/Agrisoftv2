@@ -19,6 +19,9 @@ es:
       state:
         one: Estado
         other: Estados
+      company:
+        one: Remisionista
+        other: Remisionistas
     attributes:
       user: 
         name: Nombre
@@ -96,9 +99,10 @@ es:
         box_id: Caja
         invoice_serie: Numero de factura
         invoice_total: Monto de factura
-        pdf_invoice: PDF
-        xml_invoice: XML
+        pdf_invoice: Factura PDF
+        xml_invoice: Factura XML
         cost: Costo
+        pay_freight: Quién paga flete?
       delivery_address:
         client_id: Cliente
         country_id: País

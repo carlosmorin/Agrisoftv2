@@ -2,7 +2,7 @@ section.content-header.pb-0
 	.container-fluid
 		.row.mb-2
 			.col-sm-6
-				h4 Fletes
+				h4 Control de fletes
 			.col-sm-6.text-right.pr-2.s-12
 				= render_breadcrumbs :separator => ' / '
 section.content
@@ -49,39 +49,49 @@ section.content
 										td.text-center colspan="9"
 											span.s-12 Tabla sin datos
 								- else
+									- n_freights = 0
 									- @freights.each do |freight|
+										- n_freights += freight.cost.nil? ? 0 : freight.cost
 										tr
 											td.bold.text-center = freight.id
 											td.bold = freight.folio.upcase
 											td = freight.carrier.name.upcase
-											td 
-												- if freight.pay_client?
-													=  freight.shipments.first.client.name
-												- if freight.pay_company?
-													=  freight.shipments.first.company.name
+											td = freight.debtable.present? ? freight.debtable.name : '--' 
 											td = freight.cost.present? ? "$ #{ freight.cost }" : '$ 0.00' 
 											td = freight.cost.present? ? "$ #{ freight.cost }" : '$ 0.00' 
 											td = freight.shipments.first.delivery_address.short_address.upcase
 											td.text-center
-												span.badge.mr-1.bg-warning.btn.btn-sm 	
-													span Sin factura
-													svg.feather.feather-x-circle fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-														circle cx="12" cy="12" r="10" 
-														line x1="15" x2="9" y1="9" y2="15" 
-														line x1="9" x2="15" y1="9" y2="15" 
+												- if freight.pdf_invoice.attached?
+													= link_to freight.pdf_invoice, target: "_blank", class: "badge bg-danger btn btn-sm mr-2" do 
+														span.s-10 PDF
+														svg.feather.feather-external-link fill="none" height="10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+															path d=("M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6") 
+															polyline points=("15 3 21 3 21 9") 
+															line x1="10" x2="21" y1="14" y2="3" 
+												- if freight.xml_invoice.attached?
+													= link_to freight.xml_invoice, target: "_blank", class: "badge bg-primary btn btn-sm mr-2" do 
+														span.s-10 XML
+														svg.feather.feather-external-link fill="none" height="10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+															path d=("M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6") 
+															polyline points=("15 3 21 3 21 9") 
+															line x1="10" x2="21" y1="14" y2="3" 
+												- unless freight.pdf_invoice.attached?
+													span.badge.mr-1.bg-warning.btn.btn-sm 	
+														span Sin PDF
+														svg.feather.feather-x-circle fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+															circle cx="12" cy="12" r="10" 
+															line x1="15" x2="9" y1="9" y2="15" 
+															line x1="9" x2="15" y1="9" y2="15" 
+												- unless freight.xml_invoice.attached?
+													span.badge.mr-1.bg-warning.btn.btn-sm 	
+														span Sin XML
+														svg.feather.feather-x-circle fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+															circle cx="12" cy="12" r="10" 
+															line x1="15" x2="9" y1="9" y2="15" 
+															line x1="9" x2="15" y1="9" y2="15" 
  
-												span.badge.mr-1.bg-success.btn.btn-sm 	
-													span XML
-													svg.feather.feather-external-link fill="none" height="10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-														path d=("M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6") 
-														polyline points=("15 3 21 3 21 9") 
-														line x1="10" x2="21" y1="14" y2="3" 
-												span.badge.bg-primary.btn.btn-sm 	
-													span PDF
-													svg.feather.feather-external-link fill="none" height="10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-														path d=("M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6") 
-														polyline points=("15 3 21 3 21 9") 
-														line x1="10" x2="21" y1="14" y2="3" 
+							
+												
 											td.text-center
 												= link_to freight_path(freight), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
 													svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
@@ -90,7 +100,13 @@ section.content
 												= link_to edit_freight_path(freight), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
 													svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
 														path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-														path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z") 
+														path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+							tfoot
+								tr
+									th.pl-3 colspan="5" 
+										i.text-lght.f-normal = raw "Total: <b>#{@freights.size}</b> fletes"
+									th.text-left = "$ #{n_freights}"
+									th colspan="3" 
 					.card-footer.p-2.pb-1.bg-light-gray
 						.row
 							.col-lg-12.d-flex.justify-content-center

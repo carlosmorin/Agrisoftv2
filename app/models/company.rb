@@ -7,6 +7,7 @@ class Company < ApplicationRecord
   belongs_to :state
   belongs_to :municipality
   has_many :remissions, inverse_of: :company
+  has_many :freights, as: :debtable, inverse_of: :company
 
   def full_address
 		"#{municipality.name}, #{state.name}, #{address}, #{country.name}"
