@@ -1,4 +1,4 @@
-= simple_form_for(@freight, data: { controller: "freights" }) do |f|
+= simple_form_for([:logistic, @freight], data: { controller: "freights" }) do |f|
 	.card
 		.card-body.px-3.pt-3.pb-0
 			.form-group
@@ -41,20 +41,21 @@
 										path d=("M377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-153 31V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 80v-16c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8zm144 263.88V440c0 4.42-3.58 8-8 8h-16c-4.42 0-8-3.58-8-8v-24.29c-11.29-.58-22.27-4.52-31.37-11.35-3.9-2.93-4.1-8.77-.57-12.14l11.75-11.21c2.77-2.64 6.89-2.76 10.13-.73 3.87 2.42 8.26 3.72 12.82 3.72h28.11c6.5 0 11.8-5.92 11.8-13.19 0-5.95-3.61-11.19-8.77-12.73l-45-13.5c-18.59-5.58-31.58-23.42-31.58-43.39 0-24.52 19.05-44.44 42.67-45.07V232c0-4.42 3.58-8 8-8h16c4.42 0 8 3.58 8 8v24.29c11.29.58 22.27 4.51 31.37 11.35 3.9 2.93 4.1 8.77.57 12.14l-11.75 11.21c-2.77 2.64-6.89 2.76-10.13.73-3.87-2.43-8.26-3.72-12.82-3.72h-28.11c-6.5 0-11.8 5.92-11.8 13.19 0 5.95 3.61 11.19 8.77 12.73l45 13.5c18.59 5.58 31.58 23.42 31.58 43.39 0 24.53-19.05 44.44-42.67 45.07z") fill="currentColor" 
 									span Costos de flete
 					.row.mt-0
-						.col-md-5
-							= f.label :cost, class: "pt-1 mb-0" 
+						.col-lg-3
+							= f.label :cost
+						.col-md-4
 							= f.input :cost, label: false, input_html: { class: 's-12 form-control form-control-sm', data: { action: "change->freights#updateSubtotal" , target: "freights.subtotal" }  }
 					.row.mt-2
-						.col-lg-2
+						.col-lg-3
 							= f.label :pay_freight
 						.col-lg-8.costum-options
-							= f.input :pay_freight, as: :radio_buttons, label: false, disabled: true, collection: [['Remisionista', 1], ['Cliente', 2]],  class: "radio_buttons", input_html: { data: { action: "change->shipments#addPayComments"} }
+							= f.input :pay_freight, as: :radio_buttons, label: false, collection: [['Remisionista', 1], ['Cliente', 2]],  class: "radio_buttons", input_html: { data: { action: "change->shipments#addPayComments"} }
 						.col-lg-12.pl-2
-						.col-lg-2
-							label = "#{@freight.debtable.model_name.human}:"
-						.col-lg-8.costum-options
-							label.s-12 = @freight.debtable.name
-
+						- if @freight.debtable.present?
+							.col-lg-3
+								label = "#{@freight.debtable.model_name.human}:"
+							.col-lg-8.costum-options
+								label.s-12 = @freight.debtable.name.upcase
 					section.pl-2
 						.row.mt-2
 							.col-lg-12
@@ -161,7 +162,7 @@
 					  polyline points=("7 3 7 8 15 8") 
 					span Guardar
 
-				= link_to freights_path, notice: 'Are you sure?', class: 'btn btn-default btn-sm pl-1' do
+				= link_to :back, notice: 'Are you sure?', class: 'btn btn-default btn-sm pl-1' do
 					svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
 						rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
 						line x1="9" x2="15" y1="9" y2="15" 

@@ -8,19 +8,24 @@
   namespace :config do
     resources :unit_brands
     resources :box_types
-    resources :drivers
     resources :taxes
+    resources :drivers
     resources :units
     resources :boxes
     resources :delivery_addresses
     resources :client_brands
-    resources :client_brands
-    resources :products 
-
+    resources :products
   end
 
-  namespace :directories do
+  namespace :logistic do
+    root to: "main#index"
+    resources :freights
     resources :carriers
+  end
+  namespace :directories do
+    resources :carriers do
+      resources :drivers
+    end
     resources :clients
   end
 
@@ -43,7 +48,6 @@
     get '/get_boxes', to: 'carriers#get_boxes'
   end
 
-  resources :freights
   resources :shipments do
     get '/print', to: 'shipments#print'
     get '/print_responsive', to: 'shipments#print_responsive'

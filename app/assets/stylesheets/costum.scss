@@ -11,7 +11,21 @@ span.error{
 span.error ~ input.form-control{
 	background: red;
 }
+.costum-action-link{
+	color: red;
+	max-width: 40px;
+	text-align: center;
+	border-radius: 3px !important;
+	overflow: hidden;
+	margin: 0 auto; 
+}
+.costum-action-link::after{
+	color: transparent;
+}
+a.costum-action-link:hover{
+	background: #d5d5d5 !important;
 
+}
 ///Helpers
 //// Font size
 .s-8{ font-size: 8px !important; }
@@ -36,8 +50,10 @@ span.error ~ input.form-control{
 //
 //
 a.nav-link.active{font-weight: bold !important;}
+a.nav-link.active{color: blue !important;}
 
 ///Icons size
+.h-8{ height: 8px !important; }
 .h-10{ height: 10px !important; }
 .h-12{ height: 12px !important; } .h-14{ height: 14px; } 
 .h-15{ height: 15px; } .h-16{ height: 16px; } 
@@ -48,6 +64,11 @@ a.nav-link.active{font-weight: bold !important;}
 //Whidths
 .m-w-7rm{ min-width: 7rem !important;}
 
+//Force paddings
+.py-05{
+	padding-top: .3rem !important;
+	padding-bottom: .4rem !important;
+}
 //Border radius
 .br-2{ border-radius: 2px !important; }
 .br-0{ border-radius: 0px !important; }
@@ -102,7 +123,7 @@ label{
 label.select{
 	margin-bottom: 0px;
 }
-.c-gray{ color: #4e4e4e; }
+.c-gray{ color: #808080; }
 
 .select.small > .ss-single-selected{
 	height: 1.5rem !important;
@@ -155,4 +176,9 @@ span.notificator{
 
 .costum-options span.radio{
 	padding: 0px 5px;
+}
+
+///****MENU COSTUM
+.nav-treeview{
+	background: #1f2930 !important;
 }

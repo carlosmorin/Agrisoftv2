@@ -1,7 +1,9 @@
 class Freight < ApplicationRecord
   default_scope { order(:created_at) }
   before_create :set_folio
-  validates :carrier_id, :driver_id, :unit_id, :cost, :box_id, :pay_freight, presence: true
+  before_update :set_debtable
+  validates :carrier_id, :driver_id, :unit_id, :cost, :box_id, :pay_freight,
+    presence: true
   belongs_to :carrier
   belongs_to :driver
   belongs_to :unit
@@ -35,6 +37,17 @@ class Freight < ApplicationRecord
       "0#{total_freight.to_i + 1 }"
     when 4
       "#{total_freight.to_i + 1 }"
+    end
+  end
+
+  def set_debtable
+    binding.pry
+    if self.pay_freight == 1
+      self.freight.update(debtable_type: self.company.model_name, 
+        debtable_id: self.company.id )
+    elsif self.pay_freight == 2
+      self.freight.update(debtable_type: self.client.model_name, 
+        debtable_id: self.client.id )
     end
   end
 end

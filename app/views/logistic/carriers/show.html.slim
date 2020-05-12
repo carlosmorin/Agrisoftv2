@@ -1,0 +1,33 @@
+section.content-header.pb-0
+	.container-fluid
+		.row.mb-2
+			.col-sm-6
+				h5 ="Detalle de transportista - #{@carrier.name.upcase}"
+			.col-sm-6.text-right.pr-2.s-12
+				= render_breadcrumbs :separator => ' / '
+section.content
+	.container-fluid
+		.row
+			.col-lg-12
+				= render "shared/alerts"
+		.row
+			.col-12
+			  .card.card-primary.card-outline.card-outline-tabs
+			    .card-header.p-0.border-bottom-0
+			      ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
+			        li.nav-item
+								= link_to 'General', logistic_carrier_path(@carrier, tab: :general), class: " nav-link py-05 bold s-14 #{ params[:tab] == 'general' ? 'active' : '' }"
+			        li.nav-item
+								= link_to 'Fletes', logistic_carrier_path(@carrier, tab: :fregihts), class: " nav-link py-05 bold s-14 #{ params[:tab] == 'fregihts' ? 'active' : '' }"
+			        li.nav-item
+								= link_to 'Operadores', logistic_carrier_path(@carrier, tab: :operators), class: " nav-link py-05 bold s-14 #{ params[:tab] == 'operators' ? 'active' : '' }"
+			        li.nav-item
+			          a#custom-tabs-four-messages-tab.nav-link.py-05.bold.s-12 aria-controls="custom-tabs-four-messages" aria-selected="false" data-toggle="pill" href="#custom-tabs-four-messages" role="tab"  Unidades
+			        li.nav-item
+			          a#custom-tabs-four-settings-tab.nav-link.py-05.bold.s-12 aria-controls="custom-tabs-four-settings" aria-selected="false" data-toggle="pill" href="#custom-tabs-four-settings" role="tab"  Cajas
+			    .card-body
+			      #custom-tabs-four-tabContent.tab-content
+			        #custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
+			        	= render "general" if params[:tab] == 'general'
+			        	= render "freights" if params[:tab] == 'fregihts'
+			        	= render "operators" if params[:tab] == 'operators'
