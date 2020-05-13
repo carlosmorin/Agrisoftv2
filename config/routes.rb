@@ -59,6 +59,10 @@
   resources :qualities
   resources :colors
   resources :packages
+
+  resources :reports, only: %i[index]
+  get '/reports/xls', to: 'reports#xls'
+
 	
 	devise_for :users
   root to: "dashboard#index"

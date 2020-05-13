@@ -1,0 +1,51 @@
+section.content-header.pb-0
+  .container-fluid
+    .row.mb-2
+      .col-sm-6
+        h4 Reportes
+section.content
+	.container-fluid
+		.row
+			.col-lg-12
+				.card
+					.card-body.p-2
+						.row
+							.col-lg-4
+								p.s-12.mb-0.mt-2 Selecciona rango de fechas
+							.col-lg-8
+								= form_tag(reports_path, method: "GET") do
+									.form-row.align-items-center
+										.col-10
+											- options = [2020]
+											= select_tag :year, options_for_select(options), include_blank: 'Año', class: 's-14 slim-select'
+										.col-2.my-1
+											button.btn.btn-sm.btn-flat.btn-primary.bold.s-12 type="submit"
+												span Buscar
+				- if params[:year].present?
+					= link_to 'Descargar como Excel', reports_path(format: :xlsx)
+					.card.mt-2
+						.card-body.p-2
+							table.table.table-sm
+								- @dates.each do |date|
+									tr
+										td.bg-light-gray.py-0.mt-2 colspan="5"
+											span.s-14.bold = "#{date[0]}" 
+											table.s-12
+												tr
+													td.bold Producto
+													td.bold.text-center Cantidad
+													td.bold.text-center width="100" Folio embarque
+													td.bold
+												- n_products = 0
+												- ShipmentsProduct.where('DATE(created_at) = ?', date[0]).each do |product|
+													- n_products += product.quantity
+													tr.s-12
+														td = product.product.name.upcase
+														td.text-center = product.quantity
+														td.text-center = product.shipment.folio
+												tr
+													td.text-right.bold TOTAL
+													td.text-center 
+														b = n_products
+													td
+

@@ -1,4 +1,5 @@
 class Shipment < ApplicationRecord
+	
 	before_create :set_products
 	before_create :set_folio 
 	before_create :set_freight_folio 

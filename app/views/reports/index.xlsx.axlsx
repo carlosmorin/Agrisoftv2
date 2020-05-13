@@ -1,0 +1,46 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Productos") do |sheet|
+	sps_img = File.expand_path(Rails.root+'app/assets/images/logo.png')
+	sheet.add_image(:image_src => sps_img, :expand_path => true) do |image|
+		image.start_at 0, 0
+		image.end_at 1, 5
+	end
+	
+	title = wb.styles.add_style({:b => true, :sz => 14})
+	header = wb.styles.add_style({:b => true, :alignment => {:horizontal => :center, :vertical => :center,:wrap_text => true}, :border => { :style => :thin, :color => "000000" }})
+
+	total_style = wb.styles.add_style({ :b => true, :bg_color => "CCCCCC", :fg_color => "000000", :alignment => {:horizontal => :center, :vertical => :center,:wrap_text => true}, :border => { :style => :thin, :color => "000000" }}) 
+
+	row = wb.styles.add_style({:wrap_text => true, :alignment => {:horizontal => :center, :vertical => :center}, :border => { :style => :thin, :color => "000000" }}) 
+
+	row_bold = wb.styles.add_style({:b => true, :alignment => {:horizontal => :center, :vertical => :center}, :border => { :style => :thin, :color => "000000" }}) 
+  border = wb.styles.add_style({:border => { :style => :thin, :color => "000000" }})
+	align_right = wb.styles.add_style({:alignment => {:horizontal => :right}}) 
+	date_style = wb.styles.add_style(:sz => 14, :b => true, :bg_color => "CCCCCC", :fg_color => "000000" )
+
+	2.times { sheet.add_row }
+	sheet.add_row ["", "Reporte de productos"], :style => title
+
+	sheet.add_row ["","Fecha : #{DateTime.now().strftime("%m/%d/%Y")}"]
+	@dates.sort.each do |date|
+		sheet.add_row
+		sheet.add_row [date[0].strftime("%m/%d/%Y"), "", "", "", "", ""], :style => date_style
+		sheet.add_row ["EMBARQUE", "DESCRIPCIÓN DEL PRODUCTO", " CANTIDAD", "PRECIO", "KG", "TOTAL KG" ], :style => header
+		total_kg = 0
+		ShipmentsProduct.where('DATE(created_at) = ?', date[0]).group("product_id").count.each do |gruop|
+			sub_total_kg = 0 
+			ShipmentsProduct.where("DATE(created_at) = ? AND product_id = ?", date[0], gruop[0]).each do |shprod|
+				sub_total_kg += shprod.quantity * shprod.product.weight
+				sheet.add_row [shprod.shipment.folio, shprod.product.name.tr("\n","").upcase, shprod.quantity, "$ 0.0", shprod.product.weight,  shprod.quantity * shprod.product.weight ], :style => row
+			end
+			sheet.add_row ["", "", "", "", "Subtotal:",  sub_total_kg ], :style => row_bold
+			total_kg += sub_total_kg
+			sheet.add_row
+		end
+		sheet.add_row ["", "", "", "", "TOTAL:", total_kg ], :style => total_style
+
+
+
+	end
+
+end
