@@ -22,6 +22,7 @@ wb.add_worksheet(name: "Productos") do |sheet|
 	sheet.add_row ["", "Reporte de productos"], :style => title
 
 	sheet.add_row ["","Fecha : #{DateTime.now().strftime("%m/%d/%Y")}"]
+	total_general = 0 
 	@dates.sort.each do |date|
 		sheet.add_row
 		sheet.add_row [date[0].strftime("%m/%d/%Y"), "", "", "", "", ""], :style => date_style
@@ -37,10 +38,10 @@ wb.add_worksheet(name: "Productos") do |sheet|
 			total_kg += sub_total_kg
 			sheet.add_row
 		end
+		total_general += total_kg
 		sheet.add_row ["", "", "", "", "TOTAL:", total_kg ], :style => total_style
-
-
-
 	end
+	sheet.add_row
+	sheet.add_row ["", "", "", "", "TOTAL GENERAL:", total_general ], :style => total_style
 
 end
