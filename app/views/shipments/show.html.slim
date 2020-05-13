@@ -65,17 +65,6 @@ section.content
 								label.mb-1 Caja:
 							.col-lg-9.text-left
 								p.mb-1 = "#{@freight.box.name.upcase}"
-						.row.mt-1
-							.col-md-12.text-left
-								label.mb-1.mr-1 Costo:
-								span.mb-1.bold = "$ #{@shipment.freight.cost} "
-						.row
-							.col-md-12.text-left
-								label.mb-1.mr-1 Deudor:
-								- if @freight.pay_company?
-									span.mb-1.bold = @shipment.company.name.upcase
-								- elsif @freight.pay_client?
-									span.mb-1.bold = @shipment.client.name.upcase
 					.col-lg-4
 						.row
 							.col-md-12.text-right

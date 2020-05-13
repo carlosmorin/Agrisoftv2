@@ -30,7 +30,7 @@ class ShipmentsController < ApplicationController
     @shipment = Freight.new(shipment_params)
     if @shipment.save
       flash[:notice] = "Embarque <b>#{@shipment.folio.upcase}</b> creada exitosamente"
-      redirect_to shipment_url(@shipment)
+      redirect_to shipment_url(@shipment.shipments.first.id)
     else
       render :new
     end
