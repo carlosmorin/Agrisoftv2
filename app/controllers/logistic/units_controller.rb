@@ -1,4 +1,4 @@
-module Config
+module Logistic
   class UnitsController < ApplicationController
   	before_action :set_catalogs, only: %i[index new edit create update]
   	before_action :set_object, only: %i[show edit update destroy]

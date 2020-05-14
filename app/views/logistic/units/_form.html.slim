@@ -1,10 +1,5 @@
 = simple_form_for([:config, @unit], data: { controller: 'units' } ) do |f|
-	.form-group.mb-1   
-		.row
-			.col-lg-3
-				= f.label :carrier_id, class: "pt-1" 
-			.col-lg-9
-				= f.input :carrier_id, collection: carriers, label: false, input_html: { class: 's-12' }
+	= f.input :carrier_id, as: :hidden, label: false, input_html: { value: params[:carrier_id] }
 	.form-group.mb-1  
 		.row
 			.col-lg-3

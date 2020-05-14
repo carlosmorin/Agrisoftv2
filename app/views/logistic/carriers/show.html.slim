@@ -12,22 +12,24 @@ section.content
 				= render "shared/alerts"
 		.row
 			.col-12
-			  .card.card-primary.card-outline.card-outline-tabs
-			    .card-header.p-0.border-bottom-0
-			      ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
-			        li.nav-item
-								= link_to 'General', logistic_carrier_path(@carrier, tab: :general), class: " nav-link py-05 bold s-14 #{ params[:tab] == 'general' ? 'active' : '' }"
-			        li.nav-item
-								= link_to 'Fletes', logistic_carrier_path(@carrier, tab: :fregihts), class: " nav-link py-05 bold s-14 #{ params[:tab] == 'fregihts' ? 'active' : '' }"
-			        li.nav-item
-								= link_to 'Operadores', logistic_carrier_path(@carrier, tab: :operators), class: " nav-link py-05 bold s-14 #{ params[:tab] == 'operators' ? 'active' : '' }"
-			        li.nav-item
-			          a#custom-tabs-four-messages-tab.nav-link.py-05.bold.s-12 aria-controls="custom-tabs-four-messages" aria-selected="false" data-toggle="pill" href="#custom-tabs-four-messages" role="tab"  Unidades
-			        li.nav-item
-			          a#custom-tabs-four-settings-tab.nav-link.py-05.bold.s-12 aria-controls="custom-tabs-four-settings" aria-selected="false" data-toggle="pill" href="#custom-tabs-four-settings" role="tab"  Cajas
-			    .card-body
-			      #custom-tabs-four-tabContent.tab-content
-			        #custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
-			        	= render "general" if params[:tab] == 'general'
-			        	= render "freights" if params[:tab] == 'fregihts'
-			        	= render "operators" if params[:tab] == 'operators'
+				.card.card-primary.card-outline.card-outline-tabs
+					.card-header.p-0.border-bottom-0
+						ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
+							li.nav-item
+								= link_to 'General', logistic_carrier_path(@carrier, tab: :general), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'general' ? 'active' : 'c-gray' }"
+							li.nav-item
+								= link_to 'Fletes', logistic_carrier_path(@carrier, tab: :fregihts), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'fregihts' ? 'active' : 'c-gray' }"
+							li.nav-item
+								= link_to 'Operadores', logistic_carrier_path(@carrier, tab: :operators), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'operators' ? 'active' : 'c-gray' }"
+							li.nav-item
+								= link_to 'Unidades', logistic_carrier_path(@carrier, tab: :units), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'units' ? 'active' : 'c-gray' }"
+							li.nav-item
+								= link_to 'Cajas', logistic_carrier_path(@carrier, tab: :boxes), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'boxes' ? 'active' : 'c-gray' }"
+					.card-body
+						#custom-tabs-four-tabContent.tab-content
+							#custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
+								= render "general" if params[:tab] == 'general'
+								= render "freights" if params[:tab] == 'fregihts'
+								= render "operators" if params[:tab] == 'operators'
+								= render "units" if params[:tab] == 'units'
+								= render "boxes" if params[:tab] == 'boxes'

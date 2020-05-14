@@ -182,3 +182,9 @@ span.notificator{
 .nav-treeview{
 	background: #1f2930 !important;
 }
+
+//Costum tabs
+.card-primary.card-outline-tabs > .card-header a.active{
+	border-top: 3px solid #293742 !important;
+	color: #293742 !important;
+}

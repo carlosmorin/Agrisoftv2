@@ -40,6 +40,7 @@ section.content
                   th RFC
                   th Teléfono
                   th Correo
+                  th Dirección
                   th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody.s-13
                 - if @carriers.empty?
@@ -54,9 +55,10 @@ section.content
                       td = carrier.rfc.upcase
                       td = carrier.phone
                       td = carrier.email.upcase
+                      td = carrier.short_address.upcase
                       td.text-center
                         a#dropdownSubMenu1.nav-link.dropdown-toggle.costum-action-link.btn.btn-xs aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#"
-                          svg.svg-inline--fa.fa-ellipsis-h.fa-w-16.h-16.pl-1 aria-hidden="true" data-icon="ellipsis-h" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+                          svg.svg-inline--fa.fa-ellipsis-h.fa-w-16.h-14.pl-1 aria-hidden="true" data-icon="ellipsis-h" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
                             path d=("M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z") fill="currentColor" 
                         ul.dropdown-menu.border-0.shadow.py-0 aria-labelledby="dropdownSubMenu1" 
                           li
@@ -68,7 +70,7 @@ section.content
                           li 
                             hr.my-0
                           li
-                            = link_to 'Nuevo conductor', companies_path, class: 'dropdown-item s-12 text-left px-3 bold'
+                            = link_to 'Nuevo conductor', new_logistic_carrier_driver_path(carrier), class: 'dropdown-item s-12 text-left px-3 bold'
                           li
                             = link_to 'Nueva unidad', companies_path, class: 'dropdown-item s-12 text-left px-3 bold'
                           li

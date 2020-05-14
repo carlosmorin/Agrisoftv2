@@ -20,7 +20,11 @@
   namespace :logistic do
     root to: "main#index"
     resources :freights
-    resources :carriers
+    resources :carriers do
+      resources :drivers
+      resources :units
+    end
+    resources :drivers
   end
   namespace :directories do
     resources :carriers do
