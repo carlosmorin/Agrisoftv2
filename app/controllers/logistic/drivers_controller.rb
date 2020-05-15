@@ -3,7 +3,7 @@ module Logistic
     include DriverBreadcrumb
     before_action :set_object, only: %i[show edit update destroy]
     before_action :set_carriers, only: %i[index]
-    before_action :set_carrier, only: %i[new]
+    before_action :set_carrier, only: %i[new edit]
     before_action :set_breadrcumbs
 
     def index
@@ -17,11 +17,15 @@ module Logistic
     end
 
     def show
-      add_breadcrumb "Detalle"
+      carrier = @driver.carrier
+      add_breadcrumb "Logistica", :logistic_root_path
+      add_breadcrumb "Transportistas", :logistic_carriers_path
+      add_breadcrumb carrier.name.upcase, logistic_carrier_path(carrier)
+      add_breadcrumb "Operadores", logistic_carrier_path(carrier, tab: :operators)
+      add_breadcrumb @driver.full_name
     end
 
     def edit
-      add_breadcrumb "Editar"
     end
 
     def create
@@ -41,7 +45,8 @@ module Logistic
         flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Conductor actualizado correctamente"
         redirect_to logistic_carrier_url(@driver.carrier_id, tab: :operators)
       else
-        render :edit, collection: @carriers
+        breadrcumbs_edit
+        render template: 'logistic/drivers/new'
       end
     end
 

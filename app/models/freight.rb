@@ -41,7 +41,6 @@ class Freight < ApplicationRecord
   end
 
   def set_debtable
-    binding.pry
     if self.pay_freight == 1
       self.freight.update(debtable_type: self.company.model_name, 
         debtable_id: self.company.id )

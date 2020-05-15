@@ -18,6 +18,7 @@ module Logistic
     end
 
     def edit
+      add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :general)
       add_breadcrumb "Editar"
     end
 

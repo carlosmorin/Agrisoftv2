@@ -54,7 +54,7 @@ section.content
                       td = carrier.name.upcase
                       td = carrier.rfc.upcase
                       td = carrier.phone
-                      td = carrier.email.upcase
+                      td = carrier.email.present? ? carrier.email.upcase : "--"
                       td = carrier.short_address.upcase
                       td.text-center
                         a#dropdownSubMenu1.nav-link.dropdown-toggle.costum-action-link.btn.btn-xs aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#"
@@ -64,9 +64,7 @@ section.content
                           li
                             = link_to 'Ver detalle', logistic_carrier_path(carrier, tab: :general), class: 'dropdown-item s-12 text-left px-3 bold'
                           li
-                            = link_to 'Editar', companies_path, class: 'dropdown-item s-12 text-left px-3 bold'
-                          li
-                            = link_to 'Eliminar', companies_path, class: 'dropdown-item s-12 text-left px-3 text-danger bold'
+                            = link_to 'Editar', edit_logistic_carrier_path(carrier), class: 'dropdown-item s-12 text-left px-3 bold'
                           li 
                             hr.my-0
                           li

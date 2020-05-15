@@ -23,6 +23,7 @@
     resources :carriers do
       resources :drivers
       resources :units
+      resources :freights
     end
     resources :drivers
   end
