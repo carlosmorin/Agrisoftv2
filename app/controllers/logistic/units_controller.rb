@@ -1,22 +1,24 @@
 module Logistic
   class UnitsController < ApplicationController
-  	before_action :set_catalogs, only: %i[index new edit create update]
-  	before_action :set_object, only: %i[show edit update destroy]
-    add_breadcrumb "Config"
-  	add_breadcrumb "Unidades", :config_units_path
+    before_action :set_catalogs, only: %i[index new edit create update]
+    before_action :set_object, only: %i[show edit update destroy]
 
-  	def index
-  		@units = Unit.paginate(page: params[:page], per_page: 16)
-  		search if params[:q].present?
+    def index
+      @units = Unit.paginate(page: params[:page], per_page: 16)
+      search if params[:q].present?
       search_by_carrier if params[:c].present?
-  	end
+    end
 
-  	def new
+    def new
       add_breadcrumb "Nuevo"
       @unit = Unit.new
-  	end
+    end
 
     def edit
+      add_breadcrumb "Transportistas", logistic_carriers_path
+      add_breadcrumb @unit.carrier.name.upcase, logistic_carriers_path
+      add_breadcrumb "Unidades", logistic_carrier_path(@unit.carrier, tab: :units)
+      add_breadcrumb "Unidad #{@unit.short_name}", logistic_carrier_unit_path(@unit.carrier, @unit)
       add_breadcrumb "Editar"
     end
 
@@ -30,25 +32,28 @@ module Logistic
     end
 
     def update
-	    if @unit.update(unit_params)
-	      flash[:notice] = "Unidad actualizada"
-	    	redirect_to config_unit_url(@unit), notice: 'Unidad actualizada'
-	    else
-	      render :edit
-	    end
-	  end
-
-    def show
-    	add_breadcrumb "Detalle"
+      if @unit.update(unit_params)
+        flash[:notice] = "Unidad actualizada"
+        redirect_to config_unit_url(@unit), notice: 'Unidad actualizada'
+      else
+        render :edit
+      end
     end
 
-  	def destroy
-    	@unit.destroy
-  	end
+    def show
+      add_breadcrumb "Transportistas", logistic_carriers_path
+      add_breadcrumb @unit.carrier.name.upcase, logistic_carriers_path
+      add_breadcrumb "Unidades", logistic_carrier_path(@unit.carrier, tab: :units)
+      add_breadcrumb "Unidad #{@unit.short_name}", logistic_carrier_unit_path(@unit.carrier, @unit)
+    end
+
+    def destroy
+      @unit.destroy
+    end
 
     private
-		
-		def search
+
+    def search
       q = Regexp.escape(params[:q])
       @units = @units.where(
         "concat(model, ' ', color, ' ', year) ~* ?", q)
@@ -60,13 +65,13 @@ module Logistic
     end
     
     def unit_params
-			params.require(:unit).permit(:model, :color, :year, :n_econ,  
-				:plate_number, :carrier_id, :unit_brand_id, :picture)
-	  end
+      params.require(:unit).permit(:model, :color, :year, :n_econ,  
+        :plate_number, :carrier_id, :unit_brand_id, :picture)
+    end
 
-	  def set_object
-    	@unit = Unit.find(params[:id])
-  	end
+    def set_object
+      @unit = Unit.find(params[:id])
+    end
 
     def set_catalogs
     	@carriers = Carrier.all.pluck(:name, :id)

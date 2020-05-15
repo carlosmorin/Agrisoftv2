@@ -16,4 +16,8 @@ class Box < ApplicationRecord
   def set_name
     self.name = "#{box_type.name}, PLACAS: #{plate_number}".upcase
   end
+
+  def short_name
+    "#{box_type.name} #{plate_number}".upcase
+  end
 end

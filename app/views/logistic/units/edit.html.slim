@@ -1,14 +1,14 @@
 section.content-header.pb-0
-  .container-fluid
+  .container
     .row.mb-2
-      .col-sm-6
+      .col-sm-4
         h5 Editar unidad 
-      .col-sm-6.text-right.pr-2.s-12
+      .col-sm-8.text-right.pr-2.s-10
         = render_breadcrumbs :separator => ' / ' 
-  .container-fluid
+  .container
     = render "shared/form_info"
     .card
   		.card-body
   			.row
-					.col-lg-6
+					.col-lg-8
 						= render 'form', carriers: @carriers, brands: @brands

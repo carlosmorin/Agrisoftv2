@@ -1,9 +1,7 @@
-module Config
+module Logistic
   class BoxesController < ApplicationController
 		before_action :set_object, only: %i[show edit update destroy]
   	before_action :set_catalogs, except: %i[show]
-    add_breadcrumb "Config"
-  	add_breadcrumb "Cajas", :config_boxes_path
 
   	def index
   		@boxes = Box.paginate(page: params[:page], per_page: 16)
@@ -19,11 +17,18 @@ module Config
 		end
 
 	  def edit
-	    add_breadcrumb "Editar"
+      add_breadcrumb "Transportistas", logistic_carriers_path
+      add_breadcrumb @box.carrier.name.upcase, logistic_carriers_path
+      add_breadcrumb "Fletes", logistic_carrier_path(@box.carrier, tab: :boxes)
+      add_breadcrumb "#{@box.short_name}", logistic_carrier_box_path(@box.carrier, @box)
+      add_breadcrumb "Editar"
 	  end
 
 	  def show
-	    add_breadcrumb "Detalle"
+      add_breadcrumb "Transportistas", logistic_carriers_path
+      add_breadcrumb @box.carrier.name.upcase, logistic_carriers_path
+      add_breadcrumb "Cajas", logistic_carrier_path(@box.carrier, tab: :boxes)
+      add_breadcrumb "#{@box.short_name}", logistic_carrier_box_path(@box.carrier, @box)
 	  end
 
 	  def create

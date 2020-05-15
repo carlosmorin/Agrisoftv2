@@ -22,7 +22,7 @@ module DriverBreadcrumb
 		add_breadcrumb "Transportistas", :logistic_carriers_path if params[:carrier_id].present?
 		add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :operators) if params[:carrier_id].present?
 		add_breadcrumb "Operadores", logistic_carrier_path(@carrier, tab: :operators) if params[:carrier_id].present?
-		add_breadcrumb @driver.name, logistic_carrier_driver_path(@carrier, @driver)
+		add_breadcrumb @driver.name.upcase, logistic_carrier_driver_path(@carrier, @driver)
 		add_breadcrumb "Editar"
 	end
 

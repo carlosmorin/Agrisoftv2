@@ -22,7 +22,7 @@ module Logistic
       add_breadcrumb "Transportistas", :logistic_carriers_path
       add_breadcrumb carrier.name.upcase, logistic_carrier_path(carrier)
       add_breadcrumb "Operadores", logistic_carrier_path(carrier, tab: :operators)
-      add_breadcrumb @driver.full_name
+      add_breadcrumb @driver.full_name.upcase
     end
 
     def edit

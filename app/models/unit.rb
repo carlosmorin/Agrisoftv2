@@ -19,5 +19,10 @@ class Unit < ApplicationRecord
 		self.name = "#{brand}, #{color}, PLACAS: #{plate_number}".upcase
 	end
 
+	def short_name
+		brand =
+			unit_brand.short_name.present? ? unit_brand.short_name : unit_brand.name  
+		"#{brand} #{plate_number}"
+	end
 
 end

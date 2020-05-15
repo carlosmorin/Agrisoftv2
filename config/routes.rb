@@ -24,6 +24,7 @@
       resources :drivers
       resources :units
       resources :freights
+      resources :boxes
     end
     resources :drivers
   end
