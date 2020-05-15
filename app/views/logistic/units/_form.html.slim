@@ -1,4 +1,4 @@
-= simple_form_for([:config, @unit], data: { controller: 'units' } ) do |f|
+= simple_form_for([:logistic, @unit], data: { controller: 'units' } ) do |f|
 	= f.input :carrier_id, as: :hidden, label: false, input_html: { value: params[:carrier_id] }
 	.form-group.mb-1  
 		.row

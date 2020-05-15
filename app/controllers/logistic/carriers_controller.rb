@@ -3,7 +3,6 @@ module Logistic
     before_action :set_object, 
       only: %i[show edit update destroy get_drivers get_units get_boxes]
     before_action :set_catalogs, only: %i[edit update]
-    add_breadcrumb "Logistica", :logistic_root_path
     add_breadcrumb "Transportistas", :logistic_carriers_path
     
     def index
@@ -18,12 +17,11 @@ module Logistic
     end
 
     def edit
-      add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :general)
       add_breadcrumb "Editar"
     end
 
     def show
-      add_breadcrumb @carrier.name.upcase
+      add_breadcrumb "Detalle"
     end
 
     def create

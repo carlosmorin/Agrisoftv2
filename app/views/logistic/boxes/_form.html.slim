@@ -1,17 +1,11 @@
-= simple_form_for([:config, @box], data: { controller: 'masks boxes'} ) do |f|
-	.form-group.mb-1  
-		.row
-			.col-lg-3
-				= f.label :carrier_id, class: "pt-1" 
-			.col-lg-9
-				= f.input :carrier_id, collection: carriers, label: false, input_html: { class: 's-12' }
+= simple_form_for([:logistic, @box], data: { controller: 'masks boxes'} ) do |f|
+	= f.input :carrier_id, as: :hidden, input_html: { value: params[:carrier_id] }
 	.form-group.mb-1  
 		.row
 			.col-lg-3
 				= f.label :box_type_id, class: "pt-1" 
 			.col-lg-9
 				= f.input :box_type_id, collection: box_types, label: false, input_html: { class: 's-12' }
-
 	.form-group.mb-1  
 		.row
 			.col-lg-3
@@ -39,7 +33,7 @@
 			  polyline points=("7 3 7 8 15 8") 
 			span Guardar
 
-		= link_to :back, notice: 'Are you sure?', class: 'btn btn-default btn-sm pl-1' do
+		= link_to :back, class: 'btn btn-default btn-sm pl-1' do
 			svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
 			  rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
 			  line x1="9" x2="15" y1="9" y2="15" 

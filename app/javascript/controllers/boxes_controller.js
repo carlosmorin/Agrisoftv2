@@ -3,7 +3,9 @@ import SlimSelect from 'slim-select'
 
 export default class extends Controller {
   initialize() {
-		new SlimSelect({select: '#box_carrier_id'})
-		new SlimSelect({select: '#box_box_type_id'})
+		const ids = [...document.getElementsByTagName('select')].map(el => el.id);
+		for (var i=0, max=ids.length; i < max; i++) {
+			new SlimSelect({select: `#${ids[i]}`})
+		}
 	}	
 }

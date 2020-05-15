@@ -12,14 +12,18 @@ module Logistic
   	end
 
 		def new
-	    add_breadcrumb "Nuevo"
+      carrier = Carrier.find(params[:carrier_id])
+      add_breadcrumb "Transportistas", logistic_carriers_path
+      add_breadcrumb carrier.name.upcase, logistic_carriers_path
+      add_breadcrumb "Cajas", logistic_carrier_path(carrier, tab: :boxes)
+	    add_breadcrumb "Nueva"
 	    @box = Box.new
 		end
 
 	  def edit
       add_breadcrumb "Transportistas", logistic_carriers_path
       add_breadcrumb @box.carrier.name.upcase, logistic_carriers_path
-      add_breadcrumb "Fletes", logistic_carrier_path(@box.carrier, tab: :boxes)
+      add_breadcrumb "Cajas", logistic_carrier_path(@box.carrier, tab: :boxes)
       add_breadcrumb "#{@box.short_name}", logistic_carrier_box_path(@box.carrier, @box)
       add_breadcrumb "Editar"
 	  end
@@ -34,7 +38,8 @@ module Logistic
 	  def create
 	    @box = Box.new(box_params)
       if @box.save
-        redirect_to config_box_url(@box), notice: 'Caja creada'
+        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Caja creada correctamente"
+        redirect_to logistic_carrier_path(@box.carrier, tab: :boxes)
       else
         render :new, carriers: @carriers, box_types: @box_types
       end
@@ -42,8 +47,8 @@ module Logistic
 
 		def update
     	if @box.update(box_params)
-      	flash[:notice] = "Caja actualizada"
-      	redirect_to config_box_url(@box)
+      	flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Caja actualizada correctamente"
+      	redirect_to logistic_carrier_path(@box.carrier, tab: :boxes)
     	else
       	render :edit, carriers: @carriers, box_types: @box_types
     	end

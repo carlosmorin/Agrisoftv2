@@ -1,7 +1,6 @@
 module Logistic
   class FreightsController < ApplicationController
     before_action :set_object, only: %i[show edit update destroy]
-    add_breadcrumb "Logistica", :logistic_root_path
 
     def index
       @freights = Freight.paginate(page: params[:page], per_page: 20)
@@ -11,9 +10,9 @@ module Logistic
 
     def edit
       add_breadcrumb "Transportistas", logistic_carriers_path
-      add_breadcrumb @freight.carrier.name.upcase, logistic_carriers_path
-      add_breadcrumb "Fletes", logistic_carrier_path(@freight.carrier, tab: :fregihts)
-      add_breadcrumb "Flete #{@freight.folio}", logistic_carrier_freight_path(@freight.carrier, @freight)
+      add_breadcrumb @freight.carrier.name.upcase, logistic_carrier_path(@freight.carrier ,tab: :general)
+      add_breadcrumb "Fletes", logistic_carrier_path(@freight.carrier, tab: :freights)
+      add_breadcrumb "#{@freight.folio}", logistic_carrier_freight_path(@freight.carrier, @freight)
       add_breadcrumb "Editar"
       if @freight.freights_taxes.empty?
         @freight.freights_taxes.build
@@ -22,9 +21,9 @@ module Logistic
 
     def update
       if @freight.update(frieght_params)
-        flash[:notice] = "Felete <b>#{@freight.folio.upcase}</b> actualizado
+        flash[:notice] = "<i class='fa fa-check-circle s-16 mr-2'></i>Felete <b>#{@freight.folio.upcase}</b> actualizado
           exitosamente"
-        redirect_to logistic_freight_url(@freight)
+        redirect_to logistic_carrier_freight_path(@freight.carrier, @freight)
       else
         render :edit
       end
@@ -32,9 +31,9 @@ module Logistic
     
     def show
       add_breadcrumb "Transportistas", logistic_carriers_path
-      add_breadcrumb @freight.carrier.name.upcase, logistic_carriers_path
-      add_breadcrumb "Fletes", logistic_carrier_path(@freight.carrier, tab: :fregihts)
-      add_breadcrumb "Flete #{@freight.folio}" 
+      add_breadcrumb @freight.carrier.name.upcase, logistic_carrier_path(@freight.carrier ,tab: :general)
+      add_breadcrumb "Fletes", logistic_carrier_path(@freight.carrier, tab: :freights)
+      add_breadcrumb "#{@freight.folio}", logistic_carrier_freight_path(@freight.carrier, @freight)
     end
 
     private

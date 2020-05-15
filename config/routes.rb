@@ -26,7 +26,9 @@
       resources :freights
       resources :boxes
     end
+    resources :units
     resources :drivers
+    resources :boxes
   end
   namespace :directories do
     resources :carriers do

@@ -43,7 +43,7 @@ module Logistic
     def update
       if @driver.update(driver_params)
         flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Conductor actualizado correctamente"
-        redirect_to logistic_carrier_url(@driver.carrier_id, tab: :operators)
+        redirect_to  logistic_carrier_driver_path(@driver.carrier, @driver) 
       else
         breadrcumbs_edit
         render template: 'logistic/drivers/new'

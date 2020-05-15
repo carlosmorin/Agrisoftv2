@@ -5,27 +5,30 @@ module Logistic
 
     def index
       @units = Unit.paginate(page: params[:page], per_page: 16)
+      
       search if params[:q].present?
       search_by_carrier if params[:c].present?
     end
 
     def new
+      @carrier = Carrier.find(params[:carrier_id])
+      add_breadcrumb "Transportistas", logistic_carriers_path
+      add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :general)
+      add_breadcrumb "Unidades", logistic_carrier_path(@carrier, tab: :units)
       add_breadcrumb "Nuevo"
       @unit = Unit.new
     end
 
     def edit
-      add_breadcrumb "Transportistas", logistic_carriers_path
-      add_breadcrumb @unit.carrier.name.upcase, logistic_carriers_path
-      add_breadcrumb "Unidades", logistic_carrier_path(@unit.carrier, tab: :units)
-      add_breadcrumb "Unidad #{@unit.short_name}", logistic_carrier_unit_path(@unit.carrier, @unit)
       add_breadcrumb "Editar"
     end
 
     def create
       @unit = Unit.new(unit_params)
       if @unit.save
-        redirect_to config_unit_url(@unit), notice: 'Unidad creada'
+        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  
+          Unidad creada correctamente"
+        redirect_to logistic_carrier_url(@unit.carrier, tab: :units)
       else
         render :new
       end
@@ -33,27 +36,25 @@ module Logistic
 
     def update
       if @unit.update(unit_params)
-        flash[:notice] = "Unidad actualizada"
-        redirect_to config_unit_url(@unit), notice: 'Unidad actualizada'
+        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  
+          Unidad actualizada correctamente"
+        redirect_to logistic_carrier_url(@unit.carrier, tab: :units)
       else
         render :edit
       end
     end
 
     def show
-      add_breadcrumb "Transportistas", logistic_carriers_path
-      add_breadcrumb @unit.carrier.name.upcase, logistic_carriers_path
-      add_breadcrumb "Unidades", logistic_carrier_path(@unit.carrier, tab: :units)
-      add_breadcrumb "Unidad #{@unit.short_name}", logistic_carrier_unit_path(@unit.carrier, @unit)
+      add_breadcrumb "Detalle"
     end
 
-    def destroy
-      @unit.destroy
-    end
+  	def destroy
+    	@unit.destroy
+  	end
 
     private
-
-    def search
+		
+		def search
       q = Regexp.escape(params[:q])
       @units = @units.where(
         "concat(model, ' ', color, ' ', year) ~* ?", q)
@@ -65,13 +66,13 @@ module Logistic
     end
     
     def unit_params
-      params.require(:unit).permit(:model, :color, :year, :n_econ,  
-        :plate_number, :carrier_id, :unit_brand_id, :picture)
-    end
+			params.require(:unit).permit(:model, :color, :year, :n_econ,  
+				:plate_number, :carrier_id, :unit_brand_id, :picture)
+	  end
 
-    def set_object
-      @unit = Unit.find(params[:id])
-    end
+	  def set_object
+    	@unit = Unit.find(params[:id])
+  	end
 
     def set_catalogs
     	@carriers = Carrier.all.pluck(:name, :id)

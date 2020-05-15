@@ -9,6 +9,10 @@ class FreightsController < ApplicationController
   end
 
   def edit
+    add_breadcrumb "Transportistas", logistic_carriers_path
+    add_breadcrumb @freight.carrier.name.upcase, logistic_carrier_path(@freight.carrier, tab: :general)
+    add_breadcrumb "Fletes", logistic_carrier_path(@freight.carrier, tab: :freights)
+    add_breadcrumb "#{@freight.folio}", logistic_carrier_freight_path(@freight.carrier, @freight)
     add_breadcrumb "Editar"
     if @freight.freights_taxes.empty?
       @freight.freights_taxes.build
