@@ -20,6 +20,10 @@ module Logistic
     end
 
     def edit
+      add_breadcrumb "Transportistas", logistic_carriers_path
+      add_breadcrumb @unit.carrier.name.upcase, logistic_carrier_path(@unit.carrier, tab: :general)
+      add_breadcrumb "Unidades", logistic_carrier_path(@unit.carrier, tab: :units)
+      add_breadcrumb @unit.short_name.upcase, logistic_carrier_unit_path(@unit.carrier, @unit)
       add_breadcrumb "Editar"
     end
 
@@ -45,7 +49,10 @@ module Logistic
     end
 
     def show
-      add_breadcrumb "Detalle"
+      add_breadcrumb "Transportistas", logistic_carriers_path
+      add_breadcrumb @unit.carrier.name.upcase, logistic_carrier_path(@unit.carrier, tab: :general)
+      add_breadcrumb "Unidades", logistic_carrier_path(@unit.carrier, tab: :units)
+      add_breadcrumb @unit.short_name.upcase
     end
 
   	def destroy

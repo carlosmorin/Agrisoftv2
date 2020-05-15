@@ -16,7 +16,7 @@ section.content
           .card-header.p-2.pb-1.bg-light-gray
             .row
               .col-md-10.col-sm-12
-                = form_tag(shipments_path, method: "GET") do
+                = form_tag(shipments_path, method: "GET", data: { controller: "select" }) do
                   - value = params[:q].present? ? params[:q] : ''
                   .form-row.align-items-center
                     .col-4

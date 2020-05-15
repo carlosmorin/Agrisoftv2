@@ -7,6 +7,7 @@ export default class extends Controller {
 	static targets = [ "carrierId" , "clientId", "productsContainer", "costInput", "coments"]
 	
 	connect() {
+		console.log("init")
 		let container = this.productsContainerTarget
 		$("#products").on('cocoon:after-insert', function(e, insertedItem, originalEvent) {
 			let select = $(insertedItem).find("select").attr("id")
