@@ -5,7 +5,7 @@ class Shipment < ApplicationRecord
 	before_create :set_freight_folio 
 	before_create :set_client_folio 
 	before_create :set_status
-	before_create :set_debtable
+	#before_create :set_debtable
 
 	belongs_to :company
 	belongs_to :client
@@ -85,13 +85,13 @@ class Shipment < ApplicationRecord
 		end
 	end
 
-	def set_debtable
-		if self.freight.pay_freight == 1
-			self.freight.update(debtable_type: self.company.model_name, 
-				debtable_id: self.company.id )
-		elsif self.freight.pay_freight == 2
-			self.freight.update(debtable_type: self.client.model_name, 
-				debtable_id: self.client.id )
-		end
-	end
+	##def set_debtable
+	##	if self.freight.pay_freight == 1
+	##		self.freight.update(debtable_type: self.company.model_name, 
+	##		debtable_id: self.company.id )
+	##	elsif self.freight.pay_freight == 2
+	##		self.freight.update(debtable_type: self.client.model_name, 
+	##			debtable_id: self.client.id )
+	##	end
+	##end
 end
