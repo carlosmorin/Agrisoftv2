@@ -112,8 +112,7 @@ class ShipmentsController < ApplicationController
 
   def shipment_params
   	params.require(:freight).permit(
-      :carrier_id, :driver_id, :unit_id, :box_id, :user_id, :pay_freight,
-        :cost, :currency,
+      :carrier_id, :driver_id, :unit_id, :box_id, :user_id,
           shipments_attributes: [:id, :company_id, :client_id,
             :delivery_address_id, :comments, :_destroy, :pay_freight,
           shipments_products_attributes: [:id, :price, :quantity, :shipment_id,
