@@ -4,6 +4,7 @@ module Logistic
       only: %i[show edit update destroy get_drivers get_units get_boxes]
     before_action :set_catalogs, only: %i[edit update]
     add_breadcrumb "Logistica", :logistic_root_path
+    add_breadcrumb "Transportistas", :logistic_carriers_path
     
     def index
       @carriers = Carrier.paginate(page: params[:page], per_page: 16)

@@ -24,8 +24,8 @@ span.error ~ input.form-control{
 }
 a.costum-action-link:hover{
 	background: #d5d5d5 !important;
-
 }
+
 ///Helpers
 //// Font size
 .s-8{ font-size: 8px !important; }
@@ -40,6 +40,7 @@ a.costum-action-link:hover{
 
 ///Font weight
 .bold{ font-weight: bold !important; }
+.active_menu_item{ font-weight: bold !important; }
 .f-normal{ font-weight: normal !important; }
 //Color
 .c-red{ color: #881822; }

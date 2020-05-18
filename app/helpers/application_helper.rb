@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def current_link?(path)
-	  "active" if request.url.include?(path)
+	  "active_menu_item" if request.url.include?(path)
 	end
 
 	def set_status(status)

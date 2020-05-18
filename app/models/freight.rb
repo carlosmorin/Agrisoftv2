@@ -1,7 +1,7 @@
 class Freight < ApplicationRecord
   default_scope { order(:created_at) }
   before_create :set_folio
-  before_update :set_debtable
+  ##before_update :set_debtable
   validates :carrier_id, :driver_id, :unit_id, :box_id, presence: true
   belongs_to :carrier
   belongs_to :driver
