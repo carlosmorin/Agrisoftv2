@@ -1,10 +1,8 @@
 module Logistic
   class DriversController < ApplicationController
-    include DriverBreadcrumb
     before_action :set_object, only: %i[show edit update destroy]
     before_action :set_carriers, only: %i[index]
     before_action :set_carrier, only: %i[new edit]
-    before_action :set_breadrcumbs
 
     def index
       @drivers = Driver.paginate(page: params[:page], per_page: 16)
@@ -13,6 +11,10 @@ module Logistic
     end
 
     def new
+      add_breadcrumb "Logistica", :logistic_root_path if params[:carrier_id].present?
+      add_breadcrumb "Transportistas", :logistic_carriers_path if params[:carrier_id].present?
+      add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :operators) if params[:carrier_id].present?
+      add_breadcrumb "Nuevo Conductor"
       @driver = Driver.new
     end
 
@@ -26,6 +28,12 @@ module Logistic
     end
 
     def edit
+      add_breadcrumb "Logistica", :logistic_root_path if params[:carrier_id].present?
+      add_breadcrumb "Transportistas", :logistic_carriers_path if params[:carrier_id].present?
+      add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :operators) if params[:carrier_id].present?
+      add_breadcrumb "Operadores", logistic_carrier_path(@carrier, tab: :operators) if params[:carrier_id].present?
+      add_breadcrumb @driver.name.upcase, logistic_carrier_driver_path(@carrier, @driver)
+      add_breadcrumb "Editar"
     end
 
     def create
@@ -35,7 +43,10 @@ module Logistic
         redirect_to logistic_carrier_url(@driver.carrier_id, tab: :operators)
       else
         @carrier = @driver.carrier
-        breadrcumbs_create
+        add_breadcrumb "Logistica", :logistic_root_path
+        add_breadcrumb "Transportistas", :logistic_carriers_path
+        add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :operators)
+        add_breadcrumb "Nuevo Conductor"
         render template: 'logistic/drivers/new'
       end
     end
