@@ -1,6 +1,6 @@
 class FreightsController < ApplicationController
   before_action :set_object, only: %i[show edit update destroy]
-  add_breadcrumb "Fletes", :freights_path if params[:carrier_id]
+  add_breadcrumb "Fletes", :freights_path if params[:carrier_id].present?
 
   def index
     @freights = Freight.paginate(page: params[:page], per_page: 20)
