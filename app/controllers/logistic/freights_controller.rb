@@ -1,6 +1,9 @@
 module Logistic
   class FreightsController < ApplicationController
     before_action :set_object, only: %i[show edit update destroy]
+    add_breadcrumb "Logistica", :logistic_root_path
+    add_breadcrumb "Fletes", :logistic_freights_path
+
 
     def index
       @freights = Freight.paginate(page: params[:page], per_page: 20)
@@ -9,9 +12,8 @@ module Logistic
     end
 
     def edit
-      add_breadcrumb "Transportistas", logistic_carriers_path
-      add_breadcrumb @freight.carrier.name.upcase, logistic_carrier_path(@freight.carrier ,tab: :general)
-      add_breadcrumb "Fletes", logistic_carrier_path(@freight.carrier, tab: :freights)
+      add_breadcrumb "Transportistas", logistic_carriers_path if params[:carrier_id].present?
+      add_breadcrumb @freight.carrier.name.upcase, logistic_carrier_path(@freight.carrier ,tab: :general) if params[:carrier_id].present?
       add_breadcrumb "#{@freight.folio}", logistic_carrier_freight_path(@freight.carrier, @freight)
       add_breadcrumb "Editar"
       if @freight.freights_taxes.empty?
@@ -30,10 +32,11 @@ module Logistic
     end
     
     def show
-      add_breadcrumb "Transportistas", logistic_carriers_path
-      add_breadcrumb @freight.carrier.name.upcase, logistic_carrier_path(@freight.carrier ,tab: :general)
-      add_breadcrumb "Fletes", logistic_carrier_path(@freight.carrier, tab: :freights)
-      add_breadcrumb "#{@freight.folio}", logistic_carrier_freight_path(@freight.carrier, @freight)
+      add_breadcrumb "#{@freight.folio}" unless params[:carrier_id] 
+      add_breadcrumb "Transportistas", logistic_carriers_path if params[:carrier_id]
+      add_breadcrumb @freight.carrier.name.upcase, logistic_carrier_path(@freight.carrier ,tab: :general) if params[:carrier_id]
+      add_breadcrumb "Fletes", logistic_carrier_path(@freight.carrier, tab: :freights) if params[:carrier_id]
+      add_breadcrumb "#{@freight.folio}", logistic_carrier_freight_path(@freight.carrier, @freight) if params[:carrier_id]
     end
 
     private
