@@ -63,17 +63,9 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
             
           ul.dropdown-menu.border-0.shadow.p-0.text-left aria-labelledby="dropdownSubMenu2" 
             li
-              = link_to 'Trasportistas', carriers_path, class: 'dropdown-item s-12 pl-2'
+              = link_to 'Tipos de cajas', logistic_box_types_path, class: 'dropdown-item s-12 pl-2'
             li
-              = link_to 'Conductores', config_drivers_path, class: 'dropdown-item s-12 pl-2'
-            li
-              = link_to 'Unidades', config_units_path, class: 'dropdown-item s-12 pl-2'
-            li
-              = link_to 'Cajas', config_boxes_path, class: 'dropdown-item s-12 pl-2'
-            li
-              = link_to 'Tipos de cajas', config_box_types_path, class: 'dropdown-item s-12 pl-2'
-            li
-              = link_to 'Marcas de unidades', config_unit_brands_path, class: 'dropdown-item s-12 pl-2'
+              = link_to 'Marcas de unidades', logistic_unit_brands_path, class: 'dropdown-item s-12 pl-2'
         li.dropdown-submenu.dropdown-hover
           a#dropdownSubMenu2.dropdown-item.dropdown-toggle.s-12.text-left.px-2 aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
             svg.feather.feather-package.mr-1 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 

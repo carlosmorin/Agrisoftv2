@@ -16,7 +16,8 @@ class Unit < ApplicationRecord
 	def set_name
 		brand = 
 			unit_brand.short_name.present? ? unit_brand.short_name : unit_brand.name  
-		self.name = "#{brand}, #{color}, PLACAS: #{plate_number}".upcase
+		n_economic = n_econ.present? ? n_econ : '--'
+		self.name = "#{brand}, #{color}, PLACAS: #{plate_number}, N° ECON: #{n_economic}".upcase
 	end
 
 	def short_name

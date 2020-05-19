@@ -6,7 +6,7 @@ module Logistic
 
 
     def index
-      @freights = Freight.paginate(page: params[:page], per_page: 20)
+      @freights = Freight.paginate(page: params[:page], per_page: 25)
       
       search if params[:q].present?
     end

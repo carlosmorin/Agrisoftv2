@@ -6,8 +6,6 @@
 	end
 
   namespace :config do
-    resources :unit_brands
-    resources :box_types
     resources :taxes
     resources :drivers
     resources :units
@@ -29,6 +27,8 @@
     resources :units
     resources :drivers
     resources :boxes
+    resources :box_types
+    resources :unit_brands
   end
   namespace :directories do
     resources :carriers do

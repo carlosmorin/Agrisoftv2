@@ -1,12 +1,14 @@
 section.content-header.pb-0
-  .container-fluid
-    .row.mb-2
-      .col-sm-6
-        h5 Editar marca 
-      .col-sm-6.text-right.pr-2.s-12
+  .container
+    .row
+      .col-12.text-left.pr-2.s-12
         = render_breadcrumbs :separator => ' / ' 
+    .row.mb-2
+      .col-12
+        h5 Editar marca 
+
 section.content
-  .container-fluid
+  .container
     = render "shared/form_info"
     .row
       .col-md-12

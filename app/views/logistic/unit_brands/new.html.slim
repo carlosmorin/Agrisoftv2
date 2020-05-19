@@ -5,11 +5,12 @@ section.content-header.pb-0
         = render_breadcrumbs :separator => ' / ' 
     .row.mb-2
       .col-12
-        h5 Editar unidad 
+        h5 Nueva marca 
+section.content
   .container
     = render "shared/form_info"
-    .card
+  	.card
   		.card-body
   			.row
-					.col-lg-8
-						= render 'form', carriers: @carriers, brands: @brands
+					.col-lg-6
+						= render 'form'
