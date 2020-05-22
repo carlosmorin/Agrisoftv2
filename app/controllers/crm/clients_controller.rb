@@ -17,13 +17,11 @@ module Crm
 
     def create
     	@client = Client.new(client_params)
-      respond_to do |format|
-        if @client.save
-          format.html { redirect_to crm_client_url(@client), 
-            notice: 'El cliente fue registrado exitosamente.' }
-        else
-          format.html { render :new }
-        end
+      if @client.save
+        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Cliente creado correctamente"
+        redirect_to crm_client_url(@client) 
+      else
+        render :new
       end
     end
 
