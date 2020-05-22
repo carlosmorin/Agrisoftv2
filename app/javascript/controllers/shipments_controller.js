@@ -7,7 +7,6 @@ export default class extends Controller {
 	static targets = [ "carrierId" , "clientId", "productsContainer", "costInput", "coments"]
 	
 	connect() {
-		console.log("init")
 		let container = this.productsContainerTarget
 		$("#products").on('cocoon:after-insert', function(e, insertedItem, originalEvent) {
 			let select = $(insertedItem).find("select").attr("id")
@@ -83,7 +82,7 @@ export default class extends Controller {
 		// da = DeliveryAddress
 		var daSelect = $('select#freight_shipments_attributes_0_delivery_address_id')
 		daSelect.empty()
-		var url = `/clients/${this.clientIdTarget.value}/get_delivery_address`
+		var url = `/crm/clients/${this.clientIdTarget.value}/get_delivery_address`
 		var options = "<option>SELECCIONA</option>";
 		axios({
 			method: 'GET',
@@ -106,7 +105,6 @@ export default class extends Controller {
 	}
 
 	addPayComments(){
-
 		var company = document.getElementById("freight_pay_client_1")
 		var client = document.getElementById("freight_pay_client_2")
 		const comments =  this.commentsTarget

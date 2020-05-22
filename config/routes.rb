@@ -36,6 +36,7 @@
     resources :clients do
       resources :contacts, except: [:index]
       resources :delivery_addresses, except: [:index]
+      get '/get_delivery_address', to: 'clients#get_delivery_address'
     end
     resources :delivery_addresses, except: [:index]
     resources :contacts, except: [:index]
@@ -58,9 +59,6 @@
     get '/addresses/locations', to: 'addresses#locations'
   end
   
-  resources :clients do
-    get '/get_delivery_address', to: 'clients#get_delivery_address'
-  end
   resources :carriers do
     get '/get_drivers', to: 'carriers#get_drivers'
     get '/get_units', to: 'carriers#get_units'
