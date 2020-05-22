@@ -30,6 +30,17 @@
     resources :box_types
     resources :unit_brands
   end
+  
+  namespace :crm do
+    root to: "main#index" #CRM dashboard
+    resources :clients do
+      resources :contacts, except: [:index]
+      resources :delivery_addresses, except: [:index]
+    end
+    resources :delivery_addresses, except: [:index]
+    resources :contacts, except: [:index]
+  end
+
   namespace :directories do
     resources :carriers do
       resources :drivers

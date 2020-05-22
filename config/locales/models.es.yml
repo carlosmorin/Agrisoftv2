@@ -156,3 +156,10 @@ es:
         client_brand_id: Marca
         weight: Peso
         unit_meassure: Unidad de medida
+      contact:
+        name: Nombre(s)
+        last_name: Apellidos
+        position: Departamento
+        mobile_phone: Telefono celular
+        phone: Telefono fijo
+        email: Correo

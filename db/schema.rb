@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_09_174616) do
+ActiveRecord::Schema.define(version: 2020_05_20_151041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,21 @@ ActiveRecord::Schema.define(version: 2020_05_09_174616) do
     t.index ["country_id"], name: "index_companies_on_country_id"
     t.index ["municipality_id"], name: "index_companies_on_municipality_id"
     t.index ["state_id"], name: "index_companies_on_state_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "name"
+    t.string "last_name"
+    t.string "email"
+    t.string "phone"
+    t.string "mobile_phone"
+    t.string "position"
+    t.integer "alias"
+    t.string "contactable_type", null: false
+    t.bigint "contactable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
   end
 
   create_table "countries", force: :cascade do |t|

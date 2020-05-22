@@ -1,5 +1,6 @@
 class Shipment < ApplicationRecord
-  default_scope { order(:created_at) }
+  default_scope { order(created_at: :asc) }
+  
 	before_create :set_products
 	before_create :set_folio 
 	before_create :set_freight_folio 

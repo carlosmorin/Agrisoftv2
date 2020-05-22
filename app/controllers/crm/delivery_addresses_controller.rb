@@ -1,10 +1,9 @@
-module Config
+module Crm
 	class DeliveryAddressesController < ApplicationController
-    before_action :set_object, only: %i[edit update destroy show]
-    before_action :set_catalogs, only: %i[edit update]
+    include DeliveryAddressesBreadcrumbs
 
-  	add_breadcrumb "Config"
-    add_breadcrumb "Direcciónes de entrega", :config_delivery_addresses_path
+    before_action :set_object, only: %i[edit update destroy show]
+    before_action :set_client, :set_breadcrumb, only: %i[new edit]
 
   	def index
   		@delivery_addresses = DeliveryAddress.paginate(page: params[:page], per_page: 16)
@@ -13,12 +12,10 @@ module Config
   	end
 
 		def new
-      add_breadcrumb "Nuevo"
 			@address = DeliveryAddress.new
 		end
 
     def edit
-      add_breadcrumb "Editar"
     end
 
     def show
@@ -28,18 +25,22 @@ module Config
     def create
       @address = DeliveryAddress.new(address_params)
       if @address.save
-        flash[:notice] = 'Dirección de entrega creada'
-        redirect_to config_delivery_addresses_path
+        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Dirección creada correctamente"
+        redirect_to crm_client_path(@address.client, tab: :addresses)
       else
+        set_client
+        set_breadcrumb
         render :new
       end
     end
 
     def update
       if @address.update(address_params)
-        flash[:notice] = "Dirección actualizada"
-        redirect_to config_delivery_addresses_path
+        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Dirección actualizada correctamente"
+        redirect_to crm_client_path(@address.client, tab: :addresses)
       else
+        set_client
+        set_breadcrumb
         render :edit
       end
     end

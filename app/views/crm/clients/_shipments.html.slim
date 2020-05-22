@@ -1,0 +1,45 @@
+ table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
+  thead
+    tr.bg-light-gray
+      th Remisionista
+      th Cliente
+      th.text-center Folio de flete
+      th.text-center Folio de embarque
+      th.text-center Folio de cliente
+      th.text-center N° bultos
+      th.text-center Fecha de envio
+      th.text-center Estatus
+      th.text-center colspan="2" style=("width: 12%") Acciónes
+  tbody#tbody.s-13
+    - if @client.shipments.empty?
+      tr
+        td.text-center colspan="9"
+          = link_to 'Nuevo registro', new_shipment_path, class: "s-12"
+    - else
+      - n_products = 0
+      - @client.shipments.each do |shipment|
+        - n_products += shipment.n_products
+        tr
+          td = shipment.company.name.upcase
+          td = shipment.client.name.upcase
+          td.text-center = shipment.freight.folio.present? ? shipment.freight.folio.upcase : '--'
+          td.text-center = shipment.folio.present? ? shipment.folio.upcase : '--'
+          td.text-center = shipment.client_folio.present? ? shipment.client_folio.upcase : '--' 
+          td.text-center = shipment.n_products
+          td.text-center.s-12 = shipment.created_at.strftime("%m/%d/%Y  %I:%M %p")
+          td.text-center = raw set_status shipment.status
+          td.text-center
+            = link_to shipment_path(shipment), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
+              svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+                path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+                circle cx="12" cy="12" r="3"
+            = link_to edit_shipment_path(shipment), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
+              svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+    tfoot
+      tr
+        th.pl-3 colspan="5" 
+          i.text-lght.f-normal = raw "Total: <b>#{@client.shipments.size}</b> embarques"
+        th.text-center = n_products
+        th colspan="3"

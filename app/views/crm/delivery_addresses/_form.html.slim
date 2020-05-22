@@ -1,18 +1,12 @@
-= simple_form_for([:config, @address], data: { controller: "address masks" }) do |f|
+= simple_form_for([:crm, @address], data: { controller: "address masks" }) do |f|
+	- client_id = params[:client_id].present? ? params[:client_id] :  @address.client_id 
+	= f.input :client_id, as: :hidden, input_html: { value: client_id }
 	.row
 		.col-lg-12
 			h6.s-16
 				svg.svg-inline--fa.fa-info-circle.fa-w-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="info-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
 					path d=("M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z") fill="currentColor" 
 				span General
-	.form-group.mb-1  
-		.row
-			.col-md-3
-				= f.label :client_id, class: "pt-1" 
-			.col-md-9
-				- client_id = params[:c].present? ? params[:c] : ''
-				- client_id = @address.client_id.present? ? @address.client_id : client_id
-				= f.input :client_id, collection: Client.all, selected: client_id, label: false,include_blank: 'SELECCIONA',input_html: { class: 's-12', include_blank: 'SELECCIONA'}
 	.form-group.mb-1.mb-1
 		.row
 			.col-md-3
@@ -37,13 +31,13 @@
 			.col-md-3
 				= f.label :state_id, class: "pt-1" 
 			.col-md-9
-				= f.input :state_id, collection: states, label: false, input_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId" }  }
+				= f.input :state_id, collection: State.all, label: false, input_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId" }  }
 	.form-group.mb-1  
 		.row.mb-3
 			.col-md-3
 				= f.label :municipality_id, class: "pt-1" 
 			.col-md-9
-				= f.input :municipality_id, collection: municipalities, label: false, input_html: { class: 's-12' }
+				= f.input :municipality_id, collection: Municipality.all, label: false, input_html: { class: 's-12' }
 	.form-group.mb-1  
 		.row
 			.col-md-3

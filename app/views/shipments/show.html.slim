@@ -95,7 +95,11 @@ section.content
 								span.mb-1.bold = @shipment.created_at.strftime("%m/%d/%Y")
 				.row
 					.col-lg-12
-						label.mb-2.mr-1 Origen:
+						label.mr-1 Origen:
+						span.mb-1.bold Parras de la Fuente, Coahuila, México, Agricola las albardas
+				.row
+					.col-lg-12
+						label.mb-2.mr-1 Destino:
 						span.mb-1.bold = @freight.shipments.first.delivery_address.full_address
 					.col-lg-12
 
