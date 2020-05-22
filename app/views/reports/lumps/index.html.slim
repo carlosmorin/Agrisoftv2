@@ -1,0 +1,87 @@
+section.content-header.pb-0
+	.container
+		.row
+			.col-12
+				h4 Reporte de bultos enviados
+		= form_tag(reports_lumps_path, method: "GET", data: { controller: "select" }) do
+			.row.align-items-center.mb-4
+				.col-6
+					label.s-12.mb-0 Cliente
+					= select_tag :c, options_for_select(Client.all.pluck(:name, :id), selected: params[:c]),multiple: true, include_blank: 'Todos', class: 's-14'
+				.col-2.my-1
+					button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"  
+						span.mr-2.s-12 Generar
+						svg.svg-inline--fa.fa-filter.fa-w-16.h-10 aria-hidden="true" data-icon="filter" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+							path d=("M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z") fill="currentColor"
+	.container
+		- if @clients.present?
+			- @clients.each do |client|
+				.row.mt-1
+					.col-md-12
+						.card.card-primary.card-outline
+							.card-header.p-2.pb-1.bg-light-gray
+								h5.s-14.mb-0.bold = client.name.upcase
+							.card-body.my-1.py-1
+								.card.my-0
+									.card-header.bg-light-gray.p-2.pb-1
+										.row.s-12
+											.col-2
+												span.bold.s-14 Folio Embarque
+											.col-2
+												span.bold.s-14 Folio Cilente
+											.col-2
+												span.bold.s-14 Folio Flete
+											.col-1
+												span.bold.s-14 Bultos
+											.col-2
+												span.bold.s-14 KG
+											.col-2
+												span.bold.s-14 Fecha Envio		
+								- total_kg = 0 
+								- total_lumps = 0 
+								- client.shipments.each do |shipment|
+									- total_lumps += shipment.n_products.to_i
+									.card.my-0.mt-2
+										.card-header.bg-light-gray.p-2.pb-1
+											.row.s-12
+												.col-2
+													h3.card-title.s-14 = shipment.folio.upcase
+												.col-2
+													h3.card-title.s-14 = shipment.client_folio.upcase
+												.col-2
+													h3.card-title.s-14 = shipment.freight_folio.upcase
+												.col-1
+													h3.card-title.s-14.bold = shipment.n_products
+												.col-2
+													- subtotal_kg = 0
+													- shipment.shipments_products.map { |product| subtotal_kg += product.quantity * product.product.weight }
+													- total_kg += subtotal_kg
+													h3.card-title.s-14.bold = "#{subtotal_kg} kg"
+												.col-2
+													h3.card-title.s-14 = shipment.created_at.strftime("%m/%d/%Y  %I:%M %p")
+												.col-1.text-right
+													.card-tools
+														button.btn.btn-tool data-card-widget="collapse" type="button" 
+															i.fa.fa-minus
+										.card-body.p-0 style=("display: block;")
+											- shipment.shipments_products.each do |product| 
+												.row.s-14
+													.col-6.pl-3
+														label = product.product.name.upcase
+													.col-1
+														label = product.quantity
+													.col-1
+														label for="" 
+															span = "#{product.product.weight} "
+															small KG 
+								
+								.card.mt-2
+									.card-header.bg-info.p-2.pb-1
+										.row.s-12
+											.col-6.text-right
+												span.bold.s-14 TOTAL:
+											.col-2
+												span.bold.s-14 = "#{total_lumps} Bultos"
+											.col-2
+												span.bold.s-14 = "#{total_kg} KG"
+

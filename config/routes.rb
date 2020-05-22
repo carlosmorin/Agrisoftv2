@@ -5,6 +5,10 @@
   	resources :users
 	end
 
+  namespace :reports do
+    resources :lumps, only: [:index]
+  end
+
   namespace :config do
     resources :taxes
     resources :drivers
