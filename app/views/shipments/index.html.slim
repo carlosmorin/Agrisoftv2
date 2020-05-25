@@ -1,10 +1,12 @@
 section.content-header.pb-0
   .container-fluid
+    .row
+      .col-lg-12.s-12
+        = render_breadcrumbs :separator => ' / '
     .row.mb-2
       .col-sm-6
-        h5 Embarques 
-      .col-sm-6.text-right.pr-2.s-12
-        = render_breadcrumbs :separator => ' / '
+        h5 Control de Embarques 
+
 section.content
   .container-fluid
     .row
@@ -55,9 +57,7 @@ section.content
                     td.text-center colspan="9"
                       = link_to 'Nuevo registro', new_shipment_path, class: "s-12"
                 - else
-                  - n_products = 0
                   - @shipments.each do |shipment|
-                    - n_products += shipment.n_products
                     tr
                       td = shipment.company.name.upcase
                       td = shipment.client.name.upcase
@@ -68,25 +68,34 @@ section.content
                       td.text-center.s-12 = shipment.created_at.strftime("%m/%d/%Y  %I:%M %p")
                       td.text-center = raw set_status shipment.status
                       td.text-center
-                        = link_to shipment_path(shipment), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
-                          svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-                            path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
-                            circle cx="12" cy="12" r="3"
-                        = link_to edit_shipment_path(shipment), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
-                          svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-                            path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-                            path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
-                        = link_to shipment_path(shipment), title: "Eliminar", data: { placement: 'left', toggle: 'tooltip', controller: 'users', behavior: 'delete' }  do
-                          svg.feather.feather-trash-2.text-danger fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-                            polyline points=("3 6 5 6 21 6") 
-                            path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 
-                            line x1="10" x2="10" y1="11" y2="17" 
-                            line x1="14" x2="14" y1="11" y2="17"
+                        .btn-group
+                          = link_to shipment_path(shipment), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                            svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                              path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+                              circle cx="12" cy="12" r="3"
+                          = link_to edit_shipment_path(shipment), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+                            svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                              path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                              path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+                          .btn-group
+                            button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
+                            .dropdown-menu.py-0 style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px), 38px, 0px);") x-placement="top-start" 
+                              = link_to shipment_print_path(shipment, format: :pdf), target: "_blank", class: 'dropdown-item s-12'
+                                svg.svg-inline--fa.fa-file-pdf.fa-w-12.h-12.mr-2 aria-hidden="true" data-icon="file-pdf" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
+                                  path d=("M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z") fill="currentColor" 
+                                span Remision
+                              = link_to shipment_print_responsive_path(shipment, format: :pdf), target: "_blank", class: 'dropdown-item s-12'
+                                svg.svg-inline--fa.fa-file-pdf.fa-w-12.h-12.mr-2 aria-hidden="true" data-icon="file-pdf" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
+                                  path d=("M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z") fill="currentColor" 
+                                span Responsiva
                 tfoot
                   tr
                     th.pl-3 colspan="5" 
-                      i.text-lght.f-normal = raw "Total: <b>#{@shipments.size}</b> embarques"
-                    th.text-center = n_products
+                      i.text-lght.f-normal = raw "Total: <b>#{@all_shipments.size}</b> embarques"
+                    th.text-center
+                      - total_package = 0
+                      - @all_shipments.map{ |shipment| total_package += shipment.n_products.to_i }
+                      p = total_package
                     th colspan="3"
           .card-footer.p-2.pb-1.bg-light-gray
             .row

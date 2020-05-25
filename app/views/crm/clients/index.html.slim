@@ -52,20 +52,28 @@ section.content
                       td = client.phone.upcase
                       td = client.email? ? client.email : '--'
                       td.text-center
-                        = link_to crm_client_path(client), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
-                          svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-                            path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
-                            circle cx="12" cy="12" r="3"
-                      	= link_to edit_crm_client_path(client), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
-                         svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-                          path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-                          path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
-                        = link_to crm_client_path(client), title: "Eliminar", data: { placement: 'left', toggle: 'tooltip', controller: 'users', behavior: 'delete' }  do
-                         svg.feather.feather-trash-2.text-danger fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-                          polyline points=("3 6 5 6 21 6") 
-                          path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 
-                          line x1="10" x2="10" y1="11" y2="17" 
-                          line x1="14" x2="14" y1="11" y2="17"
+                        .btn-group
+                          = link_to crm_client_path(client), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                            svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                              path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+                              circle cx="12" cy="12" r="3"
+                          = link_to edit_crm_client_path(client), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+                            svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                              path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                              path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+
+                        .btn-group
+                            button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
+                            .dropdown-menu.py-0 style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px), 38px, 0px);") x-placement="top-start" 
+                              = link_to new_crm_client_contact_path(client), class: 'dropdown-item s-12'
+                                svg.svg-inline--fa.fa-address-book.fa-w-14.h-12.mr-2 aria-hidden="true" data-icon="address-book" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 448 512") xmlns="http://www.w3.org/2000/svg" 
+                                  path d=("M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z") fill="currentColor" 
+                                span Agregar contacto
+                              = link_to new_crm_client_delivery_address_path(client), class: 'dropdown-item s-12' do
+                                svg.svg-inline--fa.fa-map-marker-alt.fa-w-12.h-12.mr-2 aria-hidden="true" data-icon="map-marker-alt" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
+                                  path d=("M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z") fill="currentColor" 
+                                span Agregar D. entrega
+                             
           .card-footer.p-2.pb-1.bg-light-gray
             .row
               .col-lg-12.d-flex.justify-content-center

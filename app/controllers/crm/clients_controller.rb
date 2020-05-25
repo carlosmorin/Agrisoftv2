@@ -3,6 +3,7 @@ module Crm
   	before_action :set_object, only: %i[show edit update destroy get_delivery_address]
     before_action :set_catalogs, only: %i[edit update]
 
+    add_breadcrumb "CRM", :crm_root_path
     add_breadcrumb "Clientes", :crm_clients_path
 
     def index

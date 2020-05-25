@@ -1,5 +1,5 @@
 - model_name =  @driver.model_name
-= simple_form_for([:logistic, @driver]) do |f|
+= simple_form_for([:logistic, @driver], data: { controller: "masks" }) do |f|
 	= f.input :carrier_id, as: :hidden, input_html: { value: @carrier.id }
 	.form-group.mb-1
 		.row
@@ -18,7 +18,7 @@
 			.col-md-3
 				= f.label :phone, class: "pt-1" 
 			.col-md-9
-				= f.input :phone, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
+				= f.input :phone, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm phone_mask' }
 	.form-group.mb-1
 		.row
 			.col-md-3

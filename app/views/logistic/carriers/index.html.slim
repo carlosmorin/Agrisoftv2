@@ -58,22 +58,31 @@ section.content
                       td = carrier.email.present? ? carrier.email.upcase : "--"
                       td = carrier.short_address.upcase
                       td.text-center
-                        a#dropdownSubMenu1.nav-link.dropdown-toggle.costum-action-link.btn.btn-xs aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#"
-                          svg.svg-inline--fa.fa-ellipsis-h.fa-w-16.h-14.pl-1 aria-hidden="true" data-icon="ellipsis-h" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-                            path d=("M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z") fill="currentColor" 
-                        ul.dropdown-menu.border-0.shadow.py-0 aria-labelledby="dropdownSubMenu1" 
-                          li
-                            = link_to 'Ver detalle', logistic_carrier_path(carrier, tab: :general), class: 'dropdown-item s-12 text-left px-3 bold'
-                          li
-                            = link_to 'Editar', edit_logistic_carrier_path(carrier), class: 'dropdown-item s-12 text-left px-3 bold'
-                          li 
-                            hr.my-0
-                          li
-                            = link_to 'Nuevo conductor', new_logistic_carrier_driver_path(carrier), class: 'dropdown-item s-12 text-left px-3 bold'
-                          li
-                            = link_to 'Nueva unidad', new_logistic_carrier_unit_path(carrier), class: 'dropdown-item s-12 text-left px-3 bold'
-                          li
-                            = link_to 'Nueva caja', new_logistic_carrier_box_path(carrier), class: 'dropdown-item s-12 text-left px-3 bold'
+                        .btn-group
+                          = link_to logistic_carrier_path(carrier, tab: :general), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                            svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                              path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+                              circle cx="12" cy="12" r="3"
+                          = link_to edit_logistic_carrier_path(carrier), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+                            svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                              path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                              path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+
+                        .btn-group
+                            button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
+                            .dropdown-menu.py-0 style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px), 38px, 0px);") x-placement="top-start" 
+                              = link_to new_logistic_carrier_driver_path(carrier), class: 'dropdown-item s-12'
+                                svg.svg-inline--fa.fa-user.fa-w-14.h-12.mr-2 aria-hidden="true" data-icon="user" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 448 512") xmlns="http://www.w3.org/2000/svg" 
+                                  path d=("M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z") fill="currentColor" 
+                                span Agregar conductor
+                              = link_to new_logistic_carrier_unit_path(carrier), class: 'dropdown-item s-12'
+                                svg.svg-inline--fa.fa-truck.fa-w-20.h-12.mr-2 aria-hidden="true" data-icon="truck" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 640 512") xmlns="http://www.w3.org/2000/svg" 
+                                  path d=("M624 352h-16V243.9c0-12.7-5.1-24.9-14.1-33.9L494 110.1c-9-9-21.2-14.1-33.9-14.1H416V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h16c0 53 43 96 96 96s96-43 96-96h128c0 53 43 96 96 96s96-43 96-96h48c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zM160 464c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm320 0c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-208H416V144h44.1l99.9 99.9V256z") fill="currentColor"  
+                                span Agregar unidad
+                              = link_to new_logistic_carrier_box_path(carrier), class: 'dropdown-item s-12'
+                                svg.svg-inline--fa.fa-truck-loading.fa-w-20.h-12.mr-2 aria-hidden="true" data-icon="truck-loading" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 640 512") xmlns="http://www.w3.org/2000/svg" 
+                                  path d=("M50.2 375.6c2.3 8.5 11.1 13.6 19.6 11.3l216.4-58c8.5-2.3 13.6-11.1 11.3-19.6l-49.7-185.5c-2.3-8.5-11.1-13.6-19.6-11.3L151 133.3l24.8 92.7-61.8 16.5-24.8-92.7-77.3 20.7C3.4 172.8-1.7 181.6.6 190.1l49.6 185.5zM384 0c-17.7 0-32 14.3-32 32v323.6L5.9 450c-4.3 1.2-6.8 5.6-5.6 9.8l12.6 46.3c1.2 4.3 5.6 6.8 9.8 5.6l393.7-107.4C418.8 464.1 467.6 512 528 512c61.9 0 112-50.1 112-112V0H384zm144 448c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z") fill="currentColor" 
+                                span Agregar caja
           .card-footer.p-2.pb-1.bg-light-gray
             .row
               .col-lg-12.d-flex.justify-content-center

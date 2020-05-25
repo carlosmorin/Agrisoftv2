@@ -1,10 +1,12 @@
 section.content-header.pb-0
 	.container-fluid
+		.row
+			.col-12.text-left.s-12
+				= render_breadcrumbs :separator => ' / '
 		.row.mb-2
 			.col-sm-6
-				h4 Control de fletes
-			.col-sm-6.text-right.pr-2.s-12
-				= render_breadcrumbs :separator => ' / '
+				h5 Control de fletes
+
 section.content
 	.container-fluid
 		.row
@@ -90,14 +92,15 @@ section.content
 							
 												
 											td.text-center
-												= link_to logistic_freight_path(freight), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
-													svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-														path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
-														circle cx="12" cy="12" r="3" 
-												= link_to edit_logistic_freight_path(freight), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
-													svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-														path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-														path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+											 .btn-group
+													= link_to logistic_freight_path(freight), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+														svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+															path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+															circle cx="12" cy="12" r="3"
+													= link_to edit_logistic_freight_path(freight), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+														svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+															path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+															path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
 							tfoot
 								tr
 									th.pl-3 colspan="5" 

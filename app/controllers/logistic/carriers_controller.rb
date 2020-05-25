@@ -27,19 +27,18 @@ module Logistic
 
     def create
       @carrier = Carrier.new(carrier_params)
-      respond_to do |format|
-        if @carrier.save
-          format.html { redirect_to carrier_url(@carrier), notice: 'Transportista creado' }
-        else
-          format.html { render :new }
-        end
+      if @carrier.save
+        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Transportista creado correctamente"
+        redirect_to logistic_carrier_url(@carrier, tab: :general)
+      else
+        render :new
       end
     end
 
     def update
       if @carrier.update(carrier_params)
-        flash[:notice] = "#{@carrier.name} Actualizado"
-        redirect_to carrier_url(@carrier)
+        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Transportista creado Actualizado"
+        redirect_to logistic_carrier_url(@carrier)
       else
         render :edit
       end
