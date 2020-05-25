@@ -35,6 +35,10 @@
     resources :unit_brands
   end
   
+  namespace :commercial do
+    root to: "main#index" #Comercial dashboard
+    resources :sales  
+  end
   namespace :crm do
     root to: "main#index" #CRM dashboard
     resources :clients do
