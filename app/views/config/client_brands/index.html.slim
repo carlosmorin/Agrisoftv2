@@ -49,7 +49,7 @@ section.content
 										tr
 											td = brand.id
 											td = brand.name
-											td = brand.client.name
+											td = brand.client.present? ? brand.client.name.upcase : "Generico"
 											td.text-center
 												= link_to edit_config_client_brand_path(brand), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
 													svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
