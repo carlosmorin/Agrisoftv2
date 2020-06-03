@@ -3,7 +3,7 @@ class ColorsController < ApplicationController
 
 	add_breadcrumb "Colores", :colors_path
 
-def index
+  def index
   	@colors = Color.paginate(page: params[:page], per_page: 16)
     search if params[:q].present?
   end
@@ -18,7 +18,7 @@ def index
   end
 
   def show
-    add_breadcrumb "Detalle" 
+    add_breadcrumb "Detalle"
   end
 
   def create
@@ -49,7 +49,7 @@ def index
 
   def search
     q = Regexp.escape(params[:q])
-    
+
     @colors = @colors.where("name ~* ?", q)
   end
 
@@ -60,5 +60,4 @@ def index
   def set_object
     @color = Color.find(params[:id])
   end
-
 end

@@ -8,8 +8,8 @@ class ShipmentsController < ApplicationController
     @shipments = Shipment.paginate(page: params[:page], per_page: 25)
     @all_shipments = Shipment.all
 
-    search if params[:q].present? 
-    search_by_client if params[:c].present? 
+    search if params[:q].present?
+    search_by_client if params[:c].present?
   end
 
   def new

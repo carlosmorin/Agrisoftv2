@@ -1,0 +1,5 @@
+es:
+  controllers:
+    crm:
+      quotes:
+        message: "En atanción a su solicitud, nos permitimos emitir la siguiente cotizacion con los productos."

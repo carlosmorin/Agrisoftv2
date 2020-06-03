@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  client: one
+  company: one
+  contact: one
+  expirated_days: 1
+  expired_at: 2020-05-27
+  folio: MyString
+  iva: false
+
+two:
+  client: two
+  company: two
+  contact: two
+  expirated_days: 1
+  expired_at: 2020-05-27
+  folio: MyString
+  iva: false

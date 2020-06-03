@@ -9,14 +9,20 @@
 
 import { Controller } from "stimulus"
 import SlimSelect from 'slim-select'
+import flatpickr from "flatpickr";
+
 
 export default class extends Controller {
   static targets = [ "output" ]
-
-  connect() {
-		const ids = [...document.getElementsByTagName('select')].map(el => el.id);
+  initialize(){
+  	const ids = [...document.getElementsByTagName('select')].map(el => el.id);
 		for (var i=0, max=ids.length; i < max; i++) {
 			new SlimSelect({select: `#${ids[i]}`})
 		}
+  	flatpickr(".date-picker", {
+			enableTime: true,
+    	dateFormat: "Y-m-d H:i"
+		});
   }
+
 }

@@ -163,3 +163,13 @@ es:
         mobile_phone: Telefono celular
         phone: Telefono fijo
         email: Correo
+      quote:
+        user_id: Remitente
+        company_id: Empresa
+        contact_id: Representante
+        client_id: Cliente
+        description: Mensaje
+        iva: Incluir IVA
+        expirated_days: Días de vigencia
+        issue_at: Fecha de emisión
+        delivery_address_id: Lugar de entrega

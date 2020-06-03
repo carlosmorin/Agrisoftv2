@@ -1,6 +1,6 @@
 module Crm
   class ClientsController < ApplicationController
-  	before_action :set_object, only: %i[show edit update destroy get_delivery_address]
+  	before_action :set_object, only: %i[show edit update destroy get_delivery_address get_contacts]
     before_action :set_catalogs, only: %i[edit update]
 
     add_breadcrumb "CRM", :crm_root_path
@@ -52,8 +52,13 @@ module Crm
       da = @client.delivery_addresses
       render json: da
     end
-
-  	private
+    
+    def get_contacts
+      contacts = @client.contacts
+      render json: contacts
+    end
+  	
+    private
 
     def search
       q = Regexp.escape(params[:q])

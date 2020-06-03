@@ -45,9 +45,11 @@
       resources :contacts, except: [:index]
       resources :delivery_addresses, except: [:index]
       get '/get_delivery_address', to: 'clients#get_delivery_address'
+      get '/get_contacts', to: 'clients#get_contacts'
     end
     resources :delivery_addresses, except: [:index]
     resources :contacts, except: [:index]
+    resources :quotes
   end
 
   namespace :directories do

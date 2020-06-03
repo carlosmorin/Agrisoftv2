@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_200433) do
+ActiveRecord::Schema.define(version: 2020_06_03_181934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -329,6 +339,27 @@ ActiveRecord::Schema.define(version: 2020_05_26_200433) do
     t.string "short_name"
   end
 
+  create_table "quotes", force: :cascade do |t|
+    t.bigint "client_id", null: false
+    t.bigint "company_id", null: false
+    t.bigint "contact_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "expirated_days"
+    t.date "expired_at"
+    t.string "folio"
+    t.decimal "iva"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "issue_at"
+    t.decimal "discount"
+    t.bigint "delivery_addresses_id", null: false
+    t.index ["client_id"], name: "index_quotes_on_client_id"
+    t.index ["company_id"], name: "index_quotes_on_company_id"
+    t.index ["contact_id"], name: "index_quotes_on_contact_id"
+    t.index ["delivery_addresses_id"], name: "index_quotes_on_delivery_addresses_id"
+    t.index ["user_id"], name: "index_quotes_on_user_id"
+  end
+
   create_table "shipments", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.bigint "client_id", null: false
@@ -351,13 +382,18 @@ ActiveRecord::Schema.define(version: 2020_05_26_200433) do
   end
 
   create_table "shipments_products", force: :cascade do |t|
-    t.bigint "shipment_id", null: false
+    t.bigint "shipment_id"
     t.bigint "product_id", null: false
-    t.integer "price"
+    t.decimal "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "quantity"
+    t.string "productable_type"
+    t.bigint "productable_id"
+    t.integer "measurement_unit"
+    t.integer "unit_meassure"
     t.index ["product_id"], name: "index_shipments_products_on_product_id"
+    t.index ["productable_type", "productable_id"], name: "index_shipments_products_on_productable_type_and_productable_id"
     t.index ["shipment_id"], name: "index_shipments_products_on_shipment_id"
   end
 
@@ -471,6 +507,11 @@ ActiveRecord::Schema.define(version: 2020_05_26_200433) do
   add_foreign_key "products", "packages"
   add_foreign_key "products", "qualities"
   add_foreign_key "products", "sizes"
+  add_foreign_key "quotes", "clients"
+  add_foreign_key "quotes", "companies"
+  add_foreign_key "quotes", "contacts"
+  add_foreign_key "quotes", "delivery_addresses", column: "delivery_addresses_id"
+  add_foreign_key "quotes", "users"
   add_foreign_key "shipments", "clients"
   add_foreign_key "shipments", "companies"
   add_foreign_key "shipments", "delivery_addresses"
