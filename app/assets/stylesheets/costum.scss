@@ -26,6 +26,11 @@ a.costum-action-link:hover{
 	background: #d5d5d5 !important;
 }
 
+
+/////TEXT STYLES
+.text-underline{
+	text-decoration: underline; 
+}
 ///Helpers
 //// Font size
 .s-8{ font-size: 8px !important; }
@@ -65,6 +70,7 @@ a.nav-link.active{color: blue !important;}
 //Whidths
 .m-w-7rm{ min-width: 7rem !important;}
 
+.mt-2rem{ margin-top: 2rem;}
 //Force paddings
 .py-05{
 	padding-top: .3rem !important;

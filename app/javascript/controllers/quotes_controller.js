@@ -136,7 +136,8 @@ export default class extends Controller {
   calculeTotal(){
     var iva = this.data.get("iva")
     var subTotal = this.data.get("subTotal")
-    var total = subTotal - ((subTotal / 100) * iva)
+    var total = ((subTotal) + ((subTotal / 100) * iva))
+    console.log(total)
     this.data.set("total", total)
     
     var number = numeral(total);

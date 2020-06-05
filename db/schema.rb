@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_03_181934) do
+ActiveRecord::Schema.define(version: 2020_06_04_185901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -352,11 +352,11 @@ ActiveRecord::Schema.define(version: 2020_06_03_181934) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "issue_at"
     t.decimal "discount"
-    t.bigint "delivery_addresses_id", null: false
+    t.bigint "delivery_address_id", null: false
     t.index ["client_id"], name: "index_quotes_on_client_id"
     t.index ["company_id"], name: "index_quotes_on_company_id"
     t.index ["contact_id"], name: "index_quotes_on_contact_id"
-    t.index ["delivery_addresses_id"], name: "index_quotes_on_delivery_addresses_id"
+    t.index ["delivery_address_id"], name: "index_quotes_on_delivery_address_id"
     t.index ["user_id"], name: "index_quotes_on_user_id"
   end
 
@@ -510,7 +510,7 @@ ActiveRecord::Schema.define(version: 2020_06_03_181934) do
   add_foreign_key "quotes", "clients"
   add_foreign_key "quotes", "companies"
   add_foreign_key "quotes", "contacts"
-  add_foreign_key "quotes", "delivery_addresses", column: "delivery_addresses_id"
+  add_foreign_key "quotes", "delivery_addresses"
   add_foreign_key "quotes", "users"
   add_foreign_key "shipments", "clients"
   add_foreign_key "shipments", "companies"

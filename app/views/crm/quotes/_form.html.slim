@@ -26,9 +26,9 @@
 								label.custom-control-label.mt-2 for="deliveryAddresses"  Incluir entrega?
 				.row.d-none data-target="quotes.deliverySelectContainer"
 					.col-2.text-right
-						= f.label :delivery_addresses_id
+						= f.label :delivery_address_id
 					.col-10
-						= f.input :delivery_addresses_id, collection: [], label: false, required: true, autofocus: true, input_html: { class: 's-12 addresses-select' }
+						= f.input :delivery_address_id, collection: [], label: false, required: true, autofocus: true, input_html: { class: 's-12 addresses-select' }
 			.col-6
 				.row
 					.col-3

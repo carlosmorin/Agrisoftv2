@@ -1,11 +1,10 @@
 section.content-header.pb-0
 	.container
-		.row
-			.col-12.text-left.s-12
-				= render_breadcrumbs :separator => ' / '
-		.row.mb-2
-			.col-12
+		.row.mb-2.mt-4
+			.col-md-6
 				h5 Nueva Cotización
+			.col-md-6.text-right.s-12
+				= render_breadcrumbs :separator => ' / '
 section.content
 	.container
 		= render "shared/form_info"

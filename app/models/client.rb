@@ -15,6 +15,6 @@ class Client < ApplicationRecord
 	has_many :contacts, as: :contactable
 
 	def full_address
-		"#{municipality.name}, #{state.name}, #{address}, #{country.name}"
+		"#{address}, #{municipality.name}, #{state.name}, #{country.name}"
 	end
 end

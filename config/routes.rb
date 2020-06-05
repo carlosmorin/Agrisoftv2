@@ -49,7 +49,9 @@
     end
     resources :delivery_addresses, except: [:index]
     resources :contacts, except: [:index]
-    resources :quotes
+    resources :quotes do
+      get '/print', to: 'quotes#print'
+    end
   end
 
   namespace :directories do
