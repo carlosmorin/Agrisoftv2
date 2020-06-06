@@ -6,7 +6,8 @@ module Crm
 
 		def index
 			@quotes = Quote.all
-		end
+		  search if params[:q].present?
+    end
 
 		def show
 			add_breadcrumb "Detalle"
@@ -45,15 +46,21 @@ module Crm
 	  end
 
 		def quote_params
-			params.require(:quote).permit(:client_id, :company_id, :contact_id, 
-				:user_id, :expirated_days, :expired_at, :iva, :delivery_address_id, 
-				:issue_at, :discount, :description, shipments_products_attributes: [:id, 
+			params.require(:quote).permit(:client_id, :company_id, :contact_id,
+				:user_id, :expirated_days, :expired_at, :iva, :delivery_address_id,
+				:issue_at, :discount, :description, shipments_products_attributes: [:id,
 					:price, :quantity, :shipment_id, :product_id, :productable_type,
 					:productable_id, :unit_meassure, :_destroy])
 		end
 
 		private
-		def set_object
+
+    def search
+      q = Regexp.escape(params[:q])
+      @quotes = @quotes.where("concat(id) ~* ?", q)
+    end
+
+    def set_object
 			id = params[:id].present? ? params[:id] : params[:quote_id]
 			@quote = Quote.find(id)
 		end
