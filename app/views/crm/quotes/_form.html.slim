@@ -17,18 +17,11 @@
 						= f.label :client_id
 					.col-10
 						= f.input :client_id, collection: Client.all, label: false, required: true, autofocus: true, input_html: { class: 's-12', data: { action: "change->quotes#loadContacts change->quotes#loadDeliveryAddresses", target: "quotes.clientSelect" } }
-				.row 
-					.col-2
-					.col-10
-						.form-group
-							.custom-control.custom-checkbox
-								input#deliveryAddresses.custom-control-input type="checkbox" value="0" data-target="quotes.checkIncludeDelivery" data-action="change->quotes#toggleDeliverySelect" /
-								label.custom-control-label.mt-2 for="deliveryAddresses"  Incluir entrega?
-				.row.d-none data-target="quotes.deliverySelectContainer"
+				.row.mt-3
 					.col-2.text-right
 						= f.label :delivery_address_id
 					.col-10
-						= f.input :delivery_address_id, collection: [], label: false, required: true, autofocus: true, input_html: { class: 's-12 addresses-select' }
+						= f.input :delivery_address_id, collection: delivery_addresses, label: false, required: true, autofocus: true, input_html: { class: 's-12 addresses-select' }
 			.col-6
 				.row
 					.col-3
@@ -46,7 +39,7 @@
 							.col-3.text-right
 								= f.label :contact_id, class: "bold"
 							.col-9
-								= f.input :contact_id, collection: [], label: false, required: true, autofocus: true, input_html: { class: 's-12 contacts-select', data: { target: 'quotes.contactsSelect' } }
+								= f.input :contact_id, collection: contacts, label: false, required: true, autofocus: true, input_html: { class: 's-12 contacts-select', data: { target: 'quotes.contactsSelect' } }
 						.row.mt-3
 							.col-3.text-right
 								= f.label :expirated_days, class: "bold"

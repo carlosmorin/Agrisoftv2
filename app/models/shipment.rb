@@ -1,10 +1,10 @@
 class Shipment < ApplicationRecord
-  default_scope { order(created_at: :asc) }
-  
+  default_scope { order(created_at: :desc) }
+
 	before_create :set_products
-	before_create :set_folio 
-	before_create :set_freight_folio 
-	before_create :set_client_folio 
+	before_create :set_folio
+	before_create :set_freight_folio
+	before_create :set_client_folio
 	before_create :set_status
 	#before_create :set_debtable
 

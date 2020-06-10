@@ -46,7 +46,10 @@ gem 'country_select'
 gem 'breadcrumbs_on_rails'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-
+gem 'rubyzip'
+gem 'axlsx'
+gem 'axlsx_rails'
+gem 'axlsx_styler', '~> 1.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

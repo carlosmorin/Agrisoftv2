@@ -1,16 +1,23 @@
 module Crm
 	class QuotesController < ApplicationController
-		before_action :set_object, only: %i[show print]
+		before_action :set_object, only: %i[show print edit update]
 		add_breadcrumb "CRM", :crm_root_path
 		add_breadcrumb "Cotizaciónes", :crm_quotes_path
 
 		def index
 			@quotes = Quote.all
-		  search if params[:q].present?
-    end
+			search if params[:q].present?
+		end
 
 		def show
 			add_breadcrumb "Detalle"
+			
+			if params[:format].present?
+				respond_to do |format|
+					format.html
+					format.xlsx
+				 end
+			end
 		end
 
 		def new
@@ -19,31 +26,43 @@ module Crm
 			@quote.shipments_products.build
 		end
 
+		def edit
+			add_breadcrumb "Editar"
+		end
+
 		def create 
 			@quote = Quote.new(quote_params)
 			if @quote.save
 				flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Cotización creada exitosamente"
 				redirect_to crm_quote_path(@quote)
 			else
-				binding.pry
-        render :new
+				render :new
 			end
 		end
 
-	  def print
-	    respond_to do |format|
-	      format.html
-	      format.pdf do
-	        render pdf: "Cotización N° #{@quote.folio}",
-	        page_size: 'A4',
-	        template: "crm/quotes/print.html.slim",
-	        layout: "pdf.html",
-	        lowquality: true,
-	        zoom: 1,
-	        dpi: 75
-	      end
-	    end
-	  end
+		def update
+			if @quote.update(quote_params)
+				flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Cotización actualizada exitosamente"
+				redirect_to crm_quote_path(@quote)
+			else
+				render :edit
+			end
+		end
+
+		def print
+			respond_to do |format|
+				format.html
+				format.pdf do
+					render pdf: "Cotización N° #{@quote.folio}",
+					page_size: 'A4',
+					template: "crm/quotes/print.html.slim",
+					layout: "pdf.html",
+					lowquality: true,
+					zoom: 1,
+					dpi: 75
+				end
+			end
+		end
 
 		def quote_params
 			params.require(:quote).permit(:client_id, :company_id, :contact_id,
@@ -55,12 +74,12 @@ module Crm
 
 		private
 
-    def search
-      q = Regexp.escape(params[:q])
-      @quotes = @quotes.where("concat(id) ~* ?", q)
-    end
+		def search
+			q = Regexp.escape(params[:q])
+			@quotes = @quotes.where("concat(id) ~* ?", q)
+		end
 
-    def set_object
+		def set_object
 			id = params[:id].present? ? params[:id] : params[:quote_id]
 			@quote = Quote.find(id)
 		end
