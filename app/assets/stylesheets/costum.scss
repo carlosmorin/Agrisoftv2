@@ -79,6 +79,9 @@ a.nav-link.active{color: blue !important;}
 //Border radius
 .br-2{ border-radius: 2px !important; }
 .br-0{ border-radius: 0px !important; }
+.bl-gray{
+	border-left: 1px solid #c7c7c7
+}
 body{
 	width: 100%;
 	overflow: auto;
@@ -202,4 +205,31 @@ span.notificator{
 
 li.line-divider > hr{
  background-color: #4d5e6c;
+}
+.profile_img{
+	width: 100px;
+  background-position: center;
+  background-size: cover;
+  height: 100px;
+  margin: 0 auto;
+  border-radius: 50% !important;
+  border: 3px solid #cccccc;
+}
+.small_profile_img{
+	width: 35px;
+  background-position: center;
+  background-size: cover;
+  height: 35px;
+  margin: 0 auto;
+  border-radius: 50% !important;
+  border: 1px solid #cccccc;
+}
+.navbar_profile_img{
+	width: 30px;
+  background-position: center;
+  background-size: cover;
+  height: 30px;
+  margin: 0 auto;
+  border-radius: 50% !important;
+  border: 1px solid #cccccc;
 }

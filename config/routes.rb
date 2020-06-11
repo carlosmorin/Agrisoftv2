@@ -92,6 +92,10 @@
   resources :qualities
   resources :colors
   resources :packages
+  resources :profile, except: [:new] do
+    get '/avatar', to: 'profile#avatar'
+    get '/change_password', to: 'profile#change_password'
+  end
 	
 	devise_for :users
   root to: "dashboard#index"

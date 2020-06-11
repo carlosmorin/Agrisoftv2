@@ -3,11 +3,13 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
     span.brand-text.s-16
       b AGRI-SOFT
   .sidebar.px-0
-    .user-panel.mt-2.pb-1.mb-1.d-flex
-      .image
-        = image_tag('avatars/default.png', alt: 'User image', class: 'img-circle elevation-2', height: "50")
-      .info
-        a.d-block.s-14 href="#" = current_user.full_name
+    = link_to profile_index_path do
+      .user-panel.mt-2.pb-1.mb-1.d-flex
+        .image
+          - url_img = current_user.avatar.present? ? current_user.avatar.service_url : 'avatars/default.png' 
+          div.small_profile_img style='background-image: url("#{url_img}")'
+        .info
+          p.s-14.bold.my-0 = current_user.full_name
     nav.mt-0
       ul.nav.nav-pills.nav-sidebar.flex-column data-accordion="false" data-widget="treeview" role="menu" 
         li.nav-item.has-treeview

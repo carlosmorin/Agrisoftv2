@@ -5,7 +5,7 @@ module Crm
 		add_breadcrumb "Cotizaciónes", :crm_quotes_path
 
 		def index
-			@quotes = Quote.all
+			@quotes = Quote.paginate(page: params[:page], per_page: 25)
 			search if params[:q].present?
 		end
 

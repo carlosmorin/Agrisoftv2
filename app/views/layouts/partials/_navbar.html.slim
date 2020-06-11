@@ -109,6 +109,10 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
       span.s-12 = "#{Time.now().strftime("%-d %bio %Y").upcase} - "
       span#output.mt-1.mr-2.s-14 
       span | 
+    li.nav-item.p-2 
+      = link_to profile_index_path do
+        - url_img = current_user.avatar.present? ? current_user.avatar.service_url : 'avatars/default.png' 
+        div.navbar_profile_img title='Ver perfil' data-toggle='tooltip' data-placement='left' style='background-image: url("#{url_img}")'
     li.nav-item.pl-1
       = link_to admin_root_path, class: 'nav-link pl-0 ', title: 'Sistema', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 
         svg.feather.feather-users fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg"
