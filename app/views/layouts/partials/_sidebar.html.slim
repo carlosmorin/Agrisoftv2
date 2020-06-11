@@ -6,7 +6,7 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
     = link_to profile_index_path do
       .user-panel.mt-2.pb-1.mb-1.d-flex
         .image
-          - url_img = current_user.avatar.present? ? current_user.avatar.service_url : 'avatars/default.png' 
+          - url_img = 'http://www.palcopharma.com/uploads/directors/5874c9e878bea81dc265f754b086a8df.png' 
           div.small_profile_img style='background-image: url("#{url_img}")'
         .info
           p.s-14.bold.my-0 = current_user.full_name
