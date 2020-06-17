@@ -9,22 +9,22 @@ local:
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon_dev:
   service: S3
-  access_key_id: <%= Rails.application.credentials.aws[:access_key_id] %>
-  secret_access_key: <%= Rails.application.credentials.aws[:secret_access_key] %>
-  region: <%= Rails.application.credentials.aws[:region] %>
-  bucket: <%= Rails.application.credentials.aws[:dev][:bucket] %>
+  access_key_id: "AKIATLOCOMASP54JN55S"
+  secret_access_key: "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"
+  region: "us-west-1"
+  bucket: "agri-soft--dev"
 
 amazon_prod:
   service: S3
-  access_key_id: <%= Rails.application.credentials.aws[:access_key_id] %>
-  secret_access_key: <%= Rails.application.credentials.aws[:secret_access_key] %>
-  region: <%= Rails.application.credentials.aws[:region] %>
-  bucket: <%= Rails.application.credentials.aws[:prod][:bucket] %>
+  access_key_id: "AKIATLOCOMASP54JN55S"
+  secret_access_key: "ManhWhgp16HwSaFIbl5CSCQsMWK8UpvnuPRSHSfT"
+  region: "us-west-1"
+  bucket: "agri-soft--pro"
   
 # Remember not to checkin your GCS keyfile to a repository
 # google:
 #   service: GCS
-#   project: your_project
+#   project: your_prRails.application.credentials.aws[:prod][:bucket]oject
 #   credentials: <%= Rails.root.join("path/to/gcs.keyfile") %>
 #   bucket: your_own_bucket
 
