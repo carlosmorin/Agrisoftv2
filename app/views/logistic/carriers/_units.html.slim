@@ -7,7 +7,7 @@
 table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
   thead
     tr.bg-light-gray
-      th style=("width: 5%")  #
+      th style=("width: 80px") Fotografia
       th Marca
       th Color
       th Año
@@ -22,7 +22,7 @@ table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
     - else
       - @carrier.units.each do |unit|
         tr
-          td = unit.id
+          td = image_tag(unit.picture, class: "img-thumbnail", width: 80) if unit.picture.attached? 
           td = unit.unit_brand.name.upcase
           td = unit.color.upcase
           td = unit.year.upcase

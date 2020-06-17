@@ -30,6 +30,8 @@
 			.col-md-3
 				= f.label "Fotografia de licencia", class: "pt-1" 
 			.col-md-9
+				= image_tag(@driver.licence_img, width: 180, class: "rounded img-thumbnail mb-2") if @driver.licence_img.attached?
+				br
 				= f.file_field :licence_img, label: false, class: "s-14"
 	hr
 	.form-actions.text-center

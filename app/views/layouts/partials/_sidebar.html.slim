@@ -1,13 +1,16 @@
 aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
-  a.brand-link.py-1.text-center href="index3.html" 
+  a.brand-link.py-2.text-center href="index3.html" 
     span.brand-text.s-16
       b AGRI-SOFT
   .sidebar.px-0
     = link_to profile_index_path do
       .user-panel.mt-2.pb-1.mb-1.d-flex
         .image
-          - url_img = 'http://www.palcopharma.com/uploads/directors/5874c9e878bea81dc265f754b086a8df.png' 
-          div.small_profile_img style='background-image: url("#{url_img}")'
+          - if current_user.avatar.attached?
+            - img_profile_path = current_user.avatar.service_url
+            div.small_profile_img title='Ver perfil' data-toggle='tooltip' data-placement='left' style='background-image: url("#{img_profile_path}")'
+          - else
+            div.small_profile_img title='Ver perfil' data-toggle='tooltip' data-placement='left' style='background-image: url("http://www.palcopharma.com/uploads/directors/5874c9e878bea81dc265f754b086a8df.png")'
         .info
           p.s-14.bold.my-0 = current_user.full_name
     nav.mt-0
