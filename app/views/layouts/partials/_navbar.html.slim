@@ -111,11 +111,11 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
       span | 
     li.nav-item.p-2 
       = link_to profile_index_path do
-        //- if current_user.avatar.attached?
-          - img_profile_path = current_user.avatar.service_url
-          div.navbar_profile_img title='Ver perfil' data-toggle='tooltip' data-placement='left' style='background-image: url("#{img_profile_path}")'
-        //- else
-        div.navbar_profile_img title='Ver perfil' data-toggle='tooltip' data-placement='left' style='background-image: url("http://www.palcopharma.com/uploads/directors/5874c9e878bea81dc265f754b086a8df.png")'
+        - if current_user.avatar.attached?
+          = image_tag(current_user.avatar, class: "rounded", width: 35)
+        - else
+          - img_url = "http://www.palcopharma.com/uploads/directors/5874c9e878bea81dc265f754b086a8df.png"
+          = image_tag(img_url, class: "rounded", width: 40)
     li.nav-item.pl-1
       = link_to admin_root_path, class: 'nav-link pl-0 ', title: 'Sistema', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 
         svg.feather.feather-users fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg"
