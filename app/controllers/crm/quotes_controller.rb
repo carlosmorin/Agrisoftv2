@@ -33,7 +33,6 @@ module Crm
 		def create 
 			@quote = Shipment.new(quote_params)
 			if @quote.save
-				binding.pry
 				flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Cotización creada exitosamente"
 				redirect_to crm_quote_path(@quote)
 			else

@@ -19,8 +19,8 @@ class Shipment < ApplicationRecord
 	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true
 	validates :exchange_rate, presence: true, if: :currency_is_usd?
 	has_rich_text :description
-	has_many :shipments_products
-	has_many :products, through: :shipments_products
+	has_many :shipments_products,  dependent: :destroy
+	has_many :products, through: :shipments_products, dependent: :destroy
 	accepts_nested_attributes_for :shipments_products, allow_destroy: true
 
 	enum status: { quotation: 0, shipment: 1, order_sale: 1, sale: 2 }

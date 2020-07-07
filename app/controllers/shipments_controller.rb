@@ -5,8 +5,8 @@ class ShipmentsController < ApplicationController
   add_breadcrumb "Embarques", :shipments_path
 
   def index
-    @shipments = Shipment.paginate(page: params[:page], per_page: 25)
-    @all_shipments = Shipment.all
+    @shipments = Shipment.shipment.paginate(page: params[:page], per_page: 25)
+    @all_shipments = Shipment.shipment
 
     search if params[:q].present?
     search_by_client if params[:c].present?

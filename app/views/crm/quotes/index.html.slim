@@ -44,7 +44,7 @@ section.content
               tbody#tbody.s-13
                 - if @quotes.empty?
                   tr
-                    td.text-center colspan="7"
+                    td.text-center colspan="10"
                       = link_to "Nuevo registro", new_crm_quote_path, class: "link"
                 - else
                   - @quotes.each do |quote|
