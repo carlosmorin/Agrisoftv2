@@ -29,20 +29,19 @@ class ShipmentsController < ApplicationController
   
   def create
     @shipment = Freight.new(shipment_params)
-    @shipment = @shipment.shipments.first
     if @shipment.save
       flash[:notice] = "Embarque <b>#{@shipment.folio.upcase}</b> creada exitosamente"
-      redirect_to shipment_url(@shipment)
-    else
+      redirect_to shipment_url(@shipment.shipments.first)
+		else
       render :new
     end
   end
 
   def update
-    if @freight.update(shipment_params)
+    if @shipment.update(shipment_params)
       flash[:notice] = "Embarque <b>#{@shipment.folio.upcase}</b> actualizado
         exitosamente"
-      redirect_to shipment_url(@shipment)
+      redirect_to shipment_url(@shipment.shipments.first)
     else
       render :edit
     end
@@ -105,10 +104,9 @@ class ShipmentsController < ApplicationController
       freight_folio, ' ', n_products) ~* ?", query)
   end
 
-  def set_object
+	def set_object
     id = params[:id].present? ? params[:id] : params[:shipment_id] 
-    @shipment = Shipment.find(id)
-    @freight = @shipment.freight
+    @shipment = Shipment.find(id).freight
   end
 
   def shipment_params

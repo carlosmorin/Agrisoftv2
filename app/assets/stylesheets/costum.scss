@@ -148,7 +148,7 @@ label.select{
 	font-size: 12px !important;
 	color: #616161; 
 }
-
+.text-upcase{ text-transform: uppercase !important }
 input[type="text"], select, select > option 	{ text-transform: uppercase !important;}
 input[type="text"]::placeholder { /* Edge */
   text-transform: capitalize !important;

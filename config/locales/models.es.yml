@@ -140,6 +140,13 @@ es:
         company_id: Empresa remisionista
         delivery_address_id: Direccion de entrega
         comments: Comentarios
+        contact_id: Con atención a
+        expirated_days: Días de vigencia
+        issue_at: Fecha de emisión
+        user_id: Usuario emisor
+        currency: Moneda
+        exchange_rate: Tipo de cambio
+        description: Comentarios
       quality:
         name: Nombre
         short_name: Abreviación

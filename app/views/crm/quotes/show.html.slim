@@ -39,7 +39,7 @@ section.content
 		.card.card-body.s-14.p-3
 			.row.mt-2
 				.col-md-12.text-right
-					h5.bold.ml-3.mb-0 = raw "COTIZACIÓN: #<span class='text-underline'>#{@quote.folio}</span>"
+					h5.bold.ml-3.mb-0 = raw "COTIZACIÓN: #<span class='text-underline'>#{@quote.quote_folio}</span>"
 					p.my-0.mt-3 = "Fecha de emisión: #{@quote.issue_at.strftime("%-d %bio %Y")}"
 					p.my-0 = "Vigencia: #{@quote.expirated_days} Dias"
 					p.my-0 = "Fecha de vigencia: #{@quote.expirated_at.strftime("%-d %bio %Y")}"
@@ -48,16 +48,14 @@ section.content
 			.row
 				.col-12
 					h6.bold.mb-0 = @quote.client.name.upcase
-					label = "RFC: #{@quote.client.rfc}".upcase
-					p.mb-0 = raw "<b>Telefono: </b> #{@quote.client.phone}"
+					h6.bold.mb-0 = "RFC: #{@quote.client.rfc}".upcase
+					p.mb-0.mt-2 = raw "<b>Telefono: </b> #{@quote.client.phone}"
 					p.mb-0 = raw "<b>Direccion: </b> #{@quote.client.address}"
 					p.my-0 = "#{@quote.client.state.name.upcase}, #{@quote.client.country.name.upcase}"
 			- if @quote.delivery_address.present? 
 				.row.my-3
 					.col-12
 						h6.s-12.bold.mb-0 DATOS DE ENVIO
-						label.mt-1.mb-0 Incluye Envio?: SI
-						br
 						label.mt-1 
 							span Direccion de envio: 
 							span = @quote.delivery_address.full_address
@@ -69,7 +67,6 @@ section.content
 							tr
 								th DESCRIPCIÓN DE PRODUCTO
 								th CANTIDAD
-								th U. MEDIDA
 								th P. UNITARIO
 								th TOTAL
 						tbody
@@ -79,10 +76,9 @@ section.content
 								tr
 									td = sp.product.name
 									td.text-center = sp.quantity
-									td.text-center = "KG"
-									td.text-center = "$#{sp.price}"
+									td.text-center = raw "$#{sp.price} <small>#{ @quote.currency.upcase }</small>"
 									td 
-										b = "$#{sp.quantity * sp.price}"
+										b = raw "$#{sp.quantity * sp.price} <small>#{ @quote.currency.upcase }</small>"
 			.row
 				.col-9
 				.col-3
@@ -92,7 +88,7 @@ section.content
 								td.text-right 
 									span NETO
 								td
-									span = "$#{neto}"
+									span = raw "$#{neto} <small>#{ @quote.currency.upcase }</small>"
 							tr
 								td.text-right 
 									span.text-danger DESCUENTO
@@ -104,7 +100,7 @@ section.content
 								td
 									- discount = (@quote.subtotal / 100) * @quote.discount
 									- sub_total = @quote.subtotal - discount
-									b = "$#{sub_total}"
+									b = raw "$#{sub_total} <small>#{ @quote.currency.upcase }</small>"
 							tr
 								td.text-right 
 									span IVA
@@ -116,7 +112,7 @@ section.content
 								td
 									- iva_value = (sub_total / 100) * @quote.iva
 									- total = sub_total + iva_value
-									b = "$#{total}"
+									b = raw "$#{total} <small>#{ @quote.currency.upcase }</small>"
 
 		.card.card-body.s-14.p-3.mt-1
 			.row.mt-1

@@ -1,25 +1,21 @@
 - url = @shipment.new_record? ? shipments_path : shipment_path
-- object = @shipment.new_record? ? @shipment : @freight
-= simple_form_for(object, url: url, data: { controller: 'shipments users'} ) do |form|
+- shipment =  @shipment
+= simple_form_for(shipment, url: url, data: { controller: 'shipments users'} ) do |form|
 	= form.input :user_id, as: :hidden, input_html: { value: current_user.id }
 	.card
 		.card-body.p-3
-			.row
-				.col-lg-12
-					h6.s-14
-						span.bold INFORMACIÓN DE FLETE 
-			.form-group.mb-1  
+			.form-group.mb-1
 				.row
-					.col-md-6
+					.col-6
 						= form.label :carrier_id, class: "pt-1" 
 						= form.input :carrier_id, collection: Carrier.all, autofocus: true, label: false, input_html: { class: 's-12 ', data: { action: "change->shipments#filter_by_carrier", target: "shipments.carrierId" } }
-				.row.mt-2	
-					.col-md-4
-	  						= form.input :driver_id, collection: @drivers, autofocus: true, input_html: { class: 's-12' }
-					.col-md-4
+				.row.mt-4
+					.col-4
+						= form.input :driver_id, collection: @drivers, autofocus: true, input_html: { class: 's-12' }
+					.col-4
 						= form.input :unit_id, collection: @units, autofocus: true, input_html: { class: 's-12' }
-					.col-md-4
-							= form.input :box_id, collection: @boxes, autofocus: true, input_html: { class: 's-12' }
+					.col-4
+						= form.input :box_id, collection: @boxes, autofocus: true, input_html: { class: 's-12' }
 				/**.row.mt-3
 					.col-lg-12
 						h6.s-14.mb-0
@@ -34,7 +30,6 @@
 						= form.label :pay_freight, class: "bold"
 					.col-lg-4.costum-options
 						= form.input :pay_freight, as: :radio_buttons, label: false, disabled: true, collection: [['Remisionista', 1], ['Cliente', 2]],  class: "radio_buttons", input_html: { data: { action: "change->shipments#addPayComments"} }
-
 			.row
 				.col-lg-12
 	section.ml-3.mt-3

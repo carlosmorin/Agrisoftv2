@@ -1,27 +1,56 @@
 class Shipment < ApplicationRecord
+	include FolioGenerator
+
   default_scope { order(created_at: :desc) }
 
 	before_create :set_products
-	before_create :set_folio
-	before_create :set_freight_folio
-	before_create :set_client_folio
+	before_create :set_folio, if: :shipment?
+	before_create :set_freight_folio, if: :shipment?
+	before_create :set_client_folio, if: :shipment?
 	before_create :set_status
-	#before_create :set_debtable
+	before_create :set_quote_folio, if: :quotation?
 
 	belongs_to :company
 	belongs_to :client
 	belongs_to :delivery_address
-	belongs_to :freight
-	validates :client_id, :company_id, :delivery_address_id, presence: true
+	belongs_to :user
+	belongs_to :freight, optional: true
 
+	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true
+	validates :exchange_rate, presence: true, if: :currency_is_usd?
+	has_rich_text :description
 	has_many :shipments_products
 	has_many :products, through: :shipments_products
 	accepts_nested_attributes_for :shipments_products, allow_destroy: true
 
-	enum status: { sent: 0, in_reporting_process: 1, in_payment_process: 2,
-		liquidated: 3, canceled: 4 }
+	enum status: { quotation: 0, shipment: 1, order_sale: 1, sale: 2 }
+	enum currency: { mxn: 0, usd: 1 }
 
+	def total_kg
+		total = 0
+		unit_meassure = shipments_products.first.product.unit_meassure
+		shipments_products.each do |sp|
+			total += sp.quantity * sp.product.weight
+		end
+		"#{total} <small>#{unit_meassure}</small>"
+	end
+
+	def expirated_at
+		issue_at + expirated_days.days
+	end
+
+	def subtotal
+		subTotal = 0
+		shipments_products.map { |product| 
+			subTotal += (product.quantity.to_i * product.price.to_i) }
+		subTotal 
+	end
+	
 	private
+	
+	def currency_is_usd?
+		currency == Shipment.currencies.keys.second
+	end
 
 	def set_status
 		self.status = 0
@@ -85,14 +114,4 @@ class Shipment < ApplicationRecord
 			"#{total_shipments.to_i + 1 }"
 		end
 	end
-
-	##def set_debtable
-	##	if self.freight.pay_freight == 1
-	##		self.freight.update(debtable_type: self.company.model_name, 
-	##		debtable_id: self.company.id )
-	##	elsif self.freight.pay_freight == 2
-	##		self.freight.update(debtable_type: self.client.model_name, 
-	##			debtable_id: self.client.id )
-	##	end
-	##end
 end

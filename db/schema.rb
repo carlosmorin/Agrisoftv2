@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_11_120216) do
+ActiveRecord::Schema.define(version: 2020_07_07_145954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -380,15 +380,26 @@ ActiveRecord::Schema.define(version: 2020_06_11_120216) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status"
-    t.bigint "freight_id", null: false
+    t.bigint "freight_id"
     t.integer "n_products"
     t.string "folio"
     t.string "client_folio"
     t.string "freight_folio"
+    t.bigint "user_id"
+    t.bigint "contact_id"
+    t.datetime "issue_at"
+    t.integer "expirated_days"
+    t.integer "iva"
+    t.integer "discount"
+    t.string "quote_folio"
+    t.integer "currency"
+    t.decimal "exchange_rate"
     t.index ["client_id"], name: "index_shipments_on_client_id"
     t.index ["company_id"], name: "index_shipments_on_company_id"
+    t.index ["contact_id"], name: "index_shipments_on_contact_id"
     t.index ["delivery_address_id"], name: "index_shipments_on_delivery_address_id"
     t.index ["freight_id"], name: "index_shipments_on_freight_id"
+    t.index ["user_id"], name: "index_shipments_on_user_id"
   end
 
   create_table "shipments_products", force: :cascade do |t|
@@ -525,8 +536,10 @@ ActiveRecord::Schema.define(version: 2020_06_11_120216) do
   add_foreign_key "quotes", "users"
   add_foreign_key "shipments", "clients"
   add_foreign_key "shipments", "companies"
+  add_foreign_key "shipments", "contacts"
   add_foreign_key "shipments", "delivery_addresses"
   add_foreign_key "shipments", "freights"
+  add_foreign_key "shipments", "users"
   add_foreign_key "shipments_products", "products"
   add_foreign_key "shipments_products", "shipments"
   add_foreign_key "states", "countries"

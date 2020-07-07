@@ -13,6 +13,11 @@ import "bootstrap"
 import "../stylesheets/application"
 import 'cocoon-js'
 
+// Fontaweomse
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
+import '@fortawesome/fontawesome-free/js/regular'
+
 document.addEventListener("turbolinks:load", () => {
 	$('[data-toggle="tooltip"]').tooltip()
 	$('[data-toggle="popover"]').popover()

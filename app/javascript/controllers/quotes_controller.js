@@ -7,7 +7,7 @@ export default class extends Controller {
   static targets = [ "ivaInput", "clientSelect", "contactsSelect"
   	,"quantityInput", "priceInput", "totalRow", "checkIncludeDelivery", 
     "deliverySelectContainer", "netOutput", "inputDiscount", "subTotalOutput",
-    "totalOutput"]
+    "totalOutput", "currencySelect", "exchangeRateInput", "exchangeRateContainer"]
 
   connect() {
     this.calculeNeto()
@@ -108,6 +108,16 @@ export default class extends Controller {
     this.calculeTotal()
   }
 
+  showExchangeRate(){
+    var currency = this.currencySelectTarget.value
+
+    if(currency == "usd"){
+      this.exchangeRateContainerTarget.classList.toggle("d-none", "")
+    }else{
+      this.exchangeRateContainerTarget.classList.add("d-none")
+    }
+  }
+
   applyDiscount(){
     var subTotal = this.data.get("netoValue")
     var discount = this.inputDiscountTarget.value
@@ -136,12 +146,16 @@ export default class extends Controller {
   calculeTotal(){
     var iva = this.data.get("iva")
     var subTotal = this.data.get("subTotal")
-    var total = ((subTotal) + ((subTotal / 100) * iva))
+    console.log("subTotal:", subTotal)
+    console.log("Total de iva:", (subTotal / 100) * iva)
+    var total_iva = ((subTotal / 100) * iva)
+    var total = (subTotal + total_iva)
     console.log(total)
     this.data.set("total", total)
     
     var number = numeral(total);
-    this.totalOutputTarget.textContent = `$ ${number.format()}`
+    console.log("Number:", number)
+    this.totalOutputTarget.textContent = `$ ${total}`
   }
     
 }

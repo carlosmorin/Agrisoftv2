@@ -1,4 +1,5 @@
-= simple_form_for([:crm, @quote], data: { controller: "select quotes" }) do |f|
+- url = @quote.persisted? ? crm_quote_url : crm_quotes_url 
+= simple_form_for([:crm, @quote], url: url, data: { controller: "select quotes" }) do |f|
 	.card.card-body
 		.row
 			.col-6
@@ -12,7 +13,7 @@
 						= f.label :company_id
 					.col-10
 						= f.input :company_id, collection: Company.all, label: false, required: true, autofocus: true, input_html: { class: 's-12' }
-				.row.mt-3
+				.row
 					.col-2.text-right
 						= f.label :client_id
 					.col-10
@@ -28,10 +29,27 @@
 						= f.label :issue_at, class: "bold"
 					.col-9
 						.input-group.date.d-block data-provide="datepicker" 
-							= f.input :issue_at, as: :string, label: false, input_html: { class: "mr-2 form-control form-control-sm date-picker" }
+							= f.input :issue_at, as: :string, label: false, input_html: { class: "mr-2 form-control form-control-sm date-picker " }
 							.input-group-addon
 								span.glyphicon.glyphicon-th
-				.row.mt-3
+				.row.mt-2
+					.col-3
+						= f.label :currency, class: "bold"
+					.col-9
+						.input-group.date.d-block data-provide="datepicker" 
+							- currency = f.object.currency.nil? ? Shipment.currencies.keys.first : f.object.currency
+							= f.input :currency, collection: Shipment.currencies.keys, selected: currency, label: false, input_html: { class: "mr-2 text-upcase ", data: { target: 'quotes.currencySelect', action: "change->quotes#showExchangeRate"}}
+							.input-group-addon
+								span.glyphicon.glyphicon-th
+				div class="row mt-2 #{f.object.currency == 'usd' ? '' : 'd-none' }" data-target="quotes.exchangeRateContainer"
+					.col-3
+						= f.label :exchange_rate, class: "bold"
+					.col-9
+						.input-group.date.d-block data-provide="datepicker" 
+							= f.input :exchange_rate, label: false, input_html: { class: "mr-2 form-control form-control-sm", data: { target: 'quotes.exchangeRateInput'}}
+							.input-group-addon
+								span.glyphicon.glyphicon-th
+				.row.mt-4
 					.col-lg-2
 						h6.bold.s-12.c-dark-gray Opcionales:
 					.col-lg-10
@@ -44,7 +62,8 @@
 							.col-3.text-right
 								= f.label :expirated_days, class: "bold"
 							.col-4
-								= f.input :expirated_days, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm', value: "7" }
+								- expirated_days = f.object.expirated_days.nil? ? "7" : f.object.expirated_days
+								= f.input :expirated_days, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm', value: expirated_days }
 						
 		section.mt-4
 			.row.mt-2
@@ -52,11 +71,10 @@
 					.row.bold.bg-light-gray.p-1.mb-2
 						.col-lg-5
 							span.s-14 DESCRIPCIÓN DE PRODUCTO  
-						.col-lg-1
+						.col-lg-2
 							span.s-14 CANTIDAD
-						.col-lg-2
-							span.s-14 U. MEDIDA
-						.col-lg-2
+	
+						.col-lg-3
 							span.s-14 P. UNITARIO
 						.col-lg-1
 							span.s-14 TOTAL

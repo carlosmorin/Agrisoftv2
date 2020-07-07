@@ -52,6 +52,7 @@
     resources :quotes do
       get '/print', to: 'quotes#print'
     end
+    resources :sales_orders
   end
 
   namespace :directories do
