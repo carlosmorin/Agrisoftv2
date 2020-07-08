@@ -5,7 +5,7 @@ section.content-header.pb-0
         h5 Gestion de cotizaciónes
       .col-md-6.text-right.s-12
         = render_breadcrumbs :separator => ' / '
-section.content
+section.content data-controller="quote-to-order-sale"
   .container-fluid
     .row
       .col-md-12
@@ -41,7 +41,7 @@ section.content
                   th.text-center IVA
                   th.text-center Total
                   th.text-center colspan="2" style=("width: 12%") Acciónes
-              tbody#tbody.s-13
+              tbody#tbody.s-13 
                 - if @quotes.empty?
                   tr
                     td.text-center colspan="10"
@@ -92,7 +92,7 @@ section.content
                                 i.fas.fa-file-excel.mr-2
                                 span Exportar EXCEL
                             .dropdown-divider.my-1
-                            = link_to crm_quote_path(quote, format: "xlsx"), class: "dropdown-item s-12 bold" do
+                            = link_to "", class: "dropdown-item s-12 bold", data: { action: "click->quote-to-order-sale#confirmOrderSale", id: quote.id } do
                               i.fas.fa-file-invoice-dollar.mr-2
                               span Generar orden de venta
 

@@ -25,6 +25,7 @@ export default class extends Controller {
       });
   }
 
+
   toggleDeliverySelect(){
   	var el = this.deliverySelectContainerTarget
 		if(this.checkIncludeDeliveryTarget.checked){
@@ -66,7 +67,7 @@ export default class extends Controller {
 
 		var options = "";
 		var options = "<option value=''>SELECCIONA</option>";
-		
+
 		Axios({
   		method: 'GET',
 			dataType: "JSON",
@@ -88,9 +89,9 @@ export default class extends Controller {
     var selectsQuantity = this.quantityInputTargets
     var inputsUnitPrice = this.priceInputTargets
     var outpuTotal = this.totalRowTargets
-    if( selectsQuantity.length === 0 ) { 
+    if( selectsQuantity.length === 0 ) {
       this.setNeto(0)
-      return false 
+      return false
     }
 
     var net = 0
@@ -122,7 +123,7 @@ export default class extends Controller {
     var subTotal = this.data.get("netoValue")
     var discount = this.inputDiscountTarget.value
     var totalDiscount = ((subTotal / 100) * discount)
-    
+
     subTotal = subTotal - totalDiscount
     this.data.set("subTotal", subTotal)
     this.data.set("discount", discount)
@@ -136,7 +137,7 @@ export default class extends Controller {
     this.netOutputTarget.textContent = `$ ${number.format()}`
     this.data.set("netoValue", net)
   }
-  
+
   changeIvaValue(){
     var iva = this.ivaInputTarget.value
     this.data.set("iva", iva)
