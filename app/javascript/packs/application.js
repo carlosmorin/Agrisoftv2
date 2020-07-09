@@ -12,6 +12,7 @@ require('jquery')
 import "bootstrap"
 import "../stylesheets/application"
 import 'cocoon-js'
+import swal from 'sweetalert';
 
 // Fontaweomse
 import '@fortawesome/fontawesome-free/js/fontawesome'
@@ -24,7 +25,6 @@ document.addEventListener("turbolinks:load", () => {
 })
 
 import "controllers"
-
 
 require("trix")
 require("@rails/actiontext")

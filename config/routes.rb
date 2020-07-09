@@ -51,6 +51,7 @@
     resources :contacts, except: [:index]
     resources :quotes do
       get '/print', to: 'quotes#print'
+      patch '/update_status', to: 'quotes#update_status'
     end
     resources :sales_orders
   end

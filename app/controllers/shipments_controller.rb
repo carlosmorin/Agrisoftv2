@@ -1,4 +1,5 @@
 class ShipmentsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_object, only: %i[show edit update destroy print 
     print_responsive]
   before_action :set_collections, only: %i[edit new update create]

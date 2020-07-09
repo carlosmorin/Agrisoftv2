@@ -23,7 +23,7 @@ class Shipment < ApplicationRecord
 	has_many :products, through: :shipments_products, dependent: :destroy
 	accepts_nested_attributes_for :shipments_products, allow_destroy: true
 
-	enum status: { quotation: 0, shipment: 1, order_sale: 1, sale: 2 }
+	enum status: { quotation: 0, order_sale: 1, shipment: 2, sale: 3 }
 	enum currency: { mxn: 0, usd: 1 }
 
 	def total_kg

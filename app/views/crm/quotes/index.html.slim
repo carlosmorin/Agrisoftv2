@@ -47,8 +47,8 @@ section.content data-controller="quote-to-order-sale"
                     td.text-center colspan="10"
                       = link_to "Nuevo registro", new_crm_quote_path, class: "link"
                 - else
-                  - @quotes.each do |quote|
-                    tr
+                  - @quotes.each_with_index do |quote, index|
+                    tr data-target='quote-to-order-sale.row'
                       td.bold = quote.quote_folio
                       td = quote.client.name.upcase
                       td.text-center 
@@ -92,7 +92,7 @@ section.content data-controller="quote-to-order-sale"
                                 i.fas.fa-file-excel.mr-2
                                 span Exportar EXCEL
                             .dropdown-divider.my-1
-                            = link_to "", class: "dropdown-item s-12 bold", data: { action: "click->quote-to-order-sale#confirmOrderSale", id: quote.id } do
+                            = link_to "", class: "dropdown-item s-12 bold", data: { action: "click->quote-to-order-sale#confirmOrderSale", id: quote.id, position: index, quoteNumber: quote.quote_folio} do
                               i.fas.fa-file-invoice-dollar.mr-2
                               span Generar orden de venta
 
