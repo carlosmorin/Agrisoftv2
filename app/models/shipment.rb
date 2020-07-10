@@ -4,11 +4,12 @@ class Shipment < ApplicationRecord
   default_scope { order(created_at: :desc) }
 
 	before_create :set_products
-	before_create :set_folio, if: :shipment?
-	before_create :set_freight_folio, if: :shipment?
-	before_create :set_client_folio, if: :shipment?
 	before_create :set_status
 	before_create :set_quote_folio, if: :quotation?
+
+	before_update :set_folio, if: :shipment?
+	before_update :set_freight_folio, if: :shipment?
+	before_update :set_client_folio, if: :shipment?
 
 	belongs_to :company
 	belongs_to :client
@@ -47,7 +48,7 @@ class Shipment < ApplicationRecord
 	end
 	
 	private
-	
+
 	def currency_is_usd?
 		currency == Shipment.currencies.keys.second
 	end
@@ -79,7 +80,8 @@ class Shipment < ApplicationRecord
 		year =  Time.now.year
 		shipments = get_total_shipments(year)
 		year = Time.now.year.to_s[2, 2]
-		self.folio = "FE-#{year}-#{shipments}"
+
+		self.folio ||= "FE-#{year}-#{shipments}"
 	end
 
 	def update_shipments(shipments)

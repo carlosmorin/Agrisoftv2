@@ -1,13 +1,16 @@
 class ShipmentsController < ApplicationController
   skip_before_action :verify_authenticity_token
+
   before_action :set_object, only: %i[show edit update destroy print 
     print_responsive]
   before_action :set_collections, only: %i[edit new update create]
   add_breadcrumb "Embarques", :shipments_path
+  before_action :create_freight, only: [:edit] , if: -> { @shipment.freight.nil? }
 
   def index
     @shipments = Shipment.shipment.paginate(page: params[:page], per_page: 25)
     @all_shipments = Shipment.shipment
+    @orders = Shipment.order_sale if params[:tab] == "order_sale"
 
     search if params[:q].present?
     search_by_client if params[:c].present?
@@ -39,10 +42,11 @@ class ShipmentsController < ApplicationController
   end
 
   def update
-    if @shipment.update(shipment_params)
-      flash[:notice] = "Embarque <b>#{@shipment.folio.upcase}</b> actualizado
+    @shipment.status = :shipment
+    if @shipment.freight.update(shipment_params)
+      flash[:notice] = "Embarque <b>#{@shipment.folio}</b> actualizado
         exitosamente"
-      redirect_to shipment_url(@shipment.shipments.first)
+      redirect_to shipment_url(@shipment)
     else
       render :edit
     end
@@ -85,6 +89,11 @@ class ShipmentsController < ApplicationController
 
   private
 
+  def create_freight
+    Freight.new(user_id: current_user.id).save(validate: false) 
+    @shipment.update(freight_id: Freight.last.id)
+  end
+  
   def set_collections
     @drivers = Driver.all.pluck(:name, :id)
     @units = Unit.all.pluck(:name, :id)
@@ -107,14 +116,14 @@ class ShipmentsController < ApplicationController
 
 	def set_object
     id = params[:id].present? ? params[:id] : params[:shipment_id] 
-    @shipment = Shipment.find(id).freight
+    @shipment = Shipment.find(id)
   end
 
   def shipment_params
   	params.require(:freight).permit(
       :carrier_id, :driver_id, :unit_id, :box_id, :user_id,
           shipments_attributes: [:id, :company_id, :client_id,
-            :delivery_address_id, :comments, :_destroy, :pay_freight,
+            :delivery_address_id, :comments, :status, :_destroy, :pay_freight,
           shipments_products_attributes: [:id, :price, :quantity, :shipment_id,
             :product_id, :_destroy]]
     )

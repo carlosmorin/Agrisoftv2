@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_07_145954) do
+ActiveRecord::Schema.define(version: 2020_07_09_175501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -255,10 +255,10 @@ ActiveRecord::Schema.define(version: 2020_07_07_145954) do
   end
 
   create_table "freights", force: :cascade do |t|
-    t.bigint "carrier_id", null: false
-    t.bigint "driver_id", null: false
-    t.bigint "unit_id", null: false
-    t.bigint "box_id", null: false
+    t.bigint "carrier_id"
+    t.bigint "driver_id"
+    t.bigint "unit_id"
+    t.bigint "box_id"
     t.bigint "user_id", null: false
     t.integer "status"
     t.datetime "deleted_at"

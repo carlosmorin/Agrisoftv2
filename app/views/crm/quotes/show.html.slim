@@ -47,7 +47,7 @@ section.content data-controller="reference"
 		.card.card-body.s-14.p-3.mt-1
 			.row
 				.col-12
-					h6.bold.mb-0 = @quote.client.name.upcase
+					h6.bold.mb-0 = "CLIENTE: #{@quote.client.name.upcase}"
 					h6.bold.mb-0 = "RFC: #{@quote.client.rfc}".upcase
 					p.mb-0.mt-2 = raw "<b>Telefono: </b> #{@quote.client.phone}"
 					p.mb-0 = raw "<b>Direccion: </b> #{@quote.client.address}"

@@ -3,7 +3,7 @@ class State < ApplicationRecord
 	self.primary_key = :id
 	belongs_to :country, inverse_of: :states
 	
-	has_many :municipalities, primary_key: :id, foreign_key: :state_id, 
+	has_many :municipalities , primary_key: :id, foreign_key: :state_id, 
 		class_name: "Municipality"
   has_many :delivery_addresses, inverse_of: :state
   has_many :clients, inverse_of: :state
