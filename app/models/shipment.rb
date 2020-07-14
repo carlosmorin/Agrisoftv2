@@ -17,7 +17,8 @@ class Shipment < ApplicationRecord
 	belongs_to :user
 	belongs_to :freight, optional: true
 
-	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true
+	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: :quotation?
+	validates :client_id, :company_id, :delivery_address_id, presence: true, if: :shipment?
 	validates :exchange_rate, presence: true, if: :currency_is_usd?
 	has_rich_text :description
 	has_many :shipments_products,  dependent: :destroy

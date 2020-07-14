@@ -37,6 +37,7 @@ class ShipmentsController < ApplicationController
       flash[:notice] = "Embarque <b>#{@shipment.folio.upcase}</b> creada exitosamente"
       redirect_to shipment_url(@shipment.shipments.first)
 		else
+      binding.pry
       render :new
     end
   end
