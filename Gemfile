@@ -50,6 +50,7 @@ gem 'rubyzip'
 gem 'axlsx'
 gem 'axlsx_rails'
 gem 'axlsx_styler', '~> 1.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
@@ -57,6 +58,7 @@ group :development, :test do
   end
   gem "database_cleaner"
   gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
 end
 
 group :development do

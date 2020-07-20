@@ -1,6 +1,6 @@
 module Crm
 	class QuotesController < ApplicationController
-		before_action :set_object, only: %i[show print edit update]
+		before_action :set_object, only: %i[show print edit update update_status]
 		add_breadcrumb "CRM", :crm_root_path
 		add_breadcrumb "Cotizaciónes", :crm_quotes_path
 
@@ -49,6 +49,11 @@ module Crm
 			end
 		end
 
+		def update_status
+			@quote.status = params[:status]
+			@quote.save!
+		end
+
 		def print
 			respond_to do |format|
 				format.html
@@ -66,7 +71,7 @@ module Crm
 
 		def quote_params
 			params.require(:shipment).permit(:client_id, :company_id, :contact_id,
-				:user_id, :expirated_days, :expired_at, :iva, :delivery_address_id,
+				:user_id, :expirated_days, :expired_at, :status, :iva, :delivery_address_id,
 				:issue_at, :discount, :currency, :exchange_rate, :description, shipments_products_attributes: [:id,
 					:price, :quantity, :shipment_id, :product_id, :productable_type,
 					:productable_id, :_destroy])
