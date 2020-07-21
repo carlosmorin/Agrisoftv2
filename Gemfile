@@ -53,11 +53,11 @@ gem 'axlsx_styler', '~> 1.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
-    gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'master' # Previously '4-0-dev' or '4-0-maintenance' branch
-  end
-  gem "database_cleaner"
-  gem 'factory_bot_rails'
+  gem 'pry', '~> 0.12.2'
+  gem 'rspec-rails', '~> 4.0', '>= 4.0.1'
+  gem 'factory_bot_rails', '~> 6.1'
+  gem 'shoulda-matchers', '~> 4.3'
+  gem 'database_cleaner', '~> 1.8', '>= 1.8.5'
   gem 'rails-controller-testing'
 end
 
@@ -68,7 +68,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'pry', '~> 0.12.2'
   gem 'awesome_print', '~> 1.8'
 end
 
