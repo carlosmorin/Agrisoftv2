@@ -49,7 +49,6 @@ section.content
                   th.text-center Folio de cliente
                   th.text-center N° bultos
                   th.text-center Fecha de envio
-                  th.text-center Estatus
                   th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody.s-13
                 - if @shipments.empty?
@@ -68,8 +67,7 @@ section.content
 												span = raw "#{shipment.n_products} <small>Bultos</small>"
 												br
 												span = raw shipment.total_kg
-                      td.text-center.s-12 = shipment.created_at.strftime("%m/%d/%Y  %I:%M %p")
-                      td.text-center = raw set_status shipment.status
+                      td.text-center.s-12 = shipment.created_at.strftime("%d %bio %Y, %-l:%M %P")
                       td.text-center
                         .btn-group
                           = link_to shipment_path(shipment), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do

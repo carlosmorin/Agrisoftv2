@@ -7,7 +7,7 @@ class Shipment < ApplicationRecord
 	before_create :set_folio, if: :shipment?
 	before_create :set_freight_folio, if: :shipment?
 	before_create :set_client_folio, if: :shipment?
-	before_create :set_status
+	# before_create :set_status
 	before_create :set_quote_folio, if: :quotation?
 
 	belongs_to :company
@@ -16,7 +16,8 @@ class Shipment < ApplicationRecord
 	belongs_to :user
 	belongs_to :freight, optional: true
 
-	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true
+	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: :quotation?
+  validates :client_id, :company_id, :delivery_address_id,:user_id, presence: true, if: :shipment?
 	validates :exchange_rate, presence: true, if: :currency_is_usd?
 	has_rich_text :description
 	has_many :shipments_products,  dependent: :destroy
@@ -40,21 +41,21 @@ class Shipment < ApplicationRecord
 	end
 
 	def subtotal
-		subTotal = 0
-		shipments_products.map { |product| 
-			subTotal += (product.quantity.to_i * product.price.to_i) }
-		subTotal 
+		sub_total = 0
+		shipments_products.map { |product|
+			sub_total += (product.quantity.to_i * product.price.to_i) }
+		sub_total
 	end
-	
+
 	private
-	
+
 	def currency_is_usd?
 		currency == Shipment.currencies.keys.second
 	end
 
-	def set_status
-		self.status = 0
-	end
+	# def set_status
+		# self.status = 0
+	# end
 
 	def set_products
 		sum = 0

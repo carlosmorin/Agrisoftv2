@@ -18,7 +18,7 @@ class ShipmentsController < ApplicationController
     @shipment = Freight.new
     @shipment.shipments.build.shipments_products.build
   end
-  
+
   def edit
     add_breadcrumb "Editar"
   end
@@ -26,13 +26,15 @@ class ShipmentsController < ApplicationController
   def show
     add_breadcrumb "Detalle"
   end
-  
+
   def create
     @shipment = Freight.new(shipment_params)
+    binding.pry
     if @shipment.save
       flash[:notice] = "Embarque <b>#{@shipment.folio.upcase}</b> creada exitosamente"
       redirect_to shipment_url(@shipment.shipments.first)
 		else
+      binding.pry
       render :new
     end
   end
@@ -93,7 +95,6 @@ class ShipmentsController < ApplicationController
 
   def search_by_client
     client_id = params[:c]
-    
     @shipments = @shipments.where(client_id: client_id)
   end
 
@@ -105,15 +106,15 @@ class ShipmentsController < ApplicationController
   end
 
 	def set_object
-    id = params[:id].present? ? params[:id] : params[:shipment_id] 
-    @shipment = Shipment.find(id).freight
+    id = params[:id].present? ? params[:id] : params[:shipment_id]
+    @shipment = Shipment.find(id)
   end
 
   def shipment_params
   	params.require(:freight).permit(
       :carrier_id, :driver_id, :unit_id, :box_id, :user_id,
           shipments_attributes: [:id, :company_id, :client_id,
-            :delivery_address_id, :comments, :_destroy, :pay_freight,
+            :delivery_address_id, :user_id, :status, :comments, :_destroy, :pay_freight,
           shipments_products_attributes: [:id, :price, :quantity, :shipment_id,
             :product_id, :_destroy]]
     )

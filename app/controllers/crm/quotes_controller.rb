@@ -11,7 +11,7 @@ module Crm
 
 		def show
 			add_breadcrumb "Detalle"
-			
+
 			if params[:format].present?
 				respond_to do |format|
 					format.html
@@ -30,7 +30,7 @@ module Crm
 			add_breadcrumb "Editar"
 		end
 
-		def create 
+		def create
 			@quote = Shipment.new(quote_params)
 			if @quote.save
 				flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Cotización creada exitosamente"
