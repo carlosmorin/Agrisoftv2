@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :size do
-    name { "admin@lasalbardas.com" }
+    name { "size valid!" }
   end
 end
