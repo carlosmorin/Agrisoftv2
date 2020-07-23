@@ -66,7 +66,7 @@ class ShipmentsController < ApplicationController
 
   def print_responsive
     respond_to do |format|
-      format.html 
+      format.html
       format.pdf do
         render pdf: "Responsiva N° #{@shipment.folio}",
         page_size: 'A4',
