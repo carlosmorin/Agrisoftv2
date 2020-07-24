@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
+ruby '2.7.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
@@ -50,9 +50,15 @@ gem 'rubyzip'
 gem 'axlsx'
 gem 'axlsx_rails'
 gem 'axlsx_styler', '~> 1.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry', '~> 0.12.2'
+  gem 'rspec-rails', '~> 4.0', '>= 4.0.1'
+  gem 'factory_bot_rails', '~> 6.1'
+  gem 'shoulda-matchers', '~> 4.3'
+  gem 'database_cleaner', '~> 1.8', '>= 1.8.5'
+  gem 'rails-controller-testing'
 end
 
 group :development do
@@ -62,7 +68,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'pry', '~> 0.12.2'
   gem 'awesome_print', '~> 1.8'
 end
 

@@ -8,7 +8,6 @@
 				th Folio de flete
 				th Folio de embarque
 				th Folio de cliente
-				th Fecha de creación
 				th.text-center style=("width: 12%") Acciónes
 		tbody#tbody.s-13
 			- @orders.each do |order|
@@ -16,7 +15,7 @@
 					td = order.company.name.upcase
 					td = order.client.name.upcase
 					td
-						span = raw "#{order.n_products} <small>Bultos</small> - "
+						span.d-block = raw "#{order.n_products} <small>Bultos</small>"
 						span = raw order.total_kg
 					td
 						span --
@@ -24,8 +23,7 @@
 						span --
 					td
 						span --
-					td
 					td.text-center
 						.btn-group
-							= link_to edit_shipment_path(order), title: "Embarcar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-info" do
+							= link_to edit_shipment_path(order), title: "Genrar embarque", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-info" do
 								i.fas.fa-truck-loading

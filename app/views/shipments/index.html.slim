@@ -5,6 +5,7 @@ section.content-header.pb-0
         h5 Control de Embarques 
       .col-sm-6.s-12.text-right.pt-1
         = render_breadcrumbs :separator => ' / '
+
 section.content
   .container-fluid
     .row
@@ -16,7 +17,7 @@ section.content
         .col-lg-12
           .callout.callout-warning.s-12.p-2.c-gray.br-2.mb-2
             i.fas.fa-exclamation-circle.s-16.mr-2
-            span.ml-1.pt-2.s-16 = raw "Tienes  <b>#{n_order_sale}</b> ordenes de venta por embarcar"
+            span.ml-1.pt-2.s-16 = raw "Tienes  <b>#{n_order_sale}</b> ordenes de venta pendientes por embarcar"
     .row.mt-2
       .col-12
         .card.card-primary.card-outline.card-outline-tabs

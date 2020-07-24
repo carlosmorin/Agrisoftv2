@@ -1,59 +1,50 @@
 .nested-fields.mt-2
-	.card.p-3.br-0
-		.row
-			.col-md-10
-				h6.s-14.bold EMBARQUE
-			.col-md-2.text-right
-				//= link_to_remove_association f, class: "btn btn-danger btn-xs s-12 " do
-					svg.feather.feather-trash-2 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-						polyline points=("3 6 5 6 21 6") 
-						path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 
-						line x1="10" x2="10" y1="11" y2="17" 
-						line x1="14" x2="14" y1="11" y2="17"
-		.row
-			.col-md-5
-				= f.input :status, as: :string, as: :hidden, input_html: { value: 'shipment' }
-
-				= f.input :company_id, collection: Company.all, input_html: { class: "s-12" }
-			.col-md-4
-				= f.input :client_id, collection: Client.all, input_html: { class: "s-12", data: { action: 'change->shipments#getDeliveryAddress', target: 'shipments.clientId'} }
-			.col-md-3
-				= f.input :delivery_address_id, collection: @delivery_addresses, input_html: { class: "s-12" }
-			.col-lg-12
-				hr.my-2
-		.row
-			.col-lg-12.mt-3
-				section
-					.row.ml-2
-						.col-lg-10
-							h6.s-14.bold PRODUCTOS 
-						.col-lg-2.text-right
-							= link_to_add_association f, :shipments_products, class: "btn btn-sm btn-xs btn-primary s-12", data: {association_insertion_node: '#products', association_insertion_method: :append } do
-								svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+  .card.p-3.br-0
+    .row
+      .col-md-10
+        h6.s-14.bold EMBARQUE
+        = f.input :user_id, as: :hidden, input_html: { value: current_user.id }
+        = f.input :status, as: :hidden, input_html: { value: "shipment" }
+      .col-md-2.text-right
+    .row
+      .col-md-5
+        = f.input :company_id, collection: Company.all, input_html: { class: "s-12" }
+      .col-md-4
+        = f.input :client_id, collection: Client.all, input_html: { class: "s-12", data: { action: 'change->shipments#getDeliveryAddress', target: 'shipments.clientId'} }
+      .col-md-3
+        = f.input :delivery_address_id, collection: @delivery_addresses, input_html: { class: "s-12" }
+      .col-lg-12
+        hr.my-2
+    .row
+      .col-lg-12.mt-3
+        section
+          .row.ml-2
+            .col-lg-10
+              h6.s-14.bold PRODUCTOS
+            .col-lg-2.text-right
+              = link_to_add_association f, :shipments_products, class: "btn btn-sm btn-xs btn-primary s-12", data: {association_insertion_node: '#products', association_insertion_method: :append } do
+                svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
 									path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
-								span Agregar
-								
-					.row.ml-2.bg-light-gray
-						.col-lg-8
-							b.s-12 DESCRIPCIÓN DE PRODUCTO
-						.col-lg-2
-							b.s-12 CANTIDAD
-						.col-lg-1
-							b.s-12 PRECIO
-						.col-lg-1
-						.col-lg-12
-							hr.my-0
-					.row	
-						.col-lg-12
-							#products data-target="shipments.productsContainer"
-								= f.fields_for :shipments_products do |ff|
-									= render 'shipments_product_fields', f: ff
-		.row
-			.col-lg-12.mt-3
-				section
-					.row
-						.col-lg-10.p-2.mb-3
-							= f.input :comments, input_html: { class: "form-control s-12", placeholder: "Ej. ", data: { target: "shipments.comments" } }
+                span Agregar
 
-							
-
+          .row.ml-2.bg-light-gray
+            .col-lg-8
+              b.s-12 DESCRIPCIÓN DE PRODUCTO
+            .col-lg-2
+              b.s-12 CANTIDAD
+            .col-lg-1
+              b.s-12 PRECIO
+            .col-lg-1
+            .col-lg-12
+              hr.my-0
+          .row
+            .col-lg-12
+              #products data-target="shipments.productsContainer"
+                = f.fields_for :shipments_products do |ff|
+                  = render 'shipments_product_fields', f: ff
+    .row
+      .col-lg-12.mt-3
+        section
+          .row
+            .col-lg-10.p-2.mb-3
+              = f.input :comments, input_html: { class: "form-control s-12", placeholder: "Ej. ", data: { target: "shipments.comments" } }

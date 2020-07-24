@@ -1,15 +1,14 @@
 class Freight < ApplicationRecord
   default_scope { order(:created_at) }
   before_create :set_folio
-  ##before_update :set_debtable
   validates :carrier_id, :driver_id, :unit_id, :box_id, presence: true
   belongs_to :carrier, optional: true
   belongs_to :driver, optional: true
   belongs_to :unit, optional: true
   belongs_to :box, optional: true
   belongs_to :user, optional: true
-  has_many :shipments, inverse_of: :freight
-  has_many :freights_taxes, inverse_of: :freight
+  has_many :shipments, inverse_of: :freight, dependent: :destroy
+  has_many :freights_taxes, inverse_of: :freight, dependent: :destroy
   accepts_nested_attributes_for :shipments, allow_destroy: true
   accepts_nested_attributes_for :freights_taxes, allow_destroy: true
   has_one_attached :pdf_invoice
@@ -39,13 +38,4 @@ class Freight < ApplicationRecord
     end
   end
 
-  def set_debtable
-    if self.pay_freight == 1
-      self.freight.update(debtable_type: self.company.model_name, 
-        debtable_id: self.company.id )
-    elsif self.pay_freight == 2
-      self.freight.update(debtable_type: self.client.model_name, 
-        debtable_id: self.client.id )
-    end
-  end
 end

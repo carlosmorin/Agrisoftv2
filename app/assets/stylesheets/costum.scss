@@ -236,10 +236,15 @@ li.line-divider > hr{
   border-radius: 50% !important;
   border: 1px solid #cccccc;
 }
-.force-text-center{
-	text-align: center !important; 
-}
-.bb-gray{
-	border-bottom: 1px solid #ececec !important;
-}
+.force-text-center{	text-align: center !important; }
+.bb-gray{	border-bottom: 1px solid #ececec !important; }
 .adjust-dropdown{	transform: translate(-141px, 23px) !important; }
+
+//** Costum styles from pdf **//
+.letter_height_pdf{
+  height: 21cm !important;
+  background: blue !important;
+}
+.bg_red{
+  background: red !important;
+}

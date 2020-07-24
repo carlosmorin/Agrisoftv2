@@ -4,11 +4,13 @@ class ShipmentsController < ApplicationController
   before_action :set_object, only: %i[show edit update destroy print 
     print_responsive]
   before_action :set_collections, only: %i[edit new update create]
-  add_breadcrumb "Embarques", :shipments_path
   before_action :create_freight, only: [:edit] , if: -> { @shipment.freight.nil? }
+  
+  add_breadcrumb "Embarques", :shipments_path
 
   def index
     @shipments = Shipment.shipment.paginate(page: params[:page], per_page: 25)
+    @orders_sales = Shipment.order_sale
     @all_shipments = Shipment.shipment
     @orders = Shipment.order_sale if params[:tab] == "order_sale"
 
@@ -22,7 +24,7 @@ class ShipmentsController < ApplicationController
     @shipment = Freight.new
     @shipment.shipments.build.shipments_products.build
   end
-  
+
   def edit
     add_breadcrumb "Editar"
   end
@@ -30,14 +32,13 @@ class ShipmentsController < ApplicationController
   def show
     add_breadcrumb "Detalle"
   end
-  
+
   def create
     @shipment = Freight.new(shipment_params)
     if @shipment.save
       flash[:notice] = "Embarque <b>#{@shipment.folio.upcase}</b> creada exitosamente"
       redirect_to shipment_url(@shipment.shipments.first)
 		else
-      binding.pry
       render :new
     end
   end
@@ -70,7 +71,7 @@ class ShipmentsController < ApplicationController
 
   def print_responsive
     respond_to do |format|
-      format.html 
+      format.html
       format.pdf do
         render pdf: "Responsiva N° #{@shipment.folio}",
         page_size: 'A4',
@@ -91,7 +92,7 @@ class ShipmentsController < ApplicationController
   private
 
   def create_freight
-    Freight.new(user_id: current_user.id).save(validate: false) 
+    Freight.new(user_id: current_user.id).save(validate: false)
     @shipment.update(freight_id: Freight.last.id)
   end
   
@@ -104,7 +105,6 @@ class ShipmentsController < ApplicationController
 
   def search_by_client
     client_id = params[:c]
-    
     @shipments = @shipments.where(client_id: client_id)
   end
 
@@ -117,6 +117,7 @@ class ShipmentsController < ApplicationController
 
 	def set_object
     id = params[:id].present? ? params[:id] : params[:shipment_id] 
+
     @shipment = Shipment.find(id)
   end
 
@@ -124,7 +125,7 @@ class ShipmentsController < ApplicationController
   	params.require(:freight).permit(
       :carrier_id, :driver_id, :unit_id, :box_id, :user_id,
           shipments_attributes: [:id, :company_id, :client_id,
-            :delivery_address_id, :comments, :status, :_destroy, :pay_freight,
+            :delivery_address_id, :user_id, :status, :comments, :_destroy, :pay_freight,
           shipments_products_attributes: [:id, :price, :quantity, :shipment_id,
             :product_id, :_destroy]]
     )

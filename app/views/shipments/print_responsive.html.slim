@@ -1,161 +1,164 @@
-table.s-14 width="100%"
-	thead
-		tr
-			th width="100%"
-				table width="100%"
-					th.text-left width="35%"
-						img src="http://lasalbardas.com/ADMIN/VIEWS/resources/IMG//logo.jpg" alt="LOGO" height="60"/
-					th.text-left width="65%"
-						h3.my-0 AGRICOLA LAS ALBARDAS
-		tr
-			th width="100%"
-				table width="100%"
-					tr
-						td.text-left width="70%"
-							h1 CARTA RESPONSIVA
-		tr
-			th.text-normal.s-16.text-left
-				span = raw "El suscrito <b> #{@shipment.freight.driver.full_name} </b> conductor del tracto camión marca: <b> #{@shipment.freight.unit.unit_brand.name} #{@shipment.freight.unit.model} #{@shipment.freight.unit.year} PLACAS: #{@shipment.freight.unit.plate_number} </b> que arrastra".upcase
-				span = raw "la caja con placas <b>#{@shipment.freight.box.plate_number}</b> propiedades de <b>#{@shipment.freight.carrier.name}</b> hago constar que he recibido e inspeccionado".upcase 
-				span = "la carga contenida en la caja antes mencionada, la cual contiene exclusivamente:".upcase
-		tr
-			th.text-normal.s-16.text-left
-				table.mt-2.pdf_table width="100%"
-						thead
-							tr
-								th.text-left width="64%"
-									b DESCRIPCIÓN DEL PRODUCTO
-								th width="12%"
-									b CANTIDAD
-								th width="12%"
-									b PRECIO
-								th width="12%"
-									b TOTAL 	
-						tbody
-							- total_quantity = 0
-							- n_products = @shipment.shipments_products.size
-							- @shipment.shipments_products.each do |product|
-								- total_quantity += product.quantity.to_i
-								tr
-									td.text-left
-										span.text-normal.s-13 = product.product.name.upcase
-									td
-										span.text-normal = product.quantity
-									td
-										span.text-normal $0.00
-									td
-										span.text-normal $0.00
-							tr style="background: #fff;"
-								td style="border: none; background: #fff;"
-								td 
-									b = total_quantity
-								td
-								td
-							tr style="background: #fff;"
-								td style="border: none;" colspan="2"
-								td.text-right SUBTOTAL
-								td
-									b $0.00
-							tr style=" background: #f2f2f2;"
-								td style="border: none; background: #fff;" colspan="2"
-								td.text-right TOTAL
-								td
-									b $0.00
+- freight = @shipment.freight
+div style="background: blue; height: 34cm;"
+  table.s-14.letter_height_pdf width="100%" style="height:22cm; background-color: red;"
+    thead
+      tr
+        th width="100%"
+          table width="100%"
+            th.text-left width="35%"
+              img src="http://lasalbardas.com/ADMIN/VIEWS/resources/IMG//logo.jpg" alt="LOGO" height="60"/
+            th.text-left width="65%"
+              h3.my-0 AGRICOLA LAS ALBARDAS
+      tr
+        th width="100%"
+          table width="100%"
+            tr
+              td.text-left width="70%"
+                h1 CARTA RESPONSIVA
+      tr
+        th.text-normal.s-16.text-left
+          span = raw "El suscrito <b> #{ freight.driver.full_name } </b> conductor del tracto camión marca: <b> #{ freight.unit.unit_brand.name } #{ freight.unit.model } #{ freight.unit.year } PLACAS: #{ freight.unit.plate_number } </b> que arrastra".upcase
+          span = raw "la caja con placas <b>#{ freight.box.plate_number }</b> propiedades de <b>#{ freight.carrier.name }</b> hago constar que he recibido e inspeccionado".upcase 
+          span = "la carga contenida en la caja antes mencionada, la cual contiene exclusivamente:".upcase
+      tr
+        th.text-normal.s-16.text-left
+          table.mt-2.pdf_table width="100%"
+              thead
+                tr
+                  th.text-left width="64%"
+                    b DESCRIPCIÓN DEL PRODUCTO
+                  th width="12%"
+                    b CANTIDAD
+                  th width="12%"
+                    b PRECIO
+                  th width="12%"
+                    b TOTAL
+              tbody
+                - total_quantity = 0
+                - n_products = @shipment.shipments_products.size
+                - @shipment.shipments_products.each do |product|
+                  - total_quantity += product.quantity.to_i
+                  tr
+                    td.text-left
+                      span.text-normal.s-13 = product.product.name.upcase
+                    td
+                      span.text-normal = product.quantity
+                    td
+                      span.text-normal $0.00
+                    td
+                      span.text-normal $0.00
+                tr style="background: #fff;"
+                  td style="border: none; background: #fff;"
+                  td
+                    b = total_quantity
+                  td
+                  td
+                tr style="background: #fff;"
+                  td style="border: none;" colspan="2"
+                  td.text-right SUBTOTAL
+                  td
+                    b $0.00
+                tr style=" background: #f2f2f2;"
+                  td style="border: none; background: #fff;" colspan="2"
+                  td.text-right TOTAL
+                  td
+                    b $0.00
 
-		tr
-			th.text-normal.s-16.text-left.pt-1
-				- date = @shipment.freight.created_at
-				span = raw "Que ira a una temperatura consta de <b>  #{ @shipment.freight.box.temperature.present? ? @shipment.freight.box.temperature : '--' } °f </b> con salida el día <b> #{ date.strftime("%m/%d/%Y  %I:%M%p") }</b>,  para llegar a la".upcase
-				- date_arrived = date + 1.day 
-				span = raw "ciudad de: <b> #{ @shipment.delivery_address.full_address}. </b> mas tardar el día de: <b>#{ date_arrived.strftime("%m/%d/%Y  %I:%M%p") }</b>.".upcase
-		tr
-			th.text-normal.s-16.text-left
-				span = "En caso de no llegar al almacen de la fecha indicada, se descontara un 20% del flete. La que será conforma a la guía y remisión".upcase
-				span = raw "de embarque con el folio: <b> #{@shipment.folio}. </b> Por este conducto manifiesto haber estado presente y por lo tanto tener pleno conocimiento de <b>#{total_quantity} </b>".upcase
-				span = "cajas de producto antes mencionado, durante y hasta el momento de cerrar las puertas del camión a mi cargo correspondiente".upcase
-				span = "a este embarque.".upcase
-		tr
-			th.text-normal.s-16.text-left
-				span  = "Consciente de que me es prohibido trasportar ningún otro tipo de carga diferente a la aqui señalada por lo que libero de toda".upcase
-				span = "responsabilidad tanto a la agrícola declarada anteriormente y de cualquier alteración que pueda surgir durante el trayecto a su".upcase
-				span = "destino final, de objetos o valores ajenos a este producto tanto en el tracto camión como en la caja refrigerada arrastrada por".upcase
-				span = "este.".upcase
-		tr
-			th.text-normal.s-16.text-left
-				span = "Sin otro particular me es grato reiterarle a las seguridades de mi más alta y distinguida consideración suscribiéndome a sus".upcase
-				span = "órdenes para cualquier aclaración al respecto".upcase
-		tr
-			th
-				hr
-		tr
-			th.text-left width="100%"
-				table width="100%"
-					tr
-						th.text-right width="15%"
-							b.mt-1.mr-1 CLIENTE:
-						th width="85%"
-							span.text-normal.pr-3 = @shipment.client.name.upcase
-					tr
-						th.text-right width="15%"
-							b.mt-1.mr-1 DOMICILIO:
-						th width="85%"
-							span.text-normal.pr-3 = @shipment.client.full_address.upcase
-					tr
-						th.text-right width="15%"
-							b.mt-1.mr-1 RFC:
-						th width="85%"
-							span.text-normal.pr-3.mr-2 = @shipment.client.rfc.upcase
-							b.mt-1.mr-1 TELÉFONO:
-							span.text-normal.pr-3 = @shipment.client.phone.upcase
-		tr
-			th
-				hr
-		tr
-			th
-				table.mt-2 width="100%"
-					tr
-						th.text-right width="13%"
-							b.mt-1.mr-1 TRANSPORTISTA:
-						th.text-left width="87%"
-							span.text-normal.pr-3 = @shipment.freight.carrier.name.upcase
-					tr
-						th.text-right width="15%"
-							b.mt-1.mr-1 DOMICILIO:
-						th.text-left width="85%"
-							span.text-normal.pr-3 = @shipment.freight.carrier.full_address.upcase
-					tr
-						th.text-right width="15%"
-							b.mt-1.mr-1 RFC:
-						th.text-left width="85%"
-							span.text-normal.pr-3.mr-2 = @shipment.freight.carrier.rfc.upcase
-							b.mt-1.mr-1 TELÉFONO:
-							span.text-normal.pr-3 = @shipment.freight.carrier.phone.upcase
-		tr
-			th
-				hr
-		tr
-			th
-				table.mt-2 width="100%"
-					tr
-						th.text-right width="13%"
-							b.mt-1.mr-1 OPERADOR:
-						th.text-left width="87%"
-							span.text-normal.pr-3 = @shipment.freight.driver.full_name.upcase
+      tr
+        th.text-normal.s-16.text-left.pt-1
+          - date = freight.created_at
+          span = raw "Que ira a una temperatura consta de <b>  #{ freight.box.temperature.present? ? freight.box.temperature : '--' } °f </b> con salida el día <b> #{ date.strftime("%m/%d/%Y  %I:%M%p") }</b>,  para llegar a la".upcase
+          - date_arrived = date + 1.day 
+          span = raw "ciudad de: <b> #{ @shipment.delivery_address.full_address}. </b> mas tardar el día de: <b>#{ date_arrived.strftime("%m/%d/%Y  %I:%M%p") }</b>.".upcase
+      tr
+        th.text-normal.s-16.text-left
+          span = "En caso de no llegar al almacen de la fecha indicada, se descontara un 20% del flete. La que será conforma a la guía y remisión".upcase
+          span = raw "de embarque con el folio: <b> #{ @shipment.folio }. </b> Por este conducto manifiesto haber estado presente y por lo tanto tener pleno conocimiento de <b>#{total_quantity} </b>".upcase
+          span = "cajas de producto antes mencionado, durante y hasta el momento de cerrar las puertas del camión a mi cargo correspondiente".upcase
+          span = "a este embarque.".upcase
+      tr
+        th.text-normal.s-16.text-left
+          span  = "Consciente de que me es prohibido trasportar ningún otro tipo de carga diferente a la aqui señalada por lo que libero de toda".upcase
+          span = "responsabilidad tanto a la agrícola declarada anteriormente y de cualquier alteración que pueda surgir durante el trayecto a su".upcase
+          span = "destino final, de objetos o valores ajenos a este producto tanto en el tracto camión como en la caja refrigerada arrastrada por".upcase
+          span = "este.".upcase
+      tr
+        th.text-normal.s-16.text-left
+          span = "Sin otro particular me es grato reiterarle a las seguridades de mi más alta y distinguida consideración suscribiéndome a sus".upcase
+          span = "órdenes para cualquier aclaración al respecto".upcase
+      tr
+        th
+          hr
+      tr
+        th.text-left width="100%"
+          table width="100%"
+            tr
+              th.text-right width="15%"
+                b.mt-1.mr-1 CLIENTE:
+              th width="85%"
+                span.text-normal.pr-3 = @shipment.client.name.upcase
+            tr
+              th.text-right width="15%"
+                b.mt-1.mr-1 DOMICILIO:
+              th width="85%"
+                span.text-normal.pr-3 = @shipment.client.full_address.upcase
+            tr
+              th.text-right width="15%"
+                b.mt-1.mr-1 RFC:
+              th width="85%"
+                span.text-normal.pr-3.mr-2 = @shipment.client.rfc.upcase
+                b.mt-1.mr-1 TELÉFONO:
+                span.text-normal.pr-3 = @shipment.client.phone.upcase
+      tr
+        th
+          hr
+      tr
+        th
+          table.mt-2 width="100%"
+            tr
+              th.text-right width="13%"
+                b.mt-1.mr-1 TRANSPORTISTA:
+              th.text-left width="87%"
+                span.text-normal.pr-3 = freight.carrier.name.upcase
+            tr
+              th.text-right width="15%"
+                b.mt-1.mr-1 DOMICILIO:
+              th.text-left width="85%"
+                span.text-normal.pr-3 = freight.carrier.full_address.upcase
+            tr
+              th.text-right width="15%"
+                b.mt-1.mr-1 RFC:
+              th.text-left width="85%"
+                span.text-normal.pr-3.mr-2 = freight.carrier.rfc.upcase
+                b.mt-1.mr-1 TELÉFONO:
+                span.text-normal.pr-3 = freight.carrier.phone.upcase
+      tr
+        th
+          hr
+      tr
+        th
+          table.mt-2 width="100%"
+            tr
+              th.text-right width="13%"
+                b.mt-1.mr-1 OPERADOR:
+              th.text-left width="87%"
+                span.text-normal.pr-3 = freight.driver.full_name.upcase
 
-					tr
-						th.text-right width="15%"
-							b.mt-1.mr-1 LICENCIA:
-						th.text-left width="85%"
-							span.text-normal.pr-3.mr-2 = @shipment.freight.driver.licence.upcase
-							b.mt-1.mr-1 TELÉFONO:
-							span.text-normal.pr-3 = @shipment.freight.driver.phone.upcase
-		tr
-			th
-				hr
-		tr
-			th.text-center.pt-4
-				span _______________________________________________________________
-				br
-				span =  @shipment.freight.driver.full_name.upcase
-				br
-				small Operador
+            tr
+              th.text-right width="15%"
+                b.mt-1.mr-1 LICENCIA:
+              th.text-left width="85%"
+                span.text-normal.pr-3.mr-2 = freight.driver.licence.upcase
+                b.mt-1.mr-1 TELÉFONO:
+                span.text-normal.pr-3 = freight.driver.phone.upcase
+      tr
+        th
+          hr
+      tr
+        th.text-center.pt-4
+          span _______________________________________________________________
+          br
+          span =  freight.driver.full_name.upcase
+          br
+          small Operador
+>>>>>>> merge_master

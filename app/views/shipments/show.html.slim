@@ -1,156 +1,144 @@
 section.content-header.pb-0
-	.container
-		.row.mb-2
-			.col-sm-6
-				h5 Detalle de embarque
-			.col-sm-6.text-right.pr-2.s-12
-				= render_breadcrumbs :separator => ' / '	
+  .container
+    .row.mb-2
+      .col-sm-6
+        h5 Detalle de embarque
+      .col-sm-6.text-right.pr-2.s-12
+        = render_breadcrumbs :separator => ' / '	
 section.content
-	.container
-		.row
-			.col-lg-12
-				= render "shared/alerts"
-		.card.mb-2
-			.card-header.p-2.pb-1
-				.row
-					.col-md-10
-						= link_to edit_shipment_path(@shipment), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
-							svg.feather.feather-edit.mr-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-								path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-								path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
-							span Editar
-						= link_to shipments_path, class: 'mr-2 btn btn-sm btn-default s-12 pl-0' do
-							svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-							  line x1="19" x2="5" y1="12" y2="12" 
-							  polyline points=("12 19 5 12 12 5") 
-							span Volver al listado
-					.col-md-2.text-right
-						a#dropdownSubMenu1.btn.btn-sm.btn-primary.dropdown-toggle.s-12.pr-1.pl-0 aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#"
-							svg.feather.feather-printer fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-								polyline points=("6 9 6 2 18 2 18 9") 
-								path d=("M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2") 
-								rect height="8" width="12" x="6" y="14" 
-						ul.dropdown-menu.border-0.shadow.py-0.m-w-7rm aria-labelledby="dropdownSubMenu1" 
-						  li
-						    = link_to 'Remisión', shipment_print_path(@shipment, format: :pdf), target: "_blank", class: 'dropdown-item s-12 text-left px-2'
-						  li
-						    = link_to 'Responsiva', shipment_print_responsive_path(@shipment, format: :pdf), target: "_blank", class: 'dropdown-item s-12 text-left px-2'
-			.card-body.s-14.p-3
-				.row
-					.col-lg-8
-						h6.s-16
-							svg.svg-inline--fa.fa-truck.fa-w-20.h-16.mr-2.mb-1 aria-hidden="true" data-icon="truck" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 640 512") xmlns="http://www.w3.org/2000/svg" 
-								path d=("M624 352h-16V243.9c0-12.7-5.1-24.9-14.1-33.9L494 110.1c-9-9-21.2-14.1-33.9-14.1H416V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h16c0 53 43 96 96 96s96-43 96-96h128c0 53 43 96 96 96s96-43 96-96h48c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zM160 464c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm320 0c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-208H416V144h44.1l99.9 99.9V256z") fill="currentColor" 
-							span Información de flete
-				.row.mb-2
-					.col-lg-8
-						.row
-							.col-md-2
-								label.mb-1 Transportista:
-							.col-lg-9.text-left
-								p.mb-1.bold = @shipment.freight.carrier.name.upcase
-						.row
-							.col-lg-2
-								label.mb-1 Conductor:
-							.col-lg-9.text-left
-								- driver  = @shipment.freight.driver
-								p.mb-1 = "#{driver.full_name.upcase}, # LIC: #{driver.licence.upcase}"
-						.row
-							.col-lg-2
-								label.mb-1 Unidad:
-							.col-lg-9.text-left
-								p.mb-1 = "#{@shipment.freight.unit.name.upcase}"
-					
-					.col-lg-4
-						.row
-							.col-md-12.text-right
-								label.mb-2.mr-1 Folio flete:
-								span.mb-1.bold = @shipment.folio
-						.row
-							.col-md-12.text-right
-								label.mb-1.mr-1 Folio embarque:
-								span.mb-1.bold = @shipment.folio
-						.row
-							.col-md-12.text-right
-								label.mb-1.mr-1 Folio cliente:
-								span.mb-1.bold = @shipment.client_folio.upcase
-						.row
-							.col-md-12.text-right
-								label.mb-1.mr-1 Fecha envio:
-								span.mb-1.bold = @shipment.created_at.strftime("%m/%d/%Y")
-				.row
-					.col-lg-12
-						label.mr-1 Origen:
-						span.mb-1.bold Parras de la Fuente, Coahuila, México, Agricola las albardas
-				.row
-					.col-lg-12
-						label.mb-2.mr-1 Destino:
-						span.mb-1.bold = @shipment.delivery_address.full_address
-					.col-lg-12
-
-		.card
-			.card-body
-				.row
-					.col-md-12
-						.row
-							.col-md-5
-								label.mb-0.d-block Empresa remisionista 
-								span.s-14 = @shipment.company.name.upcase
-							.col-md-5
-								label.mb-0.d-block Cliente 
-								span.s-14 = @shipment.client.name.upcase
-						.row.mt-2
-							.col-md-12
-								label.mb-0.d-block Dirección de entrega
-								span.s-14 = @shipment.delivery_address.full_address.upcase
-						section.products.mt-4
-							table.table.table-striped.table-sm.mb-1
-								thead
-									tr
-										th.s-14 width="60%" scope="col"  Producto
-										th.s-14.text-center scope="col"  Cantidad
-										th.s-14.text-right scope="col"  Precio
-										th.s-14.text-center scope="col"  Total
-								tbody
-									- total_quantity = 0
-									- @shipment.shipments_products.each do |object|
-										- total_quantity += object.quantity.nil? ? 0 : object.quantity
-										tr
-											td.s-14 = object.product.name.upcase
-											td.s-14.text-center = object.quantity
-											td.s-14.text-right = "$ #{object.price}"
-											td.s-14.text-center $ 0
-								tfoot
-									tr.bg-light-gray
-										td.text-left
-											b.s-14 = raw @shipment.total_kg 
-										td.text-center
-											b.s-14 = total_quantity 
-										td.text-right
-											b.s-14 $ 0
-										td.text-center
-											b.s-14 $ 0
-									tr
-										td
-										td
-										td.text-right 
-											b.s-14 Subtotal
-										td.s-14.text-center $ 0
-									tr
-										td
-										td
-										td.text-right
-											b.s-14 IVA
-										td.s-14.text-center 0%
-									tr.bg-light-gray
-										td
-										td
-										td.text-right 
-											b.s-14 TOTAL
-										td.text-center 	
-											b.s-14 $ 0.00
-				section.commets.mt-3
-					.row
-						.col-lg-12
-							label.mb-1.d-block Comentarios
-							span.s-14 = @shipment.comments.upcase
+  .container
+    .row
+      .col-lg-12
+        = render "shared/alerts"
+    .card.mb-2
+      .card-header.p-2.pb-1
+        .row
+          .col-md-8
+            = link_to shipments_path, class: 'btn s-12 btn-default btn-sm' do
+              i.fas.fa-chevron-left.s-12.mr-2
+              span Volver al listado
+          .col-md-4.text-right
+            = link_to edit_shipment_path(@shipment), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
+              i.fas.fa-edit.s-12.mr-2
+              span Editar
+            = link_to shipment_print_path(@shipment, format: :pdf), target: '_blank', class: " btn btn-sm btn-danger text-center pr-2 s-12" do
+              i.fas.fa-file-pdf.mr-2
+              span Generar documentos
+    .card.card-body.s-14.p-3.mt-3
+      .row
+        .col-12
+          h6.s-16.bold
+            i.fas.fa-truck-moving.mr-2
+            span Información de flete
+        .col-md-8
+          .row
+            .col-md-4
+              label.mb-1 Transportista:
+            .col-lg-8.text-left
+              p.mb-1.bold = @shipment.freight.carrier.name.upcase
+          .row
+            .col-lg-4
+              label.mb-1 Conductor:
+            .col-lg-8.text-left
+              - driver  = @shipment.freight.driver
+              p.mb-1 = "#{driver.full_name.upcase}, # LIC: #{driver.licence.upcase}"
+          .row
+            .col-lg-4
+              label.mb-1 Unidad:
+            .col-lg-8.text-left
+              p.mb-1 = "#{@shipment.freight.unit.name.upcase}"
+        .col-md-4
+          .row
+            .col-md-8.text-right
+              label.mb-1.mr-1 Folio flete:
+            .col-md-4.text-right
+              span.mb-1.bold = @shipment.freight.folio
+          .row
+            .col-md-8.text-right
+              label.mb-1.mr-1 Folio embarque:
+            .col-md-4.text-right
+              span.mb-1.bold = @shipment.folio
+          .row
+            .col-md-8.text-right
+              label.mb-1.mr-1 Folio cliente:
+            .col-md-4.text-right
+              span.mb-1.bold = @shipment.client_folio.upcase
+          .row.mt-2
+            .col-md-12.text-right.s-12.text-muted
+              i.fas.fa-clock.mr-2
+              span.mb-1.bold = @shipment.created_at.strftime("%d %bio %Y, %-l:%M %P")
+      .row
+        .col-lg-12
+          label.mr-1 Origen:
+          span.mb-1.bold Parras de la Fuente, Coahuila, México, Agricola las albardas
+      .row
+        .col-lg-12
+          label.mb-2.mr-1 Destino:
+          span.mb-1.bold = @shipment.delivery_address.full_address
+    .card
+      .card-body
+        .row
+          .col-md-12
+            .row
+              .col-md-5
+                label.mb-0.d-block Empresa remisionista
+                span.s-14 = @shipment.company.name.upcase
+              .col-md-5
+                label.mb-0.d-block Cliente
+                span.s-14 = @shipment.client.name.upcase
+            .row.mt-2
+              .col-md-12
+                label.mb-0.d-block Dirección de entrega
+                span.s-14 = @shipment.delivery_address.full_address.upcase
+            section.products.mt-4
+              table.table.table-sm.table-bordered.mb-1
+                thead.thead-dark
+                  tr
+                    th.s-14 width="60%" scope="col" DESCRIPCIÓN DE PRODUCTO
+                    th.s-14.text-center scope="col" CANTIDAD
+                    th.s-14.text-center scope="col" PRECIO
+                    th.s-14.text-center scope="col" TOTAL
+                tbody
+                  - total_quantity = 0
+                  - @shipment.shipments_products.each do |object|
+                    - total_quantity += object.quantity.nil? ? 0 : object.quantity
+                    tr
+                      td.s-14 = object.product.name.upcase
+                      td.s-14.text-center = object.quantity
+                      td.s-14.text-center $ 0
+                      td.s-14.text-center $ 0
+                tfoot
+                  tr
+                    td.text-left
+                      b.s-14 = raw @shipment.total_kg 
+                    td.text-center
+                      b.s-14 = total_quantity 
+                    td.text-center
+                      b.s-14 $ 0
+                    td.text-center
+                      b.s-14 $ 0
+                  tr
+                    td
+                    td
+                    td.text-right
+                      b.s-14 Subtotal
+                    td.s-14.text-center $ 0
+                  tr
+                    td
+                    td
+                    td.text-right
+                      b.s-14 IVA
+                    td.s-14.text-center 0%
+                  tr.bg-light-gray
+                    td
+                    td
+                    td.text-right
+                      b.s-14 TOTAL
+                    td.text-center
+                      b.s-14 $ 0.00
+    .card.card-body.pt-0.mt-2
+      section.commets.mt-3
+        .row
+          .col-lg-12
+            label.mb-1.d-block.bold.s-14 Comentarios
+            span.s-14 = @shipment.comments.upcase
