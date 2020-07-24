@@ -6,6 +6,7 @@ class ShipmentsController < ApplicationController
 
   def index
     @shipments = Shipment.shipment.paginate(page: params[:page], per_page: 25)
+    @orders_sales = Shipment.order_sale
     @all_shipments = Shipment.shipment
 
     search if params[:q].present?

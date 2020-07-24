@@ -1,0 +1,30 @@
+.swal-footer {
+	overflow: hidden;
+ 	text-align: left;
+}
+.swal-title {
+  margin: 0px;
+  font-size: 20px;
+  margin-bottom: 28px;
+  margin-top: 10px !important;
+  text-align: left;
+  color: #2d637c;
+}
+
+.swal-modal {
+	border-radius: 3px;
+}
+.swal-button{
+	padding: 7px 18px;
+}
+.swal-button--confirm{
+	background-color: #2d637c; 
+}
+.swal-button--confirm:hover{
+	background: #377896 !important;
+}
+.swal-text{
+	display: block;
+	text-align: left;
+	padding: 0 16px;
+}

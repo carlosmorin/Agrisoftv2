@@ -1,0 +1,32 @@
+.card.card-body.table-responsive.p-0.mt-4.mb-0
+	table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped.text-left
+		thead
+			tr.bg-light-gray
+				th.text-left Remisionsita
+				th Cliente
+				th N° bultos
+				th Folio de flete
+				th Folio de embarque
+				th Folio de cliente
+				th Fecha de creación
+				th.text-center style=("width: 12%") Acciónes
+		tbody#tbody.s-13
+			- @orders.each do |order|
+				tr
+					td = order.company.name.upcase
+					td = order.client.name.upcase
+					td
+						span = raw "#{order.n_products} <small>Bultos</small> - "
+						span = raw order.total_kg
+					td
+						span --
+					td
+						span --
+					td
+						span --
+					td
+						span = order.issue_at.strftime("%-d %bio %Y")
+					td.text-center
+						.btn-group
+							= link_to edit_shipment_path(order), title: "Embarcar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-info" do
+								i.fas.fa-truck-loading
