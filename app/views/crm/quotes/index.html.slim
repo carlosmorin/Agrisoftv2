@@ -42,17 +42,16 @@ section.content data-controller="quote-to-order-sale"
                   th.text-center Total
                   th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody.s-13 
-                - if @quotes.empty?
-                  tr
-                    td.text-center colspan="10"
-                      = link_to "Nuevo registro", new_crm_quote_path, class: "link"
-                - else
+                tr
+                  td.text-center colspan="10"
+                    = link_to "Nuevo registro", new_crm_quote_path, class: "link"
+                /*- else
                   - @quotes.each_with_index do |quote, index|
                     tr data-target='quote-to-order-sale.row'
                       td.bold = quote.quote_folio
                       td = quote.client.name.upcase
                       td.text-center 
-												span = quote.issue_at.nil? ? "--" : quote.issue_at.strftime("%-d %bio %Y")
+                        span = quote.issue_at.nil? ? "--" : quote.issue_at.strftime("%-d %bio %Y")
                       td.text-center
                         p.c-pointer.mb-0 title="6 dias restantes" data-toggle='tooltip' data-placement='bottom' 
                           span = quote.expirated_at.nil? ? "--" : quote.expirated_at.strftime("%-d %bio %Y")

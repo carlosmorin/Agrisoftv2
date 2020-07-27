@@ -43,7 +43,8 @@ class Shipment < ApplicationRecord
 	end
 
 	def expirated_at
-		issue_at + expirated_days.days
+		#issue_at + expirated_days.days
+		""
 	end
 
 	def subtotal
