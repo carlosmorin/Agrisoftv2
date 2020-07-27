@@ -26,7 +26,8 @@
     "tail.select": "^0.5.15",
     "toastr": "^2.1.4",
     "trix": "^1.0.0",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "webpack": "^4.44.0"
   },
   "version": "0.1.0",
   "devDependencies": {
