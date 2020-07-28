@@ -4,6 +4,7 @@ class Shipment < ApplicationRecord
   default_scope { order(created_at: :desc) }
 
 	before_create :set_products
+	before_update :set_products
 	before_create :set_folio, if: :shipment?
 	before_create :set_freight_folio, if: :shipment?
 	before_create :set_client_folio, if: :shipment?
@@ -63,7 +64,7 @@ class Shipment < ApplicationRecord
 	def set_products
 		sum = 0
 		shipments_products.each { |a| sum+=a.quantity }
-		n_products = sum
+		self.n_products = sum
 	end
 	
 	def set_folio
