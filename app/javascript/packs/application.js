@@ -12,6 +12,12 @@ require('jquery')
 import "bootstrap"
 import "../stylesheets/application"
 import 'cocoon-js'
+import swal from 'sweetalert';
+
+// Fontaweomse
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
+import '@fortawesome/fontawesome-free/js/regular'
 
 document.addEventListener("turbolinks:load", () => {
 	$('[data-toggle="tooltip"]').tooltip()
@@ -20,3 +26,5 @@ document.addEventListener("turbolinks:load", () => {
 
 import "controllers"
 
+require("trix")
+require("@rails/actiontext")

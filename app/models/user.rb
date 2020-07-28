@@ -9,7 +9,9 @@ class User < ApplicationRecord
   validates :name, :last_name, :email, presence: true
   validates_uniqueness_of :email
   has_many :shipments, inverse_of: :user
-
+  has_many :quotes, inverse_of: :user
+  has_one_attached :avatar
+  
   def active_for_authentication?
     super && !deactivated
   end

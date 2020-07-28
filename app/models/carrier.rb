@@ -10,7 +10,6 @@ class Carrier < ApplicationRecord
 	belongs_to :country
 	belongs_to :state
 	belongs_to :municipality
-	validates_uniqueness_of :rfc, case_sensitive: false
 
 	def short_address
 		state_name = state.name
@@ -22,4 +21,7 @@ class Carrier < ApplicationRecord
 		"#{municipality.name}, #{state.name}, #{address}, #{country.name}"
 	end
 
+	def full_name
+		"#{name}, RFC: #{ rfc }"
+	end
 end

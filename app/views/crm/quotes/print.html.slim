@@ -1,0 +1,111 @@
+table width="100%"
+	thead
+		tr
+			th width="100%"
+				table width="100%"
+					th.text-left width="35%"
+						img src="http://lasalbardas.com/ADMIN/VIEWS/resources/IMG//logo.jpg" alt="LOGO" height="90"/
+					th.text-left width="65%"
+						h2.my-0 AGRICOLA LAS ALBARDAS
+		tr
+			th width="100%"
+				table width="100%"
+					tr
+						td.text-left width="85%"
+							h1.mb-1 = raw "COTIZACI&OacuteN:</i>"
+						td.text-center width="15%" style="border: 1px solid gray; height: 30px;"
+							= @quote.quote_folio
+					tr
+						td.text-left
+							br
+							i.s-16.text-normal = raw "Parras de la Fuente, Coah; <b>#{@quote.issue_at.strftime("%-d %bio %Y")}<b>"
+		tr
+			th width="100%"
+				table.mt-2 width="100%"
+					tr
+						th.text-left width="70%"
+							h2.mt-0.mb-0 = @quote.client.name.upcase
+							p.text-normal.mt-0.mb-0 = "RFC: #{@quote.client.rfc.upcase}"
+							p.text-normal.mt-0.mb-0 = "TELÉFONO: #{@quote.client.phone.upcase}"
+							p.text-normal.mt-0 = "DIRECCIÓN: #{@quote.client.full_address.upcase}"
+						th.text-right width="30%"
+							label.text-normal.mt-1 = raw "Fecha de emisión: <b>#{@quote.issue_at.strftime("%-d %bio %Y")}</b>"
+							br
+							label.text-normal.mt-1 = raw "Vigencia: <b>(#{@quote.expirated_days}) Dias</b>"  
+							br
+							label.text-normal.mt-1 = raw "Fecha de Vigencia: <b>#{@quote.expirated_at.strftime("%-d %bio %Y")}</b>"
+		tr
+			th.text-left width="100%"
+				br
+				p.s-16.mt-0 =  "En atención a su solicitud, nos permitimos cotizar los siguientes productos:".upcase  
+		tr
+			th width="100%"
+				table.pdf_table.s-16 width="100%"
+					thead
+						tr
+							th.text-left width="64%"
+								b DESCRIPCIÓN DEL PRODUCTO
+							th width="12%"
+								b CANTIDAD
+							th width="12%"
+								b U. MEDIDA
+							th width="12%"
+								b PRECIO
+							th width="12%"
+								b TOTAL 	
+					tbody
+						- neto = 0
+						- @quote.shipments_products.each do |sp|
+							tr
+								td.text-left
+									span.text-normal.s-14 = sp.product.name.upcase
+								td
+									span.text-normal = sp.quantity
+								td
+									span.text-normal = sp.unit_meassure
+								td
+									span.text-normal = "$#{sp.price}"
+								td.text-left
+									- total = sp.quantity * sp.price
+									- neto += total
+									b = "$#{total}"
+		tr
+			th width="100%"
+				table width="100%" style="border: 1px color gray;"
+					tr
+						th width="70%"
+							p
+						th width="30%"
+							table.mt-2.pdf_table.s-16 width="100%"
+								tbody
+									tr
+										td.text-right
+											span.text-normal NETO:
+										td.text-left
+											span.pl-r = "$#{neto}"
+									tr
+										td.text-right
+											span.text-normal.c-red DESCUENTO:
+										td.text-left
+											span.c-red.pl-r = "#{@quote.discount}%"
+									tr
+										td.text-right
+											span.text-normal SUB TOTAL:
+										td.text-left
+											- sub_total = (@quote.subtotal - (neto / 100) * (@quote.discount))
+											span.pl-r = "$#{sub_total}"
+									tr
+										td.text-right
+											span.text-normal IVA:
+										td.text-left
+											span.pl-r = "#{@quote.iva}%"
+									tr
+										- total = sub_total + ( (sub_total / 100) * @quote.iva )
+										td.text-right
+											span TOTAL:
+										td.text-left
+											span.pl-r = "$#{total}"
+		tr
+			th.text-left
+				p.s-16.mb COMENTARIOS 
+				span.text-normal.s-14.mt-2 = raw @quote.description

@@ -1,0 +1,225 @@
+section.content-header.pb-0
+	.container-fluid
+		.row.mb-2
+			.col-sm-12.text-left.pr-2.s-12
+				= render_breadcrumbs :separator => ' / '
+			.col-sm-12
+				h5 ="Detalle de cliente"
+section.content
+	.container-fluid
+		.row
+			.col-12
+				.callout.callout-info.mb-2
+					.row
+						.col-md-2
+							- img_url = "https://newbuildings.org/wp-content/uploads/2015/03/client-logo.png"
+							img src="#{img_url}" height="80" alt="LOGO CLIENTE"
+						.col-md-10
+							.row
+								.col-md-8
+									h5 = @client.name.upcase
+								.col-md-4.text-right
+									= link_to :back, class: 'mr-2 btn btn-sm btn-default s-12 pl-0' do
+										svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+											line x1="19" x2="5" y1="12" y2="12" 
+											polyline points=("12 19 5 12 12 5") 
+										span Atras
+									= link_to edit_crm_client_path(@client), class: 'btn btn-sm btn-success text-center pr-2 s-12 mr-2' do
+										svg.feather.feather-edit.mr-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+											path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+											path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+										span Editar
+									
+							.row
+								.col-lg-4
+									.row
+										.col-md-4
+											label.mb-1.s-14 N° embarques:
+										.col-md-8
+												span = @client.shipments.size
+									.row
+										.col-md-4
+											label.mb-1.s-14 Codigo:
+										.col-md-8
+												span = @client.code.upcase
+									.row
+										.col-md-4
+											label.mb-1.s-14 Correo:
+										.col-md-8
+												span = @client.email.upcase
+									.row
+										.col-md-4
+											label.mb-1.s-14 Telefono:
+										.col-md-8
+												span = @client.phone.upcase
+								.col-lg-8
+									.row
+										.col-lg-12
+											p.bold.mb-0 Facturación
+									.row
+										.col-md-2
+											label.mb-1.s-14 Razón Social:
+										.col-md-8
+												span = @client.name.upcase
+									.row
+										.col-md-2
+											label.mb-1.s-14 RFC:
+										.col-md-8
+												span = @client.rfc.upcase
+									.row
+										.col-md-2
+											label.mb-1.s-14 Dirección:
+										.col-md-8
+												span = @client.full_address.upcase
+		.row
+			.col-lg-12
+				.btn-group
+					= link_to :back, title: "Atras", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: 'btn btn-sm btn-default' do
+						svg.feather.feather-chevron-left fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="13" xmlns="http://www.w3.org/2000/svg" 
+							polyline points=("15 18 9 12 15 6") 
+					= link_to edit_crm_client_path(@client), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: "btn btn-sm btn-default mr-2" do
+						svg.feather.feather-edit fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+							path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+							path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+					= link_to new_crm_client_contact_path(@client), title: "Agregar contacto", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom',  class: 'btn btn-sm btn-default' do
+						svg.svg-inline--fa.fa-address-book.fa-w-14.h-12 aria-hidden="true" data-icon="address-book" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 448 512") xmlns="http://www.w3.org/2000/svg" 
+							path d=("M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z") fill="currentColor"
+					= link_to new_crm_client_delivery_address_path(@client), title: "Agregar D. de entrega ", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: 'btn btn-sm btn-default' do
+						svg.svg-inline--fa.fa-map-marker-alt.fa-w-12.h-12 aria-hidden="true" data-icon="map-marker-alt" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
+							path d=("M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z") fill="currentColor"
+
+			.col-lg-12
+				= render "shared/alerts"
+		.row.mt-2
+			.col-12
+				.card.card-primary.card-outline.card-outline-tabs
+					.card-header.p-0.border-bottom-0
+						ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
+							li.nav-item
+								= link_to 'Ventas', crm_client_path(@client, tab: :shipments), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'shipments' ? 'active' : 'c-gray' }"
+							li.nav-item
+								= link_to 'Contactos', crm_client_path(@client, tab: :contacts), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'contacts' ? 'active' : 'c-gray' }"
+							li.nav-item
+								= link_to 'Direcciónes', crm_client_path(@client, tab: :addresses), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'addresses' ? 'active' : 'c-gray' }"
+					.card-body
+						#custom-tabs-four-tabContent.tab-content
+							#custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
+								= render "shipments" if params[:tab] == 'shipments'
+								= render "addresses" if params[:tab] == 'addresses'
+								= render "contacts" if params[:tab] == 'contacts'
+
+							
+/section.content
+	.container-fluid
+		.row
+			.col-lg-12
+				= render "shared/alerts"
+		.card
+			.card-header.p-2.pb-1
+				.row
+					.col-md-12
+						= link_to edit_client_path(@client), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
+							svg.feather.feather-edit.mr-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+								path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+								path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+							span Editar
+						= link_to crm_clients_path, class: 'mr-2 btn btn-sm btn-default s-12 pl-0' do
+							svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+							  line x1="19" x2="5" y1="12" y2="12" 
+							  polyline points=("12 19 5 12 12 5") 
+							span Volver al listado
+						/= link_to new_crm_delivery_address_path(c: @client.id), class: 'ml-3 btn btn-sm btn-default text-center pl-1 s-12' do
+							svg.feather.feather-map-pin fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+							  path d=("M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z") 
+							  circle cx="12" cy="10" r="3" 
+							span Agregar dirección de entrega
+						/= link_to new__client_brand_path(c: @client.id), class: 'ml-3 btn btn-sm btn-default text-center pl-1 s-12' do
+							svg.svg-inline--fa.fa-copyright.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="copyright" data-prefix="far" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z") fill="currentColor" 
+							span Registar nueva marca
+			.card-body.s-14.p-3
+				.row
+					.col-lg-12
+						h6.s-16
+							svg.svg-inline--fa.fa-info-circle.fa-w-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="info-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z") fill="currentColor" 
+							span General
+				.row
+					.col-lg-2
+						label.mb-1 Razón social:
+					.col-lg-7.text-left
+						p.mb-1 = @client.name.upcase
+				.row
+					.col-lg-2
+						label.mb-1 RFC:
+					.col-lg-7.text-left
+						p.mb-1 = @client.rfc.upcase
+
+				hr.my-0
+				.row
+					.col-12
+						h6.mb-0.mt-2
+							svg.svg-inline--fa.fa-map-marked-alt.fa-w-18.h-14.mr-2.mb-1 aria-hidden="true" data-icon="map-marked-alt" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 576 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M288 0c-69.59 0-126 56.41-126 126 0 56.26 82.35 158.8 113.9 196.02 6.39 7.54 17.82 7.54 24.2 0C331.65 284.8 414 182.26 414 126 414 56.41 357.59 0 288 0zm0 168c-23.2 0-42-18.8-42-42s18.8-42 42-42 42 18.8 42 42-18.8 42-42 42zM20.12 215.95A32.006 32.006 0 0 0 0 245.66v250.32c0 11.32 11.43 19.06 21.94 14.86L160 448V214.92c-8.84-15.98-16.07-31.54-21.25-46.42L20.12 215.95zM288 359.67c-14.07 0-27.38-6.18-36.51-16.96-19.66-23.2-40.57-49.62-59.49-76.72v182l192 64V266c-18.92 27.09-39.82 53.52-59.49 76.72-9.13 10.77-22.44 16.95-36.51 16.95zm266.06-198.51L416 224v288l139.88-55.95A31.996 31.996 0 0 0 576 426.34V176.02c0-11.32-11.43-19.06-21.94-14.86z") fill="currentColor" 
+							span.pt-2 Dirección
+				.row.mt-1
+					.col-lg-2
+						label.mb-1 País:
+					.col-lg-7.text-left
+						p.mb-1 = @client.country.present? ? @client.country.name : '--'  
+				.row
+					.col-lg-2
+						label.mb-1 Estado:
+					.col-lg-7.text-left
+						p.mb-1 = @client.state.present? ? @client.state.name : '--' 
+				.row
+					.col-lg-2
+						label.mb-1 Municipio / condado:
+					.col-lg-7.text-left
+						p.mb-1 = @client.municipality.name
+				.row.mb-2
+					.col-lg-2
+						label.mb-0 Dirección:
+					.col-lg-7.text-left
+						p.mb-0 = @client.address.upcase
+				.row
+					.col-lg-2
+						label.mb-1 Código Postal:
+					.col-lg-7.text-left
+						p.mb-1 = @client.cp
+				hr.my-0
+				.row
+					.col-12
+						h6.mb-0.mt-2
+							svg.svg-inline--fa.fa-phone-square-alt.fa-w-14.h-14.mr-2.mb-1 aria-hidden="true" data-icon="phone-square-alt" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 448 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48zm-16.39 307.37l-15 65A15 15 0 0 1 354 416C194 416 64 286.29 64 126a15.7 15.7 0 0 1 11.63-14.61l65-15A18.23 18.23 0 0 1 144 96a16.27 16.27 0 0 1 13.79 9.09l30 70A17.9 17.9 0 0 1 189 181a17 17 0 0 1-5.5 11.61l-37.89 31a231.91 231.91 0 0 	0 110.78 110.78l31-37.89A17 17 0 0 1 299 291a17.85 17.85 0 0 1 5.91 1.21l70 30A16.25 16.25 0 0 1 384 336a17.41 17.41 0 0 1-.39 3.37z") fill="currentColor" 
+							span.pt-2 Contacto
+				.row.mt-1
+					.col-lg-2
+						label.mb-1 Teléfono:
+					.col-lg-7.text-left
+						p.mb-1 = @client.phone
+				.row
+					.col-lg-2
+						label.mb-1 Correo electronico:
+					.col-lg-7.text-left
+						p.mb-1 = @client.email? ? @client.email : '--'
+				.row
+					.col-lg-2
+						label.mb-1 Persona de contacto:
+					.col-lg-7.text-left
+						p.mb-1 = @client.contact_name.present? ? @client.contact_name.upcase : '--'
+				- if @client.client_brands.present?
+					hr.my-0
+					.row
+						.col-12
+							h6.mb-0.mt-2
+								svg.svg-inline--fa.fa-copyright.fa-w-16.h-14.mr-2.mb-1 aria-hidden="true" data-icon="copyright" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+									path d=("M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm117.134 346.753c-1.592 1.867-39.776 45.731-109.851 45.731-84.692 0-144.484-63.26-144.484-145.567 0-81.303 62.004-143.401 143.762-143.401 66.957 0 101.965 37.315 103.422 38.904a12 12 0 0 1 1.238 14.623l-22.38 34.655c-4.049 6.267-12.774 7.351-18.234 2.295-.233-.214-26.529-23.88-61.88-23.88-46.116 0-73.916 33.575-73.916 76.082 0 39.602 25.514 79.692 74.277 79.692 38.697 0 65.28-28.338 65.544-28.625 5.132-5.565 14.059-5.033 18.508 1.053l24.547 33.572a12.001 12.001 0 0 1-.553 14.866z") fill="currentColor" 
+								span.pt-2 Marcas
+					.row.mt-2
+						.col-lg-12
+							- @client.client_brands.each do |brand|
+								.btn-group.mr-2
+									button.btn.btn-default.btn-sm.s-12.px-3 type="button" 
+										b = brand.name

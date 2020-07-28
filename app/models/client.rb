@@ -9,10 +9,12 @@ class Client < ApplicationRecord
 	belongs_to :municipality
 	has_many :client_brands, inverse_of: :client
 	has_many :shipments, inverse_of: :client
+	has_many :freights, as: :debtable, inverse_of: :client
 
 	validates_uniqueness_of :phone, :code, case_sensitive: false
-	
+	has_many :contacts, as: :contactable
+
 	def full_address
-		"#{municipality.name}, #{state.name}, #{address}, #{country.name}"
+		"#{address}, #{municipality.name}, #{state.name}, #{country.name}"
 	end
 end

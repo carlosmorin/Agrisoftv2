@@ -1,7 +1,7 @@
 .text-left{	text-align: left !important; } .text-right{ text-align: right;}
 .text-justify{	text-align: justify !important; }
 .text-normal{
-	font-weight: normal;
+	font-weight: normal !important;
 }
 .underline{
 	text-decoration: underline;
@@ -16,6 +16,7 @@
 .pt-0{ padding-top: 0px;}
 .pb-0{ padding-bottom: 0px;}
 .mb-0{ margin-bottom: 0px;}
+.mb{ margin-bottom: .5rem !important; }
 .mb-1{ margin-bottom: 2px; }
 .mr-1{ margin-right: .5rem;}
 .mr-2{ margin-right: 2rem;}
@@ -24,6 +25,8 @@
 .my-1{ margin-top: .5rem; margin-bottom: .5rem;}
 .my-0{ margin-top: 0px; margin-bottom: 0px; }
 .mt-0{ margin-top: 0px; }
+.ml-2{ margin-left: 2px !important; }
+.pl-r{ padding-left: .5rem !important; }
 .mt-4{ margin-top: 4rem; }
 .pt-4{ padding-top: 4rem; }
 .pt-1{ padding-top: 1rem; }
@@ -46,3 +49,5 @@ table.pdf_table tbody tr td{
 	border-bottom: 1px solid #ccc;
 }
 table.pdf_table tbody tr:nth-child(odd) { background: #f2f2f2;}
+.c-d-gray{ color: #828282 !important;}
+.c-red{ color: red !important;}

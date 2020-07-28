@@ -1,18 +1,20 @@
 class Freight < ApplicationRecord
+  default_scope { order(:created_at) }
   before_create :set_folio
   validates :carrier_id, :driver_id, :unit_id, :box_id, presence: true
-  belongs_to :carrier
-  belongs_to :driver
-  belongs_to :unit
-  belongs_to :box
-  belongs_to :user
-  has_many :shipments, inverse_of: :freight
-  has_many :freights_taxes, inverse_of: :freight
+  belongs_to :carrier, optional: true
+  belongs_to :driver, optional: true
+  belongs_to :unit, optional: true
+  belongs_to :box, optional: true
+  belongs_to :user, optional: true
+  has_many :shipments, inverse_of: :freight, dependent: :destroy
+  has_many :freights_taxes, inverse_of: :freight, dependent: :destroy
   accepts_nested_attributes_for :shipments, allow_destroy: true
   accepts_nested_attributes_for :freights_taxes, allow_destroy: true
   has_one_attached :pdf_invoice
   has_one_attached :xml_invoice
-  
+  belongs_to :debtable, polymorphic: true, optional: true
+
   private
   
   def set_folio
@@ -35,4 +37,5 @@ class Freight < ApplicationRecord
       "#{total_freight.to_i + 1 }"
     end
   end
+
 end

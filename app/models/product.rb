@@ -15,6 +15,14 @@ class Product < ApplicationRecord
   has_many :shipments, through: :shipments_products
 
   enum unit_meassure: { lbs: 0, kg: 1, granel: 2 }
+
+  def short_name
+    "#{crop.name} #{color.name}"
+  end
+
+  def origin
+    
+  end
   ## STATUS => lbs = libras, kg: kilogramas, granel: agrenel
 
   private

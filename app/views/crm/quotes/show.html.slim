@@ -1,0 +1,115 @@
+section.content-header.pb-0
+	.container
+		.row.mb-2
+			.col-md-6
+				h5 Detalle de Cotización
+			.col-md-6.s-12.text-right
+				= render_breadcrumbs :separator => ' / '
+section.content data-controller="reference"
+	.container
+		.row
+			.col-lg-12
+				= render "shared/alerts"
+		.card.mb-2
+			.card-header.p-2.pb-1
+				.row
+					.col-md-6
+						= link_to crm_quotes_path, class: 'mr-2 btn btn-sm btn-default s-12 pl-1' do
+							i.fas.fa-chevron-left.s-12.mr-2
+							span Volver
+					.col-md-6.text-right
+						= link_to edit_crm_quote_path(@quote), class: 'btn btn-xs btn-success mr-3' do
+							i.fas.fa-edit.s-12.mr-1
+							span Editar
+						= link_to crm_quote_print_path(@quote, format: :pdf), target: "_blank", class: "btn btn-xs btn-danger mr-1" do
+							i.fas.fa-file-pdf.s-12.mr-1
+							span Exportar PDF
+						= link_to crm_quote_path(@quote, format: "xlsx"), class: "btn btn-xs btn-success" do
+							i.fas.fa-file-excel.s-12.mr-1
+							span Exportar EXCEL
+						ul.dropdown-menu.border-0.shadow.py-0.m-w-7rm aria-labelledby="dropdownSubMenu1" 
+							li
+								= link_to 'Remisión', crm_quote_print_path(@quote, format: :pdf), target: "_blank", class: 'dropdown-item s-12 text-left px-2'
+		.card.card-body.s-14.p-3
+			.row.mt-2
+				.col-md-12.text-right
+					h5.bold.ml-3.mb-0 = raw "COTIZACIÓN: #<span class='text-underline'>#{@quote.quote_folio}</span>"
+					p.my-0.mt-3 = "Fecha de emisión: #{@quote.issue_at.strftime("%-d %bio %Y")}"
+					p.my-0 = "Vigencia: #{@quote.expirated_days} Dias"
+					p.my-0 = "Fecha de vigencia: #{@quote.expirated_at.strftime("%-d %bio %Y")}"
+					p.mt-2.mb-0.bold = "Remitente: #{@quote.user.full_name}"
+		.card.card-body.s-14.p-3.mt-1
+			.row
+				.col-12
+					h6.bold.mb-0 = "CLIENTE: #{@quote.client.name.upcase}"
+					h6.bold.mb-0 = "RFC: #{@quote.client.rfc}".upcase
+					p.mb-0.mt-2 = raw "<b>Telefono: </b> #{@quote.client.phone}"
+					p.mb-0 = raw "<b>Direccion: </b> #{@quote.client.address}"
+					p.my-0 = "#{@quote.client.state.name.upcase}, #{@quote.client.country.name.upcase}"
+			- if @quote.delivery_address.present? 
+				.row.my-3
+					.col-12
+						h6.s-12.bold.mb-0 DATOS DE ENVIO
+						label.mt-1 
+							span Direccion de envio: 
+							span = @quote.delivery_address.full_address
+
+			.row.mt-4
+				.col-12
+					table.table.table-sm.table-bordered
+						thead.thead-dark
+							tr
+								th DESCRIPCIÓN DE PRODUCTO
+								th CANTIDAD
+								th P. UNITARIO
+								th TOTAL
+						tbody
+							- neto = 0 
+							- @quote.shipments_products.each do |sp|
+								- neto += (sp.quantity * sp.price)
+								tr
+									td = sp.product.name
+									td.text-center = sp.quantity
+									td.text-center = raw "$#{sp.price} <small>#{ @quote.currency.upcase }</small>"
+									td 
+										b = raw "$#{sp.quantity * sp.price} <small>#{ @quote.currency.upcase }</small>"
+			.row
+				.col-9
+				.col-3
+					table.table.table-sm.table-bordered.s-13
+						tbobdy
+							tr
+								td.text-right 
+									span NETO
+								td
+									span = raw "$#{neto} <small>#{ @quote.currency.upcase }</small>"
+							tr
+								td.text-right 
+									span.text-danger DESCUENTO
+								td
+									span.text-danger = "#{@quote.discount} %"
+							tr
+								td.text-right 
+									b SUB TOTAL
+								td
+									- discount = (@quote.subtotal / 100) * @quote.discount
+									- sub_total = @quote.subtotal - discount
+									b = raw "$#{sub_total} <small>#{ @quote.currency.upcase }</small>"
+							tr
+								td.text-right 
+									span IVA
+								td
+									span = "#{@quote.iva}%"
+							tr.s-14
+								td.text-right 
+									b TOTAL
+								td
+									- iva_value = (sub_total / 100) * @quote.iva
+									- total = sub_total + iva_value
+									b = raw "$#{total} <small>#{ @quote.currency.upcase }</small>"
+
+		.card.card-body.s-14.p-3.mt-1
+			.row.mt-1
+				.col-12
+					label.my-0 Comentarios:
+					p.my-0 = raw @quote.description

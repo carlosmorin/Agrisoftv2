@@ -1,0 +1,96 @@
+section.content-header.pb-0
+	.container-fluid
+		.row.mb-2
+			.col-sm-12.text-left.pr-2.s-12
+				= render_breadcrumbs :separator => ' / '
+			.col-sm-12
+				h5 Control de Ventas
+section.content
+	.container-fluid
+		.row
+			.col-lg-12
+				= render "shared/alerts"
+		.row
+			.col-md-12
+				.card
+					.card-header.p-2.pb-1.bg-light-gray
+						.row
+							.col-md-10.col-sm-12
+								= form_tag(commercial_sales_path, method: "GET", data: { controller: "select" }) do
+									- value = params[:q].present? ? params[:q] : ''
+									.form-row.align-items-center
+										.col-4
+											label.s-12.mb-0 Buscar por:
+											= text_field_tag(:q, value, class: 'form-control form-control-sm', placeholder: 'Folios, N° bultos')
+										.col-4
+											label.s-12.mb-0 Cliente
+											= select_tag :c, options_for_select(Client.all.pluck(:name, :id), selected: params[:c]), include_blank: 'Todos', class: 's-12 slim-select'
+										.col-2.my-1
+											button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"  
+												span.mr-2.s-12 Filtrar
+												svg.svg-inline--fa.fa-filter.fa-w-16.h-10 aria-hidden="true" data-icon="filter" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+													path d=("M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z") fill="currentColor"
+					.card-body.table-responsive.p-0
+						table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
+							thead
+								tr.bg-light-gray
+									th Remisionista
+									th Cliente
+									th.text-center Folio de flete
+									th.text-center Folio de embarque
+									th.text-center Folio de cliente
+									th.text-center N° bultos
+									th.text-center Kg
+									th.text-center Fecha de envio
+									th.text-center colspan="2" style=("width: 12%") Acciónes
+							tbody#tbody.s-13
+								- if @sales.empty?
+									tr
+										td.text-center colspan="9"
+											= link_to 'Nuevo registro', new_shipment_path, class: "s-12"
+								- else
+									- @sales.each do |sale|
+										tr
+											td = sale.company.name.upcase
+											td = sale.client.name.upcase
+											td.text-center = sale.freight.folio.present? ? sale.freight.folio.upcase : '--'
+											td.text-center = sale.folio.present? ? sale.folio.upcase : '--'
+											td.text-center = sale.client_folio.present? ? sale.client_folio.upcase : '--' 
+											td.text-center = sale.n_products
+											td.text-center.s-12 = sale.created_at.strftime("%m/%d/%Y  %I:%M %p")
+											td.text-center = raw set_status sale.status
+											td.text-center
+												.btn-group
+													= link_to shipment_path(sale), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+														svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+															path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+															circle cx="12" cy="12" r="3"
+													= link_to edit_shipment_path(sale), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+														svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+															path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+															path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+													.btn-group
+														button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
+														.dropdown-menu.py-0 style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px), 38px, 0px);") x-placement="top-start" 
+															= link_to shipment_print_path(sale, format: :pdf), target: "_blank", class: 'dropdown-item s-12'
+																svg.svg-inline--fa.fa-file-pdf.fa-w-12.h-12.mr-2 aria-hidden="true" data-icon="file-pdf" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
+																	path d=("M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z") fill="currentColor" 
+																span Remision
+															= link_to shipment_print_responsive_path(sale, format: :pdf), target: "_blank", class: 'dropdown-item s-12'
+																svg.svg-inline--fa.fa-file-pdf.fa-w-12.h-12.mr-2 aria-hidden="true" data-icon="file-pdf" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
+																	path d=("M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z") fill="currentColor" 
+																span Responsiva
+								tfoot
+									tr
+										th.pl-3 colspan="5" 
+											i.text-lght.f-normal = raw "Total: <b>#{@all_sales.size}</b> embarques"
+										th.text-center
+											- total_package = 0
+											- @all_sales.map{ |sale| total_package += sale.n_products.to_i }
+											p = total_package
+										th colspan="3"
+					.card-footer.p-2.pb-1.bg-light-gray
+						.row
+							.col-lg-12.d-flex.justify-content-center
+								.digg_pagination.mt-2.s-14
+									= will_paginate @sales, :container => false, :page_links => true
