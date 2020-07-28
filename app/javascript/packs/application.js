@@ -12,7 +12,6 @@ require('jquery')
 import "bootstrap"
 import "../stylesheets/application"
 import 'cocoon-js'
-import swal from 'sweetalert';
 
 // Fontaweomse
 import '@fortawesome/fontawesome-free/js/fontawesome'
