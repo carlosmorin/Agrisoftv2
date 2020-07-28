@@ -4,7 +4,6 @@ module Logistic
     add_breadcrumb "Logistica", :logistic_root_path
     add_breadcrumb "Fletes", :logistic_freights_path
 
-
     def index
       @freights = Freight.paginate(page: params[:page], per_page: 25)
       
@@ -16,6 +15,7 @@ module Logistic
       add_breadcrumb @freight.carrier.name.upcase, logistic_carrier_path(@freight.carrier ,tab: :general) if params[:carrier_id].present?
       add_breadcrumb "#{@freight.folio}", logistic_carrier_freight_path(@freight.carrier, @freight)
       add_breadcrumb "Editar"
+      
       if @freight.freights_taxes.empty?
         @freight.freights_taxes.build
       end
