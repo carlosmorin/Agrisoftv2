@@ -56,7 +56,6 @@ module Logistic
         flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Conductor actualizado correctamente"
         redirect_to  logistic_carrier_driver_path(@driver.carrier, @driver) 
       else
-        breadrcumbs_edit
         render template: 'logistic/drivers/new'
       end
     end
@@ -66,10 +65,6 @@ module Logistic
     end
 
     private
-
-    def set_breadrcumbs
-      build_breadrcumbs(action_name)
-    end
 
     def search
       q = Regexp.escape(params[:q])
