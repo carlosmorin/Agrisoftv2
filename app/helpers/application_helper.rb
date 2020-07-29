@@ -3,6 +3,13 @@ module ApplicationHelper
     controller.class.name.split("::").first=="Config"
   end
 
+  def current_nav_item?(path, item)
+  	current_nav_items = send("#{item}_menu_items")
+  	current_nav_items.each do |nav_item|
+  		return 'menu-open' if path.include?(nav_item)
+  	end
+  end
+  
   def current_link?(path)
 	  "active_menu_item" if request.url.include?(path)
 	end
@@ -21,5 +28,14 @@ module ApplicationHelper
 		when 'canceled'
 		  "<span class='badge bg-danger btn btn-sm'> Cancelada </span>"
 		end
+	end
+
+
+	def packing_menu_items
+		["shipments"]
+	end
+
+	def logistic_menu_items
+		["logistic"]
 	end
 end

@@ -19,14 +19,6 @@ span.error ~ input.form-control{
 	overflow: hidden;
 	margin: 0 auto; 
 }
-.costum-action-link::after{
-	color: transparent;
-}
-a.costum-action-link:hover{
-	background: #d5d5d5 !important;
-}
-
-
 /////TEXT STYLES
 .text-underline{
 	text-decoration: underline; 
@@ -45,7 +37,9 @@ a.costum-action-link:hover{
 
 ///Font weight
 .bold{ font-weight: bold !important; }
-.active_menu_item{ font-weight: bold !important; }
+.active_menu_item{ 
+	color: #fff !important;
+}
 .f-normal{ font-weight: normal !important; }
 //Color
 .c-red{ color: #881822; }
@@ -55,7 +49,21 @@ a.costum-action-link:hover{
 .bg-light-red{ background: #ffeaea !important; }
 //
 //
-a.nav-link.active{font-weight: bold !important;}
+li.has-treeview > a.nav-link:focus{
+	background-color: transparent !important;
+}
+
+li.has-treeview > a.nav-link:hover{
+	background-color: transparent !important;
+	font-weight: 500 !important;
+}
+a.nav-link:hover{
+	background-color: #182025 !important;	
+}
+a.nav-link.active{
+	font-weight: bold !important;
+	color: #fff;
+	}
 a.nav-link.active{color: blue !important;}
 
 ///Icons size
@@ -247,4 +255,7 @@ li.line-divider > hr{
 }
 .bg_red{
   background: red !important;
+}
+.sidebar-dark .nav-treeview > .nav-item > .nav-link{
+	color: #9c9c9c !important;
 }

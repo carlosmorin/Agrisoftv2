@@ -31,8 +31,11 @@
     resources :units
     resources :drivers
     resources :boxes
-    resources :box_types
     resources :unit_brands
+    namespace :config do
+      root to: "main#index"
+      resources :box_types
+    end
   end
   
   namespace :commercial do
