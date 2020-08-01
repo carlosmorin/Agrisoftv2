@@ -1,0 +1,20 @@
+section.content-header.pb-0
+  .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "Nuevo proveedor".upcase 
+section.content
+  .container
+    = render "shared/form_info"
+    .row
+      .col-12
+        .card.card-primary.card-outline.card-outline-tabs
+          .card-header.p-0.border-bottom-0
+            = render 'tabs'
+          .card-body
+            #custom-tabs-four-tabContent.tab-content
+              #custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
+                = render 'form'

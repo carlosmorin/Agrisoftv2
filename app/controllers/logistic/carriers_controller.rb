@@ -1,10 +1,11 @@
 module Logistic
   class CarriersController < ApplicationController
+    include Breadcrumbs::Logistic::Carriers
+
     before_action :set_object, 
       only: %i[show edit update destroy get_drivers get_units get_boxes]
     before_action :set_catalogs, only: %i[edit update]
-    add_breadcrumb "Logistica", :logistic_root_path
-    add_breadcrumb "Transportistas", :logistic_carriers_path
+    before_action :build_breadcrumbs, only: %i[new edit update create]
     
     def index
       @carriers = Carrier.paginate(page: params[:page], per_page: 16)
@@ -12,13 +13,11 @@ module Logistic
     end
 
     def new
-      add_breadcrumb "Nuevo"
       @carrier = Carrier.new
       @countries = Country.new
     end
 
     def edit
-      add_breadcrumb "Editar"
     end
 
     def show

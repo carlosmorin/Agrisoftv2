@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_09_175501) do
+ActiveRecord::Schema.define(version: 2020_07_31_210536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -341,6 +341,24 @@ ActiveRecord::Schema.define(version: 2020_07_09_175501) do
     t.index ["size_id"], name: "index_products_on_size_id"
   end
 
+  create_table "provider_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "providers", force: :cascade do |t|
+    t.string "name"
+    t.string "business_name"
+    t.string "rfc"
+    t.string "email"
+    t.string "phone"
+    t.integer "status"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "qualities", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -435,6 +453,16 @@ ActiveRecord::Schema.define(version: 2020_07_09_175501) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "country_id"
     t.index ["country_id"], name: "index_states_on_country_id"
+  end
+
+  create_table "subcategories", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "categorytable_type", null: false
+    t.bigint "categorytable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["categorytable_type", "categorytable_id"], name: "index_subcategories_on_categorytable_type_and_categorytable_id"
   end
 
   create_table "taxes", force: :cascade do |t|

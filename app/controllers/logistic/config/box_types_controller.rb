@@ -1,31 +1,28 @@
 module Logistic
   module Config
     class BoxTypesController < ApplicationController
+      include Breadcrumbs::Logistic::Config::BoxTypes
       before_action :set_object, only: %i[edit update destroy]
-  		add_breadcrumb "Logistica", :logistic_root_path
-      add_breadcrumb "Configuración", :logistic_config_root_path
-      add_breadcrumb "Tipos de Cajas", :logistic_config_box_types_path
+      before_action :build_breadcrumbs, only: %i[new edit update create]
 
       def index
-        @boxes = BoxType.paginate(page: params[:page], per_page: 16)
+        @boxes = BoxType.paginate(page: params[:page], per_page: 25)
 
         search if params[:q].present?
       end
 
     	def new
-    		add_breadcrumb "Nueva"
   			@box = BoxType.new
   		end
 
   		def edit
-  			add_breadcrumb "Editar"
-  		end
+    	end
 
   	  def create
   	    @box = BoxType.new(box_types_params)
         if @box.save
-        	flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Tipo de Caja creada correctamente"
-          redirect_to logistic_box_types_path
+        	flash[:notice] = "<i class='fa fa-check-circle mr-1 s-12'></i> Nuevo tipo de caja creada correctamente"
+          redirect_to logistic_config_box_types_path
         else
           render :new
         end
@@ -33,8 +30,8 @@ module Logistic
 
   	  def update
       	if @box.update(box_types_params)
-        	flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Tipo Caja actualizada correctamente"
-        	redirect_to logistic_box_types_url
+        	flash[:notice] = "<i class='fa fa-check-circle mr-1 s-12'></i> Tipo Caja actualizada correctamente"
+        	redirect_to logistic_config_box_types_url
       	else
         	render :edit
       	end

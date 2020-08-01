@@ -6,7 +6,7 @@ module Crm
 	    add_breadcrumb "CRM", :crm_root_url
 		end
 
-		def build(action_name)
+		def build_breadcrumbs(action_name)
 			case action_name
 			when "new", "create"
 				breadrcumbs_new

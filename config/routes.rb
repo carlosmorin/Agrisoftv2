@@ -31,17 +31,23 @@
     resources :units
     resources :drivers
     resources :boxes
-    resources :unit_brands
     namespace :config do
       root to: "main#index"
       resources :box_types
+      resources :unit_brands
     end
   end
   
   namespace :commercial do
     root to: "main#index" #Comercial dashboard
-    resources :sales  
+    resources :sales
+    resources :providers
+    namespace :config do
+      root to: "main#index"
+      resources :provider_categories
+    end
   end
+
   namespace :crm do
     root to: "main#index" #CRM dashboard
     resources :clients do
@@ -58,7 +64,7 @@
     end
     resources :sales_orders
   end
-
+  
   namespace :directories do
     resources :carriers do
       resources :drivers

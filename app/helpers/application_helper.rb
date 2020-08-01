@@ -11,7 +11,7 @@ module ApplicationHelper
   end
   
   def current_link?(path)
-	  "active_menu_item" if request.url.include?(path)
+	  "active_menu_item bold" if request.url.include?(path)
 	end
 
 	def set_status(status)
@@ -37,5 +37,13 @@ module ApplicationHelper
 
 	def logistic_menu_items
 		["logistic"]
+	end
+
+	def config_box_types_menu_items
+		["config", "box_types"]
+	end
+
+	def commercial_menu_items
+		["commercial"]
 	end
 end

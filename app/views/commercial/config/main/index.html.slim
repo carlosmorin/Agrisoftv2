@@ -1,0 +1,27 @@
+section.content-header.pb-0
+  .container-fluid
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+section.content
+	.row
+		.col-12.col-sm-6.col-md-3
+		  .info-box
+		    span.info-box-icon.bg-info.elevation-1
+		      i.fas.fa-truck-loading
+		    .info-box-content
+		      span.info-box-text Tipos de cajas
+		      = link_to logistic_config_box_types_path, class: "btn btn-xs btn-primary mt-2" do
+			      span.info-box-number
+			        | Gestionar
+			        small.ml-2.fas.fa-arrow-right
+		.col-12.col-sm-6.col-md-3
+		  .info-box
+		    span.info-box-icon.bg-info.elevation-1
+		      i.fas.fa-truck-moving
+		    .info-box-content
+		      span.info-box-text Marcas de unidades
+		      = link_to logistic_config_unit_brands_url, class: "btn btn-xs btn-primary mt-2" do
+			      span.info-box-number
+			        | Gestionar 
+			        small.ml-2.fas.fa-arrow-right

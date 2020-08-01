@@ -33,21 +33,18 @@ export default class extends Controller {
 
 		$("[data-behavior='delete']").click( function (e) {
    	 	e.preventDefault()
-   	 	var column =  $(this).parent().parent();
+   	 	var column =  $(this).parent().parent().parent();
    	 	var url = $(this).attr("href");
    	 	var title = "<h4 class='s-18 bold pb-0 c-blue'>Esta seguro?</h4>";
    	 	var desc = "<p4 class='s-14'>Los cambios no podrán ser revertidos!</p>";
-	   	swalWithBootstrapButtons.fire({
-				title: title,
-				html:  desc,
-				icon: false,
-				showCancelButton: true,
-				width: '300px',
-				animation: false,
-				confirmButtonText: 'Confirmar!',
-				cancelButtonText: 'Cancelar',
-			}).then((result) => {
-				if (result.value) {
+   	 	swal({
+				title: "Requiere confirmación!",
+				text: `Deseas eliminar este registro?`,
+				buttons: true,
+				buttons: ['Cancelar', 'Aceptar']
+			})
+			.then((willDelete) => {
+				if (willDelete) {
 					axios({
 						method: 'DELETE',
 						dataType: "JSON",
@@ -60,8 +57,9 @@ export default class extends Controller {
 						toastr.options.closeButton = true;
 						toastr.success('Regisitro eliminado con exito', {timeOut: 2000})
 					});
-			  }
-			})
+				} 
+			});
+
 		});
 
 	}
