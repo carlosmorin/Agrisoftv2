@@ -17,6 +17,7 @@
     resources :delivery_addresses
     resources :client_brands
     resources :products
+    resources :currencies
   end
 
   namespace :logistic do
