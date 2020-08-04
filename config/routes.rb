@@ -41,10 +41,14 @@
   namespace :commercial do
     root to: "main#index" #Comercial dashboard
     resources :sales
-    resources :providers
+    resources :providers do
+      resources :addresses
+    end
     namespace :config do
       root to: "main#index"
-      resources :provider_categories
+      resources :provider_categories do
+        get '/get_subcategories', to: 'provider_categories#get_subcategories'
+      end
     end
   end
 

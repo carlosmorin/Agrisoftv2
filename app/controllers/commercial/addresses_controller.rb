@@ -1,19 +1,17 @@
 module Commercial
-  class ProvidersController < ApplicationController
-  	before_action :set_object, only: %i[show edit update destroy]
+  class AddressesController < ApplicationController
+		before_action :set_object, only: %i[show edit update destroy]
     
-    add_breadcrumb "Comercial", :commercial_root_path
-  	add_breadcrumb "Proveedores", :commercial_providers_path
 
   	def index
-    	@providers = Provider.paginate(page: params[:page], per_page: 16)
+    	@providers = Address.paginate(page: params[:page], per_page: 25)
 
       search if params[:q].present?
     end
 
     def new
-      add_breadcrumb "Nuevo proveedor"
-    	@provider = Provider.new
+      add_breadcrumb "Nueva direccion"
+    	@address = Address.new
     end
 
     def edit

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_31_210536) do
+ActiveRecord::Schema.define(version: 2020_08_03_143551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,28 @@ ActiveRecord::Schema.define(version: 2020_07_31_210536) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_activities_on_user_id"
+  end
+
+  create_table "addresses", force: :cascade do |t|
+    t.text "name"
+    t.string "street"
+    t.string "outdoor_number"
+    t.string "interior_number"
+    t.string "cp"
+    t.string "references"
+    t.string "neighborhood"
+    t.string "phone"
+    t.bigint "country_id", null: false
+    t.bigint "state_id", null: false
+    t.text "comments"
+    t.integer "status"
+    t.string "addressable_type", null: false
+    t.bigint "addressable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
+    t.index ["country_id"], name: "index_addresses_on_country_id"
+    t.index ["state_id"], name: "index_addresses_on_state_id"
   end
 
   create_table "box_types", force: :cascade do |t|
@@ -357,6 +379,10 @@ ActiveRecord::Schema.define(version: 2020_07_31_210536) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "provider_category_id", null: false
+    t.bigint "subcategory_id", null: false
+    t.index ["provider_category_id"], name: "index_providers_on_provider_category_id"
+    t.index ["subcategory_id"], name: "index_providers_on_subcategory_id"
   end
 
   create_table "qualities", force: :cascade do |t|
@@ -517,6 +543,8 @@ ActiveRecord::Schema.define(version: 2020_07_31_210536) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
+  add_foreign_key "addresses", "countries"
+  add_foreign_key "addresses", "states"
   add_foreign_key "boxes", "box_types"
   add_foreign_key "boxes", "carriers"
   add_foreign_key "carriers", "countries"
@@ -557,6 +585,8 @@ ActiveRecord::Schema.define(version: 2020_07_31_210536) do
   add_foreign_key "products", "packages"
   add_foreign_key "products", "qualities"
   add_foreign_key "products", "sizes"
+  add_foreign_key "providers", "provider_categories"
+  add_foreign_key "providers", "subcategories"
   add_foreign_key "quotes", "clients"
   add_foreign_key "quotes", "companies"
   add_foreign_key "quotes", "contacts"

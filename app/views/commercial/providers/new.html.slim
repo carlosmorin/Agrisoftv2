@@ -17,4 +17,6 @@ section.content
           .card-body
             #custom-tabs-four-tabContent.tab-content
               #custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
-                = render 'form'
+                - categories = ProviderCategory.all
+                - subcategories = @provider.provider_category.nil? ? [] : @provider.provider_category.subcategories 
+                = render 'form', categories: categories, subcategories: subcategories

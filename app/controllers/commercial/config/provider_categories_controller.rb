@@ -1,7 +1,7 @@
 module Commercial
   module Config
     class ProviderCategoriesController < ApplicationController
-    	before_action :set_object, only: %i[edit update destroy]
+    	before_action :set_object, only: %i[edit update destroy get_subcategories]
       
       add_breadcrumb "Comercial", :commercial_root_path
     	add_breadcrumb "Proveedores", :commercial_providers_path
@@ -51,6 +51,10 @@ module Commercial
         @category.destroy
       end
 
+      def get_subcategories
+        render json: @category.subcategories 
+      end
+
     	private
 
       def search
@@ -65,7 +69,8 @@ module Commercial
       end
 
       def set_object
-        @category = ProviderCategory.find(params[:id])
+        id = params[:id].present? ? params[:id] : params[:provider_category_id]
+        @category = ProviderCategory.find(id)
       end
     end
   end

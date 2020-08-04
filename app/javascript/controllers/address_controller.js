@@ -4,7 +4,7 @@ import SlimSelect from 'slim-select'
 const axios = require('axios');
 
 export default class extends Controller {
-  static targets = [ "countryId", "stateId", "municipalityId"]
+  static targets = [ "countryId", "stateId", "municipalityId", "countryIds"]
 
 	initialize(){
 		const ids = [...document.getElementsByTagName('select')].map(el => el.id);

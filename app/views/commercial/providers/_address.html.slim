@@ -1,0 +1,49 @@
+= simple_form_for([:commercial, @provider], data: { controller: 'masks address' }) do |f|
+	input type="hidden" name="next_tab" value="addresses"/
+
+	- @provider.addresses.new if @provider.addresses.empty? 
+	= f.fields_for :addresses do |ff|
+		= ff.input :name, as: :string, autofocus: true, label: false, input_html: { value: :fiscal, class: "d-none" }
+		= ff.input :status, as: :string, autofocus: true, label: false, input_html: { value: :fiscal, class: "d-none" }
+		.row
+			.col-6
+				.form-group  
+					.row
+						.col-11
+							= ff.input :country_id, collection: Country.all, autofocus: true, input_html: { class: 's-12', data: { action: "change->address#filter_by_country", target: "address.countryId" } }
+					.row.mt-2
+						.col-11
+								- states = ff.object.country.present? ? ff.object.country.states : []
+								= ff.input :state_id, collection: states, autofocus: true, iinput_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId" } }
+					.row.mt-2
+						.col-11
+							= ff.input :neighborhood, as: :string, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+					.row.mt-2
+						.col-11
+							= ff.input :cp, as: :string, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+			.col-6
+				.form-group  
+					.row
+						.col-11
+							= ff.input :street, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+					.row.mt-2
+						.col-11
+							= ff.input :outdoor_number, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+					.row.mt-2
+						.col-11
+							= ff.input :interior_number, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+					.row.mt-2
+						.col-11
+							= ff.input :references, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+					.row.mt-2
+						.col-11
+							= ff.input :comments, autofocus: true, input_html: { class: 'form-control' }
+
+	.form-actions.text-right.pr-3.mt-3
+		= link_to edit_commercial_provider_path(@provider, tab: :general), class: 'btn btn-default btn-sm pl-1 mr-2' do
+			i.fas.fa-chevron-left.s-12.mx-2
+			span Volver
+		button.btn.btn-dark-blue.btn-sm.mr-2.pl-2 type="submit"
+			span Guardar
+			i.fas.fa-arrow-circle-right.mx-2
+

@@ -1,0 +1,26 @@
+section.content-header.pb-0
+  .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "Editar proveedor".upcase 
+section.content
+  .container
+    = render "shared/form_info"
+    .row
+      .col-12
+        .card.card-primary.card-outline.card-outline-tabs
+          .card-header.p-0.border-bottom-0
+            = render 'tabs'
+          .card-body
+            #custom-tabs-four-tabContent.tab-content
+              #custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
+                - if params[:tab] == "general"
+                  - categories = ProviderCategory.all
+                  - subcategories = @provider.provider_category.nil? ? [] : @provider.provider_category.subcategories 
+                  = render 'form', categories: categories, subcategories: subcategories
+                - if params[:tab] == "fiscal_address"
+                  = render 'address'
+                = render 'addresses' if params[:tab] == "addresses"

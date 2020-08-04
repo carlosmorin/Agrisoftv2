@@ -54,7 +54,12 @@ class ProvidersController < ApplicationController
   end
 
 	def provider_params
-    params.require(:provider).permit(:name, :business_name, :rfc, :email, :phone, :status, :comments, :logo)
+    params.require(:provider).permit(:name, :business_name, :rfc, :email, 
+      :phone, :status, :comments, :logo, 
+        addresses_attributes: [:id, :name, :street, :outdoor_number, 
+          :interior_number, :cp, :references, :locality, :neighborhood, 
+          :country_id, :state_id, :comments, :type, :_destroy]
+    )
   end
 
   def set_object

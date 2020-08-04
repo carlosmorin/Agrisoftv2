@@ -1,0 +1,33 @@
+.row
+	.col-12.text-left
+		= link_to new_commercial_provider_address_url(@provider), class: "btn btn-sm btn-primary" do
+			i.fas.fa-plus-circle.mr-2
+			span Nueva dirección
+.row.mt-2
+	.col-12
+		table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+		  thead
+		    tr.bg-light-gray
+		      th style=("width: 5%")  #
+		      th Nombre
+		      th Calle
+		      th Colonia
+		      th Ciudad
+		      th País
+		      th Referencias
+		      th.text-center colspan="2" style=("width: 12%") Acciónes
+		  tbody#tbody.s-13
+		    - if @provider.addresses.sucursal.empty?
+		      tr
+		        td.text-center colspan="8"
+		          = link_to 'Nuevo registro', new_commercial_provider_address_url(@provider), class: "s-12"
+		    - else 
+					- @provider.addresses.each do |address|
+						tr
+							td.text-center
+							td.text-center
+							td.text-center
+							td.text-center
+							td.text-center
+							td.text-center
+

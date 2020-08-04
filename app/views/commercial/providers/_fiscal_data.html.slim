@@ -1,0 +1,67 @@
+section#general.s-14
+	.row
+		.col-md-6
+			.row.mt-2
+				.col-lg-4
+					label.mb-1 Razón social:
+				.col-lg-8.text-left
+					p.mb-1 = @provider.business_name.upcase
+			.row.mt-2
+				.col-lg-4
+					label.mb-1 RFC:
+				.col-lg-8.text-left
+					p.mb-1 = @provider.rfc.present? ? @provider.rfc.upcase : "--"
+			.row.mt-2
+				.col-lg-4
+					label.mb-1 Correo electronico:
+				.col-lg-8.text-left
+					p.mb-1 = @provider.email.upcase
+			.row.mt-2
+				.col-lg-4
+					label.mb-1 Teléfono:
+				.col-lg-8.text-left
+					p.mb-1 = @provider.phone.upcase
+		.col-md-6
+			.row.mt-2
+				.col-lg-10
+					h5.mb-1 
+						span.mr-2 Dirección fiscal:
+						button.btn.btn-sm.text-primary
+							i.fas.fa-edit
+				
+			- address = @provider.addresses.fiscal.first
+			.row
+				.col-lg-4
+					label.mb-1 Calle:
+				.col-lg-8.text-left
+					p.mb-1 = address.street.upcase
+			.row
+				.col-lg-4
+					label.mb-1 Codigo Postal:
+				.col-lg-8.text-left
+					p.mb-1 = address.cp.upcase
+			.row
+				.col-lg-4
+					label.mb-1 Num. externo:
+				.col-lg-8.text-left
+					p.mb-1 = address.outdoor_number.upcase
+			.row
+				.col-lg-4
+					label.mb-1 Num interno:
+				.col-lg-8.text-left
+					p.mb-1 = address.interior_number.upcase
+			.row
+				.col-lg-4
+					label.mb-1 	Colonia:
+				.col-lg-8.text-left
+					p.mb-1 = address.neighborhood.present? ? address.neighborhood.upcase : "--"
+			.row
+				.col-lg-4
+					label.mb-1 	Estado:
+				.col-lg-8.text-left
+					p.mb-1 = address.state.present? ? address.state.name.upcase : "--"
+			.row
+				.col-lg-4
+					label.mb-1 	País:
+				.col-lg-8.text-left
+					p.mb-1 = address.country.present? ? address.country.name.upcase : "--"
