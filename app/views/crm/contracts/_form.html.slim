@@ -1,0 +1,63 @@
+- url = @contract.new_record? ? crm_client_contracts_path(params[:client_id]) : crm_client_contract_path(params[:client_id])
+= simple_form_for([:crm, @contract], url: url, data: { controller: "masks" }, data: { controller: "datepickers" }) do |f|
+	= f.input :client_id, as: :hidden, label: false, input_html: { class: 's-12 form-control form-control-sm', value: params[:client_id] }
+
+		.row.mt-4
+			.col-md-6
+				.row
+					.col-md-3
+						= f.label :name, class: "bold s-12"
+					.col-md-9
+						= f.input :name, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+			.col-md-6
+				.row
+					.col-md-3
+						= f.label :started_at, class: "bold s-12"
+					.col-md-9
+						.input-group.date.d-block data-provide="datepicker" 
+							= f.input :started_at, as: :string, label: false, input_html: { class: "mr-2 form-control form-control-sm picker-range " }
+							.input-group-addon
+								span.glyphicon.glyphicon-th
+		.row.mt-4
+			.col-md-6
+				.row
+					.col-md-3
+						= f.label :client_id, class: "bold s-12"
+					.col-md-9
+						input.s-12.form-control.form-control-sm type="text" disabled="disabled" value="#{@contract.client.name}"
+
+			.col-lg-6
+				.row
+					.col-md-3
+						= f.label :delivery_address_id, class: "bold s-12"
+					.col-md-9
+						= f.input :delivery_address_id, collection: @contract.client.delivery_addresses, label: false, input_html: { class: 's-12 form-control form-control-sm', value: params[:client_id] }
+				
+		section.mt-4
+			.row.mt-2
+				.col-12.table.table-sm.mt-2
+					.row.bold.bg-light-gray.p-1.mb-2
+						.col-lg-5
+							span.s-14 DESCRIPCIÓN DE PRODUCTO  
+						.col-lg-3
+							span.s-14 CANTIDAD
+	
+						.col-lg-4
+							span.s-14 P. UNITARIO
+						.col-lg-1
+					.row
+	hr
+	.form-actions.text-center
+		button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
+			svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+			  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
+			  polyline points=("17 21 17 13 7 13 7 21") 
+			  polyline points=("7 3 7 8 15 8") 
+			span Guardar
+
+		= link_to :back, class: 'btn btn-default btn-sm pl-1' do
+			svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+			  rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
+			  line x1="9" x2="15" y1="9" y2="15" 
+			  line x1="15" x2="9" y1="9" y2="15" 
+			span Cancelar

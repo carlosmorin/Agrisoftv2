@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_03_143551) do
+ActiveRecord::Schema.define(version: 2020_08_04_175041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,21 @@ ActiveRecord::Schema.define(version: 2020_08_03_143551) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.string "name"
+    t.bigint "client_id", null: false
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.bigint "delivery_address_id", null: false
+    t.bigint "user_id", null: false
+    t.text "comments"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_contracts_on_client_id"
+    t.index ["delivery_address_id"], name: "index_contracts_on_delivery_address_id"
+    t.index ["user_id"], name: "index_contracts_on_user_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -557,6 +572,9 @@ ActiveRecord::Schema.define(version: 2020_08_03_143551) do
   add_foreign_key "companies", "countries"
   add_foreign_key "companies", "municipalities"
   add_foreign_key "companies", "states"
+  add_foreign_key "contracts", "clients"
+  add_foreign_key "contracts", "delivery_addresses"
+  add_foreign_key "contracts", "users"
   add_foreign_key "crops_colors", "colors"
   add_foreign_key "crops_colors", "crops"
   add_foreign_key "crops_packages", "crops"

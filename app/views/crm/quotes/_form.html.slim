@@ -1,5 +1,5 @@
 - url = @quote.persisted? ? crm_quote_url : crm_quotes_url 
-= simple_form_for([:crm, @quote], url: url, data: { controller: "select quotes" }) do |f|
+= simple_form_for([:crm, @quote], url: url, data: { controller: "datepicker" }) do |f|
 	.card.card-body
 		.row
 			.col-6

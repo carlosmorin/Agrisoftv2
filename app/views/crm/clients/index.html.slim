@@ -41,7 +41,7 @@ section.content
                 - if @clients.empty?
                   tr
                     td.text-center colspan="9"
-                      = link_to 'Nuevo registro', new_client_path, class: "s-12"
+                      = link_to 'Nuevo registro', new_crm_client_path, class: "s-12"
                 - else
                   - @clients.each do |client|
                     tr
