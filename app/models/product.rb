@@ -13,6 +13,7 @@ class Product < ApplicationRecord
 
   has_many :shipments_products, inverse_of: :product
   has_many :shipments, through: :shipments_products
+  has_many :contracts_products, inverse_of: :product
 
   enum unit_meassure: { lbs: 0, kg: 1, granel: 2 }
 

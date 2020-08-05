@@ -259,3 +259,18 @@ li.line-divider > hr{
 .sidebar-dark .nav-treeview > .nav-item > .nav-link{
 	color: #9c9c9c !important;
 }
+.disabled-container{
+	position: relative;
+	overflow: hidden;
+}
+.disabled-container::before{
+	content: "";
+	z-index: 1;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,.2);
+
+}

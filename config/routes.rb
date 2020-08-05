@@ -58,11 +58,13 @@
     resources :clients do
       resources :contacts, except: [:index]
       resources :delivery_addresses, except: [:index]
-      resources :contracts, except: [:index]
+      resources :contracts, only: [:new, :edit, :show]
 
       get '/get_delivery_address', to: 'clients#get_delivery_address'
       get '/get_contacts', to: 'clients#get_contacts'
     end
+    resources :contracts, only: [:create, :update]
+
     resources :delivery_addresses, except: [:index]
     resources :contacts, except: [:index]
     resources :quotes do

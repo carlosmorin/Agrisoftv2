@@ -5,6 +5,7 @@ class CreateContracts < ActiveRecord::Migration[6.0]
       t.references :client, null: false, foreign_key: true
       t.datetime :started_at
       t.datetime :finished_at
+      t.boolean :all_products
       t.references :delivery_address, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
       t.text :comments

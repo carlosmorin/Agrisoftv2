@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_04_195343) do
+ActiveRecord::Schema.define(version: 2020_08_04_205338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(version: 2020_08_04_195343) do
     t.bigint "client_id", null: false
     t.datetime "started_at"
     t.datetime "finished_at"
+    t.boolean "all_products"
     t.bigint "delivery_address_id", null: false
     t.bigint "user_id", null: false
     t.text "comments"
@@ -205,6 +206,19 @@ ActiveRecord::Schema.define(version: 2020_08_04_195343) do
     t.index ["client_id"], name: "index_contracts_on_client_id"
     t.index ["delivery_address_id"], name: "index_contracts_on_delivery_address_id"
     t.index ["user_id"], name: "index_contracts_on_user_id"
+  end
+
+  create_table "contracts_products", force: :cascade do |t|
+    t.bigint "contract_id", null: false
+    t.bigint "product_id", null: false
+    t.bigint "currency_id", null: false
+    t.integer "quantity"
+    t.decimal "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contract_id"], name: "index_contracts_products_on_contract_id"
+    t.index ["currency_id"], name: "index_contracts_products_on_currency_id"
+    t.index ["product_id"], name: "index_contracts_products_on_product_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -583,6 +597,9 @@ ActiveRecord::Schema.define(version: 2020_08_04_195343) do
   add_foreign_key "contracts", "clients"
   add_foreign_key "contracts", "delivery_addresses"
   add_foreign_key "contracts", "users"
+  add_foreign_key "contracts_products", "contracts"
+  add_foreign_key "contracts_products", "currencies"
+  add_foreign_key "contracts_products", "products"
   add_foreign_key "crops_colors", "colors"
   add_foreign_key "crops_colors", "crops"
   add_foreign_key "crops_packages", "crops"
