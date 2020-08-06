@@ -2,8 +2,6 @@ import { Controller } from "stimulus"
 const Axios = require('axios');
 
 export default class extends Controller {
-  static targets = [ "output" ]
-
   initialize() {
     const API_URI = 'https://api.exchangeratesapi.io/latest'
     const BASE_CURRENCY = 'USD'

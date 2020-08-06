@@ -46,4 +46,8 @@ module ApplicationHelper
 	def commercial_menu_items
 		["commercial"]
 	end
+
+	def clients_menu_items
+		["clients"]
+	end
 end

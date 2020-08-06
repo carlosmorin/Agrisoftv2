@@ -1,0 +1,2 @@
+class UnitTime < ApplicationRecord
+end

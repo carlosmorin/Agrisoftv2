@@ -1,0 +1,108 @@
+section.content-header.pb-0
+  .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "Detalle de contrato".upcase
+section.content
+  .container
+    .row
+      .col-lg-12
+        = render "shared/alerts"
+    .card.mb-2
+      .card-header.p-2.pb-1
+        .row
+          .col-md-8
+            = link_to crm_client_path(id: @contract.client_id, tab: :contracts), class: 'btn s-12 btn-default btn-sm' do
+              i.fas.fa-chevron-left.s-12.mr-2
+              span Volver
+          .col-md-4.text-right
+            = link_to edit_crm_client_contract_path(client_id: @contract.client_id, id: @contract.id), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
+              i.fas.fa-edit.s-12.mr-2
+              span Editar
+    .card.card-body.s-14.p-3.mt-4
+      .row
+        .col-12
+          h5.s-16
+            i.fas.fa-handshake.mr-2
+            span = "Información general del contrato / acuerdo comercial".upcase
+      .row.mt-2
+        .col-md-2
+          label.mb-1 Nombre:
+        .col-lg-8.text-left
+          p.mb-1.bold = @contract.name.upcase
+      .row
+        .col-md-2
+          label.mb-1 Cliente:
+        .col-lg-8.text-left
+          p.mb-1.bold = @contract.client.name.upcase
+      .row
+        .col-md-2
+          label.mb-1 Duración:
+        .col-lg-8.text-left
+          - if @contract.undefined?
+            p.mb-0.bold = "#{@contract.created_at.strftime('%m/%d/%Y')} - Indefenido"
+          - else
+            p.mb-0.bold = "#{@contract.started_at.strftime('%m/%d/%Y')} - #{@contract.finished_at.strftime('%m/%d/%Y')}"
+      .row
+        .col-md-2
+          label.mb-1 Status:
+        .col-lg-8.text-left
+          - if @contract.active?
+            span.badge.bg-success.s-12 Vigente
+          - else
+            span.badge.bg-danger.s-12 Vencido
+      .row
+        .col-md-2
+          label.mb-1 Dirección de entrega:
+        .col-lg-8.text-left
+          p.mb-1.bold = @contract.delivery_address.full_address.upcase
+    .card.card-body.mt-1
+      .row
+        .col-12
+          h5.s-16
+            i.fas.fa-boxes.mr-2
+            span = "Información de productos".upcase
+      - if @contract.all_products?
+        .row.mt-3
+          .col-12.pl-3
+            h6.s-16.bold.text-primary
+							i.fas.fa-check-square.mr-2 
+							span Todos los productos
+      - else
+        .row
+          .col-12
+            section.products.mt-4
+              table.table.table-sm.table-bordered.mb-1
+                thead.thead-dark
+                  tr
+                    th.s-12 width="60%" scope="col" DESCRIPCIÓN DE PRODUCTO
+                    th.s-12.text-center scope="col" CANTIDAD
+                    th.s-12.text-center scope="col" PRECIO
+                    th.s-12.text-center scope="col" TOTAL
+                tbody
+                  - total_quantity = 0
+                  - total_price = 0
+                  - @contract.contracts_products.each do |object|
+                    - total_quantity += object.quantity.nil? ? 0 : object.quantity
+                    - subtotal_price = total_quantity * object.price
+                    - total_price += subtotal_price
+                    tr
+                      td.s-14 = object.product.name.upcase
+                      td.s-14.text-center = object.quantity
+                      td.s-14.text-center = "$ #{object.price}"
+                      td.s-14.text-center
+                        p.my-0.bold.s-14 = "$#{number_to_currency(subtotal_price, precision: 0, delimiter: ",", unit: object.currency.code.upcase)}"
+                tfoot
+                  tr
+                    th.text-right.pr-2 Totales:
+                    th.text-center.s-14 = "#{total_quantity}"
+                    th
+                    th.text-center.s-14 = "$#{number_to_currency(total_price, precision: 0, delimiter: ",", unit: @contract.currency.code.upcase)}"
+
+      .row.mt-4
+        .col-lg-8.text-left
+          label.mb-1 Comentarios:
+          p.mb-1.bold = @contract.comments.present? ? @contract.comments.upcase : "--"

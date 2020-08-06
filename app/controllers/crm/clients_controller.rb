@@ -31,7 +31,7 @@ module Crm
     end
 
     def show
-      add_breadcrumb @client.name.upcase
+      add_breadcrumb "Detalle de cliente"
     end
 
     def update

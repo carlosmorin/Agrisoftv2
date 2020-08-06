@@ -5,5 +5,18 @@ class Contract < ApplicationRecord
 
 	accepts_nested_attributes_for :contracts_products, allow_destroy: true
 	
-	validates_presence_of :name, :started_at, :finished_at, :delivery_address_id
+	validates_presence_of :name, :delivery_address_id
+	validates_presence_of :started_at, :finished_at, unless: :undefined
+
+	def active?
+		return true if self.undefined?
+		
+		Time.now <= self.finished_at 
+	end
+
+	def currency
+		national = Currency.national.first
+		return national if self.contracts_products.empty?
+		self.contracts_products.first.currency
+	end
 end

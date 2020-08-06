@@ -5,6 +5,14 @@ User.create(email: "admin@lasalbardas.com", name: "José Carlos", last_name: "Mo
 Country.create(name: "México", short_name: "MX")
 Country.create(name: "Estados unidos", short_name: "USA")
 
+UnitTime.create([{name: "Segundos"},{name: "Minutos"},{name: "Horas"},{name: "Dias"}, {name: "Semanas"}, {name: "Meses"}])
+UnitMeasure.create([
+	{name: "Gramos", short_name: "Gr" },
+	{name: "Kilogramos", short_name: "Kg" },
+	{name: "Libras", short_name: "Lbs" },
+	{name: "Kilogramos", short_name: "Kg" },
+])
+
 ##States
 states_mx_query = "
 INSERT INTO states (name, short_name, country_id, created_at, updated_at) VALUES

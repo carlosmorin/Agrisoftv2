@@ -1,10 +1,11 @@
 section.content-header.pb-0
-	.container-fluid
-		.row.mb-2
-			.col-sm-12.text-left.pr-2.s-12
-				= render_breadcrumbs :separator => ' / '
-			.col-sm-12
-				h5 ="Detalle de cliente"
+  .container-fluid
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "Detalle de cliente".upcase 
 section.content
 	.container-fluid
 		.row
@@ -102,7 +103,7 @@ section.content
 							li.nav-item
 								= link_to 'Direcciónes', crm_client_path(@client, tab: :addresses), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'addresses' ? 'active' : 'c-gray' }"
 							li.nav-item
-								= link_to 'Contratos', crm_client_path(@client, tab: :contracts), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'contracts' ? 'active' : 'c-gray' }"
+								= link_to 'Contratos / acuerdos comerciales', crm_client_path(@client, tab: :contracts), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'contracts' ? 'active' : 'c-gray' }"
 					.card-body
 						#custom-tabs-four-tabContent.tab-content
 							#custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"

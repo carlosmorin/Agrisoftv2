@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_04_205338) do
+ActiveRecord::Schema.define(version: 2020_08_06_191542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -203,6 +203,7 @@ ActiveRecord::Schema.define(version: 2020_08_04_205338) do
     t.text "comments"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "undefined"
     t.index ["client_id"], name: "index_contracts_on_client_id"
     t.index ["delivery_address_id"], name: "index_contracts_on_delivery_address_id"
     t.index ["user_id"], name: "index_contracts_on_user_id"
@@ -539,6 +540,12 @@ ActiveRecord::Schema.define(version: 2020_08_04_205338) do
   create_table "unit_brands", force: :cascade do |t|
     t.string "name"
     t.string "short_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "unit_times", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
