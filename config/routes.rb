@@ -72,6 +72,11 @@
       patch '/update_status', to: 'quotes#update_status'
     end
     resources :sales_orders
+    
+    namespace :config do
+      root to: "main#index"
+      resources :expenses
+    end
   end
   
   namespace :directories do

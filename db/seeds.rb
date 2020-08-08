@@ -10,9 +10,9 @@ UnitMeasure.create([
 	{name: "Gramos", short_name: "Gr" },
 	{name: "Kilogramos", short_name: "Kg" },
 	{name: "Libras", short_name: "Lbs" },
-	{name: "Kilogramos", short_name: "Kg" },
+	{name: "Bultos", short_name: "Kg" },
 ])
-
+	
 ##States
 states_mx_query = "
 INSERT INTO states (name, short_name, country_id, created_at, updated_at) VALUES

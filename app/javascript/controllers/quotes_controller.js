@@ -23,6 +23,11 @@ export default class extends Controller {
       .on("cocoon:after-remove", function () {
         _this.calculeNeto()
       });
+
+    const ids = [...document.getElementsByTagName('select')].map(el => el.id);
+    for (var i=0, max=ids.length; i < max; i++) {
+      new SlimSelect({select: `#${ids[i]}`})
+    }
   }
 
 
@@ -147,15 +152,11 @@ export default class extends Controller {
   calculeTotal(){
     var iva = this.data.get("iva")
     var subTotal = this.data.get("subTotal")
-    console.log("subTotal:", subTotal)
-    console.log("Total de iva:", (subTotal / 100) * iva)
     var total_iva = ((subTotal / 100) * iva)
     var total = (subTotal + total_iva)
-    console.log(total)
     this.data.set("total", total)
     
     var number = numeral(total);
-    console.log("Number:", number)
     this.totalOutputTarget.textContent = `$ ${total}`
   }
     

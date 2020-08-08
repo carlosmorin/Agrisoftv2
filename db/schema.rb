@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_191542) do
+ActiveRecord::Schema.define(version: 2020_08_07_221918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -209,6 +209,15 @@ ActiveRecord::Schema.define(version: 2020_08_06_191542) do
     t.index ["user_id"], name: "index_contracts_on_user_id"
   end
 
+  create_table "contracts_expenses", force: :cascade do |t|
+    t.bigint "contract_id", null: false
+    t.bigint "expense_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contract_id"], name: "index_contracts_expenses_on_contract_id"
+    t.index ["expense_id"], name: "index_contracts_expenses_on_expense_id"
+  end
+
   create_table "contracts_products", force: :cascade do |t|
     t.bigint "contract_id", null: false
     t.bigint "product_id", null: false
@@ -312,6 +321,12 @@ ActiveRecord::Schema.define(version: 2020_08_06_191542) do
     t.datetime "deleted_at"
     t.string "full_name"
     t.index ["carrier_id"], name: "index_drivers_on_carrier_id"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "freights", force: :cascade do |t|
@@ -544,6 +559,13 @@ ActiveRecord::Schema.define(version: 2020_08_06_191542) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "unit_measures", force: :cascade do |t|
+    t.string "name"
+    t.string "short_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "unit_times", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -604,6 +626,8 @@ ActiveRecord::Schema.define(version: 2020_08_06_191542) do
   add_foreign_key "contracts", "clients"
   add_foreign_key "contracts", "delivery_addresses"
   add_foreign_key "contracts", "users"
+  add_foreign_key "contracts_expenses", "contracts"
+  add_foreign_key "contracts_expenses", "expenses"
   add_foreign_key "contracts_products", "contracts"
   add_foreign_key "contracts_products", "currencies"
   add_foreign_key "contracts_products", "products"

@@ -1,0 +1,20 @@
+section.content-header.pb-0
+  .container-fluid
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "CONFIGURACIÓN".upcase
+section.content
+  .container-fluid
+    .row
+      .col-2
+        .info-box
+          span.info-box-icon.bg-info.elevation-1
+            i.fas.fa-tag
+          .info-box-content
+            span.info-box-text Categorias
+            = link_to crm_config_provider_categories_path, class: "btn btn-xs btn-primary mt-2"
+              span.info-box-number
+              | Gestionar

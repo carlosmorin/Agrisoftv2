@@ -1,5 +1,5 @@
 - url = @quote.persisted? ? crm_quote_url : crm_quotes_url 
-= simple_form_for([:crm, @quote], url: url, data: { controller: "datepicker" }) do |f|
+= simple_form_for([:crm, @quote], url: url, data: { controller: "datepicker quotes" }) do |f|
 	.card.card-body
 		.row
 			.col-6
@@ -29,7 +29,7 @@
 						= f.label :issue_at, class: "bold"
 					.col-9
 						.input-group.date.d-block data-provide="datepicker" 
-							= f.input :issue_at, as: :string, label: false, input_html: { class: "mr-2 form-control form-control-sm date-picker " }
+							= f.input :issue_at, as: :string, label: false, input_html: { class: "mr-2 form-control form-control-sm date-picker" }
 							.input-group-addon
 								span.glyphicon.glyphicon-th
 				.row.mt-2

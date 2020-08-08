@@ -2,9 +2,11 @@
 	.card.card-body
 		.row
 			.col-md-8
-				.row
-					.col-12
-						h5.s-16 = "Datos generales".upcase
+		.row
+			.col-12
+				h5.s-16.mb-3 
+					span.fas.fa-info-circle.mx-2
+					= "Datos generales".upcase
 				.row
 					.col-md-3
 						= f.label :name, class: "bold s-12"
@@ -25,7 +27,9 @@
 	.card.card-body
 		.row
 			.col-12
-				h5.s-16 = "Vigencia de contrato".upcase
+				h5.s-16.mb-3 
+					span.fas.fa-calendar-day.mx-2
+					= "Fechas".upcase
 		.row
 			.col.md-3
 				= f.label :undefined, class: "bold s-12"
@@ -42,7 +46,9 @@
 	.card.card-body
 		.row
 			.col-12
-				h5.s-16.mb-3 = "Información de productos".upcase
+				h5.s-16.mb-3 
+					span.fas.fa-boxes.mx-2
+					= "Información de productos".upcase
 		section
 			.row.mt-2
 				.col-12.table.table-sm.mt-2
@@ -65,9 +71,39 @@
 								svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
 									path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
 								span.pl-2 Nuevo producto
-		.row.mt-4
+	.card.card-body
+		.row
+			.col-12
+				h5.s-16.mb-3 
+					span.fas.fa-boxes.mx-2
+					= "Conceptos de gastos".upcase
+		section
+			.row.mt-2
+				.col-12.table.table-sm.mt-2
+					.row.bold.p-1.mb-2
+						.col-lg-5.bg-light-gray
+							span.s-14 Concepto  
+					.row
+						.col-12
+							#contracts_expenses.contracts_expenses
+								= f.simple_fields_for :contracts_expenses do |product|
+									= render 'contracts_expense_fields', f: product
+					.row.mt-2
+						.col-5.text-center
+							= link_to_add_association f, :contracts_expenses, class: "btn btn-sm btn-primary s-12", data: {association_insertion_node: '#contracts_expenses', association_insertion_method: :append } do
+								svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+									path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
+								span.pl-2 Nuevo concenpto
+
+	.card.card-body
+		.row
+			.col-12
+				h5.s-16.mb-3 
+					span.fas.fa-comments.mx-2
+					= "Comentarios".upcase
+		.row
 			.col-md-12
-				= f.input :comments, input_html: { class: 's-12 form-control' }
+				= f.input :comments, label: false, input_html: { class: 's-12 form-control' }
 		hr
 		.form-actions.text-right
 			= link_to :back, class: 'btn btn-default btn-sm pl-1 mr-2' do

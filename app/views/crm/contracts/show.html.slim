@@ -102,7 +102,17 @@ section.content
                     th
                     th.text-center.s-14 = "$#{number_to_currency(total_price, precision: 0, delimiter: ",", unit: @contract.currency.code.upcase)}"
 
-      .row.mt-4
-        .col-lg-8.text-left
-          label.mb-1 Comentarios:
-          p.mb-1.bold = @contract.comments.present? ? @contract.comments.upcase : "--"
+
+    .card.card-body.mt-2
+      .row
+        .col-12
+          h5.s-16
+            i.fas.fa-boxes.mr-2
+            span = "Gastos".upcase
+    .card.card-body.mt-2
+      .row
+        .col-12
+          h5.s-16
+            i.fas.fa-comments.mr-2
+            span = "Comentarios".upcase
+          p.mb-1.s-14 = @contract.comments.present? ? @contract.comments.upcase : "--"    

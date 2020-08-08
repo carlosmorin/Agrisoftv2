@@ -1,7 +1,7 @@
 class ColorsController < ApplicationController
-	before_action :set_object, only: %i[show edit update destroy]
+  before_action :set_object, only: %i[show edit update destroy]
 
-	add_breadcrumb "Colores", :colors_path
+  add_breadcrumb "Colores", :colors_path
 
   def index
   	@colors = Color.paginate(page: params[:page], per_page: 16)
@@ -10,7 +10,7 @@ class ColorsController < ApplicationController
 
   def new
     add_breadcrumb "Nuevo"
-  	@color = Color.new
+    @color = Color.new
   end
 
   def edit
@@ -22,7 +22,7 @@ class ColorsController < ApplicationController
   end
 
   def create
-  	@color = Color.new(color_params)
+    @color = Color.new(color_params)
     respond_to do |format|
       if @color.save
         format.html { redirect_to colors_url, notice: 'Color creado.' }
@@ -32,7 +32,7 @@ class ColorsController < ApplicationController
     end
   end
 
-   def update
+  def update
     if @color.update(color_params)
       flash[:notice] = "Tamaño #{@color.name} Actualizado"
       redirect_to colors_url

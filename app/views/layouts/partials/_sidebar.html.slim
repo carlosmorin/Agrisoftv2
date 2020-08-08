@@ -55,6 +55,10 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
               = link_to crm_clients_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(crm_clients_path)}" do
                 i.fas.fa-circle.s-10.mr-2
                 p.s-14.text-normal Gestionar clientes
+            li.nav-item
+              = link_to "/", class: "nav-link py-1 pl-3 mb-0 #{current_link?(crm_clients_path)}" do
+                i.fas.fa-circle.s-10.mr-2
+                p.s-14.text-normal Estados de cuenta
             li.nav-item.has-treeview.pb-2 class="#{current_nav_item?(request.fullpath, 'config_box_types')}"
               a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#" 
                 i.fas.fa-cogs.s-10.mr-2
@@ -64,6 +68,9 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
                   li.nav-item
                     = link_to commercial_config_provider_categories_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(commercial_config_provider_categories_path)}" do
                       p.s-12.pl-3 Categorias
+                  li.nav-item
+                    = link_to crm_config_expenses_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(crm_config_expenses_path)}" do
+                      p.s-12.pl-3 Catalogo de gastos
         li class="nav-item has-treeview d-none  #{current_nav_item?(request.fullpath, 'commercial')} " 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
             i.fas.fa-shopping-bag.s-15.mr-2.ml-1

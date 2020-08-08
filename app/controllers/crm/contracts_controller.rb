@@ -5,6 +5,7 @@ module Crm
 		def new
 			@contract = Contract.new(client_id: params[:client_id])
 			@contract.contracts_products.new
+			@contract.contracts_expenses.new
 		end
 
 		def create
@@ -39,7 +40,8 @@ module Crm
 			params.require(:contract).permit(:name, :client_id, :started_at, 
 				:finished_at, :all_products, :delivery_address_id, :user_id, :undefined,
 				:comments, contracts_products_attributes: [:id, :contract_id, 
-					:product_id, :currency_id, :quantity, :price, :_destroy]
+					:product_id, :currency_id, :quantity, :price, :_destroy],
+				contracts_expenses_attributes: [:id, :contract_id, :expense_id, :_destroy]
 			)
 		end
 

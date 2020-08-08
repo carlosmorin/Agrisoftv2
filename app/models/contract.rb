@@ -2,8 +2,10 @@ class Contract < ApplicationRecord
   belongs_to :client
   belongs_to :delivery_address
   has_many :contracts_products, inverse_of: :contract, dependent: :destroy
+  has_many :contracts_expenses, inverse_of: :contract, dependent: :destroy
 
 	accepts_nested_attributes_for :contracts_products, allow_destroy: true
+	accepts_nested_attributes_for :contracts_expenses, allow_destroy: true
 	
 	validates_presence_of :name, :delivery_address_id
 	validates_presence_of :started_at, :finished_at, unless: :undefined
