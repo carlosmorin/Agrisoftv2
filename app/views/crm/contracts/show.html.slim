@@ -101,14 +101,24 @@ section.content
                     th.text-center.s-14 = "#{total_quantity}"
                     th
                     th.text-center.s-14 = "$#{number_to_currency(total_price, precision: 0, delimiter: ",", unit: @contract.currency.code.upcase)}"
-
-
     .card.card-body.mt-2
       .row
         .col-12
           h5.s-16
             i.fas.fa-boxes.mr-2
             span = "Gastos".upcase
+      .row
+        .col-12
+          section.products.mt-4
+            table.table.table-sm.table-bordered.mb-1
+              thead.thead-dark
+                tr
+                  th.s-12 width="60%" scope="col" CONCEPTOS DE GASTOS
+                  th.s-12 width="60%" scope="col" CANTIDAD
+              tbody
+                - @contract.expenses.each do |expense|
+                  tr
+                    td.s-14 = expense.name.upcase
     .card.card-body.mt-2
       .row
         .col-12

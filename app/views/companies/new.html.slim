@@ -1,15 +1,12 @@
 section.content-header.pb-0
-  .container-fluid
+  .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
     .row.mb-2
-      .col-sm-6
-        h5 Nueva Empresa
-      .col-sm-6.text-right.pr-2.s-12
-        = render_breadcrumbs :separator => ' / '
+      .col-12
+        h5 = "Nueva Empresa".upcase 
 section.content
-  .container-fluid
+  .container
     = render "shared/form_info"
-    .card
-      .card-body
-        .row
-          .col-md-7
-            = render 'form', states: [], municipalities: []
+    = render 'form', states: [], municipalities: []

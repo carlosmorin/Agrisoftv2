@@ -1,17 +1,12 @@
 section.content-header.pb-0
-  .container-fluid
-    .row.mb-2
-      .col-sm-6
-        h5 Editar empresa
-      .col-sm-6.text-right.pr-2.s-12
-        = render_breadcrumbs :separator => ' / '
-section.content
-  .container-fluid
-    = render "shared/form_info"
+  .container
     .row
-      .col-md-12
-        .card
-          .card-body
-            .row
-              .col-lg-7
-                = render 'form', states: @states, municipalities: @municipalities
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "Editar Empresa".upcase 
+section.content
+  .container
+    = render "shared/form_info"
+    = render 'form', states: @states, municipalities: @municipalities

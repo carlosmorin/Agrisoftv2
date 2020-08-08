@@ -7,10 +7,7 @@ export default class extends Controller {
   static targets = [ "countryId", "stateId", "municipalityId", "countryIds"]
 
 	initialize(){
-		const ids = [...document.getElementsByTagName('select')].map(el => el.id);
-		for (var i=0, max=ids.length; i < max; i++) {
-			new SlimSelect({select: `#${ids[i]}`})
-		}
+		
 	}
 
 	filter_by_country(){
