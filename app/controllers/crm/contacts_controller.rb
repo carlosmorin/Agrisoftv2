@@ -1,6 +1,6 @@
 module Crm
   class ContactsController < ApplicationController
-		include ContactBreadcrumb
+		include Crm::ContactBreadcrumb
 
   	before_action :set_object, only: %i[show edit update destroy]
     before_action :set_client, :set_breadcrumb, only: %i[new edit]
