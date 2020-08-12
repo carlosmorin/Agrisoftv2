@@ -4,21 +4,23 @@ const axios = require('axios');
 const $ = require('jquery');
 
 export default class extends Controller {
-	static targets = [ "carrierId" , "clientId", "productsContainer", "costInput", "coments"]
+	static targets = [ "carrierId" , "clientId", "productsContainer", "costInput", "coments", "deliveryAddress", "addProductButton"]
 	
 	connect() {
 		let container = this.productsContainerTarget
-		$("#products").on('cocoon:after-insert', function(e, insertedItem, originalEvent) {
-			let select = $(insertedItem).find("select").attr("id")
-			new SlimSelect({select: `#${select}`})
-		});
-
-		const ids = [...document.getElementsByTagName('select')].map(el => el.id);
-		for (var i=0, max=ids.length; i < max; i++) {
-			new SlimSelect({select: `#${ids[i]}`})
-		}
+		let index_conatiner = 1
+    $("#shipments")
+      .on('cocoon:after-insert', function(e, insertedItem, originalEvent) {
+    	 	var n_shipments = $("#shipments").find(".nested-fields").length - 1
+    	 	$(insertedItem).addClass(`shipment_${n_shipments}`)
+    	 	$(insertedItem).find("select.client").attr("index", n_shipments)
+	    	 	
+    	 	let selects = $(insertedItem).find("select")
+        for (var i = 0, max=selects.length; i < max; i++) {
+          new SlimSelect({select: `#${$(selects[i]).attr("id")}`})
+        }
+      })
 	}
-
 
 	filter_by_carrier(){
 		var carrierId = this.carrierIdTarget.value
@@ -80,7 +82,13 @@ export default class extends Controller {
 
 	getDeliveryAddress(){
 		// da = DeliveryAddress
-		var daSelect = $('select#freight_shipments_attributes_0_delivery_address_id')
+		console.log(this)
+		var daSelect = this.deliveryAddressTarget
+		console.log("Value", this.clientIdTargets)
+		console.log("Delivery addresses putput", this.deliveryAddressTargets)
+		$(this.deliveryAddressTarget).addClass("bg-red")
+		console.log("deliveryAddressTarget", this.deliveryAddressTarget)
+		var daSelect = $(daSelect)	
 		daSelect.empty()
 		var url = `/crm/clients/${this.clientIdTarget.value}/get_delivery_address`
 		var options = "<option>SELECCIONA</option>";
@@ -98,7 +106,6 @@ export default class extends Controller {
 	}
 
 	validateCost(){
-		console.log(this.costInputTarget.value)
 		if (this.costInputTarget.value >= 0){
 			$(".radio_buttons").removeAttr("disabled")
 		}
@@ -117,4 +124,5 @@ export default class extends Controller {
 			$("textarea").val(msg)
 		}
 	}
+
 }

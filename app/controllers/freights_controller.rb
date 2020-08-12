@@ -1,53 +1,85 @@
 class FreightsController < ApplicationController
-  before_action :set_object, only: %i[show edit update destroy]
+	before_action :set_object, only: %i[show edit update destroy]
+  before_action :set_catalogs, only: %i[edit update]
+
+  add_breadcrumb "Embarques", :clients_path
 
   def index
-    @freights = Freight.paginate(page: params[:page], per_page: 20)
-    
-    search if params[:q].present?
+  	@freights = Freight.paginate(page: params[:page], per_page: 25)
   end
 
-  def edit
-    add_breadcrumb "Transportistas", logistic_carriers_path
-    add_breadcrumb @freight.carrier.name.upcase, logistic_carrier_path(@freight.carrier, tab: :general) if params[:carrier_id].present?
-    add_breadcrumb "Fletes", logistic_carrier_path(@freight.carrier, tab: :freights) if params[:carrier_id].present?
-    add_breadcrumb "#{@freight.folio}", logistic_carrier_freight_path(@freight.carrier, @freight)
-    add_breadcrumb "Editar"
-    if @freight.freights_taxes.empty?
-      @freight.freights_taxes.build
+  def new
+    add_breadcrumb "Nuevo"
+  	@client = Client.new
+  end
+
+  def create
+  	@client = Client.new(client_params)
+    respond_to do |format|
+      if @client.save
+        format.html { redirect_to client_url(@client), 
+          notice: 'El cliente fue registrado exitosamente.' }
+      else
+        format.html { render :new }
+      end
     end
   end
 
+  def edit
+    add_breadcrumb "Editar"
+  end
+
+  def show
+    add_breadcrumb "Detalle"
+  end
+
   def update
-    if @freight.update(frieght_params)
-      flash[:notice] = "Felete <b>#{@freight.folio.upcase}</b> actualizado
-        exitosamente"
-      redirect_to freight_url(@freight)
+    if @client.update(client_params)
+      flash[:notice] = "El cliente fue actualizado exitosamente"
+      redirect_to client_url(@client)
     else
       render :edit
     end
   end
-  
-  def show
-    add_breadcrumb "Detalle" 
+
+  def destroy
+    @client.destroy
   end
 
-  private
-  
+  def get_delivery_address
+    ## da = delivery_address
+    da = @client.delivery_addresses
+    render json: da
+  end
+
+	private
+
   def search
     q = Regexp.escape(params[:q])
     
-    @freights = @freights.where("concat(folio) ~* ?", q)
+    @clients = @clients.where("concat(name, ' ', rfc, ' ', phone) ~* ?", q)
   end
 
-  def frieght_params
+  def freight_params
     params.require(:freight).permit(
-      :carrier_id, :driver_id, :unit_id, :box_id, :folio, :pay_client, 
-      :pay_company, :cost, :invoice_serie, :invoice_total, :pdf_invoice, 
-      :xml_invoice, freights_taxes_attributes: [:id, :freight_id, :tax_id, :value, :_destroy])
+      :carrier_id, :driver_id, :unit_id, :box_id, :user_id,
+          shipments_attributes: [:id, :company_id, :client_id,
+            :delivery_address_id, :user_id, :status, :comments, :_destroy, :pay_freight,
+          shipments_products_attributes: [:id, :price, :quantity, :shipment_id,
+            :product_id, :_destroy]]
+    )
   end
 
   def set_object
-    @freight = Freight.find(params[:id])
+    id = params[:id].present? ? params[:id] : params[:client_id] 
+    @client = Client.find(id)
+  end
+
+  def set_catalogs
+    country = Country.find(@client.country_id)
+    state = State.find(@client.state_id)
+
+    @states = country.states
+    @municipalities = state.municipalities
   end
 end

@@ -103,9 +103,11 @@
   end
 
   resources :shipments do
+    get '/consolidate', to: 'shipments#consolidate'
     get '/print', to: 'shipments#print'
     get '/print_responsive', to: 'shipments#print_responsive'
   end
+
   resources :companies
   resources :crops do
     get '/get_colors', to: 'crops#get_colors'

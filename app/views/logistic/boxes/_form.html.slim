@@ -17,13 +17,13 @@
 			.col-lg-3
 				= f.label :n_econ, class: "pt-1" 
 			.col-lg-9
-				= f.input :n_econ, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
+				= f.input :n_econ, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
 	.form-group.mb-1  
 		.row
 			.col-lg-3
 				= f.label :temperature, class: "pt-1" 
 			.col-lg-9
-				= f.input :temperature, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm porcent_input' }
+				= f.input :temperature, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm porcent_input' }
 	hr
 	.form-actions.text-center
 		button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"

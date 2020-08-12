@@ -1,63 +1,44 @@
 - url = @shipment.new_record? ? shipments_path : shipment_path
 - shipment = @shipment.persisted? ? @shipment.freight : @shipment
-= simple_form_for(shipment, url: url, data: { controller: 'shipments users'} ) do |form|
-	= form.input :user_id, as: :hidden, input_html: { value: current_user.id }
+= simple_form_for(shipment, url: url, data: { controller: 'shipments users slim-select'} ) do |form|
+  = form.input :user_id, as: :hidden, input_html: { value: current_user.id }
+  input type="hidden" name="type" value="normal"/
+  .card
+    .card-body.p-3
+      .row
+        .col-12
+          h5.s-16.mb-3
+            span.fas.fa-truck-moving.mx-2
+            | DATOS DE FLETE
+      .form-group.mb-1
+        .row
+          .col-6
+            = form.label :carrier_id, class: "pt-1" 
+            = form.input :carrier_id, collection: Carrier.all, required: true, autofocus: true, label: false, input_html: { class: 's-12 ', data: { action: "change->shipments#filter_by_carrier", target: "shipments.carrierId" } }
+        .row.mt-4
+          .col-4
+            = form.input :driver_id, collection: @drivers, required: true, autofocus: true, input_html: { class: 's-12' }
+          .col-4
+            = form.input :unit_id, collection: @units, required: true, autofocus: true, input_html: { class: 's-12' }
+          .col-4
+            = form.input :box_id, collection: @boxes, required: true, autofocus: true, input_html: { class: 's-12' }
+  .row.mt-4.ml-1
+    .col-9
+      h5.s-18.mt-2
+        span.fas.fa-clipboard-list.mx-2
+        b EMBARQUES
+    .col-3.text-right
+      = link_to_add_association form, :shipments, class: "btn btn-primary s-14", data: { association_insertion_node: '.shipments', association_insertion_method: :append } do
+					i.fas.fa-plus-circle.mx-1.s-14
+					span.pl-2 Consolidar embarque
 
-	.card
-		.card-body.p-3
-			.form-group.mb-1
-				.row
-					.col-6
-						= form.label :carrier_id, class: "pt-1" 
-						= form.input :carrier_id, collection: Carrier.all, autofocus: true, label: false, input_html: { class: 's-12 ', data: { action: "change->shipments#filter_by_carrier", target: "shipments.carrierId" } }
-				.row.mt-4
-					.col-4
-						= form.input :driver_id, collection: @drivers, autofocus: true, input_html: { class: 's-12' }
-					.col-4
-						= form.input :unit_id, collection: @units, autofocus: true, input_html: { class: 's-12' }
-					.col-4
-						= form.input :box_id, collection: @boxes, autofocus: true, input_html: { class: 's-12' }
-				/**.row.mt-3
-					.col-lg-12
-						h6.s-14.mb-0
-							span.bold Costos de flete
-				/**.row
-					.col-lg-2.text-left
-						= form.label :cost, class: "bold"
-					.col-lg-2
-						= form.input :cost, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm s-12', placeholder: "Costo $0.0", data: { action: "change->shipments#validateCost", target: "shipments.costInput" } }
-				/**.row.mt-2
-					.col-lg-2
-						= form.label :pay_freight, class: "bold"
-					.col-lg-4.costum-options
-						= form.input :pay_freight, as: :radio_buttons, label: false, disabled: true, collection: [['Remisionista', 1], ['Cliente', 2]],  class: "radio_buttons", input_html: { data: { action: "change->shipments#addPayComments"} }
-			.row
-				.col-lg-12
-	section.ml-3.mt-3
-		.row.d-none
-			.col-md-6.pl-0
-			.col-md-6.text-right
-				= link_to new_config_product_path, class: 'btn btn-sm btn-info s-12 mr-2', remote: true, data: { action: "users#openModal" }  do 
-					svg.svg-inline--fa.fa-box.fa-w-16.h-12 aria-hidden="true" data-icon="box" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-					  path d=("M509.5 184.6L458.9 32.8C452.4 13.2 434.1 0 413.4 0H272v192h238.7c-.4-2.5-.4-5-1.2-7.4zM240 0H98.6c-20.7 0-39 13.2-45.5 32.8L2.5 184.6c-.8 2.4-.8 4.9-1.2 7.4H240V0zM0 224v240c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V224H0z") fill="currentColor" 
-					span.pl-2 Nuevo producto
-				//**= link_to_add_association form, :shipments, class: "btn btn-sm btn-primary s-12", data: { association_insertion_node: '.shipments', association_insertion_method: :append } do
-					svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-						path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-					span.pl-2 Nuevo embarque**//
-	#shipments.shipments
-		= form.fields_for :shipments do |shipment|
-			= render 'shipment_fields', f: shipment 
-	.form-actions.text-center.mb-2
-		button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
-			svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-				path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
-				polyline points=("17 21 17 13 7 13 7 21") 
-				polyline points=("7 3 7 8 15 8") 
-			span Guardar
-		= link_to shipments_path, notice: 'Are you sure?', class: 'btn btn-default btn-sm pl-1' do
-			svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-				rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
-				line x1="9" x2="15" y1="9" y2="15" 
-				line x1="15" x2="9" y1="9" y2="15" 
-			span Cancelar
+  #shipments.shipments.mt-2
+    = form.simple_fields_for :shipments do |shipment|
+      = render 'shipment_fields', f: shipment
+  .form-actions.text-right.mb-2
+    = link_to shipments_path, notice: 'Esta seguro?', class: 'btn btn-default btn-sm pl-1 mr-2' do
+      span.fas.fa-chevron-left.s-10.mx-2
+      span Volver
+    button.btn.btn-dark-blue.btn-sm.pl-1 type="submit"
+      span.fas.fa-save.s-12.mx-2
+      span Guardar

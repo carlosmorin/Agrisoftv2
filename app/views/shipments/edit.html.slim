@@ -1,11 +1,11 @@
 section.content-header.pb-0
   .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
     .row.mb-2
-      .col-6
-        h5 Editar embarque
-      .col-6.s-12.text-right
-        = render_breadcrumbs :separator => ' / '  
-
+      .col-12
+        h5 = "Editar embarque".upcase 
 section.content
   .container
     = render "shared/form_info"

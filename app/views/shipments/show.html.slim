@@ -1,10 +1,11 @@
 section.content-header.pb-0
   .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
     .row.mb-2
-      .col-sm-6
-        h5 Detalle de embarque
-      .col-sm-6.text-right.pr-2.s-12
-        = render_breadcrumbs :separator => ' / '	
+      .col-12
+        h5 = "Detalle de embarque".upcase 
 section.content
   .container
     .row
@@ -13,11 +14,11 @@ section.content
     .card.mb-2
       .card-header.p-2.pb-1
         .row
-          .col-md-8
+          .col-md-4
             = link_to shipments_path, class: 'btn s-12 btn-default btn-sm' do
               i.fas.fa-chevron-left.s-12.mr-2
               span Volver al listado
-          .col-md-4.text-right
+          .col-md-8.text-right
             = link_to edit_shipment_path(@shipment), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
               i.fas.fa-edit.s-12.mr-2
               span Editar

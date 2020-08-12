@@ -2,7 +2,7 @@ class ShipmentsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   before_action :set_object, only: %i[show edit update destroy print 
-    print_responsive]
+    consolidate]
   before_action :set_collections, only: %i[edit new update create]
   before_action :create_freight, only: [:edit] , if: -> { @shipment.freight.nil? }
   
@@ -33,12 +33,24 @@ class ShipmentsController < ApplicationController
     add_breadcrumb "Detalle"
   end
 
+  def consolidate
+    add_breadcrumb @shipment.folio, shipment_path(@shipment)
+    add_breadcrumb "Consolidar"
+    freight_id = @shipment.freight_id
+    @shipment = Shipment.new(freight_id: freight_id)
+    @shipment.shipments_products.new
+  end
+
   def create
-    @shipment = Freight.new(shipment_params)
+    @shipment = Freight.new(shipment_params) if params[:type] == "normal"
+    @shipment = Shipment.new(consolidate_params) if params[:type] == "consolidate"
+
     if @shipment.save
       flash[:notice] = "Embarque <b>#{@shipment.folio.upcase}</b> creada exitosamente"
-      redirect_to shipment_url(@shipment.shipments.first)
+      redirect_to shipment_url(@shipment) if params[:type] == "consolidate"
+      redirect_to shipment_url(@shipment.shipments.first) if params[:type] == "normal"
 		else
+      add_breadcrumb "Nuevo"
       render :new
     end
   end
@@ -61,21 +73,6 @@ class ShipmentsController < ApplicationController
         render pdf: "Remision N° #{@shipment.folio}",
         page_size: 'A4',
         template: "shipments/print.html.slim",
-        layout: "pdf.html",
-        lowquality: true,
-        zoom: 1,
-        dpi: 75
-      end
-    end
-  end
-
-  def print_responsive
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: "Responsiva N° #{@shipment.folio}",
-        page_size: 'A4',
-        template: "shipments/print_responsive.html.slim",
         layout: "pdf.html",
         lowquality: true,
         zoom: 1,
@@ -128,6 +125,14 @@ class ShipmentsController < ApplicationController
             :delivery_address_id, :user_id, :status, :comments, :_destroy, :pay_freight,
           shipments_products_attributes: [:id, :price, :quantity, :shipment_id,
             :product_id, :_destroy]]
+    )
+  end
+
+  def consolidate_params
+    params.require(:shipment).permit(:id, :company_id, :client_id, 
+      :delivery_address_id, :user_id, :freight_id, :status, :comments, :_destroy, :pay_freight,
+      shipments_products_attributes: [ :id, :price, :quantity, :shipment_id, 
+        :product_id, :_destroy ]
     )
   end
 end
