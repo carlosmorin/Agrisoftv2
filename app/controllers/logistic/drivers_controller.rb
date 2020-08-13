@@ -15,7 +15,7 @@ module Logistic
       add_breadcrumb "Transportistas", :logistic_carriers_path if params[:carrier_id].present?
       add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :operators) if params[:carrier_id].present?
       add_breadcrumb "Nuevo Conductor"
-      @driver = Driver.new
+      @driver = Driver.new(carrier_id: params[:carrier_id])
     end
 
     def show

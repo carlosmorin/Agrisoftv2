@@ -45,7 +45,7 @@ section.content
               tbody#tbody.s-13
                 - if @carriers.empty?
                   tr
-                    td.text-center colspan="4"
+                    td.text-center colspan="6"
 	              			= link_to 'Nuevo registro', new_logistic_carrier_path, class: "s-12" 
                 - else
                   - @carriers.each do |carrier|
