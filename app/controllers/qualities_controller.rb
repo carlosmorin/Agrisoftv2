@@ -21,7 +21,7 @@ def create
   	@quality = Quality.new(quality_params)
     respond_to do |format|
       if @quality.save
-        format.html { redirect_to qualities_url, notice: 'Calidad creada.' }
+        format.html { redirect_to qualities_url, notice: '<i class="fas fa-check-circle mr-2"></i> Calidad creado' }
       else
         format.html { render :new }
       end
@@ -30,7 +30,7 @@ def create
 
    def update
     if @quality.update(quality_params)
-      flash[:notice] = "Calidad #{@quality.name.upcase} Actualizado"
+      flash[:notice] = " <i class='fas fa-check-circle mr-2'></i> Calidad #{@quality.name.upcase} Actualizado"
       redirect_to qualities_url
     else
       render :edit

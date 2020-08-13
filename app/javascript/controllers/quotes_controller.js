@@ -23,7 +23,6 @@ export default class extends Controller {
       .on("cocoon:after-remove", function () {
         _this.calculeNeto()
       });
-
   }
 
 
