@@ -40,7 +40,7 @@
 				= f.label :started_at, class: "bold s-12"
 			.col-md-4
 				.input-group.date.d-block data-provide="datepicker"
-					= f.input :started_at, as: :string, label: false, input_html: { class: "mr-2 form-control form-control-sm picker-range }", disabled: @contract.undefined?, data: { target: "contracts.dateRange" }}
+					= f.input :started_at, as: :string, label: false, input_html: { class: "mr-2 form-control form-control-sm picker-range", disabled: @contract.undefined?, data: { target: "contracts.dateRange" }}
 					.input-group-addon
 						span.glyphicon.glyphicon-th
 	.card.card-body
@@ -107,10 +107,7 @@
 		hr
 		.form-actions.text-right
 			= link_to :back, class: 'btn btn-default btn-sm pl-1 mr-2' do
-				svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-				  rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
-				  line x1="9" x2="15" y1="9" y2="15" 
-				  line x1="15" x2="9" y1="9" y2="15" 
+				span.fas.fa-chevron-left.s-10.mx-2
 				span Volver
 			button.btn.btn-dark-blue.btn-sm.pl-1 type="submit"
 				svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 

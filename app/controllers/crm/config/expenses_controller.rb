@@ -24,7 +24,7 @@ module Crm
       def create
         @expense = Expense.new(expense_params)
         if @expense.save
-          flash[:notice] = "Gasto creado"
+          flash[:notice] = "<i class='fas fa-check-circle mr-2'></i>Gasto creado"
           redirect_to crm_config_expenses_path
         else
           render :index
@@ -33,7 +33,7 @@ module Crm
 
       def update
         if @expense.update(expense_params)
-          flash[:notice] = "Gasto Actualizado"
+          flash[:notice] = "<i class='fas fa-check-circle mr-2'></i>Gasto Actualizado"
           redirect_to crm_config_expenses_path
         else
           render :edit

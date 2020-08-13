@@ -23,12 +23,12 @@ class SizesController < ApplicationController
 
   def create
   	@size = Size.new(size_params)
-    respond_to do |format|
-      if @size.save
-        format.html { redirect_to sizes_url, notice: 'Tamaño creado.' }
-      else
-        format.html { render :new }
-      end
+    if @size.save
+      flash[:notice] = " <i class='fa fa-check-circle mr-2'></i> Tamaño creado"
+      redirect_to sizes_url
+    else
+      add_breadcrumb "Nuevo"
+      render :new
     end
   end
 

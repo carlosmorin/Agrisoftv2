@@ -28,7 +28,7 @@ module Commercial
         @category = ProviderCategory.new(provider_category_params)
         
         if @category.save
-          msg = "Categoría creada correctamente <i class='fas fa-check-circle ml-2'></i>"
+          msg = "<i class='fas fa-check-circle mr-2'></i> Categoría creada correctamente "
           flash[:notice] = msg
           redirect_to commercial_config_provider_categories_path
         else
@@ -39,7 +39,7 @@ module Commercial
 
        def update
         if @category.update(provider_category_params)
-          msg = "Categoría actualizada correctamente <i class='fas fa-check-circle ml-2'></i>"
+          msg = "<i class='fas fa-check-circle mr-2'></i> Categoría actualizada correctamente"
           flash[:notice] = msg
           redirect_to commercial_config_provider_categories_path
         else

@@ -24,10 +24,6 @@ export default class extends Controller {
         _this.calculeNeto()
       });
 
-    const ids = [...document.getElementsByTagName('select')].map(el => el.id);
-    for (var i=0, max=ids.length; i < max; i++) {
-      new SlimSelect({select: `#${ids[i]}`})
-    }
   }
 
 

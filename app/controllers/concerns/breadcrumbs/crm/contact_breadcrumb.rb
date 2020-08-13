@@ -25,7 +25,7 @@ module Breadcrumbs
 			def breadrcumbs_edit
 				add_breadcrumb @client.name.upcase, crm_client_path(@client, tab: :contacts)
 				add_breadcrumb "Contactos", crm_client_path(@client, tab: :contacts)
-				add_breadcrumb @contact.full_name.upcase 
+				add_breadcrumb @contact.full_name.upcase, crm_client_path(@client, tab: :contacts)
 				add_breadcrumb "Editar"
 			end
 
@@ -36,7 +36,7 @@ module Breadcrumbs
 			end
 
 			def set_breadcrumb
-				build(action_name)
+				build_breadcrumbs(action_name)
 			end		
 		end
 	end

@@ -1,11 +1,11 @@
 section.content-header.pb-0
   .container
     .row
-      .col-12.text-left.s-12
-        = render_breadcrumbs :separator => ' / ' 
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
     .row.mb-2
       .col-12
-        h5 = "Nuevo contacto - #{@client.name.upcase}"  
+        h5 = "#{@client.name.upcase} / Agregar contacto".upcase
 
 section.content
   .container

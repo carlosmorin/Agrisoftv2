@@ -1,13 +1,11 @@
 section.content-header.pb-0
   .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
     .row.mb-2
-      .col-sm-6
-        h5 Nuevo cultivo
-      .col-sm-6
-        ol.breadcrumb.float-sm-right.s-12
-          li.breadcrumb-item
-            a href="#"  Inicio
-          li.breadcrumb-item.active Hortalizas
+      .col-12
+        h5 = "Nuevo cultivo".upcase 
 section.content
   .container
     = render "shared/form_info"

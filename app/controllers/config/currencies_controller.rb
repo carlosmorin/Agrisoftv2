@@ -22,7 +22,7 @@ module Config
 		def create
 			@currency = Currency.new(currency_params)
 			if @currency.save
-				flash[:notice] = 'Nueva moneda creada'
+				flash[:notice] = "<i class='fa fa-check-circle mr-2'></i> Nueva moneda creada"
 				return redirect_to config_currencies_path(params[:c]) if params[:c].present?
 				redirect_to config_currencies_path
 			else
@@ -32,7 +32,7 @@ module Config
   	
 		def update
 			if @currency.update(currency_params)
-				flash[:notice] = "Moneda actualizada"
+				flash[:notice] = " <i class='fa fa-check-circle mr-2'></i> Moneda actualizada"
 				redirect_to config_currencies_path
 			else
 				render :edit

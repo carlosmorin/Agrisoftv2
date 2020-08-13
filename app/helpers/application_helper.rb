@@ -48,6 +48,6 @@ module ApplicationHelper
 	end
 
 	def clients_menu_items
-		["clients"]
+		["clients", "expenses", "provider_categories"]
 	end
 end

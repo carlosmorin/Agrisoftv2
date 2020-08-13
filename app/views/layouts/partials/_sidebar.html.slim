@@ -55,10 +55,6 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
               = link_to crm_clients_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(crm_clients_path)}" do
                 i.fas.fa-circle.s-10.mr-2
                 p.s-14.text-normal Gestionar clientes
-            li.nav-item
-              = link_to "/", class: "nav-link py-1 pl-3 mb-0 #{current_link?(crm_clients_path)}" do
-                i.fas.fa-circle.s-10.mr-2
-                p.s-14.text-normal Estados de cuenta
             li.nav-item.has-treeview.pb-2 class="#{current_nav_item?(request.fullpath, 'config_box_types')}"
               a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#" 
                 i.fas.fa-cogs.s-10.mr-2

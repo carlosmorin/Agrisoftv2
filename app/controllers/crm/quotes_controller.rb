@@ -35,7 +35,7 @@ module Crm
       @quote.status = :quotation
 
       if @quote.save
-        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Cotización creada exitosamente"
+        flash[:notice] = "<i class='fa fa-check-circle mr-2'></i> Cotización creada exitosamente"
         redirect_to crm_quote_path(@quote)
       else
         render :new
@@ -44,7 +44,7 @@ module Crm
 
     def update
       if @quote.update(quote_params)
-        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Cotización actualizada exitosamente"
+        flash[:notice] = "<i class='fa fa-check-circle mr-2'></i> Cotización actualizada exitosamente"
         redirect_to crm_quote_path(@quote)
       else
         render :edit
