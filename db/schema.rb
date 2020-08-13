@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_202127) do
+ActiveRecord::Schema.define(version: 2020_08_13_165409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 2020_08_12_202127) do
 
   create_table "client_brands", force: :cascade do |t|
     t.string "name"
-    t.integer "client_id"
+    t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["client_id"], name: "index_client_brands_on_client_id"
@@ -330,27 +330,22 @@ ActiveRecord::Schema.define(version: 2020_08_12_202127) do
   end
 
   create_table "freights", force: :cascade do |t|
-    t.bigint "carrier_id"
-    t.bigint "driver_id"
-    t.bigint "unit_id"
-    t.bigint "box_id"
+    t.bigint "carrier_id", null: false
+    t.bigint "driver_id", null: false
+    t.bigint "unit_id", null: false
+    t.bigint "box_id", null: false
     t.bigint "user_id", null: false
     t.integer "status"
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "folio"
-    t.integer "pay_freight"
+    t.boolean "pay_client"
     t.boolean "pay_company"
     t.decimal "cost"
     t.integer "currency"
-    t.string "invoice_serie"
-    t.integer "invoice_total"
-    t.string "debtable_type"
-    t.bigint "debtable_id"
     t.index ["box_id"], name: "index_freights_on_box_id"
     t.index ["carrier_id"], name: "index_freights_on_carrier_id"
-    t.index ["debtable_type", "debtable_id"], name: "index_freights_on_debtable_type_and_debtable_id"
     t.index ["driver_id"], name: "index_freights_on_driver_id"
     t.index ["unit_id"], name: "index_freights_on_unit_id"
     t.index ["user_id"], name: "index_freights_on_user_id"
@@ -471,26 +466,25 @@ ActiveRecord::Schema.define(version: 2020_08_12_202127) do
     t.bigint "company_id", null: false
     t.bigint "client_id", null: false
     t.bigint "delivery_address_id", null: false
-    t.integer "pay_freight"
+    t.boolean "pay_freight"
     t.text "comments"
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status"
-    t.bigint "freight_id"
+    t.bigint "freight_id", null: false
     t.integer "n_products"
     t.string "folio"
     t.string "client_folio"
     t.string "freight_folio"
-    t.bigint "user_id"
-    t.bigint "contact_id"
     t.datetime "issue_at"
-    t.integer "expirated_days"
-    t.integer "iva"
-    t.integer "discount"
-    t.string "quote_folio"
     t.integer "currency"
+    t.integer "expirated_days"
     t.decimal "exchange_rate"
+    t.decimal "discount"
+    t.decimal "iva"
+    t.bigint "user_id", null: false
+    t.bigint "contact_id", null: false
     t.index ["client_id"], name: "index_shipments_on_client_id"
     t.index ["company_id"], name: "index_shipments_on_company_id"
     t.index ["contact_id"], name: "index_shipments_on_contact_id"
@@ -500,18 +494,13 @@ ActiveRecord::Schema.define(version: 2020_08_12_202127) do
   end
 
   create_table "shipments_products", force: :cascade do |t|
-    t.bigint "shipment_id"
+    t.bigint "shipment_id", null: false
     t.bigint "product_id", null: false
-    t.decimal "price"
+    t.integer "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "quantity"
-    t.string "productable_type"
-    t.bigint "productable_id"
-    t.integer "measurement_unit"
-    t.integer "unit_meassure"
     t.index ["product_id"], name: "index_shipments_products_on_product_id"
-    t.index ["productable_type", "productable_id"], name: "index_shipments_products_on_productable_type_and_productable_id"
     t.index ["shipment_id"], name: "index_shipments_products_on_shipment_id"
   end
 
@@ -608,9 +597,6 @@ ActiveRecord::Schema.define(version: 2020_08_12_202127) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "activities", "users"
-  add_foreign_key "addresses", "countries"
-  add_foreign_key "addresses", "states"
   add_foreign_key "boxes", "box_types"
   add_foreign_key "boxes", "carriers"
   add_foreign_key "carriers", "countries"
@@ -623,14 +609,10 @@ ActiveRecord::Schema.define(version: 2020_08_12_202127) do
   add_foreign_key "companies", "countries"
   add_foreign_key "companies", "municipalities"
   add_foreign_key "companies", "states"
-  add_foreign_key "contracts", "clients"
-  add_foreign_key "contracts", "delivery_addresses"
-  add_foreign_key "contracts", "users"
   add_foreign_key "contracts_expenses", "contracts"
   add_foreign_key "contracts_expenses", "expenses"
   add_foreign_key "contracts_products", "contracts"
   add_foreign_key "contracts_products", "currencies"
-  add_foreign_key "contracts_products", "products"
   add_foreign_key "crops_colors", "colors"
   add_foreign_key "crops_colors", "crops"
   add_foreign_key "crops_packages", "crops"
@@ -649,8 +631,6 @@ ActiveRecord::Schema.define(version: 2020_08_12_202127) do
   add_foreign_key "freights", "drivers"
   add_foreign_key "freights", "units"
   add_foreign_key "freights", "users"
-  add_foreign_key "freights_taxes", "freights"
-  add_foreign_key "freights_taxes", "taxes"
   add_foreign_key "general_information", "users"
   add_foreign_key "municipalities", "states"
   add_foreign_key "products", "client_brands"
@@ -661,11 +641,7 @@ ActiveRecord::Schema.define(version: 2020_08_12_202127) do
   add_foreign_key "products", "sizes"
   add_foreign_key "providers", "provider_categories"
   add_foreign_key "providers", "subcategories"
-  add_foreign_key "quotes", "clients"
-  add_foreign_key "quotes", "companies"
   add_foreign_key "quotes", "contacts"
-  add_foreign_key "quotes", "delivery_addresses"
-  add_foreign_key "quotes", "users"
   add_foreign_key "shipments", "clients"
   add_foreign_key "shipments", "companies"
   add_foreign_key "shipments", "contacts"

@@ -4,7 +4,7 @@ module Breadcrumbs
 			extend ActiveSupport::Concern
 
 			included do
-		    add_breadcrumb "CRM", :crm_root_url
+				add_breadcrumb "CRM", :crm_root_url
 			end
 
 			def build_breadcrumbs(action_name)

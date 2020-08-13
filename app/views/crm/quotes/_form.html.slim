@@ -29,7 +29,7 @@
 						= f.label :issue_at, class: "bold"
 					.col-9
 						.input-group.date.d-block data-provide="datepicker" 
-							= f.input :issue_at, as: :string, label: false, input_html: { class: "mr-2 form-control form-control-sm date-picker" }
+							= f.input :issue_at, label: false,  as: :date, html5: true, input_html: { class: "mr-2 form-control form-control-sm date-picker" }
 							.input-group-addon
 								span.glyphicon.glyphicon-th
 				.row.mt-2
