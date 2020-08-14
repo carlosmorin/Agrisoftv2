@@ -15,8 +15,6 @@ module Crm
 		end
 
 		def create
-
-
 			if contract_params[:started_at] .present?
 				dates = contract_params[:started_at].split(" to ")
 				@contract = Contract.new(contract_params.merge!(started_at: dates.first, finished_at: dates.last))
@@ -32,6 +30,7 @@ module Crm
 				flash[:notice] =  "<i class='fa fa-check-circle mr-1 s-18'></i> Contracto registrado correctamente"
 				redirect_to crm_client_path(@contract.client_id, tab: :contracts) 
 			else
+				binding.pry
 				@contract
 				render :new
 			end

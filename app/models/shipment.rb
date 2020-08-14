@@ -5,13 +5,13 @@ class Shipment < ApplicationRecord
 
 	before_create :set_products
 	before_update :set_products
-	before_create :set_folio, if: :shipment?
-	before_create :set_freight_folio, if: :shipment?
-	before_create :set_client_folio, if: :shipment?
+	before_create :set_folio, if: :sale?
+	before_create :set_freight_folio, if: :sale?
+	before_create :set_client_folio, if: :sale?
 
-	before_update :set_folio, if: :shipment?
-	before_update :set_freight_folio, if: :shipment?
-	before_update :set_client_folio, if: :shipment?
+	before_update :set_folio, if: :sale?
+	before_update :set_freight_folio, if: :sale?
+	before_update :set_client_folio, if: :sale?
 
 	before_create :set_quote_folio, if: :quotation?
 
@@ -22,7 +22,7 @@ class Shipment < ApplicationRecord
 	belongs_to :freight, optional: true
 
 	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: :quotation?
-	validates :client_id, :company_id, :delivery_address_id, presence: true, if: :shipment?
+	validates :client_id, :company_id, :delivery_address_id, presence: true, if: :sale?
 	validates :exchange_rate, presence: true, if: :currency_is_usd?
 	
 	has_rich_text :description
@@ -31,9 +31,9 @@ class Shipment < ApplicationRecord
 	
 	accepts_nested_attributes_for :shipments_products, allow_destroy: true
 	
-	enum status: { quotation: 0, order_sale: 1, shipment: 2, sale: 3 }
+	enum status: { quotation: 0, order_sale: 1, sale: 2 }
 	enum currency: { mxn: 0, usd: 1 }
-	
+
 	def total_kg
 		total = 0
 		unit_meassure = shipments_products.first.product.unit_meassure
@@ -44,8 +44,7 @@ class Shipment < ApplicationRecord
 	end
 
 	def expirated_at
-		#issue_at + expirated_days.days
-		""
+		issue_at + expirated_days.days
 	end
 
 	def subtotal
@@ -101,7 +100,7 @@ class Shipment < ApplicationRecord
 	end
 
 	def get_total_shipments_by_client(year)
-		total_shipments = client.shipments.shipment.where('extract(year from created_at) = ?', year).size
+		total_shipments = client.shipments.sale.where('extract(year from created_at) = ?', year).size
 		update_shipments(total_shipments)
 		case total_shipments.to_s.size
 		when 1
@@ -116,7 +115,7 @@ class Shipment < ApplicationRecord
 	end
 
 	def get_total_shipments(year)
-		total_shipments = Shipment.shipment.where('extract(year from created_at) = ?', year).size
+		total_shipments = Shipment.sale.where('extract(year from created_at) = ?', year).size
 		case total_shipments.to_s.size
 		when 1
 			"000#{total_shipments.to_i + 1 }"

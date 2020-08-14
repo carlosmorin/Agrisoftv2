@@ -41,7 +41,6 @@
   
   namespace :commercial do
     root to: "main#index" #Comercial dashboard
-    resources :sales
     resources :providers do
       resources :addresses
     end
@@ -63,6 +62,7 @@
       get '/get_delivery_address', to: 'clients#get_delivery_address'
       get '/get_contacts', to: 'clients#get_contacts'
     end
+    resources :sales
     resources :contracts, only: [:create, :update]
 
     resources :delivery_addresses, except: [:index]

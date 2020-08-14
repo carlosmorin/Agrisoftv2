@@ -43,63 +43,60 @@ section.content data-controller="quote-to-order-sale"
                   th.text-center Total
                   th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody.s-13 
-                tr
-                  td.text-center colspan="10"
-                    = link_to "Nuevo registro", new_crm_quote_path, class: "link"
-                  /*- if @quotes.empty?
-                    tr
-                      td.text-center colspan="10"
-                        = link_to "Nuevo registro", new_crm_quote_path, class: "link"
-                  /*- else
-                    - @quotes.each_with_index do |quote, index|
-                      tr data-target='quote-to-order-sale.row'
-                        td.bold = quote.quote_folio
-                        td = quote.client.name.upcase
-                        td.text-center 
-                         span = quote.issue_at.nil? ? "--" : quote.issue_at.strftime("%-d %bio %Y")
-                        td.text-center
-                          p.c-pointer.mb-0 title="6 dias restantes" data-toggle='tooltip' data-placement='bottom' 
-                            = "--"
-                            span = quote.expirated_at.present? ? "--" : quote.expirated_at.strftime("%-d %bio %Y")
-                        td.text-center
-                          - sub_total = quote.subtotal
-                          - discount = quote.discount 
-                          span.bold = "$ #{quote.subtotal}"
-                        td.text-center
-                          - discount = ((sub_total.to_d / 100) * discount)
-                          span.text-danger.bold = " #{quote.discount}% - $#{discount}"
-                          span --
-                        td.text-center.bold
-                          - sub_total = (sub_total.to_d - discount)  
-                          = "$#{sub_total}"
-                        td.text-center
-                          - iva = ((quote.subtotal.to_d - discount) / 100) * quote.iva
-                          span.bold = "%#{quote.iva} - $#{iva.round(2)}"
-                        td.text-center.bold
-                          = "$#{sub_total + iva}"
-                        td.text-center
-                          .btn-group
-                            = link_to crm_quote_path(quote), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
-                              svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg"
-                                path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z")
-                                circle cx="12" cy="12" r="3"
-                            = link_to edit_crm_quote_path(quote), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
-                              svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-                                path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7")
-                                path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
-                          .btn-group
-                            button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
-                            .dropdown-menu.py-0.adjust-dropdown style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-43px, 22px, 0px);") x-placement="top-start" 
-                              = link_to crm_quote_print_path(quote, format: :pdf), target: "_blank", class: "dropdown-item s-12 text-danger bold" do
-                                  i.fas.fa-file-pdf.mr-2
-                                  span Exportar PDF
-                              = link_to crm_quote_path(quote, format: "xlsx"), title: "Exportar XLS", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "dropdown-item s-12 text-success bold" do
-                                  i.fas.fa-file-excel.mr-2
-                                  span Exportar EXCEL
-                              .dropdown-divider.my-1
-                              = link_to "", class: "dropdown-item s-12 bold", data: { action: "click->quote-to-order-sale#confirmOrderSale", id: quote.id, position: index, quoteNumber: quote.quote_folio} do
-                                i.fas.fa-file-invoice-dollar.mr-2
-                                span Generar orden de venta
+                - if @quotes.empty?
+                  tr
+                    td.text-center colspan="10"
+                      = link_to "Nuevo registro", new_crm_quote_path, class: "link"
+                - else
+                  - @quotes.each_with_index do |quote, index|
+                    tr data-target='quote-to-order-sale.row'
+                      td.bold = quote.quote_folio
+                      td = quote.client.name.upcase
+                      td.text-center 
+                       span = quote.issue_at.nil? ? "--" : quote.issue_at.strftime("%-d %bio %Y")
+                      td.text-center
+                        p.c-pointer.mb-0 title="6 dias restantes" data-toggle='tooltip' data-placement='bottom' 
+                          = "--"
+                          span = quote.expirated_at.present? ? "--" : quote.expirated_at.strftime("%-d %bio %Y")
+                      td.text-center
+                        - sub_total = quote.subtotal
+                        - discount = quote.discount 
+                        span.bold = "$ #{quote.subtotal}"
+                      td.text-center
+                        - discount = ((sub_total.to_d / 100) * discount)
+                        span.text-danger.bold = " #{quote.discount}% - $#{discount}"
+                        span --
+                      td.text-center.bold
+                        - sub_total = (sub_total.to_d - discount)  
+                        = "$#{sub_total}"
+                      td.text-center
+                        - iva = ((quote.subtotal.to_d - discount) / 100) * quote.iva
+                        span.bold = "%#{quote.iva} - $#{iva.round(2)}"
+                      td.text-center.bold
+                        = "$#{sub_total + iva}"
+                      td.text-center
+                        .btn-group
+                          = link_to crm_quote_path(quote), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                            svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg"
+                              path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z")
+                              circle cx="12" cy="12" r="3"
+                          = link_to edit_crm_quote_path(quote), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+                            svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                              path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7")
+                              path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+                        .btn-group
+                          button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
+                          .dropdown-menu.py-0.adjust-dropdown style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-43px, 22px, 0px);") x-placement="top-start" 
+                            = link_to crm_quote_print_path(quote, format: :pdf), target: "_blank", class: "dropdown-item s-12 text-danger bold" do
+                                i.fas.fa-file-pdf.mr-2
+                                span Exportar PDF
+                            = link_to crm_quote_path(quote, format: "xlsx"), title: "Exportar XLS", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "dropdown-item s-12 text-success bold" do
+                                i.fas.fa-file-excel.mr-2
+                                span Exportar EXCEL
+                            .dropdown-divider.my-1
+                            = link_to "", class: "dropdown-item s-12 bold", data: { action: "click->quote-to-order-sale#confirmOrderSale", id: quote.id, position: index, quoteNumber: quote.quote_folio} do
+                              i.fas.fa-file-invoice-dollar.mr-2
+                              span Generar orden de venta
           .card-footer.p-2.pb-1.bg-light-gray
             .row
               .col-lg-12.d-flex.justify-content-center

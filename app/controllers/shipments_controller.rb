@@ -9,9 +9,9 @@ class ShipmentsController < ApplicationController
   add_breadcrumb "Embarques", :shipments_path
 
   def index
-    @shipments = Shipment.shipment.paginate(page: params[:page], per_page: 25)
+    @shipments = Shipment.sale.paginate(page: params[:page], per_page: 25)
     @orders_sales = Shipment.order_sale
-    @all_shipments = Shipment.shipment
+    @all_shipments = Shipment.sale
     @orders = Shipment.order_sale if params[:tab] == "order_sale"
 
     search if params[:q].present?
@@ -56,7 +56,7 @@ class ShipmentsController < ApplicationController
   end
 
   def update
-    @shipment.status = :shipment
+    @shipment.status = :sale
     if @shipment.freight.update(shipment_params)
       flash[:notice] = "Embarque <b>#{@shipment.folio}</b> actualizado
         exitosamente"

@@ -8,7 +8,6 @@ export default class extends Controller {
   	console.log("date-picker")
   	flatpickr(".picker-range", {
   		mode: "range",
-	    minDate: "today",
 	    dateFormat: "Y-m-d"
 	  });
 

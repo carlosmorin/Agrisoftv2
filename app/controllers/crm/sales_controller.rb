@@ -1,11 +1,11 @@
-module Commercial
+module Crm
 	class SalesController < ApplicationController
-		add_breadcrumb "Commercial", :commercial_root_path
-		add_breadcrumb "Ventas", :commercial_sales_path
+		add_breadcrumb "CRM", :crm_root_path
+		add_breadcrumb "Ventas", :crm_sales_path
   	
 		def index
-			@sales = Shipment.paginate(page: params[:page], per_page: 25)
-			@all_sales = Shipment.all
+			@sales = Shipment.sale.paginate(page: params[:page], per_page: 25)
+			@all_sales = Shipment.sale.all
 
 			search if params[:q].present?
 			search_by_client if params[:c].present?
