@@ -30,7 +30,6 @@ module Crm
 				flash[:notice] =  "<i class='fa fa-check-circle mr-1 s-18'></i> Contracto registrado correctamente"
 				redirect_to crm_client_path(@contract.client_id, tab: :contracts) 
 			else
-				binding.pry
 				@contract
 				render :new
 			end

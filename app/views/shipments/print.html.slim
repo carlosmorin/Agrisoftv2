@@ -278,7 +278,8 @@
                 th.text-center.pt-4 width="50%"
                   span __________________________________________
                   br
-                  small = @shipment.user.full_name
+                  - user = @shipment.user.nil? ? @shipment.freight.user : @shipment.user 
+                  small = user.full_name
                   br
                   small REMISIONISTA
                 th.text-center.pt-4 width="50%"
