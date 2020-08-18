@@ -8,12 +8,11 @@ class Shipment < ApplicationRecord
 	before_create :set_folio, if: :sale?
 	before_create :set_freight_folio, if: :sale?
 	before_create :set_client_folio, if: :sale?
-
+	before_create :set_quote_folio, if: :quotation?
+	
 	before_update :set_folio, if: :sale?
 	before_update :set_freight_folio, if: :sale?
 	before_update :set_client_folio, if: :sale?
-
-	before_create :set_quote_folio, if: :quotation?
 
 	belongs_to :company
 	belongs_to :client

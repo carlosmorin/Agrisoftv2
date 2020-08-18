@@ -1,0 +1,56 @@
+section.content-header.pb-0
+  .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "Reporte de productos".upcase
+section.content 
+  .container
+    = form_tag(reports_products_path, method: "GET", data: { controller: "select datepickers" }) do
+      .row.align-items-center.mb-4
+        .col-6
+          label.s-12.mb-0 Cultivo
+          = select_tag :crops, options_for_select(Crop.all.pluck(:name, :id), selected: params[:crops]), multiple: true, include_blank: 'Todos', class: 's-14'
+        .col-6
+          label.s-12.mb-0 Rango de fechas
+          .input-group.date.d-block data-provide="datepicker"
+            - value = params[:dates].present? ? params[:dates] : ''
+            input.form-control.form-control-sm.picker-range type="text" name="dates" value="#{value}" data-target="contracts.dateRange" /
+            .input-group-addon
+              span.glyphicon.glyphicon-th
+        .col-4
+          label.s-12.mb-0 Tamaño
+          = select_tag :sizes, options_for_select(Size.all.pluck(:name, :id), selected: params[:sizes]), multiple: true, include_blank: 'Todos', class: 's-14'
+        .col-4
+          label.s-12.mb-0 Variedad
+          = select_tag :varieties, options_for_select(Color.all.pluck(:name, :id), selected: params[:varieties]), multiple: true, include_blank: 'Todos', class: 's-14'
+        .col-3
+          label.s-12.mb-0 Calidad
+          = select_tag :qualities, options_for_select(Color.all.pluck(:name, :id), selected: params[:qualities]), multiple: true, include_blank: 'Todos', class: 's-14'
+        .col-1.my-1
+          button.btn.btn-sm.btn-flat.btn-primary.bold.mt-4 type="submit"  
+            span.s-12 Buscar
+            span.fas.fa-search.mx-1.s-12
+    - if @crops.present?
+      - @crops.each do |crop|
+        .row
+          .col-12
+            .card.card-primary.card-outline
+              .card-header.p-2.pb-1.bg-light-gray
+                h5.s-16.mb-0.bold
+                  = crop.name.upcase
+              - colors = crop.colors.find(params[:varieties]) if params[:varieties].present? 
+              - colors = crop.colors unless params[:varieties].present?
+              
+              - colors.each do |color|
+                .card.my-0.mt-2
+                  .card-header.bg-light-gray.p-2.pb-1
+                    .row.s-14
+                      .col-10
+                        h3.card-title.s-14 = color.name.upcase
+                      .col-1.text-right
+                        .card-tools
+                          button.btn.btn-tool data-card-widget="collapse" type="button" 
+                            i.fa.fa-minus

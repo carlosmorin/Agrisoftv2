@@ -141,24 +141,22 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
                   li.nav-item
                     = link_to crm_config_expenses_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(crm_config_expenses_path)}" do
                       p.s-12.pl-3 Catalogo de gastos
-
-
         li.line-divider 
           hr.my-0
-        li.nav-item.has-treeview
-          a.nav-link.pt-1.pb-1.pl-2 href="#"
-            svg.svg-inline--fa.fa-file-invoice-dollar.fa-w-12.h-16.mr-2.ml-1 aria-hidden="true" data-icon="file-invoice-dollar" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
-              path d=("M377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-153 31V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 80v-16c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8zm144 263.88V440c0 4.42-3.58 8-8 8h-16c-4.42 0-8-3.58-8-8v-24.29c-11.29-.58-22.27-4.52-31.37-11.35-3.9-2.93-4.1-8.77-.57-12.14l11.75-11.21c2.77-2.64 6.89-2.76 10.13-.73 3.87 2.42 8.26 3.72 12.82 3.72h28.11c6.5 0 11.8-5.92 11.8-13.19 0-5.95-3.61-11.19-8.77-12.73l-45-13.5c-18.59-5.58-31.58-23.42-31.58-43.39 0-24.52 19.05-44.44 42.67-45.07V232c0-4.42 3.58-8 8-8h16c4.42 0 8 3.58 8 8v24.29c11.29.58 22.27 4.51 31.37 11.35 3.9 2.93 4.1 8.77.57 12.14l-11.75 11.21c-2.77 2.64-6.89 2.76-10.13.73-3.87-2.43-8.26-3.72-12.82-3.72h-28.11c-6.5 0-11.8 5.92-11.8 13.19 0 5.95 3.61 11.19 8.77 12.73l45 13.5c18.59 5.58 31.58 23.42 31.58 43.39 0 24.53-19.05 44.44-42.67 45.07z") fill="currentColor" 
-
-            p.s-14.bold REPORTES
-            i.fa.fa-angle-left.right style="font-size: 16px;"
+        li class=" nav-item has-treeview" 
+          a.nav-link.py-1.pl-2.mb-1  href="#" 
+            i.fas.fa-file-invoice.s-15.mr-2.ml-1
+            p.s-14 REPORTES
+            i.fa.fa-chevron-left.right style="font-size: 12px;"
           ul.nav.nav-treeview
             li.nav-item
-              = link_to reports_lumps_path, class: 'nav-link pt-0 pb-0 pl-3 mb-0' do
-                svg.svg-inline--fa.fa-boxes.fa-w-18.h-12.mr-2 aria-hidden="true" data-icon="boxes" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 576 512") xmlns="http://www.w3.org/2000/svg" 
-                  path d=("M560 288h-80v96l-32-21.3-32 21.3v-96h-80c-8.8 0-16 7.2-16 16v192c0 8.8 7.2 16 16 16h224c8.8 0 16-7.2 16-16V304c0-8.8-7.2-16-16-16zm-384-64h224c8.8 0 16-7.2 16-16V16c0-8.8-7.2-16-16-16h-80v96l-32-21.3L256 96V0h-80c-8.8 0-16 7.2-16 16v192c0 8.8 7.2 16 16 16zm64 64h-80v96l-32-21.3L96 384v-96H16c-8.8 0-16 7.2-16 16v192c0 8.8 7.2 16 16 16h224c8.8 0 16-7.2 16-16V304c0-8.8-7.2-16-16-16z") fill="currentColor" 
-                p.s-12 Bultos
-
+              = link_to reports_lumps_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(reports_lumps_path)}" do
+                i.fas.fa-circle.s-10.mr-2
+                p.s-14.text-normal Reporte de bultos
+            li.nav-item
+              = link_to reports_products_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(reports_products_path)}" do
+                i.fas.fa-circle.s-10.mr-2
+                p.s-14.text-normal Reporte de productos
         li.line-divider 
           hr.my-0
         li.nav-item.has-treeview

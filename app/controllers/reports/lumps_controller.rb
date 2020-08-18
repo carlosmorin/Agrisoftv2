@@ -1,5 +1,5 @@
 module Reports
-  class LumpsController < ApplicationController
+	class LumpsController < ApplicationController
   
   	def index
   		filter_clients if params[:c].present?

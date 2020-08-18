@@ -30,6 +30,10 @@ module Crm
       add_breadcrumb "Editar"
     end
 
+    def consolidate
+      add_breadcrumb "Consolidar"
+    end
+
     def create
       @quote = Shipment.new(quote_params)
       @quote.status = :quotation

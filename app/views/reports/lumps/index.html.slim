@@ -39,7 +39,7 @@ section.content-header.pb-0
 												span.bold.s-14 Fecha Envio		
 								- total_kg = 0 
 								- total_lumps = 0 
-								- client.shipments.each do |shipment|
+								- client.shipments.sale.each do |shipment|
 									- total_lumps += shipment.n_products.to_i
 									.card.my-0.mt-2
 										.card-header.bg-light-gray.p-2.pb-1

@@ -109,6 +109,7 @@ export default class extends Controller {
     this.calculeTotal()
   }
 
+
   showExchangeRate(){
     var currency = this.currencySelectTarget.value
 

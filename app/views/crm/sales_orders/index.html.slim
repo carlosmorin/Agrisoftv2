@@ -1,0 +1,72 @@
+section.content-header.pb-0
+  .container-fluid
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "Gestion de ordenes de venta".upcase
+
+section.content data-controller="order-sales"
+  .container-fluid
+    .row
+      .col-md-12
+        .card
+          .card-header.p-2.pb-1.bg-light-gray
+            .row
+              .col-md-6.col-sm-12
+                = form_tag(crm_sales_orders_path, method: "GET") do
+                  .form-row.align-items-center
+                    .col-10
+                      = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por folio')
+                    .col-2
+                      button.btn.btn-sm.btn-flat.btn-default.bold type="submit"
+                        span.mr-2 Buscar
+                        span.fas.fa-search.s-12
+          .card-body.p-0
+            = form_tag(consolidate_crm_sales_orders_path, method: "GET") do
+              table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
+                thead
+                  tr.bg-light-gray
+                    th.text-center 
+                      .custom-control.custom-checkbox
+                        input#customCheckboxAll.custom-control-input type="checkbox" value="all" name="order_sales" /
+                        label.custom-control-label for="customCheckboxAll" 
+                    th #
+                    th # COT
+                    th Cliente
+                    th.text-left Fecha de expedición
+                    th.text-center colspan="2" style=("width: 12%") Acciónes
+                tbody#tbody.s-13 
+                  - if @sales_orders.empty?
+                    tr
+                      td.text-center 
+                        i.text-muted Sin ordenes de venta
+                  - @sales_orders.each do |so| 
+                    tr
+                      td
+                        .custom-control.custom-checkbox
+                          input.custom-control-input id="customCheckbox#{so.id}" type="checkbox" name="order_sales[#{so.id}]" /
+                          label.custom-control-label for="customCheckbox#{so.id}" 
+                      td
+                        b = so.id
+                      td
+                        b = so.quote_folio.upcase
+                      td
+                        b = so.client.name.upcase
+                      td
+                        b = so.created_at.strftime("%-d %bio %Y")
+                      td.text-center
+                        .btn-group
+                          = link_to crm_sales_order_path(so), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-info' do
+                            i.fas.fa-eye.s-12
+                        .btn-group
+                          button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
+                          .dropdown-menu.py-0.adjust-dropdown style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-43px, 22px, 0px);") x-placement="top-start" 
+                            = link_to crm_quote_print_path(so, format: :pdf), target: "_blank", class: "dropdown-item s-12 text-danger bold" do
+                                i.fas.fa-file-pdf.mr-2
+                                span Exportar PDF
+                            = link_to crm_quote_print_path(so, format: :pdf), target: "_blank", class: "dropdown-item s-12 bold" do
+                                i.fas.fa-file-alt.mr-2
+                                span Crear pedido
+              input type="submit" value="Enviar"/

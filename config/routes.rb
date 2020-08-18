@@ -7,6 +7,7 @@
 
   namespace :reports do
     resources :lumps, only: [:index]
+    resources :products, only: [:index]
   end
 
   namespace :config do
@@ -70,6 +71,9 @@
     resources :quotes do
       get '/print', to: 'quotes#print'
       patch '/update_status', to: 'quotes#update_status'
+      collection do
+        get :consolidate
+      end
     end
     resources :sales_orders
     
