@@ -511,25 +511,25 @@ div style="height: 34.5cm;"
                     th.text-left.text-normal style="padding-left: 5px; font-size: 14px;" width="15%"
                       span Name:
                     th.text-left.text-normal colspan="5" style="padding: 5px; font-size: 14px;" width="85%"
-                      span EL CEGADOR SPR DE RL DE CV
+                      span = @shipment.company.name.upcase
                   tr
                     th.text-left.text-normal style="padding: 5px; font-size: 14px;" width="15%"
                       span Address:
                     th.text-left.text-normal style="padding: 5px; font-size: 14px;" colspan="3" width="50%"
-                      span GUERRERO 14 COL. CENTRO
+                      span = @shipment.company.address.upcase
                     th.text-left.text-normal style="padding: 5px; font-size: 14px;" width="12%"
                       span Location:
                     th.text-left.text-normal width="23%" style="padding: 5px; font-size: 14px;"
-                     span PARRAS
+                     span = @shipment.company.municipality.name.upcase
                   tr
                     th.text-left.text-normal.s-14 style="padding-left: 5px;" width="15%"
                       span State:
                     th.text-left.text-normal.s-14 style="padding-left: 5px;" width="20%"
-                      span COAHUILA
+                      span = @shipment.company.state.name.upcase
                     th.text-normal.s-14  style="padding-left: 5px;" width="10%"
                       span Country:
                     th.text-center.text-normal.s-14  style="padding-left: 5px;"
-                      b MEXICO
+                      b = @shipment.company.country.name
                     th.text-left.text-normal.s-14 style="padding-left: 5px;"
                       span Zip Code:
                     th.text-left.text-normal.s-14 style="padding-left: 5px;"
