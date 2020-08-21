@@ -1,0 +1,2 @@
+class SubStage < ApplicationRecord
+end

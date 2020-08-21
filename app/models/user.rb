@@ -10,6 +10,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :email
   has_many :shipments, inverse_of: :user
   has_many :quotes, inverse_of: :user
+  has_many :ranches, class_name: "Ranch", foreign_key: :manager_id, primary_key: :id
   has_one_attached :avatar
   
   def active_for_authentication?

@@ -19,6 +19,15 @@
     resources :client_brands
     resources :products
     resources :currencies
+    namespace :production do 
+      root to: 'main#index'
+      resources :ranches do
+        resources :areas
+        resources :perforations
+      end
+      resources :stages
+      resources :sub_stages
+    end
   end
 
   namespace :logistic do
