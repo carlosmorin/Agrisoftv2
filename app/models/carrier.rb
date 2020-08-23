@@ -7,6 +7,7 @@ class Carrier < ApplicationRecord
 	has_many :boxes, inverse_of: :carrier
 	has_many :freights, inverse_of: :carrier
 	has_many :shipments, inverse_of: :carrier
+	has_many :contacts, as: :contactable
 	belongs_to :country
 	belongs_to :state
 	belongs_to :municipality
