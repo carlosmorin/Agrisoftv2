@@ -43,6 +43,10 @@
 				= f.label :position, class: "pt-1" 
 			.col-lg-9
 				= f.input :position, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
+    .row.mt-4
+      .col-lg-12.s-12
+				= f.label :comments, class: "bold"
+				= f.rich_text_area :comments
 	hr
 	.form-actions.text-right
 		= link_to :back, class: 'btn btn-default btn-sm pl-1 mr-2' do

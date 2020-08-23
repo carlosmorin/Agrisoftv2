@@ -11,6 +11,8 @@ class Carrier < ApplicationRecord
 	belongs_to :country
 	belongs_to :state
 	belongs_to :municipality
+	
+	has_many :contacts, as: :contactable
 
 	def short_address
 		state_name = state.name

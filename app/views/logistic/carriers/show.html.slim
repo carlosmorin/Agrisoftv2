@@ -88,6 +88,8 @@ section.content
 							li.nav-item
 								= link_to 'Fletes', logistic_carrier_path(@carrier, tab: :freights), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'freights' ? 'active' : 'c-gray' }"
 							li.nav-item
+								= link_to 'Contactos', logistic_carrier_path(@carrier, tab: :contacts), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'contacts' ? 'active' : 'c-gray' }"
+							li.nav-item
 							li.nav-item
 								= link_to 'Operadores', logistic_carrier_path(@carrier, tab: :operators), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'operators' ? 'active' : 'c-gray' }"
 							li.nav-item
@@ -99,6 +101,7 @@ section.content
 							#custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
 								= render "general" if params[:tab] == 'general'
 								= render "freights" if params[:tab] == 'freights'
+								= render "contacts" if params[:tab] == 'contacts'
 								= render "operators" if params[:tab] == 'operators'
 								= render "units" if params[:tab] == 'units'
 								= render "boxes" if params[:tab] == 'boxes'

@@ -6,6 +6,15 @@ es:
         name: "Nombre"
         last_name: "Apellidos"
         password: "Contraseña"
+      contact:
+        name: Nombre
+        last_name: Apellido
+        email: Correo electronico
+        phone: Telefono
+        mobile_phone: Celular
+        position: Puesto
+        alias: Alias
+        comments: Comentarios / Notas
     errors:
       models:
         user:
