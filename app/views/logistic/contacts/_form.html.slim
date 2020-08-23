@@ -1,43 +1,43 @@
-= simple_form_for([:crm, @contact], data: { controller: "masks" }) do |f|
-	= f.input :contactable_type, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @client.model_name }
-	= f.input :contactable_id, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @client.id }
-	.form-group.mb-1  
+= simple_form_for([:logistic, @contact], data: { controller: "masks" }) do |f|
+	= f.input :contactable_type, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @carrier.model_name }
+	= f.input :contactable_id, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @carrier.id }
+	.form-group.mb-2  
 		.row
 			.col-lg-3
 				= f.label :alias, class: "pt-1" 
 			.col-lg-9
 				= f.input :alias, collection: [:ing, :lic, :sr, :sra], label: false, input_html: { class: 's-12 form-control form-control-sm' }
-	.form-group.mb-1  
+	.form-group.mb-2 
 		.row
 			.col-lg-3
-				= f.label :name, class: "pt-1" 
+				= f.label :name, class: "pt-1"
 			.col-lg-9
 				= f.input :name, label: false, input_html: { class: 's-12 form-control form-control-sm' }
-	.form-group.mb-1  
+	.form-group.mb-2
 		.row
 			.col-lg-3
 				= f.label :last_name, class: "pt-1" 
 			.col-lg-9
 				= f.input :last_name, label: false, input_html: { class: 'form-control form-control-sm ' }
-	.form-group.mb-1  
+	.form-group.mb-2
 		.row
 			.col-lg-3
 				= f.label :mobile_phone, class: "pt-1" 
 			.col-lg-9
 				= f.input :mobile_phone, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm phone_mask' }
-	.form-group.mb-1  
+	.form-group.mb-2
 		.row
 			.col-lg-3
 				= f.label :phone, class: "pt-1" 
 			.col-lg-9
 				= f.input :phone, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm phone_mask' }
-	.form-group.mb-1  
+	.form-group.mb-2
 		.row
 			.col-lg-3
 				= f.label :email, class: "pt-1" 
 			.col-lg-9
 				= f.input :email, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
-	.form-group.mb-1  
+	.form-group.mb-2
 		.row
 			.col-lg-3
 				= f.label :position, class: "pt-1" 
