@@ -52,6 +52,12 @@
   .form-group.mb-1  
     .row
       .col-lg-3
+        = f.label :Estructura_de_pozo, class: "pt-1" 
+      .col-lg-9
+        = f.rich_text_area :perforation_structure, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm cp_mask'  }
+  .form-group.mb-1  
+    .row
+      .col-lg-3
         = f.label :Documento, class: "pt-1" 
       .col-lg-9
         = f.file_field :document, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm cp_mask'  }

@@ -50,7 +50,8 @@ module Config
       private
 
       def ranch_params
-        params.require(:ranch).permit(:state_id, :name, :municipality_id, :parcel_certificate, :manager_id, :territory, :hydrological_region,
+        params.require(:ranch).permit(:state_id, :name, :municipality_id, :parcel_certificate, 
+        :manager_id, :territory, :hydrological_region,
         :aquifer_name, :georeference, :document)
       end
 

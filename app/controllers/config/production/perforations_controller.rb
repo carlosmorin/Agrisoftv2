@@ -53,7 +53,7 @@ module Config
 
       def perforation_params
         params.require(:perforation).permit(:name, :coordinates, :registry_number, :volume, 
-          :validity, :expenditure, :ranch_id)
+          :validity, :expenditure, :ranch_id, :perforation_structure, :document)
       end
 
       def find_perforation
