@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_23_133523) do
+ActiveRecord::Schema.define(version: 2020_08_24_031714) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -504,8 +505,8 @@ ActiveRecord::Schema.define(version: 2020_08_23_133523) do
   end
 
   create_table "ranches", force: :cascade do |t|
-    t.bigint "state_id"
-    t.bigint "municipality_id"
+    t.string "state_id"
+    t.string "municipality_id"
     t.bigint "manager_id"
     t.string "territory"
     t.string "hydrological_region"
