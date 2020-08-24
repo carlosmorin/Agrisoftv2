@@ -197,3 +197,14 @@ es:
         comments: Comentarios
         crosses: Cruzamientos
         locality: Ciudad
+      bank_account:
+        bank_id: Banco
+        name: Nombre / alias
+        currency_id: Moneda
+        titular: Titular
+        branch: Sucursal
+        bank_key: Clave interbancaria
+        account_number: Numero de cuenta
+        card_number: Numero de tarjeta
+        comments: Comentarios
+
