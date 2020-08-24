@@ -1,4 +1,4 @@
-module Areas
+module Activities
   class IndexFacade
     attr_reader :activities
 

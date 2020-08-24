@@ -14,7 +14,7 @@ section.content
           .card-header.p-2.pb-1.bg-light-gray
             .row
               .col-md-6.col-sm-12
-                = form_tag(config_production_areas_path, method: "GET") do
+                = form_tag(config_production_activities_path, method: "GET") do
                   .form-row.align-items-center
                     .col-10
                       = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por Nombre, unidad de produccion')

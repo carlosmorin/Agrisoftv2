@@ -5,7 +5,7 @@ section.content-header.pb-0
         = render "shared/breadcrumbs_nav"
     .row.mb-2
       .col-12
-        h5 = "Detalle de Etapa".upcase 
+        h5 = "Detalle de Actividad".upcase 
 section.content
 	.container-fluid
 		.row
@@ -18,14 +18,14 @@ section.content
 						.col-md-10
 							.row
 								.col-md-8
-									h5 = @stage.name&.upcase
+									h5 = @activity.action&.upcase
 								.col-md-4.text-right
 									= link_to :back, class: 'mr-2 btn btn-sm btn-default s-12 pl-0' do
 										svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
 											line x1="19" x2="5" y1="12" y2="12" 
 											polyline points=("12 19 5 12 12 5") 
 										span Atras
-									= link_to edit_config_production_stage_path(@stage), class: 'btn btn-sm btn-success text-center pr-2 s-12 mr-2' do
+									= link_to  edit_config_production_activity_path(@activity), class: 'btn btn-sm btn-success text-center pr-2 s-12 mr-2' do
 										svg.feather.feather-edit.mr-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
 											path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
 											path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
@@ -36,7 +36,7 @@ section.content
 					= link_to :back, title: "Atras", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: 'btn btn-sm btn-default' do
 						svg.feather.feather-chevron-left fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="13" xmlns="http://www.w3.org/2000/svg" 
 							polyline points=("15 18 9 12 15 6") 
-					= link_to edit_config_production_stage_path(@stage), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: "btn btn-sm btn-default mr-2" do
+					= link_to  edit_config_production_activity_path(@activity), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: "btn btn-sm btn-default mr-2" do
 						svg.feather.feather-edit fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
 							path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
 							path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")

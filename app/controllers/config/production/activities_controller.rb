@@ -12,11 +12,11 @@ module Config
 
       def new
         add_breadcrumb "Nuevo"
-        @activity = Area.new
+        @activity = Activity.new
       end
 
       def create
-        @activity = Area.new(activity_params)
+        @activity = Activity.new(activity_params)
         if @activity.save
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Actividad creada correctamente"
           redirect_to config_production_activity_url(@activity)
@@ -53,7 +53,7 @@ module Config
       end
 
       def find_activity
-        @activity = Area.find(params[:id])
+        @activity = Activity.find(params[:id])
       end
     end
   end
