@@ -14,10 +14,14 @@ module Logistic
 
     def new
       @carrier = Carrier.new
+      @carrier.fiscals.new.addresses.new
       @countries = Country.new
+      @states = []
+      @municipalities = []
     end
 
     def edit
+      @carrier.fiscals.new.addresses.new unless @carrier.fiscals.present?
     end
 
     def show
@@ -36,8 +40,8 @@ module Logistic
 
     def update
       if @carrier.update(carrier_params)
-        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Transportista creado Actualizado"
-        redirect_to logistic_carrier_url(@carrier)
+        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Transportista Actualizado correctamente"
+        redirect_to logistic_carrier_url(@carrier, tab: :general)
       else
         render :edit
       end
@@ -73,7 +77,12 @@ module Logistic
   	def carrier_params
       params.require(:carrier).permit(
         :name, :rfc, :phone, :country_id, :state_id, :address, :cp, 
-        :municipality_id, :email, :contact_name, :caat, :alpha, :iccmx, :usdot)
+        :municipality_id, :email, :contact_name, :caat, :alpha, :iccmx, :usdot,
+        fiscals_attributes: [:id, :bussiness_name, :rfc, :_destroy,
+          addresses_attributes: [:id, :name, :street, :outdoor_number, :interior_number,
+            :cp, :references, :neighborhood, :phone, :country_id, :state_id, 
+            :fiscalcrosses, :locality, :fiscal, :crosses, :_destroy]
+        ])
     end
 
     def set_object

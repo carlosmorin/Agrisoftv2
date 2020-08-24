@@ -1,9 +1,10 @@
-module Crm
+module Logistic
   class ContactsController < ApplicationController
-		include Breadcrumbs::Crm::ContactBreadcrumb
+    include Breadcrumbs::Logistic::Contacts
 
   	before_action :set_object, only: %i[show edit update destroy]
-    before_action :set_client, :set_breadcrumb, only: %i[new edit]
+  	before_action :set_carrier, only: %i[new edit show]
+  	before_action :build_breadcrumbs, only: %i[new edit show]
 
 		def new
 			@contact = Contact.new
@@ -19,10 +20,10 @@ module Crm
 			@contact = Contact.new(contact_params)
 			if @contact.save
 				flash[:notice] =  "<i class='fa fa-check-circle mr-1 s-18'></i> Contacto registrado correctamente"
-				redirect_to crm_client_path(@contact.contactable, tab: :contacts) 
+				redirect_to logistic_carrier_path(@contact.contactable, tab: :contacts)
 			else
-				set_client
-				set_breadcrumb
+				set_carrier
+				build_breadcrumbs
 				render :new
 			end
     end
@@ -30,10 +31,10 @@ module Crm
 		def update
       if @contact.update(contact_params)
         flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Contacto actualizado correctamente"
-        redirect_to crm_client_path(@contact.contactable, tab: :contacts) 
+        redirect_to logistic_carrier_path(@contact.contactable, tab: :contacts)
       else
-				set_client
-				set_breadcrumb
+				set_carrier
+				build_breadcrumbs	
         render :edit
       end
     end

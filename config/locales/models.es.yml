@@ -50,7 +50,7 @@ es:
         name: Nombre
         short_name: Abreviación
       carrier:
-        name: Razón social
+        name: Nombre
         rfc: RFC
         phone: Telefono
         country_id: País
@@ -180,3 +180,20 @@ es:
         expirated_days: Días de vigencia
         issue_at: Fecha de emisión
         delivery_address_id: Lugar de entrega
+      fiscal:
+        bussiness_name: Razón social
+        rfc: RFC
+      address: 
+        name: Nombre
+        street: Calle
+        outdoor_number: Num. externo
+        interior_number: Num. interior
+        cp: Codigo postal
+        references: Referencias
+        neighborhood: Colonia
+        phone: Teléfono
+        country_id: País
+        state_id: Estado
+        comments: Comentarios
+        crosses: Cruzamientos
+        locality: Ciudad

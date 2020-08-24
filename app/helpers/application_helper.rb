@@ -50,4 +50,8 @@ module ApplicationHelper
 	def clients_menu_items
 		["clients", "expenses", "provider_categories"]
 	end
+
+	def valid_empty(obj)
+		obj.empty? ? "--" : obj
+	end
 end

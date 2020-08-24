@@ -1,81 +1,89 @@
 = simple_form_for([:logistic, @carrier], data: { controller: 'masks address carriers slim-select' }) do |f|
-	.form-group  
-		.row
-			.col-lg-12
-				h6.s-16.mb-0
-					svg.svg-inline--fa.fa-info-circle.fa-w-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="info-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-						path d=("M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z") fill="currentColor" 
-					span General
-		.row
-			.col-lg-12
-				= f.input :name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
-			.col-lg-12
-				= f.input :rfc, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm', maxlength: "13", placeholder: "XAXX010101000" }
-			
-	.form-group  
-		hr.my-0
-		.row
-			.col-12
-				h6.mb-0.mt-2
-					svg.svg-inline--fa.fa-map-marked-alt.fa-w-18.h-14.mr-2.mb-1 aria-hidden="true" data-icon="map-marked-alt" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 576 512") xmlns="http://www.w3.org/2000/svg" 
-						path d=("M288 0c-69.59 0-126 56.41-126 126 0 56.26 82.35 158.8 113.9 196.02 6.39 7.54 17.82 7.54 24.2 0C331.65 284.8 414 182.26 414 126 414 56.41 357.59 0 288 0zm0 168c-23.2 0-42-18.8-42-42s18.8-42 42-42 42 18.8 42 42-18.8 42-42 42zM20.12 215.95A32.006 32.006 0 0 0 0 245.66v250.32c0 11.32 11.43 19.06 21.94 14.86L160 448V214.92c-8.84-15.98-16.07-31.54-21.25-46.42L20.12 215.95zM288 359.67c-14.07 0-27.38-6.18-36.51-16.96-19.66-23.2-40.57-49.62-59.49-76.72v182l192 64V266c-18.92 27.09-39.82 53.52-59.49 76.72-9.13 10.77-22.44 16.95-36.51 16.95zm266.06-198.51L416 224v288l139.88-55.95A31.996 31.996 0 0 0 576 426.34V176.02c0-11.32-11.43-19.06-21.94-14.86z") fill="currentColor" 
-					span.pt-2 Dirección
-		.row
-			.col-md-6
-				= f.input :country_id, collection: Country.all, input_html: { class: 's-12', data: { action: "change->address#filter_by_country", target: "address.countryId" }}
-			.col-md-6
-				= f.input :state_id, collection: states, input_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId" } }
-		.row.mt-1
-			.col-lg-6
-				= f.input :municipality_id, collection: municipalities, required: true, autofocus: true, input_html: { class: 's-12' }
-			.col-lg-6
-				= f.input :cp, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm cp_mask' }
-		.row.mt-1
-			.col-lg-12		
-				= f.input :address, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
-	.form-group.mb-0  
-		hr.mb-1
-		.row.mt-2
-			.col-lg-12
-				h6.s-16.mb-0
-					svg.svg-inline--fa.fa-phone-square-alt.fa-w-14.h-16.mr-2.mb-1 aria-hidden="true" data-icon="phone-square-alt" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 448 512") xmlns="http://www.w3.org/2000/svg" 
-						path d=("M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48zm-16.39 307.37l-15 65A15 15 0 0 1 354 416C194 416 64 286.29 64 126a15.7 15.7 0 0 1 11.63-14.61l65-15A18.23 18.23 0 0 1 144 96a16.27 16.27 0 0 1 13.79 9.09l30 70A17.9 17.9 0 0 1 189 181a17 17 0 0 1-5.5 11.61l-37.89 31a231.91 231.91 0 0 	0 110.78 110.78l31-37.89A17 17 0 0 1 299 291a17.85 17.85 0 0 1 5.91 1.21l70 30A16.25 16.25 0 0 1 384 336a17.41 17.41 0 0 1-.39 3.37z") fill="currentColor" 
-					span Contacto 
-			.col-lg-6
-				= f.input :phone, autofocus: true, input_html: { class: 'form-control form-control-sm phone_mask' }
-			.col-lg-6
-				= f.input :email, autofocus: true, input_html: { class: 'form-control form-control-sm' }
-			.col-lg-12.mt-1
-				= f.input :contact_name, autofocus: true, input_html: { class: 'form-control form-control-sm' }
-	.form-group.mb-0  
-		hr.mb-1
-		.row
-			.col-12.mt-1
-				svg.svg-inline--fa.fa-clipboard-check.fa-w-12.h-14.mr-2.mb-1 aria-hidden="true" data-icon="clipboard-check" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
-					path d=("M336 64h-80c0-35.3-28.7-64-64-64s-64 28.7-64 64H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zM192 40c13.3 0 24 10.7 24 24s-10.7 24-24 24-24-10.7-24-24 10.7-24 24-24zm121.2 231.8l-143 141.8c-4.7 4.7-12.3 4.6-17-.1l-82.6-83.3c-4.7-4.7-4.6-12.3.1-17L99.1 285c4.7-4.7 12.3-4.6 17 .1l46 46.4 106-105.2c4.7-4.7 12.3-4.6 17 .1l28.2 28.4c4.7 4.8 4.6 12.3-.1 17z") fill="currentColor" 
-				span.pt-2 Permisos
-		.row.mt-1
-			.col-md-6
-				= f.input :caat, autofocus: true, input_html: { class: 'form-control form-control-sm' }
-			.col-md-6
-				= f.input :alpha, autofocus: true, input_html: { class: 'form-control form-control-sm' }
-		.row.mt-1
-			.col-md-6
-				= f.input :iccmx, autofocus: true, input_html: { class: 'form-control form-control-sm' }
-			.col-md-6
-				= f.input :usdot, autofocus: true, input_html: { class: 'form-control form-control-sm' }
-		hr
-		.form-actions.text-center
-			button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
-				svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-				  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
-				  polyline points=("17 21 17 13 7 13 7 21") 
-				  polyline points=("7 3 7 8 15 8") 
-				span Guardar
+  .row.mt-2
+    .col-md-6
+      .card
+        .card-body.p-3
+          .form-group  
+            .row
+              .col-lg-12
+                h6.s-14.mb-0
+                  i.fas.fa-info-circle.mr-2
+                  b = "General".upcase
+            .row.mt-3
+              .col-lg-12
+                = f.input :name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+              .col-lg-12
+                = f.input :phone, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm phone_mask_ext' }
+            .row.mt-4
+              .col-lg-12
+                h6.s-14.mb-0
+                  span PERMISOS
+            .row.mt-2
+              .col-md-3
+                = f.input :caat, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+              .col-md-3
+                = f.input :alpha, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+              .col-md-3
+                = f.input :iccmx, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+              .col-md-3
+                = f.input :usdot, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
 
-			= link_to :back, class: 'btn btn-default btn-sm pl-1' do
-				svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-				  rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
-				  line x1="9" x2="15" y1="9" y2="15" 
-				  line x1="15" x2="9" y1="9" y2="15" 
-				span Cancelar
+      .card
+        .card-body.p-3
+          .form-group
+            .row
+              .col-md-8
+                h6.s-14.mb-0
+                  i.fas.fa-map-marked-alt.mr-2
+                  b = "Domicilio fisico".upcase
+            .row.mt-4
+              .col-md-2
+                = f.label :country_id
+              .col-md-10
+                = f.input :country_id, label: false, collection: Country.all, input_html: { class: 's-12', data: { action: "change->address#filter_by_country", target: "address.countrySelect", container: "general_address" }}
+            .row.mt-2.general_address
+              .col-md-2
+                = f.label :state_id
+              .col-md-10
+                = f.input :state_id, label: false, collection: states, input_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId", container: "general_address" } }
+            .row.mt-2.general_address
+              .col-lg-2
+                = f.label :municipality_id
+              .col-lg-10
+                = f.input :municipality_id, label: false, collection: municipalities, required: true, autofocus: true, input_html: { class: 's-12' }
+            .row.mt-2
+              .col-md-2
+                = f.label :cp
+              .col-lg-10
+                = f.input :cp, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm cp_mask' }
+            .row.mt-2
+              .col-md-2
+                = f.label :address
+              .col-md-10		
+                = f.input :address, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+
+    .col-md-6
+      .card
+        .card-body.p-3
+          .row
+            .col-lg-12
+              h6.s-14.mb-0
+                i.fas.fa-file-invoice.mr-2
+                b = "Datos fiscales".upcase
+          .row
+            .col-12
+              #fiscals.fiscals
+                = f.simple_fields_for :fiscals do |fiscal|
+                  = render 'fiscals_fields', f: fiscal
+  .row
+    .col-12.text-right.mb-4
+      .form-actions.text-right
+        = link_to logistic_config_box_types_path, class: 'btn btn-default btn-sm pl-1 mr-2' do
+          i.fas.fa-chevron-left.s-12.mr-2
+          span Volver
+        button.btn.btn-dark-blue.btn-sm.pl-1 type="submit"
+					svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+					  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
+					  polyline points=("17 21 17 13 7 13 7 21") 
+					  polyline points=("7 3 7 8 15 8") 
+					span Guardar

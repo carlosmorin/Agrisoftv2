@@ -24,11 +24,11 @@ section.content data-controller="order-sales"
                         span.mr-2 Buscar
                         span.fas.fa-search.s-12
           .card-body.p-0
-            = form_tag(consolidate_crm_sales_orders_path, method: "GET") do
+            = form_tag(consolidate_crm_quotes_path, method: "GET") do
               table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
                 thead
                   tr.bg-light-gray
-                    th.text-center 
+                    th.text-center.d-none 
                       .custom-control.custom-checkbox
                         input#customCheckboxAll.custom-control-input type="checkbox" value="all" name="order_sales" /
                         label.custom-control-label for="customCheckboxAll" 
@@ -44,7 +44,7 @@ section.content data-controller="order-sales"
                         i.text-muted Sin ordenes de venta
                   - @sales_orders.each do |so| 
                     tr
-                      td
+                      td.d-none
                         .custom-control.custom-checkbox
                           input.custom-control-input id="customCheckbox#{so.id}" type="checkbox" name="order_sales[#{so.id}]" /
                           label.custom-control-label for="customCheckbox#{so.id}" 
@@ -69,4 +69,4 @@ section.content data-controller="order-sales"
                             = link_to crm_quote_print_path(so, format: :pdf), target: "_blank", class: "dropdown-item s-12 bold" do
                                 i.fas.fa-file-alt.mr-2
                                 span Crear pedido
-              input type="submit" value="Enviar"/
+              input.d-none type="submit" value="Enviar"/
