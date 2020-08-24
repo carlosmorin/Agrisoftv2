@@ -1,0 +1,70 @@
+section.content-header.pb-0
+  .container-fluid
+    .row.mb-2
+      .col-sm-6
+        h5 Configuracion Produccion
+      .col-sm-6.text-right.pr-2.s-12
+        = render_breadcrumbs :separator => ' / '
+section.content
+  .row
+    .col-4.col-sm-6.col-md-3
+      .info-box
+        span.info-box-icon.bg-info.elevation-1
+          i.fas.fa-tools
+        .info-box-content
+          span.info-box-text Ranchos
+          = link_to config_production_ranches_path, class: "btn btn-xs btn-primary mt-2" do
+            span.info-box-number
+              | Gestionar
+              small.ml-2.fas.fa-arrow-right
+    .col-4.col-sm-6.col-md-3
+      .info-box
+        span.info-box-icon.bg-info.elevation-1
+          i.fas.fa-project-diagram
+        .info-box-content
+          span.info-box-text Perforaciones/Pozos
+          = link_to config_production_perforations_path, class: "btn btn-xs btn-primary mt-2" do
+            span.info-box-number
+              | Gestionar
+              small.ml-2.fas.fa-arrow-right
+    .col-4.col-sm-6.col-md-3
+      .info-box
+        span.info-box-icon.bg-info.elevation-1
+          i.fas.fa-chart-area
+        .info-box-content
+          span.info-box-text Areas/Tablas
+          = link_to config_production_areas_path, class: "btn btn-xs btn-primary mt-2" do
+            span.info-box-number
+              | Gestionar
+              small.ml-2.fas.fa-arrow-right
+    .col-4.col-sm-6.col-md-3
+      .info-box
+        span.info-box-icon.bg-info.elevation-1
+          i.fas.fa-layer-group
+        .info-box-content
+          span.info-box-text Etapas
+          = link_to config_production_stages_path, class: "btn btn-xs btn-primary mt-2" do
+            span.info-box-number
+              | Gestionar
+              small.ml-2.fas.fa-arrow-right
+    .col-4.col-sm-6.col-md-3
+      .info-box
+        span.info-box-icon.bg-info.elevation-1
+          i.fas.fa-code-branch
+        .info-box-content
+          span.info-box-text Sub Etapas
+          = link_to config_production_sub_stages_path, class: "btn btn-xs btn-primary mt-2" do
+            span.info-box-number
+              | Gestionar
+              small.ml-2.fas.fa-arrow-right
+    .col-4.col-sm-6.col-md-3
+      .info-box
+        span.info-box-icon.bg-info.elevation-1
+          i.fas.fa-chart-line
+        .info-box-content
+          span.info-box-text Actividades
+          = link_to config_production_activities_path, class: "btn btn-xs btn-primary mt-2" do
+            span.info-box-number
+              | Gestionar
+              small.ml-2.fas.fa-arrow-right
+	
