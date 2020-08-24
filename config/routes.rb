@@ -1,4 +1,4 @@
-  Rails.application.routes.draw do
+Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace :admin do
   	root to: "main#index"
@@ -19,6 +19,18 @@
     resources :client_brands
     resources :products
     resources :currencies
+    namespace :production do 
+      root to: 'main#index'
+      resources :ranches do
+        resources :areas
+        resources :perforations
+      end
+      resources :areas
+      resources :activities
+      resources :perforations
+      resources :stages
+      resources :sub_stages
+    end
   end
 
   namespace :logistic do

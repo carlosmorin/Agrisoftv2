@@ -1,0 +1,15 @@
+section.content-header.pb-0
+  .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "Nueva Perforacion".upcase 
+section.content
+  .container
+    = render "shared/form_info"
+    .card
+      .card-body
+        .col-md-10
+          = render 'form', states: [], municipalities: []
