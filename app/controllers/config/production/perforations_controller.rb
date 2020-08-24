@@ -19,7 +19,6 @@ module Config
       def create
         @perforation = Perforation.new(perforation_params)
         @perforation.ranch_id = params[:ranch_id] if params[:ranch_id].present?
-        binding.pry
         if @perforation.save
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Perforacion creada correctamente"
           redirect_to config_production_perforation_url(@perforation)
