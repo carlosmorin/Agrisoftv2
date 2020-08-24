@@ -1,7 +1,6 @@
 class Carrier < ApplicationRecord
 	default_scope { order(:id) }
-	validates :name, :rfc, :phone, :country_id, :state_id, :address, :cp,
-		:municipality_id, presence: true
+	validates :name, :phone, :country_id, :state_id, :municipality_id, presence: true
 	has_many :drivers, inverse_of: :carrier
 	has_many :units, inverse_of: :carrier
 	has_many :boxes, inverse_of: :carrier
@@ -12,7 +11,8 @@ class Carrier < ApplicationRecord
 	belongs_to :state
 	belongs_to :municipality
 	
-	has_many :contacts, as: :contactable
+	has_many :fiscals, as: :fiscalable
+	accepts_nested_attributes_for :fiscals, allow_destroy: true
 
 	def short_address
 		state_name = state.name
@@ -27,4 +27,5 @@ class Carrier < ApplicationRecord
 	def full_name
 		"#{name}, RFC: #{ rfc }"
 	end
+
 end

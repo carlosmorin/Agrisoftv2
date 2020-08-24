@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_23_131208) do
+ActiveRecord::Schema.define(version: 2020_08_23_133523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -330,6 +330,16 @@ ActiveRecord::Schema.define(version: 2020_08_23_131208) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "fiscals", force: :cascade do |t|
+    t.string "bussiness_name"
+    t.string "rfc"
+    t.string "fiscalable_type", null: false
+    t.bigint "fiscalable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["fiscalable_type", "fiscalable_id"], name: "index_fiscals_on_fiscalable_type_and_fiscalable_id"
   end
 
   create_table "freights", force: :cascade do |t|

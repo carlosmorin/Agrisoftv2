@@ -1,5 +1,5 @@
 section.content-header.pb-0
-  .container
+  .container-fluid
     .row
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
@@ -7,10 +7,6 @@ section.content-header.pb-0
       .col-12
         h5 = "Nuevo trasportista".upcase 
 section.content
-  .container
+  .container-fluid
     = render "shared/form_info"
-  	.card
-  		.card-body.p-3
-  			.row
-					.col-lg-10
-						= render 'form', states: [], municipalities: []
+    = render 'form', states: [], municipalities: []
