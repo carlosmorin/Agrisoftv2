@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_13_180913) do
+ActiveRecord::Schema.define(version: 2020_08_24_031714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,12 +47,13 @@ ActiveRecord::Schema.define(version: 2020_08_13_180913) do
   end
 
   create_table "activities", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.string "url"
     t.string "action"
     t.string "ip_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "production_unit"
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
@@ -76,6 +77,16 @@ ActiveRecord::Schema.define(version: 2020_08_13_180913) do
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
     t.index ["country_id"], name: "index_addresses_on_country_id"
     t.index ["state_id"], name: "index_addresses_on_state_id"
+  end
+
+  create_table "areas", force: :cascade do |t|
+    t.string "name"
+    t.string "territory"
+    t.string "type_of_irrigation"
+    t.bigint "ranch_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ranch_id"], name: "index_areas_on_ranch_id"
   end
 
   create_table "box_types", force: :cascade do |t|
@@ -396,6 +407,19 @@ ActiveRecord::Schema.define(version: 2020_08_13_180913) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "perforations", force: :cascade do |t|
+    t.string "name"
+    t.string "coordinates"
+    t.string "registry_number"
+    t.string "volume"
+    t.date "validity"
+    t.decimal "expenditure"
+    t.bigint "ranch_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ranch_id"], name: "index_perforations_on_ranch_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.bigint "crop_id", null: false
     t.bigint "color_id", null: false
@@ -467,6 +491,22 @@ ActiveRecord::Schema.define(version: 2020_08_13_180913) do
     t.index ["user_id"], name: "index_quotes_on_user_id"
   end
 
+  create_table "ranches", force: :cascade do |t|
+    t.bigint "state_id"
+    t.bigint "municipality_id"
+    t.bigint "manager_id"
+    t.string "territory"
+    t.string "hydrological_region"
+    t.string "aquifer_name"
+    t.string "georeference"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.index ["manager_id"], name: "index_ranches_on_manager_id"
+    t.index ["municipality_id"], name: "index_ranches_on_municipality_id"
+    t.index ["state_id"], name: "index_ranches_on_state_id"
+  end
+
   create_table "shipments", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.bigint "client_id", null: false
@@ -523,6 +563,12 @@ ActiveRecord::Schema.define(version: 2020_08_13_180913) do
     t.string "short_name"
   end
 
+  create_table "stages", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "states", force: :cascade do |t|
     t.string "key"
     t.string "name"
@@ -532,6 +578,12 @@ ActiveRecord::Schema.define(version: 2020_08_13_180913) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "country_id"
     t.index ["country_id"], name: "index_states_on_country_id"
+  end
+
+  create_table "sub_stages", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "subcategories", force: :cascade do |t|
@@ -611,6 +663,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_180913) do
   add_foreign_key "activities", "users"
   add_foreign_key "addresses", "countries"
   add_foreign_key "addresses", "states"
+  add_foreign_key "areas", "ranches"
   add_foreign_key "boxes", "box_types"
   add_foreign_key "boxes", "carriers"
   add_foreign_key "carriers", "countries"
@@ -653,6 +706,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_180913) do
   add_foreign_key "freights_taxes", "taxes"
   add_foreign_key "general_information", "users"
   add_foreign_key "municipalities", "states"
+  add_foreign_key "perforations", "ranches"
   add_foreign_key "products", "client_brands"
   add_foreign_key "products", "colors"
   add_foreign_key "products", "crops"
