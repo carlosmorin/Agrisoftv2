@@ -1,113 +1,70 @@
 section.content-header.pb-0
   .container-fluid
+    .row.mb-2
+      .col-12
+        h5.mb-0 
+          b = "Detalle de cliente".upcase 
     .row
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
-    .row.mb-2
-      .col-12
-        h5 = "Detalle de cliente".upcase 
 section.content
-	.container-fluid
-		.row
-			.col-12
-				.callout.callout-info.mb-2
-					.row
-						.col-md-2
-							- img_url = "https://newbuildings.org/wp-content/uploads/2015/03/client-logo.png"
-							img src="#{img_url}" height="80" alt="LOGO CLIENTE"
-						.col-md-10
-							.row
-								.col-md-8
-									h5 = @client.name.upcase
-								.col-md-4.text-right
-									= link_to :back, class: 'mr-2 btn btn-sm btn-default s-12 pl-0' do
-										svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-											line x1="19" x2="5" y1="12" y2="12" 
-											polyline points=("12 19 5 12 12 5") 
-										span Atras
-									= link_to edit_crm_client_path(@client), class: 'btn btn-sm btn-success text-center pr-2 s-12 mr-2' do
-										svg.feather.feather-edit.mr-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-											path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-											path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
-										span Editar
-									
-							.row
-								.col-lg-4
-									.row
-										.col-md-4
-											label.mb-1.s-14 N° embarques:
-										.col-md-8
-												span = @client.shipments.size
-									.row
-										.col-md-4
-											label.mb-1.s-14 Codigo:
-										.col-md-8
-												span = @client.code.upcase
-									.row
-										.col-md-4
-											label.mb-1.s-14 Correo:
-										.col-md-8
-												span = @client.email.upcase
-									.row
-										.col-md-4
-											label.mb-1.s-14 Telefono:
-										.col-md-8
-												span = @client.phone.upcase
-								.col-lg-8
-									.row
-										.col-lg-12
-											p.bold.mb-0 Facturación
-									.row
-										.col-md-2
-											label.mb-1.s-14 Razón Social:
-										.col-md-8
-												span = @client.name.upcase
-									.row
-										.col-md-2
-											label.mb-1.s-14 RFC:
-										.col-md-8
-												span = @client.rfc.upcase
-									.row
-										.col-md-2
-											label.mb-1.s-14 Dirección:
-										.col-md-8
-												span = @client.full_address.upcase
-		.row
-			.col-lg-12
-				.btn-group
-					= link_to :back, title: "Atras", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: 'btn btn-sm btn-default' do
-						svg.feather.feather-chevron-left fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="13" xmlns="http://www.w3.org/2000/svg" 
-							polyline points=("15 18 9 12 15 6") 
-					= link_to edit_crm_client_path(@client), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: "btn btn-sm btn-default mr-2" do
-						svg.feather.feather-edit fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-							path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-							path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
-					= link_to new_crm_client_contact_path(@client), title: "Agregar contacto", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom',  class: 'btn btn-sm btn-default' do
-						svg.svg-inline--fa.fa-address-book.fa-w-14.h-12 aria-hidden="true" data-icon="address-book" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 448 512") xmlns="http://www.w3.org/2000/svg" 
-							path d=("M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z") fill="currentColor"
-					= link_to new_crm_client_delivery_address_path(@client), title: "Agregar D. de entrega ", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: 'btn btn-sm btn-default' do
-						svg.svg-inline--fa.fa-map-marker-alt.fa-w-12.h-12 aria-hidden="true" data-icon="map-marker-alt" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
-							path d=("M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z") fill="currentColor"
+  .container-fluid
+    .row.my-2
+      .col-md-8	
+        h3 = @client.name.upcase
+      .col-md-4.text-right
+        .btn-group
+          = link_to crm_clients_path, class: 'btn btn-sm btn-flat btn-default s-13 mr-2' do
+            svg.feather.feather-chevron-left.mx-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="13" xmlns="http://www.w3.org/2000/svg" 
+              polyline points=("15 18 9 12 15 6")
+              span Volver
+          = link_to edit_crm_client_path(@client), class: "btn btn-sm btn-success s-12 mr-2" do
+            svg.feather.feather-edit.mx-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+              path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+              path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+            span Editar
+          .btn-group.dropleft
+            button.btn.btn-dark-blue.btn-sm.s-12.mr-2.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+              | Acciones
+            .dropdown-menu
+              = link_to new_crm_client_contact_path(@client), class: 'dropdown-item s-12' do
+                i.fas.fa-id-card.mr-2
+                span Agregar contacto
+              = link_to new_crm_client_delivery_address_path(@client), class: 'dropdown-item s-12' do
+                i.fas.fa-truck.mr-2
+                span Agregar direccion de entrega
+              = link_to new_crm_client_contract_path(@client), class: 'dropdown-item s-12' do
+                i.fas.fa-file-signature.mr-2
+                span Agregar contrato
+              = link_to new_crm_client_bank_account_path(@client), class: 'dropdown-item s-12' do
+                i.fas.fa-money-check-alt.mr-2
+                span Agregar cuenta de banco
 
-			.col-lg-12
-				= render "shared/alerts"
-		.row.mt-2
-			.col-12
-				.card.card-primary.card-outline.card-outline-tabs
-					.card-header.p-0.border-bottom-0
-						ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
-							li.nav-item
-								= link_to 'Ventas', crm_client_path(@client, tab: :shipments), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'shipments' ? 'active' : 'c-gray' }"
-							li.nav-item
-								= link_to 'Contactos', crm_client_path(@client, tab: :contacts), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'contacts' ? 'active' : 'c-gray' }"
-							li.nav-item
-								= link_to 'Direcciónes', crm_client_path(@client, tab: :addresses), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'addresses' ? 'active' : 'c-gray' }"
-							li.nav-item
-								= link_to 'Contratos / acuerdos comerciales', crm_client_path(@client, tab: :contracts), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'contracts' ? 'active' : 'c-gray' }"
-					.card-body
-						#custom-tabs-four-tabContent.tab-content
-							#custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
-								= render "shipments" if params[:tab] == 'shipments'
-								= render "contracts" if params[:tab] == 'contracts'
-								= render "addresses" if params[:tab] == 'addresses'
-								= render "contacts" if params[:tab] == 'contacts'
+      .col-lg-12
+        = render "shared/alerts"
+    .row.mt-2
+      .col-12
+        .card.card-primary.card-outline.card-outline-tabs
+          .card-header.p-0.border-bottom-0
+            ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
+              li.nav-item
+                = link_to 'General', crm_client_path(@client, tab: :general), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'general' ? 'active' : 'c-gray' }"
+              li.nav-item
+                = link_to 'Ventas', crm_client_path(@client, tab: :shipments), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'shipments' ? 'active' : 'c-gray' }"
+              li.nav-item
+                = link_to 'Contactos', crm_client_path(@client, tab: :contacts), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'contacts' ? 'active' : 'c-gray' }"
+              li.nav-item
+                = link_to 'Cuentas de banco', crm_client_path(@client, tab: :bank_accounts), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'bank_accounts' ? 'active' : 'c-gray' }"
+              li.nav-item
+                = link_to 'Direcciónes', crm_client_path(@client, tab: :addresses), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'addresses' ? 'active' : 'c-gray' }"
+              li.nav-item
+                = link_to 'Contratos / acuerdos comerciales', crm_client_path(@client, tab: :contracts), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'contracts' ? 'active' : 'c-gray' }"
+          .card-body
+            #custom-tabs-four-tabContent.tab-content
+              #custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
+                = render "general" if params[:tab] == 'general'
+                = render "shipments" if params[:tab] == 'shipments'
+                = render "contracts" if params[:tab] == 'contracts'
+                = render "addresses" if params[:tab] == 'addresses'
+                = render "contacts" if params[:tab] == 'contacts'
+                = render "bank_accounts" if params[:tab] == 'bank_accounts'

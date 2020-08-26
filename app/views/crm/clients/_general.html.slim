@@ -1,0 +1,94 @@
+section#general.s-12
+	.row
+		.col-6	
+			.row
+				.col-lg-4.s-14
+					b.mb-1 Nombre:
+				.col-lg-8.text-left
+					b.mb-1.s-14 = @client.name.upcase
+			.row.mt-1
+				.col-lg-4
+					label.mb-1 Teléfono:
+				.col-lg-8.text-left
+					p.mb-1 = @client.phone.upcase
+			.row.mt-2
+				.col-lg-4
+					label.mb-1 País:
+				.col-lg-8.text-left
+					p.mb-1 = @client.country.name.upcase
+			.row
+				.col-lg-4
+					label.mb-1 Estado:
+				.col-lg-8.text-left
+					p.mb-1 = @client.state.name.upcase
+			.row
+				.col-lg-4
+					label.mb-1 Municipio / condado:
+				.col-lg-8.text-left
+					p.mb-1 = @client.municipality.name
+			.row
+				.col-lg-4
+					label.mb-1 Código Postal:
+				.col-lg-8.text-left
+					p.mb-1 = @client.cp
+			.row
+				.col-lg-4
+					label.mb-1 Dirección:
+				.col-lg-8.text-left
+					p.mb-1 = @client.address.upcase
+		
+	- if @client.fiscals.present?
+		hr.my-1
+		.row
+			.col-12
+				h6.mb-0.mt-2
+					i.fas.fa-file-invoice.mr-2
+					b.pt-2 Datos fiscales
+					- fiscal = @client.fiscals.first
+		.row.mt-2
+			.col-lg-2
+				label.mb-1 Razón social:
+			.col-lg-7.text-left
+				p.mb-1 = valid_empty(fiscal.bussiness_name).upcase
+		.row
+			.col-lg-2
+				label.mb-1 RFC:
+			.col-lg-7.text-left
+				p.mb-1 = valid_empty(fiscal.rfc).upcase
+		- if fiscal.addresses.present?
+			- address = fiscal.addresses.first
+			.row.mt-2
+				.col-lg-2
+					label.mb-1 Dirección:
+				.col-lg-7.text-left
+					p.mb-1 = address.locality.upcase + ", " + address.state.name.upcase + ", " + address.country.name.upcase 
+			.row.mt-2
+				.col-lg-2
+					label.mb-1 Colonia:
+				.col-lg-2.text-left
+					p.mb-1 = address.neighborhood.upcase
+			.row			
+				.col-lg-2
+					label.mb-1 CP:
+				.col-lg-4.text-left
+					p.mb-1 = address.cp.upcase
+			.row			
+				.col-lg-2
+					label.mb-1 Calle:
+				.col-lg-4.text-left
+					p.mb-1 = address.street.upcase
+			.row			
+				.col-lg-2
+					label.mb-1 Numero exterior:
+				.col-lg-4.text-left
+					p.mb-1 = address.outdoor_number.upcase
+			.row			
+				.col-lg-2
+					label.mb-1 Numero interior:
+				.col-lg-4.text-left
+					p.mb-1 = valid_empty(address.interior_number).upcase
+			.row			
+				.col-lg-2
+					label.mb-1 Curzamientos:
+				.col-lg-4.text-left
+					p.mb-1 = valid_empty(address.crosses).upcase

@@ -81,8 +81,8 @@ module Logistic
         fiscals_attributes: [:id, :bussiness_name, :rfc, :_destroy,
           addresses_attributes: [:id, :name, :street, :outdoor_number, :interior_number,
             :cp, :references, :neighborhood, :phone, :country_id, :state_id, 
-            :fiscalcrosses, :locality, :fiscal, :crosses, :_destroy]
-        ])
+            :fiscalcrosses, :locality, :fiscal, :crosses, :_destroy]]
+      )
     end
 
     def set_object

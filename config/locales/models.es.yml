@@ -33,7 +33,7 @@ es:
         name: Nombre
         value: Porcentaje
       client:
-        name: Razón social
+        name: Nombre
         rfc: RFC
         phone: Telefono
         country: Pais

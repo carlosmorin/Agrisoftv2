@@ -1,4 +1,4 @@
-= simple_form_for([:logistic, @carrier], data: { controller: 'masks address carriers slim-select' }) do |f|
+= simple_form_for([:logistic, @carrier], data: { controller: 'masks address carriers slim-select fiscal' }) do |f|
   .row.mt-2
     .col-md-6
       .card
@@ -11,7 +11,7 @@
                   b = "General".upcase
             .row.mt-3
               .col-lg-12
-                = f.input :name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+                = f.input :name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm', data: { target: 'fiscal.nameInput', action: 'keyup->fiscal#setFiscalName' } } 
               .col-lg-12
                 = f.input :phone, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm phone_mask_ext' }
             .row.mt-4
@@ -40,12 +40,12 @@
               .col-md-2
                 = f.label :country_id
               .col-md-10
-                = f.input :country_id, label: false, collection: Country.all, input_html: { class: 's-12', data: { action: "change->address#filter_by_country", target: "address.countrySelect", container: "general_address" }}
+                = f.input :country_id, label: false, collection: Country.all, input_html: { class: 's-12', data: { action: "change->address#filter_by_country", target: "address.countrySelect fiscal.countrySelect", container: "general_address" }}
             .row.mt-2.general_address
               .col-md-2
                 = f.label :state_id
               .col-md-10
-                = f.input :state_id, label: false, collection: states, input_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId", container: "general_address" } }
+                = f.input :state_id, label: false, collection: states, input_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId fiscal.stateSelect", container: "general_address" } }
             .row.mt-2.general_address
               .col-lg-2
                 = f.label :municipality_id
@@ -55,12 +55,18 @@
               .col-md-2
                 = f.label :cp
               .col-lg-10
-                = f.input :cp, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm cp_mask' }
+                = f.input :cp, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm cp_mask', data: { target: "fiscal.cpInput" }}
             .row.mt-2
               .col-md-2
                 = f.label :address
               .col-md-10		
                 = f.input :address, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+          .row.mt-4.d-none
+            .col-12.text-right
+              .custom-control.custom-checkbox
+                input#customCheckbox2.custom-control-input type="checkbox" data-target="fiscal.setAsFiscalAddress" data-action="change->fiscal#setAsFiscalAddress"  /
+                label.custom-control-label for="customCheckbox2"  Usar como dirección fiscal
+
 
     .col-md-6
       .card

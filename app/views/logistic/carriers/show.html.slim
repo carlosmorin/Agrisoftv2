@@ -1,39 +1,51 @@
 section.content-header.pb-0
   .container-fluid
+    .row.mb-2
+      .col-12
+        h5 
+          b = "Detalle de transportista".upcase	
     .row
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
-    .row.mb-2
-      .col-12
-        h5 = "Detalle de transportista".upcase	
       .col-lg-12
         = render "shared/alerts"
 section.content
-	.container-fluid
-		.row.my-4
-			.col-md-8
-				h2 = @carrier.name.upcase
-			.col-md-4.text-right
-				.btn-group
-					= link_to logistic_carriers_path, class: 'btn btn-sm btn-default s-12 mr-2' do
-						svg.feather.feather-chevron-left fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="13" xmlns="http://www.w3.org/2000/svg" 
-							polyline points=("15 18 9 12 15 6")
-						span.mx-2 Volver
-					= link_to edit_logistic_carrier_path(@carrier), class: "btn btn-sm btn-success mr-2" do
-						svg.feather.feather-edit fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-							path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-							path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
-						span.ml-2 Editar
-					= link_to new_logistic_carrier_driver_path(@carrier), title: "Agregar conductor", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-sm btn-default" do
-							svg.svg-inline--fa.fa-user.fa-w-14.h-12 aria-hidden="true" data-icon="user" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 448 512") xmlns="http://www.w3.org/2000/svg" 
-								path d=("M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z") fill="currentColor" 
-					= link_to new_logistic_carrier_unit_path(@carrier), title: "Agregar unidad", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-sm btn-default" do
-						svg.svg-inline--fa.fa-truck.fa-w-20.h-12 aria-hidden="true" data-icon="truck" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 640 512") xmlns="http://www.w3.org/2000/svg" 
-							path d=("M624 352h-16V243.9c0-12.7-5.1-24.9-14.1-33.9L494 110.1c-9-9-21.2-14.1-33.9-14.1H416V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h16c0 53 43 96 96 96s96-43 96-96h128c0 53 43 96 96 96s96-43 96-96h48c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zM160 464c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm320 0c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-208H416V144h44.1l99.9 99.9V256z") fill="currentColor" 
-					= link_to new_logistic_carrier_box_path(@carrier), title: "Agregar caja", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-sm btn-default" do
-						svg.svg-inline--fa.fa-truck-loading.fa-w-20.h-12 aria-hidden="true" data-icon="truck-loading" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 640 512") xmlns="http://www.w3.org/2000/svg" 
-							path d=("M50.2 375.6c2.3 8.5 11.1 13.6 19.6 11.3l216.4-58c8.5-2.3 13.6-11.1 11.3-19.6l-49.7-185.5c-2.3-8.5-11.1-13.6-19.6-11.3L151 133.3l24.8 92.7-61.8 16.5-24.8-92.7-77.3 20.7C3.4 172.8-1.7 181.6.6 190.1l49.6 185.5zM384 0c-17.7 0-32 14.3-32 32v323.6L5.9 450c-4.3 1.2-6.8 5.6-5.6 9.8l12.6 46.3c1.2 4.3 5.6 6.8 9.8 5.6l393.7-107.4C418.8 464.1 467.6 512 528 512c61.9 0 112-50.1 112-112V0H384zm144 448c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z") fill="currentColor"
-		.row
+  .container-fluid
+    .row.my-2
+      .col-md-8
+        h3 = @carrier.name.upcase
+      .col-md-4.text-right
+        .btn-group
+          = link_to logistic_carriers_path, class: 'btn btn-sm btn-default mr-2 s-12' do
+            svg.feather.feather-chevron-left fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="13" xmlns="http://www.w3.org/2000/svg" 
+              polyline points=("15 18 9 12 15 6")
+            span.mx-1 Volver
+          = link_to edit_logistic_carrier_path(@carrier), class: "btn btn-sm btn-success mr-2 s-12" do
+            svg.feather.feather-edit fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+              path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+              path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+            span.ml-2 Editar
+        .btn-group.dropleft
+          button.btn.btn-dark-blue.btn-sm.s-12.mr-2.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+            | Acciones
+          .dropdown-menu
+            = link_to new_logistic_carrier_driver_path(@carrier), class: 'dropdown-item s-12' do
+              i.fas.fa-user.mr-2
+              span Agregar operador
+            = link_to new_logistic_carrier_unit_path(@carrier), class: 'dropdown-item s-12' do
+              i.fas.fa-truck.mr-2
+              span Agregar undiad
+            = link_to new_logistic_carrier_box_path(@carrier), class: 'dropdown-item s-12' do
+              i.fas.fa-truck-loading.mr-2
+              span Agregar caja
+            .line-divider
+            = link_to new_logistic_carrier_contact_path(@carrier), class: 'dropdown-item s-12' do
+              i.fas.fa-id-card.mr-2
+              span Agregar contacto
+            = link_to new_logistic_carrier_bank_account_path(@carrier), class: 'dropdown-item s-12' do
+              i.fas.fa-money-check-alt.mr-2
+              span Agregar cuenta de banco
+    .row
 			.col-12
 				.card.card-primary.card-outline.card-outline-tabs
 					.card-header.p-0.border-bottom-0

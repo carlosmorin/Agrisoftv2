@@ -51,6 +51,10 @@ module ApplicationHelper
 		["clients", "expenses", "provider_categories"]
 	end
 
+	def valid_nil(str)
+		str.nil? ? "--" : str
+	end
+
 	def valid_empty(obj)
 		obj.empty? ? "--" : obj
 	end
