@@ -1,7 +1,7 @@
 class Shipment < ApplicationRecord
 	include FolioGenerator
 
-  default_scope { order(created_at: :desc) }
+  default_scope { order(freight_folio: :desc) }
 
 	before_create :set_products
 	before_update :set_products

@@ -10,7 +10,8 @@ class Carrier < ApplicationRecord
 	belongs_to :country
 	belongs_to :state
 	belongs_to :municipality
-	
+
+	has_many :bank_accounts, as: :accountable
 	has_many :fiscals, as: :fiscalable
 	accepts_nested_attributes_for :fiscals, allow_destroy: true
 

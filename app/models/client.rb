@@ -1,7 +1,7 @@
 class Client < ApplicationRecord
   acts_as_paranoid
   default_scope { order(:created_at) }
-  validates :name, :rfc, :cp, :address, :code, presence: true
+  validates :name, :cp, :address, :code, presence: true
   validates :country_id, :state_id, :municipality_id, :phone, :address, presence: true
   has_many :delivery_addresses, inverse_of: :client
 	belongs_to :country
@@ -14,6 +14,9 @@ class Client < ApplicationRecord
 
 	validates_uniqueness_of :phone, :code, case_sensitive: false
 	has_many :contacts, as: :contactable
+	has_many :fiscals, as: :fiscalable
+	has_many :bank_accounts, as: :accountable
+	accepts_nested_attributes_for :fiscals, allow_destroy: true
 
 	def full_address
 		"#{address}, #{municipality.name}, #{state.name}, #{country.name}"

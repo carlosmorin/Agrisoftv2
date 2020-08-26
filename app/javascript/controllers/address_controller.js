@@ -1,5 +1,4 @@
 import { Controller } from "stimulus"
-import SlimSelect from 'slim-select'
 
 const axios = require('axios');
 
@@ -7,7 +6,7 @@ export default class extends Controller {
   static targets = [ "countrySelect", "stateId", "municipalityId", "countryIds"]
 
 	initialize(){
-		
+		console.log("Init addresses")
 	}
 
 	filter_by_country(event){
