@@ -141,6 +141,9 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
                   li.nav-item
                     = link_to crm_config_expenses_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(crm_config_expenses_path)}" do
                       p.s-12.pl-3 Catalogo de gastos
+            li.nav-item.pb-2
+              = link_to config_production_root_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(config_production_root_path)}" do
+                p.s-12.pl-3 Produccion
         li.line-divider 
           hr.my-0
         li class=" nav-item has-treeview" 
@@ -193,3 +196,20 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
                         li.nav-item
                           = link_to directories_carriers_path, class: 'nav-link pt-0 pl-3 mb-0 pb-0' do
                             p.s-13 Transportistas
+        li.line-divider 
+          hr.my-0
+        li.nav-item.has-treeview
+          a.nav-link.pt-1.pb-1.pl-2 href="#"
+            svg.svg-inline--fa.fa-address-book.fa-w-14.h-16.mr-2.ml-1 aria-hidden="true" data-icon="address-book" data-prefix="far" focusable="false" role="img" viewbox=("0 0 448 512") xmlns="http://www.w3.org/2000/svg" 
+              path d=("M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-68 304H48V48h320v416zM208 256c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm-89.6 128h179.2c12.4 0 22.4-8.6 22.4-19.2v-19.2c0-31.8-30.1-57.6-67.2-57.6-10.8 0-18.7 8-44.8 8-26.9 0-33.4-8-44.8-8-37.1 0-67.2 25.8-67.2 57.6v19.2c0 10.6 10 19.2 22.4 19.2z") fill="currentColor" 
+            p.s-14.bold CATALOGOS
+            i.fa.fa-angle-left.right style="font-size: 16px;"
+          ul.nav.nav-treeview
+            li.nav-item.has-treeview.pb-2.pt-2
+              = link_to config_production_production_units_path, class: 'nav-link pt-0 pl-3 mb-0 pb-0' do
+                i.fas.fa-users.mr-2
+                p.s-13.bold.pl-1 Unidades de Produccion
+            li.nav-item.has-treeview.pb-2.pt-2
+              = link_to config_production_irrigation_types_path, class: 'nav-link pt-0 pl-3 mb-0 pb-0' do
+                i.fas.fa-users.mr-2
+                p.s-13.bold.pl-1 Tipos de riego

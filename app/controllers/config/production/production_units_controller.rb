@@ -1,0 +1,40 @@
+module Config
+  module Production
+    class ProductionUnitsController < ApplicationController
+      before_action :find_production_unit, only: %i[destroy]
+    
+      add_breadcrumb "Produccion", :config_production_root_path
+      add_breadcrumb "Unidades de Produccion", :config_production_production_units_path
+      
+      def index
+        @index_facade = ProductionUnits::IndexFacade.new(params)
+        @production_unit = ProductionUnit.new
+      end
+
+      def create
+        @production_unit = ProductionUnit.new(production_units_params)
+        if @production_unit.save
+          flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Unidad de produccion creada correctamente"
+          redirect_to config_production_production_units_path
+        else
+          @index_facade = ProductionUnit::IndexFacade.new(params)
+          render :index
+        end
+      end
+
+      def destroy
+        @production_unit.destroy
+      end
+
+      private
+
+      def production_units_params
+        params.require(:production_unit).permit(:name)
+      end
+
+      def find_production_unit
+        @production_unit = ProductionUnit.find(params[:id])
+      end
+    end
+  end
+end
