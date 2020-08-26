@@ -59,13 +59,13 @@ section.content
                       td = ranch.aquifer_name
                       td = ranch.municipality.name.upcase
                       td = ranch.georeference ? ranch.georeference.upcase : '--'
-                      - if ranch.document
+                      - if ranch.document.present?
                         td.text-center
                           .btn-group
                           = link_to '#', title: "Ver documento", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
                             i.far.fa-file-pdf
                       - else
-                        td = '--'
+                        td.text-center = '--'
                       td.text-center
                         .btn-group
                           = link_to config_production_ranch_path(ranch), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do

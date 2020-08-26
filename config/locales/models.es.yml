@@ -55,7 +55,10 @@ es:
         phone: Telefono
         country_id: País
         state_id: Estado
-        cp: Codigo postal
+        cp: Codigo postal<<<<<<< feature/banks_catalog
+184
+ 
+=======
         address: Dirección
         municipality_id: Municipio / condado
         caat: CAAT
@@ -79,7 +82,10 @@ es:
       unit:
         model: Modelo
         color: Color
-        year: Año
+        year: Año<<<<<<< feature/banks_catalog
+184
+ 
+=======
         n_econ: N° economico
         plate_number: N° de placas
         carrier_id: Transportista
@@ -94,7 +100,10 @@ es:
         box_type_id: Tipo de caja
       freight:
         carrier_id: Transportista
-        driver_id: Conductor
+        driver_id: Conductor<<<<<<< feature/banks_catalog
+184
+ 
+=======
         unit_id: Unidad
         box_id: Caja
         invoice_serie: Numero de factura
@@ -180,6 +189,28 @@ es:
         expirated_days: Días de vigencia
         issue_at: Fecha de emisión
         delivery_address_id: Lugar de entrega
+      activity:
+        action: Nombre
+        production_unit: Unidad de produccion
+      stage:
+        name: Nombre
+      sub_stage:
+        name: Nombre
+      ranch:
+        name: Nombre
+        territory: Superficie(has)
+        aquifer_name: Nombre del Aquifero
+        state_id: Estado
+        municipality_id: Municipio
+        georeference: Georeferencia
+        hydrological_region: Region Hidrologica
+      perforation:
+        name: Nombre
+        coordinates: Coordenadas
+        registry_number: Numero de registro
+        volume: Volumen(mts/2)
+        expenditure: Gasto(lps)
+        ranch_id: Rancho
       fiscal:
         bussiness_name: Razón social
         rfc: RFC
@@ -207,4 +238,3 @@ es:
         account_number: Numero de cuenta
         card_number: Numero de tarjeta
         comments: Comentarios
-

@@ -25,6 +25,8 @@ Rails.application.routes.draw do
         resources :areas
         resources :perforations
       end
+      resources :production_units, only: %i[index create destroy]
+      resources :irrigation_types, only: %i[index create destroy]
       resources :areas
       resources :activities
       resources :perforations
@@ -42,10 +44,8 @@ Rails.application.routes.draw do
       resources :freights
       resources :boxes
       resources :contacts, except: [:index]
-      resources :bank_accounts, except: [:index]
     end
     resources :contacts, except: [:index]
-    resources :bank_accounts, except: [:index]
     resources :units
     resources :drivers
     resources :boxes

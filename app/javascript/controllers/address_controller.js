@@ -10,7 +10,6 @@ export default class extends Controller {
 	}
 
 	filter_by_country(event){
-		console.log("filter_by_country") 
 		var current_target = event.currentTarget
 		var states_select = $("." + current_target.getAttribute('data-container')).find('select[name*=state]')
 		states_select.empty()

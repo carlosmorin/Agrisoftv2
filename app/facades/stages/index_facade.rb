@@ -1,6 +1,6 @@
 module Stages
   class IndexFacade
-    attr_reader :stages
+    attr_reader :stages, :stage
 
     def initialize(params)
       @params = params
@@ -10,6 +10,10 @@ module Stages
     def get_stages
       @stages = Stage.paginate(page: @params[:page], per_page: 10)
       search if @params[:q].present?
+    end
+
+    def find_stage(id)
+      @stage = Stage.find(id)
     end
 
     private
