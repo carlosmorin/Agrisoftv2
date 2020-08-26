@@ -8,6 +8,7 @@ module Config
       
       def index
         @index_facade = Activities::IndexFacade.new(params)
+        @activity = Activity.new
       end
 
       def new
@@ -19,9 +20,10 @@ module Config
         @activity = Activity.new(activity_params)
         if @activity.save
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Actividad creada correctamente"
-          redirect_to config_production_activity_url(@activity)
+          redirect_to config_production_activities_path
         else
-          render :new
+          @index_facade = Activities::IndexFacade.new(params)
+          render :index
         end
       end
 
@@ -36,7 +38,7 @@ module Config
       def update
         if @activity.update(activity_params)
           flash[:notice] = "La Aactividad fue actualizada correctamente."
-          redirect_to config_production_activity_url(@activity)
+          redirect_to config_production_activities_path
         else
           render :edit
         end
@@ -49,7 +51,7 @@ module Config
       private
 
       def activity_params
-        params.require(:activity).permit(:action, :production_unit)
+        params.require(:activity).permit(:action, :production_unit_id)
       end
 
       def find_activity

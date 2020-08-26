@@ -5,11 +5,13 @@ section.content-header.pb-0
         = render "shared/breadcrumbs_nav"
     .row.mb-2
       .col-12
-        h5 = "Nueva Etapa".upcase 
+        h5 = "#{@carrier.name.upcase} / Agregar cuenta de banco".upcase
+
 section.content
   .container
     = render "shared/form_info"
-    .card
-      .card-body
-        .col-md-10
-          = render 'form', states: [], municipalities: []
+  	.card
+  		.card-body.p-3
+  			.row
+					.col-lg-8
+						= render 'form'
