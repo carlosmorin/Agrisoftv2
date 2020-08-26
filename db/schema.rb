@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_24_031714) do
+ActiveRecord::Schema.define(version: 2020_08_26_045723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,8 @@ ActiveRecord::Schema.define(version: 2020_08_24_031714) do
     t.string "ip_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "production_unit"
+    t.bigint "production_unit_id"
+    t.index ["production_unit_id"], name: "index_activities_on_production_unit_id"
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
@@ -82,10 +83,11 @@ ActiveRecord::Schema.define(version: 2020_08_24_031714) do
   create_table "areas", force: :cascade do |t|
     t.string "name"
     t.string "territory"
-    t.string "type_of_irrigation"
     t.bigint "ranch_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "irrigation_type_id"
+    t.index ["irrigation_type_id"], name: "index_areas_on_irrigation_type_id"
     t.index ["ranch_id"], name: "index_areas_on_ranch_id"
   end
 
@@ -390,6 +392,12 @@ ActiveRecord::Schema.define(version: 2020_08_24_031714) do
     t.index ["user_id"], name: "index_general_information_on_user_id"
   end
 
+  create_table "irrigation_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "municipalities", force: :cascade do |t|
     t.bigint "state_id", null: false
     t.string "key"
@@ -418,6 +426,12 @@ ActiveRecord::Schema.define(version: 2020_08_24_031714) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ranch_id"], name: "index_perforations_on_ranch_id"
+  end
+
+  create_table "production_units", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "products", force: :cascade do |t|

@@ -8,10 +8,6 @@ module Config
       
       def index
         @index_facade = SubStages::IndexFacade.new(params)
-      end
-
-      def new
-        add_breadcrumb "Nuevo"
         @sub_stage = SubStage.new
       end
 
@@ -19,9 +15,10 @@ module Config
         @sub_stage = SubStage.new(sub_stage_params)
         if @sub_stage.save
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Sub Etapa creada correctamente"
-          redirect_to config_production_sub_stage_url(@sub_stage)
+          redirect_to config_production_sub_stages_path
         else
-          render :new
+          @index_facade = SubStages::IndexFacade.new(params)
+          render :index
         end
       end
 
@@ -29,14 +26,10 @@ module Config
         add_breadcrumb "Editar"
       end
 
-      def show
-        add_breadcrumb "Detalle de Sub Etapa"
-      end
-
       def update
         if @sub_stage.update(sub_stage_params)
           flash[:notice] = "La Sub Etapa fue actualizada correctamente."
-          redirect_to config_production_sub_stage_url(@sub_stage)
+          redirect_to config_production_sub_stages_path
         else
           render :edit
         end

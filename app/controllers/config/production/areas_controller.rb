@@ -51,7 +51,7 @@ module Config
       private
 
       def area_params
-        params.require(:area).permit(:name, :territory, :type_of_irrigation, :ranch_id)
+        params.require(:area).permit(:name, :territory, :irrigation_type_id, :ranch_id)
       end
 
       def find_area

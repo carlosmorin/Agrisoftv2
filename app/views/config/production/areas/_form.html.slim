@@ -16,7 +16,7 @@
   .form-group.mb-2 
     .row
       .col-lg-10
-        = f.input :type_of_irrigation, label: 'Tipo de riego', required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ', maxlength: "130"}
+        = f.input :irrigation_type_id, collection: IrrigationType.all, label: 'Tipo de riego', required: true, autofocus: true
   - if @ranch.present?
     input type="hidden" name="ranch_id" value="#{@ranch.id}"
     .row

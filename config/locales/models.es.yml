@@ -180,3 +180,26 @@ es:
         expirated_days: Días de vigencia
         issue_at: Fecha de emisión
         delivery_address_id: Lugar de entrega
+      activity:
+        action: Nombre
+        production_unit: Unidad de produccion
+      stage:
+        name: Nombre
+      sub_stage:
+        name: Nombre
+      ranch:
+        name: Nombre
+        territory: Superficie(has)
+        aquifer_name: Nombre del Aquifero
+        state_id: Estado
+        municipality_id: Municipio
+        georeference: Georeferencia
+        hydrological_region: Region Hidrologica
+      perforation:
+        name: Nombre
+        coordinates: Coordenadas
+        registry_number: Numero de registro
+        volume: Volumen(mts/2)
+        expenditure: Gasto(lps)
+        ranch_id: Rancho
+
