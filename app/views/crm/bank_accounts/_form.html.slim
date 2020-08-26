@@ -1,0 +1,65 @@
+= simple_form_for([:crm, @bank_account], data: { controller: "masks selectize" }) do |f|
+	= f.input :accountable_type, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @client.model_name }
+	= f.input :accountable_id, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @client.id }
+	.form-group.mb-2
+		.row
+			.col-lg-3
+				= f.label :name, class: "pt-1" 
+			.col-lg-9
+				= f.input :name, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+		.row.mt-2
+			.col-lg-3
+				= f.label :bank_id, class: "pt-1" 
+			.col-lg-9
+				= f.input :bank_id, collection: Bank.all, label: false, input_html: { class: 's-12 selectize' }
+		.row.mt-2
+			.col-lg-3
+				= f.label :currency_id, class: "pt-1" 
+			.col-lg-9
+				= f.input :currency_id, collection: Currency.all, label: false, input_html: { class: 's-12 selectize' }
+		.row.mt-2
+			.col-lg-3
+				= f.label :branch, class: "pt-1" 
+			.col-lg-9
+				= f.input :branch, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+		.row.mt-2
+			.col-lg-3
+				= f.label :titular, class: "pt-1" 
+			.col-lg-9
+				= f.input :titular, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+		.row.mt-4
+			.col-lg-3
+				= f.label :bank_key, class: "pt-1" 
+			.col-lg-9
+				= f.input :bank_key, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+		.row.mt-2
+			.col-lg-3
+				= f.label :account_number, class: "pt-1" 
+			.col-lg-9
+				= f.input :account_number, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+		.row.mt-2
+			.col-lg-3
+				= f.label :card_number, class: "pt-1" 
+			.col-lg-9
+				= f.input :card_number, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+		.row.mt-4
+			.col-md-3
+				= f.label :comments, class: "s-14"
+			.col-md-9.s-12.pl-4.bg-light-gray.py-2
+				= f.rich_text_area :comments
+		.row
+			.col-12
+				hr
+		.row.mt-2
+			.col-12
+				.form-actions.text-right
+					= link_to crm_client_path(@client, tab: :bank_accounts), class: 'btn btn-default btn-sm pl-1 mr-2' do
+						i.fas.fa-chevron-left.s-10.mr-2
+						span Volver
+					button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
+						svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+						  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
+						  polyline points=("17 21 17 13 7 13 7 21") 
+						  polyline points=("7 3 7 8 15 8") 
+						span Guardar
+

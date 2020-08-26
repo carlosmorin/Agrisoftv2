@@ -51,7 +51,7 @@
                   = shipment.freight.folio.present? ? shipment.freight.folio.upcase : '--'
               td = shipment.folio.present? ? shipment.folio.upcase : '--'
               td = shipment.client_folio.present? ? shipment.client_folio.upcase : '--' 
-              td = shipment.created_at.strftime("%m/%d/%Y  %I:%M %p")
+              td = shipment.updated_at.strftime("%m/%d/%Y  %I:%M %p")
               td.text-center
                 .btn-group
                   = link_to shipment_path(shipment), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do

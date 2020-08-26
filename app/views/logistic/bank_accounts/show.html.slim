@@ -1,0 +1,74 @@
+section.content-header.pb-0
+  .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "Detalle de cuenta de banco".upcase 
+section.content
+  .container
+    .row
+      .col-lg-12
+        = render "shared/alerts"
+		.card
+
+			.card-header
+				= link_to logistic_carrier_path(@bank_account.accountable, tab: :bank_accounts), class: 'mr-4 btn btn-sm btn-default s-12 pl-0' do
+					svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+					  line x1="19" x2="5" y1="12" y2="12" 
+					  polyline points=("12 19 5 12 12 5") 
+					span Atras
+				= link_to edit_logistic_carrier_bank_account_path(carrier_id: @bank_account.accountable, id: @bank_account), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
+					svg.feather.feather-edit.mr-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+						path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+						path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+					span Editar
+
+			.card-body
+				.row
+					.col-md-2
+						label Nombre / alias:
+					.col-md-8
+						p.mb-1.s-14 = @bank_account.name.upcase
+				.row
+					.col-md-2
+						label Banco:
+					.col-md-8
+						p.mb-1.s-14 = @bank_account.bank.name.upcase
+				.row
+					.col-md-2
+						label Moneda:
+					.col-md-8
+						p.mb-1.s-14 = @bank_account.currency.code.upcase
+				.row
+					.col-md-2
+						label Sucursal:
+					.col-md-8
+						p.mb-1.s-14 = valid_empty(@bank_account.branch.upcase)
+				.row
+					.col-md-2
+						label Titular:
+					.col-md-8
+						p.mb-1.s-14 = valid_empty(@bank_account.titular.upcase)
+
+				.row
+					.col-md-2
+						label Clave interbancaria:
+					.col-md-8
+						p.mb-1.s-14 = valid_empty(@bank_account.bank_key.upcase)
+				.row
+					.col-md-2
+						label Numero de cuenta:
+					.col-md-8
+						p.mb-1.s-14 = valid_empty(@bank_account.account_number.upcase)
+				.row
+					.col-md-2
+						label Numero de tarjeta:
+					.col-md-8
+						p.mb-1.s-14 = valid_empty(@bank_account.card_number.upcase)
+				.row.mt-4	
+					.col-md-2
+						label Comentarios / notas:
+					.col-md-8
+						p.mb-1.s-14 == valid_empty(@bank_account.comments)

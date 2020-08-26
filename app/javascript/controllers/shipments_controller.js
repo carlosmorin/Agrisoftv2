@@ -1,5 +1,7 @@
 import { Controller } from "stimulus"
 import SlimSelect from 'slim-select'
+import selectize from "selectize"
+
 const axios = require('axios');
 const $ = require('jquery');
 
@@ -17,7 +19,7 @@ export default class extends Controller {
 	    	 	
     	 	let selects = $(insertedItem).find("select")
         for (var i = 0, max=selects.length; i < max; i++) {
-          new SlimSelect({select: `#${$(selects[i]).attr("id")}`})
+        	$(`#${$(selects[i]).attr("id")}`).selectize()
         }
       })
 	}

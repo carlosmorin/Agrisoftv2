@@ -28,8 +28,8 @@
 			.col-lg-3
 				= f.label :state_id, class: "pt-1" 
 			.col-lg-9
-				= f.input :state_id, collection: states, required: true, autofocus: true, label: false, input_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId" } }
-	.form-group  
+				= f.input :state_id, collection: State.all.pluck(:name, :id), required: true, autofocus: true, label: false, input_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId" , container: "municipality-container" } }
+	.form-group.municipality-container  
 		.row
 			.col-md-3
 				= f.label :municipality_id, class: "pt-1" 
