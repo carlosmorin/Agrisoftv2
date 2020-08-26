@@ -1,43 +1,117 @@
 section#general.s-12
 	.row
-		.col-lg-2
-			label.mb-1 Nombre:
-		.col-lg-7.text-left
-			p.mb-1 = @carrier.name.upcase
-	.row
-		.col-lg-2
-			label.mb-1 RFC:
-		.col-lg-7.text-left
-			p.mb-1 = @carrier.rfc.upcase
-	hr.my-0
+		.col-6	
+			.row
+				.col-lg-4
+					label.mb-1 Nombre:
+				.col-lg-8.text-left
+					p.mb-1 = @carrier.name.upcase
+			.row
+				.col-lg-4
+					label.mb-1 Teléfono:
+				.col-lg-8.text-left
+					p.mb-1 = @carrier.phone.upcase
+			.row.mt-2
+				.col-lg-4
+					label.mb-1 País:
+				.col-lg-8.text-left
+					p.mb-1 = @carrier.country.name.upcase
+			.row
+				.col-lg-4
+					label.mb-1 Estado:
+				.col-lg-8.text-left
+					p.mb-1 = @carrier.state.name.upcase
+			.row
+				.col-lg-4
+					label.mb-1 Municipio / condado:
+				.col-lg-8.text-left
+					p.mb-1 = @carrier.municipality.name
+			.row
+				.col-lg-4
+					label.mb-1 Código Postal:
+				.col-lg-8.text-left
+					p.mb-1 = @carrier.cp
+			.row
+				.col-lg-4
+					label.mb-1 Dirección:
+				.col-lg-8.text-left
+					p.mb-1 = @carrier.address.upcase
+		.col-md-6
+			.row
+				.col-12
+					h5.s-14 PERMISOS		
+			.row
+				.col-md-2
+					label.mb-1 CAAT:
+				.col-md-8.text-left
+					p.mb-1 = @carrier.caat.upcase
+			.row
+				.col-md-2
+					label.mb-1 ALPHA:
+				.col-md-8.text-left
+					p.mb-1 = @carrier.alpha.upcase
+			.row
+				.col-md-2
+					label.mb-1 ICCMX:
+				.col-md-8.text-left
+					p.mb-1 = @carrier.iccmx.upcase
+			.row
+				.col-md-2
+					label.mb-1 US DOT:
+				.col-md-8.text-left
+					p.mb-1 = @carrier.usdot.upcase
+	hr.my-1
 	.row
 		.col-12
 			h6.mb-0.mt-2
 				svg.svg-inline--fa.fa-map-marked-alt.fa-w-18.h-14.mr-2.mb-1 aria-hidden="true" data-icon="map-marked-alt" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 576 512") xmlns="http://www.w3.org/2000/svg" 
 					path d=("M288 0c-69.59 0-126 56.41-126 126 0 56.26 82.35 158.8 113.9 196.02 6.39 7.54 17.82 7.54 24.2 0C331.65 284.8 414 182.26 414 126 414 56.41 357.59 0 288 0zm0 168c-23.2 0-42-18.8-42-42s18.8-42 42-42 42 18.8 42 42-18.8 42-42 42zM20.12 215.95A32.006 32.006 0 0 0 0 245.66v250.32c0 11.32 11.43 19.06 21.94 14.86L160 448V214.92c-8.84-15.98-16.07-31.54-21.25-46.42L20.12 215.95zM288 359.67c-14.07 0-27.38-6.18-36.51-16.96-19.66-23.2-40.57-49.62-59.49-76.72v182l192 64V266c-18.92 27.09-39.82 53.52-59.49 76.72-9.13 10.77-22.44 16.95-36.51 16.95zm266.06-198.51L416 224v288l139.88-55.95A31.996 31.996 0 0 0 576 426.34V176.02c0-11.32-11.43-19.06-21.94-14.86z") fill="currentColor" 
-				span.pt-2 Dirección
+				span.pt-2 Datos fiscales
+				- fiscal = @carrier.fiscals.first
 	.row.mt-2
 		.col-lg-2
-			label.mb-1 País:
+			label.mb-1 Razón social:
 		.col-lg-7.text-left
-			p.mb-1 = @carrier.country.name.upcase
+			p.mb-1 = fiscal.bussiness_name.upcase
 	.row
 		.col-lg-2
-			label.mb-1 Estado:
+			label.mb-1 RFC:
 		.col-lg-7.text-left
-			p.mb-1 = @carrier.state.name.upcase
-	.row
-		.col-lg-2
-			label.mb-1 Municipio / condado:
-		.col-lg-7.text-left
-			p.mb-1 = @carrier.municipality.name
-	.row
-		.col-lg-2
-			label.mb-1 Código Postal:
-		.col-lg-7.text-left
-			p.mb-1 = @carrier.cp
-	.row
+			p.mb-1 = fiscal.rfc.upcase
+	
+	- address = fiscal.addresses.first
+	.row.mt-2
 		.col-lg-2
 			label.mb-1 Dirección:
 		.col-lg-7.text-left
-			p.mb-1 = @carrier.address.upcase
+			p.mb-1 = address.locality.upcase + ", " + address.state.name.upcase + ", " + address.country.name.upcase 
+	.row.mt-2
+		.col-lg-2
+			label.mb-1 Colonia:
+		.col-lg-2.text-left
+			p.mb-1 = address.neighborhood.upcase
+	.row			
+		.col-lg-2
+			label.mb-1 CP:
+		.col-lg-4.text-left
+			p.mb-1 = address.cp.upcase
+	.row			
+		.col-lg-2
+			label.mb-1 Calle:
+		.col-lg-4.text-left
+			p.mb-1 = address.street.upcase
+	.row			
+		.col-lg-2
+			label.mb-1 Numero exterior:
+		.col-lg-4.text-left
+			p.mb-1 = address.outdoor_number.upcase
+	.row			
+		.col-lg-2
+			label.mb-1 Numero interior:
+		.col-lg-4.text-left
+			p.mb-1 = valid_empty(address.interior_number).upcase
+	.row			
+		.col-lg-2
+			label.mb-1 Curzamientos:
+		.col-lg-4.text-left
+			p.mb-1 = valid_empty(address.crosses).upcase

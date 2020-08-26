@@ -1,0 +1,40 @@
+.row
+  .col-lg-2.mb-2
+    = link_to new_logistic_carrier_contact_path(@carrier), class: "btn btn-success btn-sm" do
+      svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+        path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+      span.pl-2 Agregar contacto
+
+table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+  thead
+    tr.bg-light-gray
+      th style=("width: 5%")  #
+      th Nombre completo
+      th Telefonos
+      th Correo
+      th.text-center colspan="2" style=("width: 12%") Acciónes
+  tbody#tbody.s-13
+    - if @carrier.contacts.empty?
+      tr
+        td.text-center colspan="7"
+          = link_to 'Nuevo registro', new_config_unit_path, class: "s-12" 
+    - else
+      - @carrier.contacts.each do |contact|
+        tr
+          td = contact.id 
+          td 
+            span = contact.full_name.upcase
+            br 
+            small = "Dep: #{contact.position.upcase}"
+          td 
+            span = "Fijo: #{contact.phone.present? ? contact.phone : '--'}"
+            br
+            span = "Celular: #{contact.mobile_phone.present? ? contact.mobile_phone : '--' }"
+          td 
+            span = "#{contact.email.present? ? contact.email : '--'}"
+          td.text-center
+            = link_to logistic_carrier_contact_path(carrier_id: contact.contactable, id: contact), class: "btn btn-xs btn-default mr-1" do
+              i.fas.fa-eye.s-12
+            = link_to edit_logistic_carrier_contact_path(carrier_id: contact.contactable, id: contact), class: "btn btn-xs btn-default" do
+              i.fas.fa-edit.s-12
+

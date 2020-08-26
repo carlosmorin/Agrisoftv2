@@ -43,7 +43,9 @@ Rails.application.routes.draw do
       resources :units
       resources :freights
       resources :boxes
+      resources :contacts, except: [:index]
     end
+    resources :contacts, except: [:index]
     resources :units
     resources :drivers
     resources :boxes

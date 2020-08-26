@@ -4,16 +4,17 @@ import SlimSelect from 'slim-select'
 const axios = require('axios');
 
 export default class extends Controller {
-  static targets = [ "countryId", "stateId", "municipalityId", "countryIds"]
+  static targets = [ "countrySelect", "stateId", "municipalityId", "countryIds"]
 
 	initialize(){
 		
 	}
 
-	filter_by_country(){
-		var states_select = $('select[name*=state]')
+	filter_by_country(event){
+		var current_target = event.currentTarget
+		var states_select = $("." + current_target.getAttribute('data-container')).find('select[name*=state]')
 		states_select.empty()
-		var country_id = this.countryIdTarget.value
+		var country_id = current_target.value
 		var url = "/addresses/addresses/states?country_id=" + country_id;
 		var options = "";
 		var options = "<option value=''>SELECCIONA</option>";
@@ -31,8 +32,12 @@ export default class extends Controller {
 		});
 	}
 
-	filter_by_state(){
-		var municipality_select = $('select[name*=municipality_id]')
+	filter_by_state(event){
+		var current_target = event.currentTarget
+		var municipality_select = $("." + current_target.getAttribute('data-container')).find('select[name*=municipality_id]')
+		
+		if (municipality_select.length == 0) { return false; }
+		
 		municipality_select.empty()
 		var state_id = this.stateIdTarget.value
 		var url = "/addresses/addresses/municipalities?state_id=" + state_id;

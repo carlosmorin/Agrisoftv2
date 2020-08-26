@@ -1,12 +1,17 @@
 section.content-header.pb-0
-  .container-fluid
+  .container
     .row
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
     .row.mb-2
       .col-12
-        h5 = "Nuevo trasportista".upcase 
+        h5 = "#{@carrier.name.upcase} / Agregar contacto".upcase
+
 section.content
-  .container-fluid
+  .container
     = render "shared/form_info"
-    = render 'form', states: [], municipalities: []
+  	.card
+  		.card-body.p-3
+  			.row
+					.col-lg-8
+						= render 'form'
