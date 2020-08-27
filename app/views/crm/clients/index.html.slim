@@ -63,14 +63,18 @@ section.content
                         .btn-group
                             button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
                             .dropdown-menu.py-0 style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px), 38px, 0px);") x-placement="top-start" 
-                              = link_to new_crm_client_contact_path(client), class: 'dropdown-item s-12'
-                                svg.svg-inline--fa.fa-address-book.fa-w-14.h-12.mr-2 aria-hidden="true" data-icon="address-book" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 448 512") xmlns="http://www.w3.org/2000/svg" 
-                                  path d=("M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z") fill="currentColor" 
+                              = link_to new_crm_client_contact_path(client), class: 'dropdown-item s-12' do
+                                i.fas.fa-id-card.mr-2
                                 span Agregar contacto
                               = link_to new_crm_client_delivery_address_path(client), class: 'dropdown-item s-12' do
-                                svg.svg-inline--fa.fa-map-marker-alt.fa-w-12.h-12.mr-2 aria-hidden="true" data-icon="map-marker-alt" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
-                                  path d=("M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z") fill="currentColor" 
-                                span Agregar D. entrega
+                                i.fas.fa-truck.mr-2
+                                span Agregar direccion de entrega
+                              = link_to new_crm_client_contract_path(client), class: 'dropdown-item s-12' do
+                                i.fas.fa-file-signature.mr-2
+                                span Agregar contrato
+                              = link_to new_crm_client_bank_account_path(client), class: 'dropdown-item s-12' do
+                                i.fas.fa-money-check-alt.mr-2
+                                span Agregar cuenta de banco
                              
           .card-footer.p-2.pb-1.bg-light-gray
             .row

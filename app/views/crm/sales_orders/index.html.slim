@@ -28,45 +28,35 @@ section.content data-controller="order-sales"
               table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
                 thead
                   tr.bg-light-gray
-                    th.text-center.d-none 
-                      .custom-control.custom-checkbox
-                        input#customCheckboxAll.custom-control-input type="checkbox" value="all" name="order_sales" /
-                        label.custom-control-label for="customCheckboxAll" 
-                    th #
-                    th # COT
+                    th.text-left # COT
+                    th.text-left Remisionsita
                     th Cliente
-                    th.text-left Fecha de expedición
-                    th.text-center colspan="2" style=("width: 12%") Acciónes
+                    th N° bultos
+                    th Folio de flete
+                    th Folio de embarque
+                    th Folio de cliente
+                    th.text-center style=("width: 12%") Acciónes
                 tbody#tbody.s-13 
                   - if @sales_orders.empty?
                     tr
-                      td.text-center 
+                      td.text-center colspan="5"
                         i.text-muted Sin ordenes de venta
-                  - @sales_orders.each do |so| 
+                  - @sales_orders.each do |order| 
                     tr
-                      td.d-none
-                        .custom-control.custom-checkbox
-                          input.custom-control-input id="customCheckbox#{so.id}" type="checkbox" name="order_sales[#{so.id}]" /
-                          label.custom-control-label for="customCheckbox#{so.id}" 
                       td
-                        b = so.id
+                        = link_to order.quote_folio, crm_quote_path(order)
+                      td = order.company.name.upcase
+                      td = order.client.name.upcase
                       td
-                        b = so.quote_folio.upcase
+                        span.d-block = raw "#{order.n_products} <small>Bultos</small>"
+                        span = raw order.total_kg
                       td
-                        b = so.client.name.upcase
+                        span --
                       td
-                        b = so.created_at.strftime("%-d %bio %Y")
+                        span --
+                      td
+                        span --
                       td.text-center
                         .btn-group
-                          = link_to crm_sales_order_path(so), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-info' do
-                            i.fas.fa-eye.s-12
-                        .btn-group
-                          button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
-                          .dropdown-menu.py-0.adjust-dropdown style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-43px, 22px, 0px);") x-placement="top-start" 
-                            = link_to crm_quote_print_path(so, format: :pdf), target: "_blank", class: "dropdown-item s-12 text-danger bold" do
-                                i.fas.fa-file-pdf.mr-2
-                                span Exportar PDF
-                            = link_to crm_quote_print_path(so, format: :pdf), target: "_blank", class: "dropdown-item s-12 bold" do
-                                i.fas.fa-file-alt.mr-2
-                                span Crear pedido
-              input.d-none type="submit" value="Enviar"/
+                          = link_to edit_shipment_path(order), title: "Generar embarque", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-primary px-2" do
+                            i.fas.fa-arrow-right

@@ -14,9 +14,8 @@ section.content
         h3 = @client.name.upcase
       .col-md-4.text-right
         .btn-group
-          = link_to crm_clients_path, class: 'btn btn-sm btn-flat btn-default s-13 mr-2' do
-            svg.feather.feather-chevron-left.mx-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="13" xmlns="http://www.w3.org/2000/svg" 
-              polyline points=("15 18 9 12 15 6")
+          = link_to crm_clients_path, class: 'btn s-12 btn-default btn-sm mr-2' do
+              i.fas.fa-chevron-left.s-12.mr-2
               span Volver
           = link_to edit_crm_client_path(@client), class: "btn btn-sm btn-success s-12 mr-2" do
             svg.feather.feather-edit.mx-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 

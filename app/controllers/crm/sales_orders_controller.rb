@@ -29,44 +29,19 @@ module Crm
     end
 
     def destroy
-      @client.destroy
+      @sales_order.destroy
     end
 
-    def get_delivery_address
-      ## da = delivery_address
-      da = @client.delivery_addresses
-      render json: da
-    end
-    
-    def get_contacts
-      contacts = @client.contacts
-      render json: contacts
-    end
-  	
     private
 
     def search
       q = Regexp.escape(params[:q])
       
-      @clients = @clients.where("concat(name, ' ', rfc, ' ', phone) ~* ?", q)
-    end
-
-  	def client_params
-      params.require(:client).permit(:name, :rfc, :code, :phone, :country_id, :state_id, 
-        :municipality_id, :cp, :address, :email, :conact_name)
+      @sales_order = @sales_order.where("concat(folio, ' ', freight_folio, ' ', client_folio) ~* ?", q)
     end
 
     def set_object
-      id = params[:id].present? ? params[:id] : params[:client_id] 
-      @client = Client.find(id)
-    end
-
-    def set_catalogs
-      country = Country.find(@client.country_id)
-      state = State.find(@client.state_id)
-
-      @states = country.states
-      @municipalities = state.municipalities
+      @sales_order = Shipment.find(params[:id])
     end
   end
 end

@@ -55,10 +55,7 @@ es:
         phone: Telefono
         country_id: País
         state_id: Estado
-        cp: Codigo postal<<<<<<< feature/banks_catalog
-184
- 
-=======
+        cp: Codigo postal
         address: Dirección
         municipality_id: Municipio / condado
         caat: CAAT
@@ -82,10 +79,7 @@ es:
       unit:
         model: Modelo
         color: Color
-        year: Año<<<<<<< feature/banks_catalog
-184
- 
-=======
+        year: Año
         n_econ: N° economico
         plate_number: N° de placas
         carrier_id: Transportista
@@ -100,10 +94,7 @@ es:
         box_type_id: Tipo de caja
       freight:
         carrier_id: Transportista
-        driver_id: Conductor<<<<<<< feature/banks_catalog
-184
- 
-=======
+        driver_id: Conductor
         unit_id: Unidad
         box_id: Caja
         invoice_serie: Numero de factura

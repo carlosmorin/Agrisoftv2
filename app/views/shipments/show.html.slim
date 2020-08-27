@@ -15,9 +15,9 @@ section.content
       .card-header.p-2.pb-1
         .row
           .col-md-4
-            = link_to shipments_path, class: 'btn s-12 btn-default btn-sm' do
+            = link_to :back, class: 'btn s-12 btn-default btn-sm' do
               i.fas.fa-chevron-left.s-12.mr-2
-              span Volver al listado
+              span Volver
           .col-md-8.text-right
             = link_to edit_shipment_path(@shipment), class: 'mr-2 btn btn-sm btn-success text-center pr-2 s-12 ' do
               i.fas.fa-edit.s-12.mr-2
