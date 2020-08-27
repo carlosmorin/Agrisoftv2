@@ -60,57 +60,59 @@ section#general.s-12
 					label.mb-1 US DOT:
 				.col-md-8.text-left
 					p.mb-1 = @carrier.usdot.upcase
-	hr.my-1
-	.row
-		.col-12
-			h6.mb-0.mt-2
-				i.fas.fa-file-invoice.mr-2
-				span.pt-2 Datos fiscales
-				- fiscal = @carrier.fiscals.first
-	.row.mt-2
-		.col-lg-2
-			label.mb-1 Razón social:
-		.col-lg-7.text-left
-			p.mb-1 = fiscal.bussiness_name.upcase
-	.row
-		.col-lg-2
-			label.mb-1 RFC:
-		.col-lg-7.text-left
-			p.mb-1 = fiscal.rfc.upcase
-	
-	- address = fiscal.addresses.first
-	.row.mt-2
-		.col-lg-2
-			label.mb-1 Dirección:
-		.col-lg-7.text-left
-			p.mb-1 = address.locality.upcase + ", " + address.state.name.upcase + ", " + address.country.name.upcase 
-	.row.mt-2
-		.col-lg-2
-			label.mb-1 Colonia:
-		.col-lg-2.text-left
-			p.mb-1 = address.neighborhood.upcase
-	.row			
-		.col-lg-2
-			label.mb-1 CP:
-		.col-lg-4.text-left
-			p.mb-1 = address.cp.upcase
-	.row			
-		.col-lg-2
-			label.mb-1 Calle:
-		.col-lg-4.text-left
-			p.mb-1 = address.street.upcase
-	.row			
-		.col-lg-2
-			label.mb-1 Numero exterior:
-		.col-lg-4.text-left
-			p.mb-1 = address.outdoor_number.upcase
-	.row			
-		.col-lg-2
-			label.mb-1 Numero interior:
-		.col-lg-4.text-left
-			p.mb-1 = valid_empty(address.interior_number).upcase
-	.row			
-		.col-lg-2
-			label.mb-1 Curzamientos:
-		.col-lg-4.text-left
-			p.mb-1 = valid_empty(address.crosses).upcase
+
+	- if @carrier.fiscals.present?
+		hr.my-1
+		.row
+			.col-12
+				h6.mb-0.mt-2
+					i.fas.fa-file-invoice.mr-2
+					span.pt-2 Datos fiscales
+					- fiscal = @carrier.fiscals.first
+		.row.mt-2
+			.col-lg-2
+				label.mb-1 Razón social:
+			.col-lg-7.text-left
+				p.mb-1 = fiscal.bussiness_name.upcase
+		.row
+			.col-lg-2
+				label.mb-1 RFC:
+			.col-lg-7.text-left
+				p.mb-1 = fiscal.rfc.upcase
+		
+		- address = fiscal.addresses.first
+		.row.mt-2
+			.col-lg-2
+				label.mb-1 Dirección:
+			.col-lg-7.text-left
+				p.mb-1 = address.locality.upcase + ", " + address.state.name.upcase + ", " + address.country.name.upcase 
+		.row.mt-2
+			.col-lg-2
+				label.mb-1 Colonia:
+			.col-lg-2.text-left
+				p.mb-1 = address.neighborhood.upcase
+		.row			
+			.col-lg-2
+				label.mb-1 CP:
+			.col-lg-4.text-left
+				p.mb-1 = address.cp.upcase
+		.row			
+			.col-lg-2
+				label.mb-1 Calle:
+			.col-lg-4.text-left
+				p.mb-1 = address.street.upcase
+		.row			
+			.col-lg-2
+				label.mb-1 Numero exterior:
+			.col-lg-4.text-left
+				p.mb-1 = address.outdoor_number.upcase
+		.row			
+			.col-lg-2
+				label.mb-1 Numero interior:
+			.col-lg-4.text-left
+				p.mb-1 = valid_empty(address.interior_number).upcase
+		.row			
+			.col-lg-2
+				label.mb-1 Curzamientos:
+			.col-lg-4.text-left
+				p.mb-1 = valid_empty(address.crosses).upcase

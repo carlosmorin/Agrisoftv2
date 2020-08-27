@@ -36,11 +36,10 @@ section.content
 								tr.bg-light-gray
 									th Remisionista
 									th Cliente
+									th N° bultos
 									th.text-center Folio de flete
 									th.text-center Folio de embarque
 									th.text-center Folio de cliente
-									th.text-center N° bultos
-									th.text-center Kg
 									th.text-center Fecha de envio
 									th.text-center colspan="2" style=("width: 12%") Acciónes
 							tbody#tbody.s-13
@@ -53,26 +52,18 @@ section.content
 										tr
 											td = sale.company.name.upcase
 											td = sale.client.name.upcase
+											td.s-12 
+												span == "#{sale.n_products} <small>Bultos</small>"
+												br
+												span == sale.total_kg
 											td.text-center = sale.freight.folio.present? ? sale.freight.folio.upcase : '--'
 											td.text-center = sale.folio.present? ? sale.folio.upcase : '--'
 											td.text-center = sale.client_folio.present? ? sale.client_folio.upcase : '--' 
-											td.text-center = sale.n_products
 											td.text-center.s-12 = sale.created_at.strftime("%m/%d/%Y  %I:%M %p")
-											td.text-center = raw set_status sale.status
 											td.text-center
 												.btn-group
 													= link_to shipment_path(sale), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
 														i.far.fa-eye.s-12
-													.btn-group
-														button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
-														.dropdown-menu.py-0 style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px), 38px, 0px);") x-placement="top-start" 
-															= link_to shipment_print_path(sale, format: :pdf), target: "_blank", class: 'dropdown-item s-12'
-																i.fas.fa-handshake.s-12.mr-2
-																b Acuerdo comercial
-															= link_to shipment_print_responsive_path(sale, format: :pdf), target: "_blank", class: 'dropdown-item s-12'
-																svg.svg-inline--fa.fa-file-pdf.fa-w-12.h-12.mr-2 aria-hidden="true" data-icon="file-pdf" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
-																	path d=("M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z") fill="currentColor" 
-																span Agregar acuerdo comercial
 								tfoot
 									tr
 										th.pl-3 colspan="5" 
