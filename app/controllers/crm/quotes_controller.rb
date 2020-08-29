@@ -95,7 +95,7 @@ module Crm
     def search
       q = Regexp.escape(params[:q])
 
-      @quotes = @quotes.where('quote_folio ~* ?', q, q)
+      @quotes = @quotes.where('quote_folio ~* ?', q)
     end
 
     def set_object
