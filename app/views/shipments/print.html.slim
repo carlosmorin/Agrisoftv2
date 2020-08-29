@@ -89,7 +89,9 @@
                       th.text-right width="15%"
                         b.mt-1.mr-1 RFC:
                       th width="85%"
-                        span.text-normal.pr-3.mr-2 = @shipment.client.rfc.upcase
+                        - client = @shipment.client
+                        - rfc = client.fiscals.any? ? client.fiscals.first.rfc : client.rfc
+                        span.text-normal.pr-3.mr-2 = rfc.upcase
                         b.mt-1.mr-1 TELÉFONO:
                         span.text-normal.pr-3 = @shipment.client.phone.upcase
               tr
@@ -387,7 +389,7 @@ div style="height: 34.5cm;"
           table width="100%"
             tr
               th.text-right width="15%"
-                b.mt-1.mr-1 CLIENTE:
+                b.mt-1.mr-1 CLIENTE---------------:
               th width="85%"
                 span.text-normal.pr-3 = @shipment.client.name.upcase
             tr

@@ -5,8 +5,10 @@ module Crm
     add_breadcrumb "Cotizaciónes", :crm_quotes_path
 
     def index
-      @quotes = Shipment.quotation.paginate(page: params[:page], per_page: 25)
+      @quotes = Shipment.quotation
+                  .paginate(page: params[:page], per_page: 25)
       search if params[:q].present?
+      search_by_client if params[:c].present?
     end
 
     def show
@@ -84,10 +86,16 @@ module Crm
     end
 
     private
+    
+    def search_by_client
+      client_id = params[:c]
+      @quotes = @quotes.where(client_id: client_id)
+    end
 
     def search
       q = Regexp.escape(params[:q])
-      @quotes = @quotes.where("concat(id) ~* ?", q)
+
+      @quotes = @quotes.where('quote_folio ~* ?', q, q)
     end
 
     def set_object

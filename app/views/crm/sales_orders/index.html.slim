@@ -32,19 +32,18 @@ section.content data-controller="order-sales"
                     th.text-left Remisionsita
                     th Cliente
                     th N° bultos
-                    th Folio de flete
-                    th Folio de embarque
-                    th Folio de cliente
+                    th Folio de OV
+                    th Fechas
                     th.text-center style=("width: 12%") Acciónes
                 tbody#tbody.s-13 
                   - if @sales_orders.empty?
                     tr
-                      td.text-center colspan="5"
+                      td.text-center colspan="7"
                         i.text-muted Sin ordenes de venta
                   - @sales_orders.each do |order| 
                     tr
                       td
-                        = link_to order.quote_folio, crm_quote_path(order)
+                        = link_to order.quote_folio, crm_quote_path(order) if order.quote_folio.present?
                       td = order.company.name.upcase
                       td = order.client.name.upcase
                       td
@@ -54,9 +53,4 @@ section.content data-controller="order-sales"
                         span --
                       td
                         span --
-                      td
-                        span --
                       td.text-center
-                        .btn-group
-                          = link_to edit_shipment_path(order), title: "Generar embarque", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-primary px-2" do
-                            i.fas.fa-arrow-right

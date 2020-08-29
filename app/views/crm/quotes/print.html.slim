@@ -25,9 +25,11 @@ table width="100%"
 					tr
 						th.text-left width="70%"
 							h2.mt-0.mb-0 = @quote.client.name.upcase
-							p.text-normal.mt-0.mb-0 = "RFC: #{@quote.client.rfc.upcase}"
-							p.text-normal.mt-0.mb-0 = "TELÉFONO: #{@quote.client.phone.upcase}"
-							p.text-normal.mt-0 = "DIRECCIÓN: #{@quote.client.full_address.upcase}"
+							- client = @quote.client
+							- rfc = client.fiscals.any? ? client.fiscals.first.rfc : client.rfc
+							p.text-normal.mt-0.mb-0 = "RFC: #{rfc.upcase}"
+							p.text-normal.mt-0.mb-0 = "TELÉFONO: #{client.phone.upcase}"
+							p.text-normal.mt-0 = "DIRECCIÓN: #{client.full_address.upcase}"
 						th.text-right width="30%"
 							label.text-normal.mt-1 = raw "Fecha de emisión: <b>#{@quote.issue_at.strftime("%-d %bio %Y")}</b>"
 							br
