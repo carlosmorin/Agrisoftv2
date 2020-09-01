@@ -9,10 +9,12 @@ class Shipment < ApplicationRecord
 	before_create :set_freight_folio, if: :sale?
 	before_create :set_client_folio, if: :sale?
 	before_create :set_quote_folio, if: :quotation?
+	before_create :set_order_sale_folio, if: :order_sale?
 	
 	before_update :set_folio, if: :sale?
 	before_update :set_freight_folio, if: :sale?
 	before_update :set_client_folio, if: :sale?
+	before_update :set_order_sale_folio, if: -> { order_sale? && order_sale_folio.nil? }
 
 	belongs_to :company
 	belongs_to :client
@@ -20,7 +22,7 @@ class Shipment < ApplicationRecord
 	belongs_to :user
 	belongs_to :freight, optional: true
 
-	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: :quotation?
+	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: -> { order_sale? || quotation? }
 	validates :client_id, :company_id, :delivery_address_id, presence: true, if: :sale?
 	validates :exchange_rate, presence: true, if: :currency_is_usd?
 	
@@ -43,14 +45,20 @@ class Shipment < ApplicationRecord
 	end
 
 	def expirated_at
+		return if issue_at.nil? 
 		issue_at + expirated_days.days
 	end
 
 	def subtotal
 		sub_total = 0
 		shipments_products.map { |product|
-			sub_total += (product.quantity.to_i * product.price.to_i) }
+			sub_total += (product.quantity * product.price) }
 		sub_total
+	end
+
+	## Quote
+	def valid
+		self.expirated_at.beginning_of_day > Time.now.end_of_day
 	end
 
 	private
@@ -91,8 +99,6 @@ class Shipment < ApplicationRecord
 
 		self.client_folio ||= "FC-#{year}-#{code_client}-#{shipments}"
 	end
-	
-
 
 	def update_shipments(shipments)
 		client.update_column(:shipments, shipments)
@@ -126,4 +132,5 @@ class Shipment < ApplicationRecord
 			"#{total_shipments.to_i + 1 }"
 		end
 	end
+
 end

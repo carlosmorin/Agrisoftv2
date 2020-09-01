@@ -1,6 +1,6 @@
 - url = @shipment.new_record? ? shipments_path : shipment_path
 - shipment = @shipment.persisted? ? @shipment.freight : @shipment
-= simple_form_for(shipment, url: url, data: { controller: 'shipments users slim-select'} ) do |form|
+= simple_form_for(shipment, url: url, data: { controller: 'shipments users slim-select selectize'} ) do |form|
   = form.input :user_id, as: :hidden, input_html: { value: current_user.id }
   input type="hidden" name="type" value="normal"/
   .card

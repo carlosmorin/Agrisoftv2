@@ -95,7 +95,9 @@ Rails.application.routes.draw do
         get :consolidate
       end
     end
-    resources :sales_orders
+    resources :sales_orders do
+      get '/print', to: 'sales_orders#print'
+    end
     
     namespace :config do
       root to: "main#index"

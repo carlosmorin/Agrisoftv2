@@ -2,9 +2,12 @@ module Crm
 	class SalesController < ApplicationController
 		add_breadcrumb "CRM", :crm_root_path
 		add_breadcrumb "Ventas", :crm_sales_path
-  	
+
 		def index
-			@sales = Shipment.sale.paginate(page: params[:page], per_page: 25)
+			@sales = Shipment.sale
+								.joins(:products)
+								.includes(:products)
+								.paginate(page: params[:page], per_page: 25)
 			@all_sales = Shipment.sale.all
 
 			search if params[:q].present?
@@ -14,10 +17,11 @@ module Crm
 		private
 
 		def search
-			query = Regexp.escape(params[:q])
+			q = Regexp.escape(params[:q])
 
-			@sales = @sales.where("concat(folio, ' ', client_folio, ' ', 
-	      freight_folio, ' ', n_products) ~* ?", query)
+			@sales = @sales.where("folio ~* ? OR client_folio ~* ? OR 
+				freight_folio ~* ? OR products.name ~* ?", q, q, q, q)
+
 	  end
 		
 		def search_by_client

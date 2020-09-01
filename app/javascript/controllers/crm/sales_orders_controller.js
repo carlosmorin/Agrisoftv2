@@ -1,8 +1,8 @@
 import { Controller } from "stimulus"
-import selectize from "selectize"
 
 export default class extends Controller {
+  static targets = [ "output" ]
+
   connect() {
-  	$("select.selectize").selectize()
   }
 }

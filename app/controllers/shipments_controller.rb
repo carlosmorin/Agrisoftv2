@@ -9,7 +9,10 @@ class ShipmentsController < ApplicationController
   add_breadcrumb "Embarques", :shipments_path
 
   def index
-    @shipments = Shipment.sale.paginate(page: params[:page], per_page: 25)
+    @shipments = Shipment.sale
+                  .joins(:products)
+                  .includes(:products)
+                  .paginate(page: params[:page], per_page: 25)
     @orders_sales = Shipment.order_sale
     @all_shipments = Shipment.sale
     @orders = Shipment.order_sale if params[:tab] == "order_sale"
@@ -106,10 +109,9 @@ class ShipmentsController < ApplicationController
   end
 
   def search
-    query = Regexp.escape(params[:q])
+    q = Regexp.escape(params[:q])
 
-    @shipments = @shipments.where("concat(folio, ' ', client_folio, ' ', 
-      freight_folio, ' ', n_products) ~* ?", query)
+    @shipments = @shipments.where("folio ~* ? OR client_folio ~* ? OR freight_folio ~* ? OR products.name ~* ?", q, q, q, q)
   end
 
 	def set_object

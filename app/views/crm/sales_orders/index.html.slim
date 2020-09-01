@@ -5,52 +5,96 @@ section.content-header.pb-0
         = render "shared/breadcrumbs_nav"
     .row.mb-2
       .col-12
-        h5 = "Gestion de ordenes de venta".upcase
-
-section.content data-controller="order-sales"
+        h5 = "Gestionar ordenes de venta".upcase
+section.content data-controller="order-sales slim-select"
   .container-fluid
     .row
       .col-md-12
         .card
-          .card-header.p-2.pb-1.bg-light-gray
+          .card-header.p-2.pb-1
             .row
-              .col-md-6.col-sm-12
+              .col-md-8.col-sm-12
                 = form_tag(crm_sales_orders_path, method: "GET") do
+                  - value = params[:q].present? ? params[:q] : ''
                   .form-row.align-items-center
-                    .col-10
-                      = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por folio')
-                    .col-2
-                      button.btn.btn-sm.btn-flat.btn-default.bold type="submit"
-                        span.mr-2 Buscar
-                        span.fas.fa-search.s-12
+                    .col-5
+                      label.s-12.mb-0 Buscar por:
+                      = text_field_tag(:q, value, class: 'form-control form-control-sm', placeholder: 'Folio de cotización, Productos ...')
+                    .col-5
+                      label.s-12.mb-0 Cliente
+                      = select_tag :c, options_for_select(Client.all.pluck(:name, :id), selected: params[:c]), include_blank: 'Todos', class: 's-12 text-upcase'
+                    .col-2.my-1
+                      button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"  
+                        span.mr-2.s-12 Buscar
+                        i.fas.fa-search
+              .col-md-4.text-right
+                = link_to new_crm_sales_order_path, class: 'btn btn-success btn-sm s-14 mt-4' do 
+                  svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+                    path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+                  span.pl-2 Nueva orden de venta
           .card-body.p-0
             = form_tag(consolidate_crm_quotes_path, method: "GET") do
               table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
                 thead
                   tr.bg-light-gray
-                    th.text-left # COT
                     th.text-left Remisionsita
                     th Cliente
                     th N° bultos
                     th Folio de OV
+                    th.text-left Folio Cot
                     th Fechas
                     th.text-center style=("width: 12%") Acciónes
                 tbody#tbody.s-13 
-                  - if @sales_orders.empty?
+                  - if @order_sales.empty?
                     tr
                       td.text-center colspan="7"
-                        i.text-muted Sin ordenes de venta
-                  - @sales_orders.each do |order| 
-                    tr
-                      td
-                        = link_to order.quote_folio, crm_quote_path(order) if order.quote_folio.present?
+                        i.order_salestext-muted Sin ordenes de venta
+                  - @order_sales.each do |order| 
+                    - valid_class = order.valid ? '' : 'inavlid_row'
+                    tr class="#{valid_class}"
                       td = order.company.name.upcase
                       td = order.client.name.upcase
                       td
                         span.d-block = raw "#{order.n_products} <small>Bultos</small>"
                         span = raw order.total_kg
                       td
-                        span --
+                        span = order.order_sale_folio
                       td
-                        span --
+                        - if order.quote_folio.present?
+                          = link_to order.quote_folio, crm_quote_path(order) 
+                        - else
+                          = "--"
+                      td
+                        p.c-pointer.mb-0.s-12
+                          span Expiración: 
+                          b = order.expirated_at.nil? ? '--' : order.expirated_at.strftime("%d/%m/%Y")
+                        small = "#{distance_of_time_in_words(Time.now, order.expirated_at)} para expirar" if order.valid
+                        small.text-d-none
+                          b  = "Orden de venta vencida" unless order.valid
+
                       td.text-center
+                        .btn-group
+                          = link_to crm_sales_order_path(order), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                            svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg"
+                              path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z")
+                              circle cx="12" cy="12" r="3"
+                          = link_to edit_crm_sales_order_path(order), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+                            svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                              path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7")
+                              path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+                        .btn-group
+                          button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
+                          .dropdown-menu.py-0.adjust-dropdown style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-43px, 22px, 0px);") x-placement="top-start" 
+                            = link_to crm_sales_order_print_path(order, format: :pdf), target: "_blank", class: "dropdown-item s-12 text-danger bold" do
+                                i.fas.fa-file-pdf.mr-2
+                                span Exportar PDF
+                            = link_to crm_quote_path(order, format: :pdf), class: "dropdown-item s-12 text-danger bold" do
+                                i.fas.fa-file-pdf.mr-2
+                                span Exportar datos adcionales                                
+                            .dropdown-divider.my-1
+                            = link_to crm_quote_path(order, format: :pdf), class: "dropdown-item s-12  bold" do
+                                span Generar embarque
+                                i.fas.fa-arrow-right.ml-2
+
+
+

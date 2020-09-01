@@ -5,7 +5,7 @@ section.content-header.pb-0
         = render "shared/breadcrumbs_nav"
     .row.mb-2
       .col-12
-        h5 = "Editar orden de venta".upcase 
+        h5 = "Nueva orden de venta".upcase 
 section.content
 	.container
 		- delivery_addresses = @order_sale.client.nil? ? [] : @order_sale.client.delivery_addresses
