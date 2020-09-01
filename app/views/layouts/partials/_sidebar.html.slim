@@ -86,27 +86,27 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
                   li.nav-item
                     = link_to commercial_config_provider_categories_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(commercial_config_provider_categories_path)}" do
                       p.s-12.pl-3 Categorias
-        li class="nav-item has-treeview  #{current_nav_item?(request.fullpath, 'commercial')} " 
+        li class="nav-item has-treeview  #{current_nav_item?(request.fullpath, 'crm')} " 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
             i.fas.fa-shopping-bag.s-15.mr-2.ml-1
             p.s-14.ml-1 VENTAS
             i.fa.fa-chevron-left.right style="font-size: 12px;"
           ul.nav.nav-treeview
             li.nav-item
-              = link_to crm_quotes_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(commercial_providers_path)}" do
+              = link_to crm_quotes_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(crm_quotes_path)}" do
                 i.fas.fa-circle.s-10.mr-2
                 p.s-14.text-normal 
                   span Gestionar Cotizaciónes
                   span.badge.badge-info.right.s-10 = Shipment.quotation.size
         
             li.nav-item
-              = link_to crm_sales_orders_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(commercial_providers_path)}" do
+              = link_to crm_sales_orders_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(crm_sales_orders_path)}" do
                 i.fas.fa-circle.s-10.mr-2
                 p.s-14.text-normal 
                   span Gestionar Ordenes de V
                   span.badge.badge-info.right.s-10 = Shipment.order_sale.size
             li.nav-item.pb-2
-              = link_to crm_sales_path, class: 'nav-link pt-0 pb-0 pl-3 mb-0' do
+              = link_to crm_sales_path, class: 'nav-link pt-0 pb-0 pl-3 mb-0 #{current_link?(crm_sales_path)}' do
                 i.fas.fa-circle.s-10.mr-2
                 p.s-14
                   span Gestionar Ventas

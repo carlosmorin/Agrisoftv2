@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_26_045723) do
+ActiveRecord::Schema.define(version: 2020_09_01_033755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -584,6 +584,7 @@ ActiveRecord::Schema.define(version: 2020_08_26_045723) do
     t.string "quote_folio"
     t.integer "currency"
     t.decimal "exchange_rate"
+    t.string "order_sale_folio"
     t.index ["client_id"], name: "index_shipments_on_client_id"
     t.index ["company_id"], name: "index_shipments_on_company_id"
     t.index ["contact_id"], name: "index_shipments_on_contact_id"

@@ -30,11 +30,11 @@
               .col-lg-1
               .col-lg-12
                 hr.my-0
-            #products.products.text-center data-target="shipments.productsContainer"
+            #products.products.s-12 data-target="shipments.productsContainer"
               = f.simple_fields_for :shipments_products do |ff|
                 = render 'shipments_product_fields', f: ff
-              = link_to_add_association 'Agregar producto', f, :shipments_products, class: "btn btn-sm btn-sm btn-primary s-12 add_products mt-4"
-      .row
+              = link_to_add_association 'Agregar producto', f, :shipments_products, class: "btn btn-sm btn-sm btn-primary s-12 add_products mt-4 pull-right"
+      .row.mt-2
         .col-lg-12
           = f.input :comments, input_html: { class: "form-control s-12", placeholder: "Ej. ", data: { target: "shipments.comments" } }
   hr

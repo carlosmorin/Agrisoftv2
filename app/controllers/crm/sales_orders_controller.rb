@@ -1,14 +1,24 @@
 module Crm
   class SalesOrdersController < ApplicationController
-  	before_action :set_object, only: %i[show edit update]
-    before_action :set_catalogs, only: %i[edit update]
+  	before_action :set_object, only: %i[show edit update print]
 
     add_breadcrumb "CRM", :crm_root_path
     add_breadcrumb "Ordenes de venta", :crm_sales_orders_path
 
     def index
-    	@sales_orders = Shipment.order_sale.paginate(page: params[:page], per_page: 16)
+    	@order_sales = Shipment.order_sale
+                        .order('order_sale_folio ASC')
+                        .joins(:products)
+                        .includes(:products)
+                        .paginate(page: params[:page], per_page: 25)  
       search if params[:q].present?
+      search_by_client if params[:c].present?
+    end
+
+    def new 
+      add_breadcrumb "Nueva"
+      @order_sale = Shipment.new(status: :order_sale)
+      @order_sale.shipments_products.build
     end
 
     def edit
@@ -19,29 +29,71 @@ module Crm
       add_breadcrumb "Detalle de orden de venta"
     end
 
+    def create
+      @order_sale = Shipment.new(order_sale_params)
+      @order_sale.status = :order_sale
+      if @order_sale.save
+        flash[:notice] = "<i class='fa fa-check-circle mr-2'></i> Orden de venta creada exitosamente"
+        redirect_to crm_sales_order_path(@order_sale)
+      else
+        add_breadcrumb "Nueva"
+        render :new
+      end
+    end
+
     def update
-      if @sales_order.update(client_params)
-        flash[:notice] = "Orden de venta actualizada exitosamente"
-        redirect_to crm_sales_order_url(@sales_order)
+      if @order_sale.update(order_sale_params)
+        flash[:notice] = "<i class='fa fa-check-circle mr-2'></i> Orden de venta actualizada exitosamente"
+        redirect_to crm_sales_order_path(@order_sale)
       else
         render :edit
       end
     end
 
     def destroy
-      @sales_order.destroy
+      @order_sale.destroy
+    end
+
+    def order_sale_params
+      params.require(:shipment).permit(:client_id, :company_id, :contact_id,
+        :user_id, :expirated_days, :expired_at, :status, :iva, :delivery_address_id,
+        :issue_at, :discount, :currency, :exchange_rate, :description, shipments_products_attributes: [:id,
+          :price, :quantity, :shipment_id, :product_id, :productable_type,
+          :productable_id, :_destroy])
+    end
+    
+    def print
+      respond_to do |format|
+        format.html
+        format.pdf do
+          render pdf: "Orden de venta N° #{@order_sale.order_sale_folio}",
+          page_size: 'A4',
+          template: "crm/sales_orders/print.html.slim",
+          layout: "pdf.html",
+          lowquality: true,
+          zoom: 1,
+          dpi: 75
+        end
+      end
     end
 
     private
 
+    def search_by_client
+      client_id = params[:c]
+      @order_sales = @order_sales.where(client_id: client_id)
+    end
+
     def search
       q = Regexp.escape(params[:q])
       
-      @sales_order = @sales_order.where("concat(folio, ' ', freight_folio, ' ', client_folio) ~* ?", q)
+      @order_sales = @order_sales.where(
+        'quote_folio ~* ? OR products.name ~* ? OR order_sale_folio ~* ?', q, q, q)
     end
 
     def set_object
-      @sales_order = Shipment.find(params[:id])
+      id = params[:id].present? ? params[:id] : params[:sales_order_id] 
+      @order_sale = Shipment.find(id)
     end
   end
 end

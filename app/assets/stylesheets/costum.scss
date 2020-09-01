@@ -19,10 +19,7 @@ span.error ~ input.form-control{
 	overflow: hidden;
 	margin: 0 auto; 
 }
-/////TEXT STYLES
-.text-underline{
-	text-decoration: underline; 
-}
+
 ///Helpers
 //// Font size
 .s-8{ font-size: 8px !important; }
@@ -279,4 +276,15 @@ li.line-divider > hr{
 
 .selectize-input {
  padding: 5px 6px !important;
+}
+
+.inavlid_row{
+	background-color: #ffc2c2 !important;
+}
+/////TEXT STYLES
+.text-underline{
+	text-decoration: underline; 
+}
+.text-d-none{
+	text-decoration: none !important; 
 }
