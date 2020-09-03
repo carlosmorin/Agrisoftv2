@@ -182,7 +182,7 @@ es:
         delivery_address_id: Lugar de entrega
       activity:
         action: Nombre
-        production_unit: Unidad de produccion
+        production_unit_id: Unidad de produccion
       stage:
         name: Nombre
       sub_stage:
@@ -199,8 +199,9 @@ es:
         name: Nombre
         coordinates: Coordenadas
         registry_number: Numero de registro
-        volume: Volumen(mts/2)
-        expenditure: Gasto(lps)
+        volume: Volumen(M3)
+        expenditure: Gasto(LPS)
+        validity: Vigencia
         ranch_id: Rancho
       fiscal:
         bussiness_name: Razón social
@@ -229,3 +230,8 @@ es:
         account_number: Numero de cuenta
         card_number: Numero de tarjeta
         comments: Comentarios
+      area: 
+        name: Nombre
+        territory: Superficie(HAS)
+        irrigation_type_id: Tipo de riego
+        ranch_id: Rancho

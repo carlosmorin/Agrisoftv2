@@ -16,7 +16,7 @@ module Activities
 
     def search
       q = Regexp.escape(@params[:q])
-      @activities = @activities.where("concat(action, ' ', production_unit, ' ') ~* ?", q)
+      @activities = @activities.where("concat(action) ~* ?", q)
     end
   end
 end

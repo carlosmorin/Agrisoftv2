@@ -17,7 +17,7 @@ section.content
                 = form_tag(config_production_areas_path, method: "GET") do
                   .form-row.align-items-center
                     .col-10
-                      = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por Nombre, territorio, tipo de irrigacion')
+                      = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por Nombre, superficie(has), rancho, tipo de irrigacion')
                     .col-2.my-1
                       button.btn.btn-sm.btn-flat.btn-default.bold type="submit"
                         svg.feather.feather-filter fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
@@ -52,14 +52,14 @@ section.content
                       td = area.ranch.name.upcase
                       td.text-center
                         .btn-group
+                          = link_to edit_config_production_area_path(area), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+                              svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                                path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                                path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
                           = link_to config_production_area_path(area), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
                             svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
                               path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
                               circle cx="12" cy="12" r="3"
-                          = link_to edit_config_production_area_path(area), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
-                            svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-                              path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-                              path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
                              
           .card-footer.p-2.pb-1.bg-light-gray
             .row

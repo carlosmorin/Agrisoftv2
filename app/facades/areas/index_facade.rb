@@ -8,6 +8,7 @@ module Areas
     end
 
     def get_areas
+      binding.pry
       @areas = Area.paginate(page: @params[:page], per_page: 10)
       search if @params[:q].present?
     end
@@ -16,7 +17,7 @@ module Areas
 
     def search
       q = Regexp.escape(@params[:q])
-      @areas = @areas.where("concat(name, ' ', territory, ' ', type_of_irrigation) ~* ?", q)
+      @areas = @areas.joins(:ranch, :irrigation_type).where("concat(areas.name, ' ', areas.territory, ' ', ranches.name, ' ', irrigation_types.name) ~* ?", q)
     end
   end
 end

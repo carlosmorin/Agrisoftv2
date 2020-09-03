@@ -17,23 +17,17 @@
         = f.input :registry_number, label: "Numero de registro", required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ', maxlength: "13" }
   .form-group.mb-2  
     .row
-      .col-3
-        = f.label :vigencia, class: "pt-1" 
-      .col-9
+      .col-lg-10
         .input-group.date.d-block data-provide="datepicker" 
-          = f.input :validity, label: false, as: :date, html5: true, input_html: { class: "mr-2 form-control form-control-sm date-picker" }
+          = f.input :validity, as: :date, html5: true, input_html: { class: "mr-2 form-control form-control-sm date-picker" }
   .form-group.mb-2
     .row
-      .col-lg-3
-        = f.label :volumen, class: "pt-1" 
-      .col-lg-9
-        = f.input :volume, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
+      .col-lg-10
+        = f.input :volume, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
   .form-group.mb-2
     .row
-      .col-md-3
-        = f.label :gasto, class: "pt-1" 
-      .col-md-9
-        = f.input :expenditure, required: true, label: false, input_html: { class: 'form-control form-control-sm' }
+      .col-md-10
+        = f.input :expenditure, required: true, input_html: { class: 'form-control form-control-sm' }
   - if @ranch.present?
     input type="hidden" name="ranch_id" value="#{@ranch.id}"
     .row
@@ -43,23 +37,18 @@
         .badge.badge-pill.bg-info
           = @ranch.name.upcase
   - else
-    .form-group.mb-1  
+    .form-group.mb-3
       .row
-        .col-lg-3
-          = f.label :rancho, class: "pt-1" 
-        .col-lg-9
-          = f.input :ranch_id, collection: Ranch.all, label: false, input_html: { class: 's-12', data: { action: "change->address#filter_by_country", target: "address.countryId" }}
+        .col-lg-10
+          = f.input :ranch_id, collection: Ranch.all, input_html: { class: 's-12', data: { action: "change->address#filter_by_country", target: "address.countryId" }}
+  .form-group.mb-3
+    .row
+      .col-lg-10
+        = f.rich_text_area :perforation_structure, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm cp_mask'  }
   .form-group.mb-1  
     .row
-      .col-lg-3
-        = f.label :Estructura_de_pozo, class: "pt-1" 
-      .col-lg-9
-        = f.rich_text_area :perforation_structure, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm cp_mask'  }
-  .form-group.mb-1  
-    .row
-      .col-lg-3
-        = f.label :Documento, class: "pt-1" 
-      .col-lg-9
+      .col-lg-10
+        = f.label :Documento, class: "pt-1 d-block mb-3" 
         = f.file_field :document, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm cp_mask'  }
   hr
   .form-actions.text-right

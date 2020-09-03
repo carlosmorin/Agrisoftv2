@@ -545,8 +545,8 @@ ActiveRecord::Schema.define(version: 2020_09_01_033755) do
   end
 
   create_table "ranches", force: :cascade do |t|
-    t.string "state_id"
-    t.string "municipality_id"
+    t.bigint "state_id"
+    t.bigint "municipality_id"
     t.bigint "manager_id"
     t.string "territory"
     t.string "hydrological_region"

@@ -5,32 +5,27 @@
         svg.svg-inline--fa.fa-info-circle.fa-w-16.h-16.mr-2.mb-1 aria-hidden="true" data-icon="info-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
           path d=("M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z") fill="currentColor" 
         span General
-  .form-group.mb-1  
-    .row
-      .col-lg-10
+  .row
+    .col-lg-6
+      .form-group.mb-1  
         = f.input :name, label: 'Nombre', required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
-  .form-group.mb-1  
-    .row
-      .col-lg-10
-        = f.input :territory, label: 'Superficie', required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
-  .form-group.mb-2 
-    .row
-      .col-lg-10
+    .col-lg-6
+      .form-group.mb-1  
+        = f.input :territory, label: 'Superficie(HAS)', required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+    .col-lg-6
+      .form-group.mb-2 
         = f.input :irrigation_type_id, collection: IrrigationType.all, label: 'Tipo de riego', required: true, autofocus: true
-  - if @ranch.present?
-    input type="hidden" name="ranch_id" value="#{@ranch.id}"
-    .row
-      .col-lg-3
-        = "Rancho"
+    - if @ranch.present?
+      input type="hidden" name="ranch_id" value="#{@ranch.id}"
+        .col-lg-6
+          = "Rancho"
+        .col-lg-6
+          .badge.badge-pill.bg-info
+            = @ranch.name.upcase
+    - else
       .col-lg-6
-        .badge.badge-pill.bg-info
-          = @ranch.name.upcase
-  - else
-    .form-group.mb-1  
-      .row
-        .col-lg-1
+        .form-group.mb-1  
           = f.label :rancho, class: "pt-1" 
-        .col-lg-9
           = f.input :ranch_id, collection: Ranch.all, label: false, input_html: { class: 's-12'}
   hr
   .form-actions.text-right

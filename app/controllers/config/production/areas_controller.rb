@@ -56,6 +56,7 @@ module Config
 
       def find_area
         id = params[:id].present? ? params[:id] : params[:client_id] 
+        binding.pry
         @area = Area.find(id)
       end
 

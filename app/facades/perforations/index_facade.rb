@@ -16,7 +16,7 @@ module Perforations
 
     def search
       q = Regexp.escape(@params[:q])
-      @perforations = @perforations.where("concat(name, ' ', coordinates, ' ', registry_number) ~* ?", q)
+      @perforations = @perforations.joins(:ranch).where("concat(perforations.name, ' ', perforations.coordinates, ' ', perforations.registry_number, ' ', ranches.name) ~* ?", q)
     end
   end
 end

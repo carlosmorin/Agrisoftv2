@@ -88,11 +88,8 @@ section.content
 					.card-header.p-0.border-bottom-0
 						ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
 							li.nav-item
-								= link_to 'Perforaciones', crm_client_path(@perforation, tab: :shipments), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'perforations' ? 'active' : 'c-gray' }"
-							li.nav-item
-								= link_to 'Areas /  Tablas', crm_client_path(@perforation, tab: :contacts), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'areas' ? 'active' : 'c-gray' }"
+								= link_to 'Rancho', config_production_perforation_path(@perforation, tab: :ranch), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'ranch' ? 'active' : 'c-gray' }"
 					.card-body
 						#custom-tabs-four-tabContent.tab-content
 							#custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
-								= render "perforations" if params[:tab] == 'perforations'
-								= render "areas" if params[:tab] == 'areas'
+								= render "ranch" if params[:tab] == 'ranch'

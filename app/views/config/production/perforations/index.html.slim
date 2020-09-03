@@ -17,7 +17,7 @@ section.content
                 = form_tag(config_production_perforations_path, method: "GET") do
                   .form-row.align-items-center
                     .col-10
-                      = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por nombre, coordenadas, numero de registro')
+                      = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por nombre, coordenadas, numero de registro, rancho')
                     .col-2.my-1
                       button.btn.btn-sm.btn-flat.btn-default.bold type="submit"
                         svg.feather.feather-filter fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
@@ -35,9 +35,9 @@ section.content
                   th Nombre
                   th Coordenadas
                   th Numero de Registro
-                  th Volumen mts concedidos
+                  th Volumen(M3)
                   th Vigencia
-                  th Gasto
+                  th Gasto(LPS)
                   th Rancho
                   th Documento
                   th.text-center colspan="2" style=("width: 12%") Acciónes
@@ -57,13 +57,13 @@ section.content
                       td = perforation.validity
                       td = perforation.expenditure.to_f
                       td = perforation.ranch.name.upcase
-                      - if perforation.document
+                      - if perforation.document.present?
                         td.text-center
                           .btn-group
                           = link_to '#', title: "Ver documento", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
                             i.far.fa-file-pdf
                       - else
-                        td = '--'
+                        td.text-center = '--'
                       td.text-center
                         .btn-group
                           = link_to config_production_perforation_path(perforation), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
