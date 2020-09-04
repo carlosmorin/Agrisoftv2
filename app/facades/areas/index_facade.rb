@@ -8,7 +8,6 @@ module Areas
     end
 
     def get_areas
-      binding.pry
       @areas = Area.paginate(page: @params[:page], per_page: 10)
       search if @params[:q].present?
     end

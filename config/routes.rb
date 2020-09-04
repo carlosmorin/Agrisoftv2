@@ -32,6 +32,14 @@ Rails.application.routes.draw do
       resources :perforations
       resources :stages
       resources :sub_stages
+      resources :crops do
+        member do
+          get '/get_colors', to: 'crops#get_colors'
+          get '/get_qualities', to: 'crops#get_qualities'
+          get '/get_sizes', to: 'crops#get_sizes'
+          get '/get_packages', to: 'crops#get_packages'
+        end
+      end
     end
   end
 
@@ -135,12 +143,12 @@ Rails.application.routes.draw do
   end
 
   resources :companies
-  resources :crops do
-    get '/get_colors', to: 'crops#get_colors'
-    get '/get_qualities', to: 'crops#get_qualities'
-    get '/get_sizes', to: 'crops#get_sizes'
-    get '/get_packages', to: 'crops#get_packages'
-  end
+  # resources :crops do
+  #   get '/get_colors', to: 'crops#get_colors'
+  #   get '/get_qualities', to: 'crops#get_qualities'
+  #   get '/get_sizes', to: 'crops#get_sizes'
+  #   get '/get_packages', to: 'crops#get_packages'
+  # end
   resources :sizes
   resources :qualities
   resources :colors

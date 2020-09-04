@@ -288,3 +288,13 @@ li.line-divider > hr{
 .text-d-none{
 	text-decoration: none !important; 
 }
+
+// PERFORATIONS
+.text-color {
+  color: #000 !important;
+  text-decoration: none !important;
+}
+
+.text-color::hover {
+  text-decoration: none !important;
+}

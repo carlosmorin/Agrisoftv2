@@ -50,7 +50,7 @@ section.content
 												span = @perforation.registry_number.upcase
 									.row
 										.col-md-4
-											label.mb-1.s-14 Volumen:
+											label.mb-1.s-14 Volumen(M3):
 										.col-md-8
 												span = @perforation.volume.upcase
 								.col-lg-8
@@ -61,14 +61,14 @@ section.content
 												span = @perforation.validity
 									.row
 										.col-md-2
-											label.mb-1.s-14 Gasto:
+											label.mb-1.s-14 Gasto(LPS):
 										.col-md-8
 												span = @perforation.expenditure.to_f
 									.row
 										.col-md-2
 											label.mb-1.s-14 Rancho:
 										.col-md-8
-												span = @perforation.ranch.name&.upcase
+											= link_to @perforation.ranch_name&.upcase, config_production_ranch_path(@obj.ranch), class: "text-color"
 		.row
 			.col-lg-12
 				.btn-group
@@ -88,8 +88,11 @@ section.content
 					.card-header.p-0.border-bottom-0
 						ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
 							li.nav-item
-								= link_to 'Rancho', config_production_perforation_path(@perforation, tab: :ranch), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'ranch' ? 'active' : 'c-gray' }"
+								= link_to 'Rancho', config_production_perforation_path(@obj, tab: :ranch), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'ranch' ? 'active' : 'c-gray' }"
+							li.nav-item
+								= link_to 'Estructura de pozo', config_production_perforation_path(@perforation, tab: :perforation_structure), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'perforation_structure' ? 'active' : 'c-gray' }"
 					.card-body
 						#custom-tabs-four-tabContent.tab-content
 							#custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
-								= render "ranch" if params[:tab] == 'ranch'
+								= render "shared/ranch" if params[:tab] == 'ranch'
+								= render "perforation_structure" if params[:tab] == 'perforation_structure'
