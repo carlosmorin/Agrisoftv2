@@ -1,4 +1,4 @@
-= simple_form_for(@crop) do |f|
+= simple_form_for([:config_production, @crop]) do |f|
 	.form-group 
 		.row
 			.col-lg-12
@@ -99,7 +99,7 @@
 							= render 'crops_package_fields', f: pack
 	hr
 	.form-actions.text-right
-		= link_to crops_path, class: 'btn btn-default btn-sm pl-1 mr-2' do
+		= link_to config_production_crops_path, class: 'btn btn-default btn-sm pl-1 mr-2' do
 			span.fas.fa-chevron-left.s-10.mx-2
 			span Cancelar
 		button.btn.btn-dark-blue.btn-sm.pl-1 type="submit"

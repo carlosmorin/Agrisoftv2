@@ -1,7 +1,8 @@
-class PackagesController < ApplicationController
+class Config::Production::PackagesController < ApplicationController
 	before_action :set_object, only: %i[show edit update destroy]
 
-  add_breadcrumb "Empaques", :packages_path
+  add_breadcrumb "Produccion", :config_production_root_path
+  add_breadcrumb "Empaques", :config_production_packages_path
 
   def index
   	@packages = Package.paginate(page: params[:page], per_page: 16)
@@ -25,7 +26,7 @@ class PackagesController < ApplicationController
   	@package = Package.new(package_params)
     respond_to do |format|
       if @package.save
-        format.html { redirect_to packages_url, notice: 'Empaque creado.' }
+        format.html { redirect_to config_production_packages_url, notice: 'Empaque creado.' }
       else
         format.html { render :new }
       end
@@ -35,7 +36,7 @@ class PackagesController < ApplicationController
    def update
     if @package.update(package_params)
       flash[:notice] = "Tamaño #{@package.name} Actualizado"
-      redirect_to sizes_url
+      redirect_to config_production_packages_url
     else
       render :edit
     end

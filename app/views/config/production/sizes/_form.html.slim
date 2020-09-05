@@ -1,15 +1,21 @@
-= simple_form_for(@color) do |f|
+= simple_form_for([:config_production, @size]) do |f|
 	.form-group.mb-1 
 		.row
 			.col-lg-3
 				= f.label :name, class: "pt-1" 
 			.col-lg-9
 				= f.input :name, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
+	.form-group.mb-1 
+		.row
+			.col-lg-3
+				= f.label :short_name, class: "pt-1" 
+			.col-lg-9
+				= f.input :short_name, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
 	hr
 	.form-actions.text-right
-		= link_to colors_path, notice: 'Are you sure?', class: 'btn btn-default btn-sm pl-1 mr-2' do
-			span.fas.fa-chevron-left.mx-2.s-10
-			span Volver
+		= link_to config_production_sizes_path, class: 'btn btn-default btn-sm pl-1 mr-2' do
+			span.fas.fa-chevron-left.s-10.mx-2
+			span Cancelar
 		button.btn.btn-dark-blue.btn-sm.pl-1 type="submit"
 			svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
 			  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 

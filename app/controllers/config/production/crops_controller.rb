@@ -1,7 +1,9 @@
-class CropsController < ApplicationController
+class Config::Production::CropsController < ApplicationController
   before_action :set_object, only: %i[show edit update destroy get_colors 
     get_qualities get_sizes get_packages]
-  add_breadcrumb "Cultivos", :crops_path
+    
+  add_breadcrumb "Produccion", :config_production_root_path
+  add_breadcrumb "Cultivos", :config_production_crops_path
 
   def index
   	@crops = Crop.paginate(page: params[:page], per_page: 16)
@@ -29,7 +31,7 @@ class CropsController < ApplicationController
   	@crop = Crop.new(crop_params)
     if @crop.save
       flash[:notice] = "Cultivo #{ @crop.name } creado"
-      redirect_to crops_url
+      redirect_to config_production_crops_url
     else
       render :new
     end
@@ -38,7 +40,7 @@ class CropsController < ApplicationController
    def update
     if @crop.update(crop_params)
       flash[:notice] = "Cultivo #{ @crop.name } actualizado"
-      redirect_to crops_url
+      redirect_to config_production_crops_url
     else
       render :edit
     end

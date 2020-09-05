@@ -1,9 +1,9 @@
 module Config
-  class ProductsController < ApplicationController
+  class Production::ProductsController < ApplicationController
     before_action :set_object, only: %i[edit update destroy show]
 
-    add_breadcrumb "Config"
-    add_breadcrumb "Productos", :config_products_path
+    add_breadcrumb "Produccion", :config_production_root_path
+    add_breadcrumb "Productos", :config_production_products_path
 
     def index
       @products = Product.paginate(page: params[:page], per_page: 16)
@@ -30,7 +30,7 @@ module Config
       @product = Product.new(product_params)
 
       if @product.save
-        redirect_to config_product_path(@product), notice: 
+        redirect_to config_production_product_path(@product), notice: 
           'Producto creado exitosamente.'
       else
         render :new
@@ -40,7 +40,7 @@ module Config
     def update
       if @product.update(product_params)
         flash[:notice] = "Producto actualizado"
-        redirect_to config_product_path(@product.id)
+        redirect_to config_production_product_path(@product.id)
       else
         render :edit
       end

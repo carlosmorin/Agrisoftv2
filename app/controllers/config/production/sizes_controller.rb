@@ -1,7 +1,8 @@
-class SizesController < ApplicationController
-	before_action :set_object, only: %i[show edit update destroy]
-
-  add_breadcrumb "Tamaños", :sizes_path
+class Config::Production::SizesController < ApplicationController
+  before_action :set_object, only: %i[show edit update destroy]
+  
+  add_breadcrumb "Produccion", :config_production_root_path
+  add_breadcrumb "Tamaños", :config_production_sizes_path
 
   def index
   	@sizes = Size.paginate(page: params[:page], per_page: 16)
@@ -25,7 +26,7 @@ class SizesController < ApplicationController
   	@size = Size.new(size_params)
     if @size.save
       flash[:notice] = " <i class='fa fa-check-circle mr-2'></i> Tamaño creado"
-      redirect_to sizes_url
+      redirect_to config_production_sizes_url
     else
       add_breadcrumb "Nuevo"
       render :new
@@ -35,7 +36,7 @@ class SizesController < ApplicationController
    def update
     if @size.update(size_params)
       flash[:notice] = "Tamaño #{@size.name} Actualizado"
-      redirect_to sizes_url
+      redirect_to config_production_sizes_url
     else
       render :edit
     end
