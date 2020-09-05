@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_01_033755) do
+ActiveRecord::Schema.define(version: 2020_09_05_205934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -305,6 +305,15 @@ ActiveRecord::Schema.define(version: 2020_09_01_033755) do
     t.index ["package_id"], name: "index_crops_packages_on_package_id"
   end
 
+  create_table "crops_pests", force: :cascade do |t|
+    t.bigint "crop_id", null: false
+    t.bigint "pest_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["crop_id"], name: "index_crops_pests_on_crop_id"
+    t.index ["pest_id"], name: "index_crops_pests_on_pest_id"
+  end
+
   create_table "crops_qualities", force: :cascade do |t|
     t.bigint "crop_id", null: false
     t.bigint "quality_id", null: false
@@ -465,6 +474,13 @@ ActiveRecord::Schema.define(version: 2020_09_01_033755) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ranch_id"], name: "index_perforations_on_ranch_id"
+  end
+
+  create_table "pests", force: :cascade do |t|
+    t.string "name"
+    t.string "scientific_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "production_units", force: :cascade do |t|
@@ -744,6 +760,8 @@ ActiveRecord::Schema.define(version: 2020_09_01_033755) do
   add_foreign_key "crops_colors", "crops"
   add_foreign_key "crops_packages", "crops"
   add_foreign_key "crops_packages", "packages"
+  add_foreign_key "crops_pests", "crops"
+  add_foreign_key "crops_pests", "pests"
   add_foreign_key "crops_qualities", "crops"
   add_foreign_key "crops_qualities", "qualities"
   add_foreign_key "crops_sizes", "crops"

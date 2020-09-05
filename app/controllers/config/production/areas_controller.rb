@@ -55,8 +55,7 @@ module Config
       end
 
       def find_area
-        id = params[:id].present? ? params[:id] : params[:client_id] 
-        @area = Area.find(id)
+        @area = Area.find(params[:id])
         @obj = @area
       end
 

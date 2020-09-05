@@ -235,3 +235,8 @@ es:
         territory: Superficie(HAS)
         irrigation_type_id: Tipo de riego
         ranch_id: Rancho
+      pest:
+        name: Nombre
+        scientific_name: Nombre Cientifico
+        crop_id: Cultivo
+

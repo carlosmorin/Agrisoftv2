@@ -1,0 +1,38 @@
+= simple_form_for([:config_production, @pest]) do |f|
+	.form-group 
+		.row
+			.col-lg-12
+				h5
+					i.fas.fa-pastafarianism.mr-3
+					span Agregar nueva plaga
+    - if @crop.present?
+      input type="hidden" name="crop_id" value="#{@crop.id}"
+      .row.mb-2
+        .col-lg-1
+          = "Cultivo:"
+        .col-lg-1
+          .badge.badge-pill.bg-info
+            = @crop.name.upcase
+
+    .row
+			.col-lg-10
+				= f.input :name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+    .row
+			.col-lg-10
+				= f.input :scientific_name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+    - if !@crop.present?
+      .row
+        .col-lg-10
+          = f.input :crop_id, collection: Crop.all, input_html: { class: 's-12 form-control form-control-sm ', data: { action: "change->address#filter_by_country", target: "address.countryId" }}
+	hr
+	.form-actions.text-right
+		= link_to config_production_crops_path, class: 'btn btn-default btn-sm pl-1 mr-2' do
+			span.fas.fa-chevron-left.s-10.mx-2
+			span Cancelar
+		button.btn.btn-dark-blue.btn-sm.pl-1 type="submit"
+			svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+			  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
+			  polyline points=("17 21 17 13 7 13 7 21") 
+			  polyline points=("7 3 7 8 15 8") 
+			span Guardar
+

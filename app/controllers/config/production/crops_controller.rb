@@ -85,7 +85,9 @@ class Config::Production::CropsController < ApplicationController
       crops_sizes_attributes: [:id, :crop_id, :size_id, :_destroy],
       crops_qualities_attributes: [:id, :crop_id, :quality_id, :_destroy],
       crops_packages_attributes: [:id, :crop_id, :package_id, :_destroy],
-      crops_colors_attributes: [:id, :crop_id, :color_id, :_destroy])
+      crops_colors_attributes: [:id, :crop_id, :color_id, :_destroy],
+      crops_pests_attributes: [:id, :crop_id, :pest_id, :_destroy ]
+    )
   end
 
   def set_object

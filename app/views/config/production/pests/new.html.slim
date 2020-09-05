@@ -5,14 +5,12 @@ section.content-header.pb-0
         = render "shared/breadcrumbs_nav"
     .row.mb-2
       .col-12
-        h5 = "Editar Cultivo".upcase 
+        h5 = "Nuevo cultivo".upcase 
 section.content
   .container
     = render "shared/form_info"
-    .row
-      .col-md-12
-        .card
-          .card-body
-            .row
-              .col-lg-10
-                = render 'form'
+  	.card
+  		.card-body
+  			.row
+					.col-lg-10
+						= render 'form'

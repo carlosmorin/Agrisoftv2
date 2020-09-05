@@ -3,6 +3,10 @@ class Crop < ApplicationRecord
   default_scope { order(:created_at) }
   validates :name, presence: true
 
+  has_many :crops_pests
+  has_many :pests, through: :crops_pests
+  accepts_nested_attributes_for :crops_pests, allow_destroy: true
+
   has_many :crops_colors
   has_many :colors, through: :crops_colors
   accepts_nested_attributes_for :crops_colors, allow_destroy: true

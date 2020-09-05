@@ -67,6 +67,7 @@ class ClientsController < ApplicationController
   end
 
   def set_object
+    binding.pry
     id = params[:id].present? ? params[:id] : params[:client_id] 
     @client = Client.find(id)
   end
