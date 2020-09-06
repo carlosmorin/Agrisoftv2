@@ -31,7 +31,7 @@ section.content
 												span.mr-2.s-12 Buscar
 												i.fas.fa-search.s-12.mx-1
 					.card-body.table-responsive.p-0
-						table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
+						table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped data-controller="drop-down-table"
 							thead
 								tr.bg-light-gray
 									th Remisionista
@@ -50,7 +50,9 @@ section.content
 								- else
 									- @sales.each do |sale|
 										tr
-											td = sale.company.name.upcase
+											td
+												span.fas.fa-chevron-down.s-16.mr-2.c-blue.c-pointer data-id=sale.id data-action="click->drop-down-table#toggleDropDown"
+												span = sale.company.name.upcase
 											td = sale.client.name.upcase
 											td.s-12 
 												span == "#{sale.n_products} <small>Bultos</small>"
@@ -64,6 +66,32 @@ section.content
 												.btn-group
 													= link_to shipment_path(sale), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
 														i.far.fa-eye.s-12
+										tr.d-none class="dropdown_#{sale.id}"
+											th colspan="7"
+												.row.mt-3
+													.col-10
+														.card
+															.card-header.p-1
+																.row
+																	.col-6
+																		span.bold.s-12 DESCRIPCIÓN DE PRODUCTO
+																	.col-2
+																		span.bold.s-12 CANTIDAD
+																	.col-2
+																		span.bold.s-12 P. UNITARIO
+																	.col-2
+																		span.bold.s-12 TOTAL
+															.card-body.p-1
+																- sale.shipments_products.each do |sp|
+																	.row
+																		.col-6
+																			span.s-12 = sp.product.name
+																		.col-2
+																			span.s-12 = sp.quantity
+																		.col-2
+																			span.s-12 = raw "$#{sp.price} <small>#{ sale.currency&.upcase }</small>"
+																		.col-2
+																			span.bold.s-12 = raw "$#{sp.quantity * sp.price} <small>#{ sale.currency&.upcase }</small>"
 								tfoot
 									tr
 										th.pl-3 colspan="5" 

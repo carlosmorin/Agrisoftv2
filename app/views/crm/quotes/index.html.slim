@@ -42,7 +42,7 @@ section.content data-controller="quote-to-order-sale"
                     span.fas.fa-arrow-circle-right.s-14.mx-1
                 .col-10.text-right
 
-              table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
+              table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped data-controller="drop-down-table"
                 thead
                   tr.bg-light-gray
                     th.d-none
@@ -74,7 +74,8 @@ section.content data-controller="quote-to-order-sale"
                           .custom-control.custom-checkbox
                             input.custom-control-input data-target="quote-to-order-sale.checkQuote" id="customCheckbox#{quote.id}" type="checkbox" value="#{quote.id}" required="true" name="quotes[]"  /
                             label.custom-control-label for="customCheckbox#{quote.id}" 
-                        td.bold 
+                        td.bold
+                          span.fas.fa-chevron-down.s-16.mr-2.c-blue.c-pointer data-id=quote.id data-action="click->drop-down-table#toggleDropDown"
                           span = quote.quote_folio
                         td = quote.client.name.upcase
                         td.text-left
@@ -127,6 +128,32 @@ section.content data-controller="quote-to-order-sale"
                                 = link_to "", class: "dropdown-item s-12 bold", data: { action: "click->quote-to-order-sale#confirmOrderSale", id: quote.id, position: index, quoteNumber: quote.quote_folio} do
                                   i.fas.fa-file-invoice-dollar.mr-2
                                   span Generar orden de venta
+                      tr.d-none class="dropdown_#{quote.id}"
+                        th colspan="10"
+                          .row.mt-3
+                            .col-10
+                              .card
+                                .card-header.p-1
+                                  .row
+                                    .col-6
+                                      span.bold.s-12 DESCRIPCIÓN DE PRODUCTO
+                                    .col-2
+                                      span.bold.s-12 CANTIDAD
+                                    .col-2
+                                      span.bold.s-12 P. UNITARIO
+                                    .col-2
+                                      span.bold.s-12 TOTAL
+                                .card-body.p-1
+                                  - quote.shipments_products.each do |sp|
+                                    .row
+                                      .col-6
+                                        span.s-12 = sp.product.name
+                                      .col-2
+                                        span.s-12 = sp.quantity
+                                      .col-2
+                                        span.s-12 = raw "$#{sp.price} <small>#{ quote.currency.upcase }</small>"
+                                      .col-2
+                                        span.bold.s-12 = raw "$#{sp.quantity * sp.price} <small>#{ quote.currency.upcase }</small>"
             .card-footer.p-2.pb-1.bg-light-gray
               .row
                 .col-lg-12.d-flex.justify-content-center

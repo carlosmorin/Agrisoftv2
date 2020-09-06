@@ -1,5 +1,5 @@
 .card.card-body.table-responsive.p-0.mt-4.mb-0
-	table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped.text-left
+	table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped.text-left data-controller="drop-down-table"
 		thead
 			tr.bg-light-gray
 				th.text-left Remisionsita
@@ -12,7 +12,9 @@
 		tbody#tbody.s-13
 			- @orders.each do |order|
 				tr
-					td = order.company.name.upcase
+					td 
+						span.fas.fa-chevron-down.s-16.mr-2.c-blue.c-pointer data-id=order.id data-action="click->drop-down-table#toggleDropDown"
+						span = order.company.name.upcase
 					td = order.client.name.upcase
 					td
 						span.d-block = raw "#{order.n_products} <small>Bultos</small>"
@@ -27,3 +29,29 @@
 						.btn-group
 							= link_to edit_shipment_path(order), title: "Generar embarque", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-primary px-2" do
 								i.fas.fa-arrow-right
+				tr.d-none class="dropdown_#{order.id}"
+					th colspan="8"
+						.row.mt-3
+							.col-10
+								.card
+									.card-header.p-1
+										.row
+											.col-6
+												span.bold.s-12 DESCRIPCIÓN DE PRODUCTO
+											.col-2
+												span.bold.s-12 CANTIDAD
+											.col-2
+												span.bold.s-12 P. UNITARIO
+											.col-2
+												span.bold.s-12 TOTAL
+									.card-body.p-1
+										- order.shipments_products.each do |sp|
+											.row
+												.col-6
+													span.s-12 = sp.product.name
+												.col-2
+													span.s-12 = sp.quantity
+												.col-2
+													span.s-12 --
+												.col-2
+													span.bold.s-12 --

@@ -7,10 +7,11 @@ module Crm
 
     def index
     	@order_sales = Shipment.order_sale
-                        .order('order_sale_folio ASC')
+                        .order('order_sale_folio DESC')
                         .joins(:products)
                         .includes(:products)
-                        .paginate(page: params[:page], per_page: 25)  
+                        .paginate(page: params[:page], per_page: 25)
+      @quotes = Shipment.quotation
       search if params[:q].present?
       search_by_client if params[:c].present?
     end
@@ -42,6 +43,7 @@ module Crm
     end
 
     def update
+      @order_sale.status = :order_sale if @order_sale.status != :order_sale
       if @order_sale.update(order_sale_params)
         flash[:notice] = "<i class='fa fa-check-circle mr-2'></i> Orden de venta actualizada exitosamente"
         redirect_to crm_sales_order_path(@order_sale)

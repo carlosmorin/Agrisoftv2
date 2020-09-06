@@ -10,7 +10,7 @@ class ShipmentsController < ApplicationController
 
   def index
     @shipments = Shipment.sale
-                  .joins(:products)
+                  .joins(products: [:crop, :color, :quality, :size, :package, :client_brand])
                   .includes(:products)
                   .paginate(page: params[:page], per_page: 25)
     @orders_sales = Shipment.order_sale
@@ -111,8 +111,9 @@ class ShipmentsController < ApplicationController
   def search
     q = Regexp.escape(params[:q])
 
-    @shipments = @shipments.where("folio ~* ? OR client_folio ~* ? OR freight_folio ~* ? OR products.name ~* ?", q, q, q, q)
+    @shipments = @shipments.where("folio LIKE '%#{q}%' OR client_folio LIKE '%#{q}%' OR freight_folio LIKE '%#{q}%' OR crops.name LIKE '%#{q}%' OR colors.name LIKE '%#{q}%' OR qualities.name LIKE '%#{q}%' OR sizes.name LIKE '%#{q}%' OR packages.name LIKE '%#{q}%' OR client_brands.name LIKE '%#{q}%'")
   end
+
 
 	def set_object
     id = params[:id].present? ? params[:id] : params[:shipment_id] 
