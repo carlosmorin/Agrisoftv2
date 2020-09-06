@@ -10,7 +10,7 @@ class ShipmentsController < ApplicationController
 
   def index
     @shipments = Shipment.sale
-                  .joins(products: [:crop, :color, :quality, :size, :package, :client_brand])
+                  .joins(:products)
                   .includes(:products)
                   .paginate(page: params[:page], per_page: 25)
     @orders_sales = Shipment.order_sale
