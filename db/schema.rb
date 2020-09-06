@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_05_205934) do
+ActiveRecord::Schema.define(version: 2020_09_06_040551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -359,6 +359,15 @@ ActiveRecord::Schema.define(version: 2020_09_05_205934) do
     t.index ["country_id"], name: "index_delivery_addresses_on_country_id"
     t.index ["municipality_id"], name: "index_delivery_addresses_on_municipality_id"
     t.index ["state_id"], name: "index_delivery_addresses_on_state_id"
+  end
+
+  create_table "deseases", force: :cascade do |t|
+    t.string "name"
+    t.string "scientific_name"
+    t.string "pathogen"
+    t.string "desease_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "drivers", force: :cascade do |t|

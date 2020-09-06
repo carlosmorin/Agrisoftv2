@@ -37,7 +37,6 @@ section.content
                   th style=("width: 5%")  #
                   th Nombre
                   th Nombre Cientifico
-                  th Cultivo
                   th.text-center colspan="2" style=("width: 12%") Acciones
               tbody#tbody
                 - if @index_facade.pests.empty?
@@ -50,7 +49,6 @@ section.content
                       td = pest.id
                       td = pest.name.upcase
                       td = pest.scientific_name.upcase
-                      td = pest.crop_name.upcase
                       td.text-center
                         = link_to config_production_pest_path(pest, tab: :general), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
                          svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 

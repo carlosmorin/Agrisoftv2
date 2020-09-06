@@ -45,7 +45,10 @@ section.content
             ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
               li.nav-item
                 = link_to 'General', config_production_pest_path(@pest, tab: :general), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'general' ? 'active' : 'c-gray' }"
+              li.nav-item
+                = link_to 'Fotos', config_production_pest_path(@pest, tab: :pictures), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'pictures' ? 'active' : 'c-gray' }"
           .card-body
             #custom-tabs-four-tabContent.tab-content
               #custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
                 = render "general" if params[:tab] == 'general'
+                = render "pictures" if params[:tab] == 'pictures'

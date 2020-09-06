@@ -5,6 +5,23 @@ class Pest < ApplicationRecord
   has_rich_text :description
 
   validates :name, :scientific_name, presence: true
+  validate :pest_pictures
 
-  delegate :name, to: :crop, prefix: "crop", allow_nil: :true
+  delegate :name, to: :crops_pests, prefix: "crop", allow_nil: :true
+  delegate :get_crop_names, to: :crops, prefix: false
+
+  accepts_nested_attributes_for :crops_pests, allow_destroy: true
+
+  private
+
+  def pest_pictures
+    if pictures.attached? == false
+      errors.add(:pictures, "are missing!") 
+    end
+    pictures.each do |pic|
+      if !pic.content_type.in?(%('image/jpeg image/png'))
+        errors.add(:pictures, 'needs to be a JPEG or PNG')
+      end
+    end
+  end
 end

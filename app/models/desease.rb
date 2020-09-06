@@ -1,0 +1,2 @@
+class Desease < ApplicationRecord
+end

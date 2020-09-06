@@ -22,4 +22,8 @@ class Crop < ApplicationRecord
   has_many :crops_packages
   has_many :packages, through: :crops_packages
   accepts_nested_attributes_for :crops_packages, allow_destroy: true
+
+  def self.get_crop_names
+    pluck(:name, :id)
+  end
 end

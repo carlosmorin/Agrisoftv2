@@ -15,6 +15,7 @@ class Config::Production::PestsController < ApplicationController
       flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Plaga creada correctamente"
       redirect_to config_production_pest_url(@pest, tab: :general)
     else
+      flash.now[:alert] = "<i class='fa fa-check-circle mr-1 s-18'></i>  #{@pest.errors.full_messages[0]}"
       render :new
     end
   end
@@ -30,6 +31,7 @@ class Config::Production::PestsController < ApplicationController
 
   def show
     add_breadcrumb "Detalle de la Plaga"
+    @pest = Pests::PestDecorator.new(@pest)
   end
 
   def update
@@ -48,7 +50,9 @@ class Config::Production::PestsController < ApplicationController
   private
 
   def pest_params
-    params.require(:pest).permit(:name, :scientific_name, :crop_id, :description, :pictures)
+    params.require(:pest).permit(:name, :scientific_name, 
+      :description, pictures: [],
+      crops_pests_attributes: [:id, :crop_id, :pest_id, :_destroy])
   end
 
   def find_pest
