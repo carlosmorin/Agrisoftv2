@@ -32,6 +32,8 @@ Rails.application.routes.draw do
       resources :stages
       resources :sub_stages
       resources :crops do
+        resources :deseases
+        resources :pests
         member do
           get '/get_colors', to: 'crops#get_colors'
           get '/get_qualities', to: 'crops#get_qualities'
@@ -45,6 +47,7 @@ Rails.application.routes.draw do
       resources :colors
       resources :packages
       resources :pests
+      resources :deseases
     end
   end
 

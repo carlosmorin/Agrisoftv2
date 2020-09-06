@@ -104,6 +104,16 @@ section.content
     .col-4.col-sm-6.col-md-3
       .info-box
         span.info-box-icon.bg-info.elevation-1
+          i.fas.fa-disease
+        .info-box-content
+          span.info-box-text Enfermedades
+          = link_to config_production_deseases_path, class: "btn btn-xs btn-primary mt-2" do
+            span.info-box-number
+              | Gestionar
+              small.ml-2.fas.fa-arrow-right
+    .col-4.col-sm-6.col-md-3
+      .info-box
+        span.info-box-icon.bg-info.elevation-1
           i.fas.fa-sort-amount-up-alt
         .info-box-content
           span.info-box-text Cantidades

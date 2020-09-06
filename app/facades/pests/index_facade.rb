@@ -15,6 +15,6 @@ class Pests::IndexFacade
 
   def search
     q = Regexp.escape(@params[:q])
-    @pests = @pests.joins(:crop).where("concat(pests.name, ' ', pests.scientific_name, ' ', crops.name) ~* ?", q)
+    @pests = @pests.where("concat(name, ' ', scientific_name) ~* ?", q)
   end
 end

@@ -34,6 +34,27 @@
 		section.pl-2.card.p-2.pb-3.br-0
 			.row
 				.col-lg-10
+					h6.s-16 Enfermedades
+				.col-lg-2.text-right
+					= link_to_add_association f, :crops_deseases, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#deseases', association_insertion_method: :append } do
+						svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+							path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+						span.ml-2 Agregar
+			#deseases.ml-2
+				.row.bg-light-gray.mt-1
+					.col-lg-10
+						b.s-14 Nombre
+					.col-lg-2
+				.row.bg-light-gray
+					.col-lg-12
+						hr.my-0
+				.row.mt-1
+					.col-lg-12
+						= f.fields_for :crops_deseases do |desease|
+							= render 'crops_desease_fields', f: desease
+		section.pl-2.card.p-2.pb-3.br-0
+			.row
+				.col-lg-10
 					h6.s-16 Plagas
 				.col-lg-2.text-right
 					= link_to_add_association f, :crops_pests, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#pests', association_insertion_method: :append } do

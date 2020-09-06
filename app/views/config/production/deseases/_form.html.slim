@@ -1,10 +1,10 @@
-= simple_form_for([:config_production, @pest]) do |f|
+= simple_form_for([:config_production, @desease]) do |f|
 	.form-group 
 		.row
 			.col-lg-12
 				h5
-					i.fas.fa-pastafarianism.mr-3
-					span Agregar nueva plaga
+					i.fas.fa-disease.mr-3
+					span Agregar nueva enfermedad
 		- if @crop.present?
 			input type="hidden" name="crop_id" value="#{@crop.id}"
 			.row.mb-2
@@ -22,7 +22,13 @@
 				= f.input :scientific_name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
 		.row.mb-4
 			.col-lg-10
-				= f.rich_text_area :description, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+				= f.input :pathogen, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+		.row.mb-4
+			.col-lg-10
+				= f.input :desease_name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+		.row.mb-4
+			.col-lg-10
+				= f.rich_text_area :development_conditions, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
 		.row
 			.col-lg-10
 				= f.file_field :pictures, multiple: true, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
@@ -51,11 +57,11 @@
 						.col-lg-10
 							h6.s-16 Cultivos
 						.col-lg-2.text-right
-							= link_to_add_association f, :crops_pests, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#pests', association_insertion_method: :append } do
+							= link_to_add_association f, :crops_deseases, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#deseases', association_insertion_method: :append } do
 								svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
 									path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
 								span.ml-2 Agregar
-					#pests.ml-2
+					#deseases.ml-2
 						.row.bg-light-gray.mt-1
 							.col-lg-10
 								b.s-14 Nombre
@@ -65,12 +71,12 @@
 								hr.my-0
 						.row.mt-1
 							.col-lg-12
-								= f.fields_for :crops_pests do |pest|
-									= render 'crops_pest_fields', f: pest
+								= f.fields_for :crops_deseases do |desease|
+									= render 'crops_desease_fields', f: desease
 	
 	hr
 	.form-actions.text-right
-		= link_to config_production_crops_path, class: 'btn btn-default btn-sm pl-1 mr-2' do
+		= link_to :back, class: 'btn btn-default btn-sm pl-1 mr-2' do
 			span.fas.fa-chevron-left.s-10.mx-2
 			span Cancelar
 		button.btn.btn-dark-blue.btn-sm.pl-1 type="submit"

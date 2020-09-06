@@ -238,5 +238,9 @@ es:
       pest:
         name: Nombre
         scientific_name: Nombre Cientifico
-        crop_id: Cultivo
+      desease:
+        name: Nombre
+        scientific_name: Nombre Cientifico
+        pathogen: Patogeno
+        desease_name: Enfermedad
 

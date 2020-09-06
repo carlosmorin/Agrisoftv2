@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_06_040551) do
+ActiveRecord::Schema.define(version: 2020_09_06_172126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -280,6 +280,15 @@ ActiveRecord::Schema.define(version: 2020_09_06_040551) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "crop_damages", force: :cascade do |t|
+    t.integer "crop_damageable_id"
+    t.string "crop_damageable_type"
+    t.integer "crop_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["crop_id"], name: "index_crop_damages_on_crop_id"
+  end
+
   create_table "crops", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -294,6 +303,15 @@ ActiveRecord::Schema.define(version: 2020_09_06_040551) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["color_id"], name: "index_crops_colors_on_color_id"
     t.index ["crop_id"], name: "index_crops_colors_on_crop_id"
+  end
+
+  create_table "crops_deseases", force: :cascade do |t|
+    t.bigint "crop_id", null: false
+    t.bigint "desease_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["crop_id"], name: "index_crops_deseases_on_crop_id"
+    t.index ["desease_id"], name: "index_crops_deseases_on_desease_id"
   end
 
   create_table "crops_packages", force: :cascade do |t|
@@ -767,6 +785,8 @@ ActiveRecord::Schema.define(version: 2020_09_06_040551) do
   add_foreign_key "contracts_products", "products"
   add_foreign_key "crops_colors", "colors"
   add_foreign_key "crops_colors", "crops"
+  add_foreign_key "crops_deseases", "crops"
+  add_foreign_key "crops_deseases", "deseases"
   add_foreign_key "crops_packages", "crops"
   add_foreign_key "crops_packages", "packages"
   add_foreign_key "crops_pests", "crops"
