@@ -110,8 +110,10 @@ class ShipmentsController < ApplicationController
 
   def search
     q = Regexp.escape(params[:q])
+    query = Regexp.escape(params[:q])
 
-    @shipments = @shipments.where("folio LIKE '%#{q}%' OR client_folio LIKE '%#{q}%' OR freight_folio LIKE '%#{q}%' OR crops.name LIKE '%#{q}%' OR colors.name LIKE '%#{q}%' OR qualities.name LIKE '%#{q}%' OR sizes.name LIKE '%#{q}%' OR packages.name LIKE '%#{q}%' OR client_brands.name LIKE '%#{q}%'")
+    @shipments = @shipments.where("concat(folio, ' ', client_folio, ' ', 
+      freight_folio, ' ', n_products) ~* ?", query)
   end
 
 

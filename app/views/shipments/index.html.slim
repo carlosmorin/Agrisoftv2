@@ -11,7 +11,7 @@ section.content
     .row
       .col-lg-12
         = render "shared/alerts"
-    - n_order_sale = Shipment.order_sale.size         
+    - n_order_sale = Shipment.order_sale.size
     - if n_order_sale > 0
       .row
         .col-lg-12
