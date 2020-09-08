@@ -17,14 +17,8 @@ section.content
           .card-header.p-2.pb-1.bg-light-gray
             .row
               .col-md-6.col-sm-12
-                = form_tag(config_production_hosts_path, method: "GET") do
-                  .form-row.align-items-center
-                    .col-10
-                      = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por Nombre')
-                    .col-2.my-1
-                      button.btn.btn-sm.btn-flat.btn-default.bold type="submit"
-                        svg.feather.feather-filter fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-                          polygon points=("22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3")
+                = render 'shared/search_form', search_path: config_production_hosts_path do
+                  = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por Nombre')
               .col-lg-6.text-right
                 = link_to new_config_production_host_path, class: 'btn btn-success btn-sm s-12 mt-1' do 
                     svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
