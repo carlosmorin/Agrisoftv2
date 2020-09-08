@@ -53,10 +53,10 @@ section.content
                       td = ranch.aquifer_name
                       td = ranch.municipality.name.upcase
                       td = ranch.georeference ? ranch.georeference.upcase : '--'
-                      - if ranch.document.present?
+                      - if ranch.document.present? && ranch.document.previewable?
                         td.text-center
                           .btn-group
-                          = link_to '#', title: "Ver documento", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                          = link_to rails_blob_path(ranch.document, disposition: "document"), target: "_blank", title: "Ver documento", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
                             i.far.fa-file-pdf
                       - else
                         td.text-center = '--'

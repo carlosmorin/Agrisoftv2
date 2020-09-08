@@ -51,10 +51,10 @@ section.content
                       td = perforation.validity
                       td = perforation.expenditure.to_f
                       td = perforation.ranch.name.upcase
-                      - if perforation.document.present?
+                      - if perforation.document.present? && perforation.document.previewable?
                         td.text-center
                           .btn-group
-                          = link_to '#', title: "Ver documento", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                          = link_to rails_blob_path(perforation.document, disposition: "document"), target: "_blank", title: "Ver documento", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
                             i.far.fa-file-pdf
                       - else
                         td.text-center = '--'
