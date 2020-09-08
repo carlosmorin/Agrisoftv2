@@ -27,6 +27,7 @@ class Config::Production::PestsController < ApplicationController
   def new
     add_breadcrumb "Nuevo"
     @pest = Pest.new
+    @pest.crops_pests.build
   end
 
   def edit

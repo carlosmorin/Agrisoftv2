@@ -46,8 +46,16 @@ Rails.application.routes.draw do
       resources :qualities
       resources :colors
       resources :packages
-      resources :pests
-      resources :deseases
+      resources :hosts
+      resources :damages
+      resources :pests do
+        resources :hosts
+        resources :damages
+      end
+      resources :deseases do
+        resources :hosts
+        resources :damages
+      end
     end
   end
 

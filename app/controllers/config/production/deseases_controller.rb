@@ -27,6 +27,7 @@ class Config::Production::DeseasesController < ApplicationController
   def new
     add_breadcrumb "Nuevo"
     @desease = Desease.new
+    @desease.crops_deseases.build
   end
 
   def edit

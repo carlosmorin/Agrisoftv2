@@ -1,0 +1,3 @@
+class HostDecorator < BaseDecorator
+
+end

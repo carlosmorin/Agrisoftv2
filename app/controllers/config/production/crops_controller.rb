@@ -17,6 +17,8 @@ class Config::Production::CropsController < ApplicationController
     @crop.crops_sizes.build
     @crop.crops_qualities.build
     @crop.crops_packages.build
+    @crop.crops_pests.build
+    @crop.crops_deseases.build
   end
 
   def edit
