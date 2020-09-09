@@ -183,6 +183,7 @@ es:
       activity:
         action: Nombre
         production_unit_id: Unidad de produccion
+        jornals: Jornales
       stage:
         name: Nombre
       sub_stage:

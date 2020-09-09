@@ -30,6 +30,7 @@ section.content data-controller="users"
                 tr.bg-light-gray
                   th style=("width: 5%")  #
                   th Nombre
+                  th Jornales
                   th Unidad de produccion
                   th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody
@@ -42,6 +43,7 @@ section.content data-controller="users"
                     tr
                       td = activity.id
                       td = activity.action&.upcase
+                      td = activity.jornals.to_f
                       td = activity.production_unit&.name&.upcase
                       td.text-center
                         .btn-group
