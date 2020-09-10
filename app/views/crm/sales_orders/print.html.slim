@@ -14,11 +14,11 @@ table width="100%"
 						td.text-left width="85%"
 							h1.mb-1 = raw "Orden de venta:</i>"
 						td.text-center width="15%" style="border: 1px solid gray; height: 30px;"
-							= @order_sale.order_sale_folio
+							span.s-18 = @order_sale.order_sale_folio
 					tr
 						td.text-left
 							br
-							i.s-16.text-normal = raw "Parras de la Fuente, Coah; <b>#{@order_sale.issue_at.strftime("%d/%m/%Y")}<b>"
+							i.s-16.text-normal = raw "Parras de la Fuente, Coah; <b>#{@order_sale.created_at.strftime("%d/%m/%Y")}<b>"
 		tr
 			th width="100%"
 				table.mt-2 width="100%"
@@ -31,11 +31,11 @@ table width="100%"
 							p.text-normal.mt-0.mb-0 = "TELÉFONO: #{client.phone.upcase}"
 							p.text-normal.mt-0 = "DIRECCIÓN: #{client.full_address.upcase}"
 						th.text-right width="30%"
-							label.text-normal.mt-1 = raw "Fecha de emisión: <b>#{@order_sale.issue_at.strftime("%d/%m/%Y")}</b>"
-							br
-							label.text-normal.mt-1 = raw "Vigencia: <b>(#{@order_sale.expirated_days}) Dias</b>"  
-							br
-							label.text-normal.mt-1 = raw "Fecha de Expiración: <b>#{@order_sale.expirated_at.strftime("%d/%m/%Y")}</b>"
+							- if @order_sale.appointments.any?
+								- appointment = @order_sale.appointments.first
+								label.text-normal.mt-1 = raw "Vigencia: <b>(#{@order_sale.expirated_days}) Dias</b>"  
+								br
+								label.text-normal.mt-1 = raw "Fecha de Expiración: <b>#{@order_sale.expirated_at.strftime("%d/%m/%Y")}</b>"
 		tr
 			th.text-left width="100%"
 				br
