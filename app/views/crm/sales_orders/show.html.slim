@@ -1,0 +1,114 @@
+section.content-header.pb-0
+  .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "Detalle de orden de venta".upcase 
+section.content data-controller="reference"
+	.container
+		.row
+			.col-lg-12
+				= render "shared/alerts"
+		.card.mb-2
+			.card-header.p-2.pb-1
+				.row
+					.col-md-6
+						= link_to crm_sales_orders_path, class: 'mr-2 btn btn-sm btn-default s-12 pl-1' do
+							i.fas.fa-chevron-left.s-12.mr-2
+							span Volver
+					.col-md-6.text-right
+						= link_to edit_crm_sales_order_path(@order_sale), class: 'btn btn-sm btn-success mr-1 s-12' do
+							i.fas.fa-edit.s-12.mr-1
+							span Editar
+						= link_to crm_sales_order_print_path(@order_sale, format: :pdf), target: "_blank", class: "btn btn-sm btn-default mr-1 text-danger s-12" do
+							i.fas.fa-file-pdf.s-12.mr-1
+							b Exportar OV
+						- if @order_sale.appointments.any?
+							= link_to crm_sales_order_print_aditional_data_path(@order_sale, format: :pdf), target: "_blank", class: "btn btn-sm btn-default mr-1 text-danger s-12" do
+								i.fas.fa-file-pdf.s-12.mr-1
+								b Exportar Datos Adicionales
+		.card.card-body.s-14.p-3
+			.row.mt-2
+				.col-md-12.text-right
+					h5.bold.ml-3.mb-0 = raw "Orden de Venta: #<span class='text-underline'>#{@order_sale.order_sale_folio}</span>"
+					p.my-0 = "Vigencia: #{@order_sale.expirated_days} Dias"
+					p.my-0 = "Fecha de vigencia: #{@order_sale.expirated_at.strftime("%d/%m/%Y")}"
+					p.mt-2.mb-0.bold = "Remitente: #{@order_sale.user.full_name}"
+		.card.card-body.s-14.p-3.mt-1
+			.row
+				.col-12
+					h6.bold.mb-0 = "CLIENTE: #{@order_sale.client.name.upcase}"
+					- client_rfc = @order_sale.client.rfc.nil? ? @order_sale.client.fiscals.first.rfc : @order_sale.client.rfc
+					h6.bold.mb-0 = "RFC: #{client_rfc}".upcase
+					p.mb-0.mt-2 = raw "<b>Telefono: </b> #{@order_sale.client.phone}"
+					p.mb-0 = raw "<b>Direccion: </b> #{@order_sale.client.address}"
+					p.my-0 = "#{@order_sale.client.state.name.upcase}, #{@order_sale.client.country.name.upcase}"
+			- if @order_sale.delivery_address.present? 
+				.row.my-3
+					.col-12
+						h6.s-12.bold.mb-0 DATOS DE ENVIO
+						label.mt-1 
+							span Direccion de envio: 
+							span = @order_sale.delivery_address.full_address
+
+			.row.mt-4
+				.col-12
+					table.table.table-sm.table-bordered
+						thead.thead-dark
+							tr
+								th DESCRIPCIÓN DE PRODUCTO
+								th CANTIDAD
+								th P. UNITARIO
+								th TOTAL
+						tbody
+							- neto = 0 
+							- @order_sale.shipments_products.each do |sp|
+								- neto += (sp.quantity * sp.price)
+								tr
+									td = sp.product.name
+									td.text-center = sp.quantity
+									td.text-center = raw "$#{sp.price} <small>#{ @order_sale.currency.upcase }</small>"
+									td 
+										b = raw "$#{sp.quantity * sp.price} <small>#{ @order_sale.currency.upcase }</small>"
+			.row
+				.col-9
+				.col-3
+					table.table.table-sm.table-bordered.s-13
+						tbobdy
+							tr
+								td.text-right 
+									span NETO
+								td
+									span = raw "$#{neto} <small>#{ @order_sale.currency.upcase }</small>"
+							tr
+								td.text-right 
+									span.text-danger DESCUENTO
+								td
+									span.text-danger = "#{@order_sale.discount} %"
+							tr
+								td.text-right 
+									b SUB TOTAL
+								td
+									- discount = (@order_sale.subtotal / 100) * @order_sale.discount
+									- sub_total = @order_sale.subtotal - discount
+									b = raw "$#{sub_total} <small>#{ @order_sale.currency.upcase }</small>"
+							tr
+								td.text-right 
+									span IVA
+								td
+									span = "#{@order_sale.iva}%"
+							tr.s-14
+								td.text-right 
+									b TOTAL
+								td
+									- iva_value = (sub_total / 100) * @order_sale.iva
+									- total = sub_total + iva_value
+									b = raw "$#{total} <small>#{ @order_sale.currency.upcase }</small>"
+
+		.card.card-body.s-14.p-3.mt-1
+			.row.mt-1
+				.col-12
+					label.my-0 Comentarios:
+					p.my-0 = raw @order_sale.description
