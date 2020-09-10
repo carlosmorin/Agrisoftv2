@@ -17,7 +17,6 @@ Rails.application.routes.draw do
     resources :boxes
     resources :delivery_addresses
     resources :client_brands
-    resources :products
     resources :currencies
     namespace :production do 
       root to: 'main#index'
@@ -32,6 +31,31 @@ Rails.application.routes.draw do
       resources :perforations
       resources :stages
       resources :sub_stages
+      resources :crops do
+        resources :deseases
+        resources :pests
+        member do
+          get '/get_colors', to: 'crops#get_colors'
+          get '/get_qualities', to: 'crops#get_qualities'
+          get '/get_sizes', to: 'crops#get_sizes'
+          get '/get_packages', to: 'crops#get_packages'
+        end
+      end
+      resources :products
+      resources :sizes
+      resources :qualities
+      resources :colors
+      resources :packages
+      resources :hosts
+      resources :damages
+      resources :pests do
+        resources :hosts
+        resources :damages
+      end
+      resources :deseases do
+        resources :hosts
+        resources :damages
+      end
     end
   end
 
@@ -136,16 +160,6 @@ Rails.application.routes.draw do
   end
 
   resources :companies
-  resources :crops do
-    get '/get_colors', to: 'crops#get_colors'
-    get '/get_qualities', to: 'crops#get_qualities'
-    get '/get_sizes', to: 'crops#get_sizes'
-    get '/get_packages', to: 'crops#get_packages'
-  end
-  resources :sizes
-  resources :qualities
-  resources :colors
-  resources :packages
   resources :profile, except: [:new] do
     get '/avatar', to: 'profile#avatar'
     get '/change_password', to: 'profile#change_password'

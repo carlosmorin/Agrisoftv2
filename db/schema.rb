@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_09_033058) do
-
+ActiveRecord::Schema.define(version: 2020_09_09_010907) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,6 +53,7 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "production_unit_id"
+    t.decimal "jornals", precision: 8, scale: 2
     t.index ["production_unit_id"], name: "index_activities_on_production_unit_id"
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
@@ -291,6 +291,15 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "crop_damages", force: :cascade do |t|
+    t.integer "crop_damageable_id"
+    t.string "crop_damageable_type"
+    t.integer "crop_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["crop_id"], name: "index_crop_damages_on_crop_id"
+  end
+  
   create_table "create_appointments", force: :cascade do |t|
     t.string "n_request"
     t.datetime "startet_at"
@@ -320,6 +329,15 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
     t.index ["crop_id"], name: "index_crops_colors_on_crop_id"
   end
 
+  create_table "crops_deseases", force: :cascade do |t|
+    t.bigint "crop_id", null: false
+    t.bigint "desease_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["crop_id"], name: "index_crops_deseases_on_crop_id"
+    t.index ["desease_id"], name: "index_crops_deseases_on_desease_id"
+  end
+
   create_table "crops_packages", force: :cascade do |t|
     t.bigint "crop_id", null: false
     t.bigint "package_id", null: false
@@ -327,6 +345,15 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["crop_id"], name: "index_crops_packages_on_crop_id"
     t.index ["package_id"], name: "index_crops_packages_on_package_id"
+  end
+
+  create_table "crops_pests", force: :cascade do |t|
+    t.bigint "crop_id", null: false
+    t.bigint "pest_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["crop_id"], name: "index_crops_pests_on_crop_id"
+    t.index ["pest_id"], name: "index_crops_pests_on_pest_id"
   end
 
   create_table "crops_qualities", force: :cascade do |t|
@@ -355,6 +382,12 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "damages", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "delivery_addresses", force: :cascade do |t|
     t.bigint "client_id", null: false
     t.bigint "country_id", null: false
@@ -374,6 +407,33 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
     t.index ["country_id"], name: "index_delivery_addresses_on_country_id"
     t.index ["municipality_id"], name: "index_delivery_addresses_on_municipality_id"
     t.index ["state_id"], name: "index_delivery_addresses_on_state_id"
+  end
+
+  create_table "deseases", force: :cascade do |t|
+    t.string "name"
+    t.string "scientific_name"
+    t.string "pathogen"
+    t.string "desease_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "deseases_damages", force: :cascade do |t|
+    t.bigint "desease_id", null: false
+    t.bigint "damage_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["damage_id"], name: "index_deseases_damages_on_damage_id"
+    t.index ["desease_id"], name: "index_deseases_damages_on_desease_id"
+  end
+
+  create_table "deseases_hosts", force: :cascade do |t|
+    t.bigint "desease_id", null: false
+    t.bigint "host_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["desease_id"], name: "index_deseases_hosts_on_desease_id"
+    t.index ["host_id"], name: "index_deseases_hosts_on_host_id"
   end
 
   create_table "drivers", force: :cascade do |t|
@@ -455,6 +515,12 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
     t.index ["user_id"], name: "index_general_information_on_user_id"
   end
 
+  create_table "hosts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "irrigation_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -489,6 +555,31 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ranch_id"], name: "index_perforations_on_ranch_id"
+  end
+
+  create_table "pests", force: :cascade do |t|
+    t.string "name"
+    t.string "scientific_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "pests_damages", force: :cascade do |t|
+    t.bigint "pest_id", null: false
+    t.bigint "damage_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["damage_id"], name: "index_pests_damages_on_damage_id"
+    t.index ["pest_id"], name: "index_pests_damages_on_pest_id"
+  end
+
+  create_table "pests_hosts", force: :cascade do |t|
+    t.bigint "pest_id", null: false
+    t.bigint "host_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["host_id"], name: "index_pests_hosts_on_host_id"
+    t.index ["pest_id"], name: "index_pests_hosts_on_pest_id"
   end
 
   create_table "production_units", force: :cascade do |t|
@@ -569,8 +660,8 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
   end
 
   create_table "ranches", force: :cascade do |t|
-    t.string "state_id"
-    t.string "municipality_id"
+    t.bigint "state_id"
+    t.bigint "municipality_id"
     t.bigint "manager_id"
     t.string "territory"
     t.string "hydrological_region"
@@ -768,8 +859,12 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
   add_foreign_key "create_appointments", "shipments"
   add_foreign_key "crops_colors", "colors"
   add_foreign_key "crops_colors", "crops"
+  add_foreign_key "crops_deseases", "crops"
+  add_foreign_key "crops_deseases", "deseases"
   add_foreign_key "crops_packages", "crops"
   add_foreign_key "crops_packages", "packages"
+  add_foreign_key "crops_pests", "crops"
+  add_foreign_key "crops_pests", "pests"
   add_foreign_key "crops_qualities", "crops"
   add_foreign_key "crops_qualities", "qualities"
   add_foreign_key "crops_sizes", "crops"
@@ -778,6 +873,10 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
   add_foreign_key "delivery_addresses", "countries"
   add_foreign_key "delivery_addresses", "municipalities"
   add_foreign_key "delivery_addresses", "states"
+  add_foreign_key "deseases_damages", "damages"
+  add_foreign_key "deseases_damages", "deseases"
+  add_foreign_key "deseases_hosts", "deseases"
+  add_foreign_key "deseases_hosts", "hosts"
   add_foreign_key "drivers", "carriers"
   add_foreign_key "freights", "boxes"
   add_foreign_key "freights", "carriers"
@@ -789,6 +888,10 @@ ActiveRecord::Schema.define(version: 2020_09_09_033058) do
   add_foreign_key "general_information", "users"
   add_foreign_key "municipalities", "states"
   add_foreign_key "perforations", "ranches"
+  add_foreign_key "pests_damages", "damages"
+  add_foreign_key "pests_damages", "pests"
+  add_foreign_key "pests_hosts", "hosts"
+  add_foreign_key "pests_hosts", "pests"
   add_foreign_key "products", "client_brands"
   add_foreign_key "products", "colors"
   add_foreign_key "products", "crops"

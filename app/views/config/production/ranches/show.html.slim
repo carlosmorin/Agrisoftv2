@@ -95,8 +95,11 @@ section.content
 								= link_to 'Perforaciones', config_production_ranch_url(@ranch, tab: :perforations), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'perforations' ? 'active' : 'c-gray' }"
 							li.nav-item
 								= link_to 'Areas /  Tablas', config_production_ranch_url(@ranch, tab: :areas), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'areas' ? 'active' : 'c-gray' }"
+							li.nav-item
+								= link_to 'Certificado Parcelario', config_production_ranch_url(@ranch, tab: :parcel_certificate), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'parcel_certificate' ? 'active' : 'c-gray' }"
 					.card-body
 						#custom-tabs-four-tabContent.tab-content
 							#custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
 								= render "perforations" if params[:tab] == 'perforations'
 								= render "areas" if params[:tab] == 'areas'
+								= render "parcel_certificate" if params[:tab] == 'parcel_certificate'

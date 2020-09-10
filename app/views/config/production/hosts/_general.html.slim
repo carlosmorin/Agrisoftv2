@@ -1,0 +1,36 @@
+section#general.s-12
+	.row
+		.col-4	
+			.row
+				.col-lg-6.s-14
+					b.mb-1 Nombre:
+				.col-lg-6.text-left
+					b.mb-1.s-14 = @host.name.upcase
+			.row.mt-1
+				.col-lg-6
+					label.mb-1 Enfermedades:
+				.col-lg-6.text-left
+					- if @host.get_desease_names.size == 0
+						b = '--'
+					- @host.get_desease_names.each do |desease_name|
+						= link_to desease_name[0].upcase, config_production_desease_path(desease_name[1], tab: :general), title: "Ver Enfermedad", 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: "text-color badge badge-pill bg-info mb-2 mr-2 pt-1"
+			.row.mt-1
+				.col-lg-6
+					label.mb-1 Plagas:
+				.col-lg-6.text-left
+					- if @host.get_pest_names.size == 0
+						b = '--'
+					- @host.get_pest_names.each do |pest_name|
+						= link_to pest_name[0].upcase, config_production_pest_path(pest_name[1], tab: :general), title: "Ver Plaga", 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: "text-color badge badge-pill bg-info mb-2 mr-2 pt-1"
+		.col-7
+			b.mb-1 Foto:
+			.d-flex.row
+			  = image_tag @host.picture, size: "400x400" if @host.picture.present?
+hr
+section#general.s-12.mt-5
+	.row
+		.col-6	
+			.row
+				.col-lg-12
+					h6.mb-2 Descripcion:
+					b.mb-1.s-14 = raw @host.description

@@ -16,7 +16,7 @@ module Areas
 
     def search
       q = Regexp.escape(@params[:q])
-      @areas = @areas.where("concat(name, ' ', territory, ' ', type_of_irrigation) ~* ?", q)
+      @areas = @areas.joins(:ranch, :irrigation_type).where("concat(areas.name, ' ', areas.territory, ' ', ranches.name, ' ', irrigation_types.name) ~* ?", q)
     end
   end
 end

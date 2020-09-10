@@ -11,6 +11,8 @@
       .col-lg-5
         = f.input :production_unit_id, collection: ProductionUnit.all, label: false, required: true, html5: true,  autofocus: true
       .col-lg-2
+        = f.input :jornals, label: false, required: true, html5: true,  autofocus: true, placeholder: "Jornales", input_html: { class: 'form-control form-control-sm' }
+      .col-lg-2
         button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
           i.fas.fa-save.mx-1
           span Guardar
