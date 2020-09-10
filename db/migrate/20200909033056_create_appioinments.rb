@@ -7,7 +7,7 @@ class CreateAppioinments < ActiveRecord::Migration[6.0]
 			t.datetime :finished_at
 			t.datetime :appointment_at
 			t.datetime :commitment_at
-			t.references :shipment_id, foreign_key: true
+			t.references :shipment, foreign_key: true
 
       t.timestamps
     end
