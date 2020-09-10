@@ -16,7 +16,7 @@ module Ranches
 
     def search
       q = Regexp.escape(@params[:q])
-      @ranches = @ranches.where("concat(state, ' ', city, ' ', territory) ~* ?", q)
+      @ranches = @ranches.where("concat(name, ' ', hydrological_region, ' ', territory, ' ', aquifer_name) ~* ?", q)
     end
   end
 end

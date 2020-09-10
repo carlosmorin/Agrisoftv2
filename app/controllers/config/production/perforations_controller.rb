@@ -56,8 +56,8 @@ module Config
       end
 
       def find_perforation
-        id = params[:id].present? ? params[:id] : params[:client_id] 
-        @perforation = Perforation.find(id)
+        @perforation = Perforation.find(params[:id])
+        @obj = @perforation
       end
 
       def set_ranch

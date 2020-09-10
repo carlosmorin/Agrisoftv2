@@ -6,23 +6,28 @@ const axios = require('axios');
 const $ = require('jquery');
 
 export default class extends Controller {
-	static targets = [ "carrierId" , "clientId", "productsContainer", "costInput", "coments", "deliveryAddress", "addProductButton"]
-	
-	connect() {
-		let container = this.productsContainerTarget
-		let index_conatiner = 1
+  static targets = [ "carrierId" , "clientId", "productsContainer", "costInput", "coments", "deliveryAddress", "addProductButton"]
+
+  connect() {
+    let container = this.productsContainerTarget
+    let index_conatiner = 1
     $("#shipments")
       .on('cocoon:after-insert', function(e, insertedItem, originalEvent) {
-    	 	var n_shipments = $("#shipments").find(".nested-fields").length - 1
-    	 	$(insertedItem).addClass(`shipment_${n_shipments}`)
-    	 	$(insertedItem).find("select.client").attr("index", n_shipments)
+        var n_shipments = $("#shipments").find(".nested-fields").length - 1
+        $(insertedItem)
+          .find("select.client")
+          .attr("data-index", n_shipments)
+
+        $(insertedItem)
+          .find("select.delivery_address")
+          .addClass(`delivery_address_${n_shipments}`)
 	    	 	
-    	 	let selects = $(insertedItem).find("select")
+        let selects = $(insertedItem).find("select")
         for (var i = 0, max=selects.length; i < max; i++) {
-        	$(`#${$(selects[i]).attr("id")}`).selectize()
+          new SlimSelect({select: `#${$(selects[i]).attr("id")}`})
         }
       })
-	}
+  }
 
 	filter_by_carrier(){
 		var carrierId = this.carrierIdTarget.value
@@ -82,17 +87,12 @@ export default class extends Controller {
 		});		
 	}
 
-	getDeliveryAddress(){
+	getDeliveryAddress(e){
 		// da = DeliveryAddress
-		console.log(this)
-		var daSelect = this.deliveryAddressTarget
-		console.log("Value", this.clientIdTargets)
-		console.log("Delivery addresses putput", this.deliveryAddressTargets)
-		$(this.deliveryAddressTarget).addClass("bg-red")
-		console.log("deliveryAddressTarget", this.deliveryAddressTarget)
-		var daSelect = $(daSelect)	
+		let index = e.currentTarget.getAttribute('data-index')
+		var daSelect = $(`select.delivery_address_${index}`)
 		daSelect.empty()
-		var url = `/crm/clients/${this.clientIdTarget.value}/get_delivery_address`
+		var url = `/crm/clients/${e.currentTarget.value}/get_delivery_address`
 		var options = "<option>SELECCIONA</option>";
 		axios({
 			method: 'GET',

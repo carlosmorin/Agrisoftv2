@@ -4,24 +4,43 @@ section.content-header.pb-0
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
     .row.mb-2
-      .col-12
-        h5 = "Gestion de cotizaciónes".upcase 
-section.content data-controller="quote-to-order-sale"
+      .col-8
+        h5 = "Gestion de cotizaciónes".upcase
+      .col-md-4.text-right
+        = link_to new_crm_quote_path, class: 'btn btn-success btn-sm s-14' do 
+          svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+            path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+          span.pl-2 Nueva cotización
+section.content data-controller="quote-to-order-sale slim-select"
   .container-fluid
     .row
       .col-md-12
         .card
-          .card-header.p-2.pb-1.bg-light-gray
-            .row
-              .col-md-8.col-sm-12
-                = form_tag(crm_quotes_path, method: "GET") do
-                  .form-row.align-items-center
-                    .col-10
-                      = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por folio')
-                    .col-2
-                      button.btn.btn-sm.btn-flat.btn-default.bold type="submit"
-                        span.mr-2 Buscar
-                        span.fas.fa-search.s-12
+          .card-body.p-2.pb-1
+            = form_tag(crm_quotes_path, method: "GET") do
+              - value = params[:q].present? ? params[:q] : ''
+              .form-row.align-items-center
+                .col-2
+                  label.s-12.mb-0 Buscar por:
+                  = text_field_tag(:q, value, class: 'form-control form-control-sm', placeholder: 'Folio de cotización, Folio de OV..')
+                .col-2
+                  label.s-12.mb-0 Cliente
+                  = select_tag :c, options_for_select(Client.all.pluck(:name, :id), selected: params[:c]), include_blank: 'Todos', class: 's-12 text-upcase'
+                .col-2
+                  label.s-12.mb-0 Cultivo
+                  = select_tag :crop_id, options_for_select(Crop.all.pluck(:name, :id), selected: params[:crop_id]), include_blank: 'Todos', class: 's-12 text-upcase'
+                .col-2
+                  label.s-12.mb-0 Calidad
+                  = select_tag :quality_id, options_for_select(Quality.all.pluck(:name, :id), selected: params[:quality_id]), include_blank: 'Todos', class: 's-12 text-upcase'
+                .col-2
+                  label.s-12.mb-0 Empaque
+                  = select_tag :package_id, options_for_select(Package.all.pluck(:name, :id), selected: params[:package_id]), include_blank: 'Todos', class: 's-12 text-upcase'
+                .col-2.my-1
+                  button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"  
+                    span.mr-2.s-12 Buscar
+                    i.fas.fa-search
+                  = link_to crm_quotes_path, class: "btn btn-sm btn-flat  btn-default mt-4 ml-2" do
+                    i.fas.fa-eraser
           .card-body.p-0
             = form_tag(consolidate_crm_quotes_path, method: "GET") do
               .row
@@ -30,11 +49,8 @@ section.content data-controller="quote-to-order-sale"
                     span Consolidar
                     span.fas.fa-arrow-circle-right.s-14.mx-1
                 .col-10.text-right
-                  = link_to new_crm_quote_path, class: 'btn btn-success btn-sm s-14 m-2' do 
-                    svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-                      path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-                      span.pl-2 Nueva cotización
-              table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
+
+              table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped data-controller="drop-down-table"
                 thead
                   tr.bg-light-gray
                     th.d-none
@@ -44,14 +60,14 @@ section.content data-controller="quote-to-order-sale"
                           label.custom-control-label for="customCheckboxAll" 
                     th #
                     th Cliente
-                    th.text-center Fecha de expedición
-                    th.text-center Fecha de expiración
-                    th.text-center Neto
-                    th.text-center Descuento
-                    th.text-center Subtotal
-                    th.text-center IVA
-                    th.text-center Total
-                    th.text-center colspan="2" style=("width: 12%") Acciónes
+                    th.text-left Fecha de expedición
+                    th.text-left Fecha de expiración
+                    th.text-left Neto
+                    th.text-left Descuento
+                    th.text-left Subtotal
+                    th.text-left IVA
+                    th.text-left Total
+                    th.text-left colspan="2" style=("width: 12%") Acciónes
                 tbody#tbody.s-13
                   - if @quotes.empty?
                     tr 
@@ -59,39 +75,44 @@ section.content data-controller="quote-to-order-sale"
                         = link_to "Nuevo registro", new_crm_quote_path, class: "link"
                   - else
                     - @quotes.each_with_index do |quote, index|
-                      tr data-target='quote-to-order-sale.row'
+                      - valid_class = quote.valid ? '' : 'inavlid_row'
+                      tr class="#{valid_class}" data-target='quote-to-order-sale.row'
                         td.d-none disabled="true"
+
                           .custom-control.custom-checkbox
                             input.custom-control-input data-target="quote-to-order-sale.checkQuote" id="customCheckbox#{quote.id}" type="checkbox" value="#{quote.id}" required="true" name="quotes[]"  /
                             label.custom-control-label for="customCheckbox#{quote.id}" 
-                        td.bold = quote.quote_folio
+                        td.bold
+                          span.fas.fa-chevron-down.s-16.mr-2.c-blue.c-pointer data-id=quote.id data-action="click->drop-down-table#toggleDropDown"
+                          span = quote.quote_folio
                         td = quote.client.name.upcase
                         td.text-left
                           span = quote.issue_at.nil? ? "--" : quote.issue_at.strftime("%d/%m/%Y")
                           - expiration_date = quote.issue_at - quote.issue_at
-                          br
-                          small = "#{distance_of_time_in_words(quote.issue_at, quote.expirated_at)} para expirar"
-                          br
-                        td.text-center
+                        td.text-left
                           p.c-pointer.mb-0
-                            = quote.issue_at.strftime("%d/%m/%Y")
-                        td.text-center
+                            = quote.expirated_at.strftime("%d/%m/%Y")
+
+                          small = "#{distance_of_time_in_words(Time.now, quote.expirated_at)} para expirar" if quote.valid
+                          small.text-d-none
+                            b  = "Cotizacion vencida" unless quote.valid
+                        td.text-left
                           - sub_total = quote.subtotal
                           - discount = quote.discount 
                           span.bold = "$ #{quote.subtotal}"
-                        td.text-center
+                        td.text-left
                           - discount = ((sub_total.to_d / 100) * discount)
                           span.text-danger.bold = " #{quote.discount}% - $#{discount}"
                           span --
-                        td.text-center.bold
+                        td.text-left.bold
                           - sub_total = (sub_total.to_d - discount)  
                           = "$#{sub_total}"
-                        td.text-center
+                        td.text-left
                           - iva = ((quote.subtotal.to_d - discount) / 100) * quote.iva
                           span.bold = "%#{quote.iva} - $#{iva.round(2)}"
-                        td.text-center.bold
+                        td.text-left.bold
                           = "$#{sub_total + iva}"
-                        td.text-center
+                        td.text-left
                           .btn-group
                             = link_to crm_quote_path(quote), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
                               svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg"
@@ -110,10 +131,37 @@ section.content data-controller="quote-to-order-sale"
                               = link_to crm_quote_path(quote, format: "xlsx"), title: "Exportar XLS", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "dropdown-item s-12 text-success bold" do
                                   i.fas.fa-file-excel.mr-2
                                   span Exportar EXCEL
-                              .dropdown-divider.my-1
-                              = link_to "", class: "dropdown-item s-12 bold", data: { action: "click->quote-to-order-sale#confirmOrderSale", id: quote.id, position: index, quoteNumber: quote.quote_folio} do
-                                i.fas.fa-file-invoice-dollar.mr-2
-                                span Generar orden de venta
+                              - if quote.valid
+                                .dropdown-divider.my-1
+                                = link_to "", class: "dropdown-item s-12 bold", data: { action: "click->quote-to-order-sale#confirmOrderSale", id: quote.id, position: index, quoteNumber: quote.quote_folio} do
+                                  i.fas.fa-file-invoice-dollar.mr-2
+                                  span Generar orden de venta
+                      tr.d-none class="dropdown_#{quote.id}"
+                        th colspan="10"
+                          .row.mt-3
+                            .col-10
+                              .card
+                                .card-header.p-1
+                                  .row
+                                    .col-6
+                                      span.bold.s-12 DESCRIPCIÓN DE PRODUCTO
+                                    .col-2
+                                      span.bold.s-12 CANTIDAD
+                                    .col-2
+                                      span.bold.s-12 P. UNITARIO
+                                    .col-2
+                                      span.bold.s-12 TOTAL
+                                .card-body.p-1
+                                  - quote.shipments_products.each do |sp|
+                                    .row
+                                      .col-6
+                                        span.s-12 = sp.product.name
+                                      .col-2
+                                        span.s-12 = sp.quantity
+                                      .col-2
+                                        span.s-12 = raw "$#{sp.price} <small>#{ quote.currency.upcase }</small>"
+                                      .col-2
+                                        span.bold.s-12 = raw "$#{sp.quantity * sp.price} <small>#{ quote.currency.upcase }</small>"
             .card-footer.p-2.pb-1.bg-light-gray
               .row
                 .col-lg-12.d-flex.justify-content-center

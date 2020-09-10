@@ -1,4 +1,4 @@
-.nested-fields 
+.nested-fields.shipment_1
   .card.ml-2 data-shipments-index-conatiner="1"
     .card-body.p-3
       .row
@@ -14,9 +14,9 @@
         .col-md-5
           = f.input :company_id, required: true, collection: Company.all, input_html: { class: "s-12" }
         .col-md-4
-          = f.input :client_id, required: true, collection: Client.all, input_html: { class: "s-12 client" }
+          = f.input :client_id, required: true, collection: Client.all, input_html: { class: "s-12 client", data: { action: 'change->shipments#getDeliveryAddress', index: 1} }
         .col-md-3.deliveryAddress
-          = f.input :delivery_address_id, required: true, collection: DeliveryAddress.all, input_html: { class: "s-12", data: { target: 'shipments.deliveryAddress' } }
+          = f.input :delivery_address_id, required: true, collection: DeliveryAddress.all, input_html: { class: "s-12 delivery_address delivery_address_1", data: { target: 'shipments.deliveryAddress' } }
       .row
         .col-lg-12.mt-4
           section
@@ -30,11 +30,11 @@
               .col-lg-1
               .col-lg-12
                 hr.my-0
-            #products.products.text-center data-target="shipments.productsContainer"
+            #products.products.s-12 data-target="shipments.productsContainer"
               = f.simple_fields_for :shipments_products do |ff|
                 = render 'shipments_product_fields', f: ff
-              = link_to_add_association 'Agregar producto', f, :shipments_products, class: "btn btn-sm btn-sm btn-primary s-12 add_products mt-4"
-      .row
+              = link_to_add_association 'Agregar producto', f, :shipments_products, class: "btn btn-sm btn-sm btn-primary s-12 add_products mt-4 pull-right"
+      .row.mt-2
         .col-lg-12
           = f.input :comments, input_html: { class: "form-control s-12", placeholder: "Ej. ", data: { target: "shipments.comments" } }
   hr

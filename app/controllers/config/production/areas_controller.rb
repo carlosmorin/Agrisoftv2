@@ -21,7 +21,7 @@ module Config
         @area.ranch_id = params[:ranch_id] if params[:ranch_id].present?
         if @area.save
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Area creada correctamente"
-          redirect_to config_production_area_url(@area)
+          redirect_to new_config_production_area_path
         else
           render :new
         end
@@ -55,8 +55,8 @@ module Config
       end
 
       def find_area
-        id = params[:id].present? ? params[:id] : params[:client_id] 
-        @area = Area.find(id)
+        @area = Area.find(params[:id])
+        @obj = @area
       end
 
       def set_ranch

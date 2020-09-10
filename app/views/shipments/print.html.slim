@@ -1,27 +1,28 @@
-- freight = @shipment.freight
 // Remision ----------------------------------------
 - copies = ["original", "copia caseta", "copia operador"]
+- freight = @shipment.freight
+- carrier = freight.carrier
+- client = @shipment.client
 - copies.each do |copy|
-  div style="height: 34.5cm;"
-    table.s-14 width="100%"
-      thead
-        tr
-          th width="100%"
-            table width="100%"
-              th.text-left width="20%"
-                img src="http://lasalbardas.com/ADMIN/VIEWS/resources/IMG//logo.jpg" alt="LOGO" height="60"/
-              th.text-center width="60%"
-                h3.my-0 AGRICOLA LAS ALBARDAS
-              th.text-right width="20%"
-                h3 style="color: gray;" = copy.upcase
+  div style="min-height: 34.5cm;"
+    table.s-12 width="100%"
+      tr
+        th width="100%"
+          table width="100%"
+            th.text-left width="20%"
+              img src="http://lasalbardas.com/ADMIN/VIEWS/resources/IMG//logo.jpg" alt="LOGO" height="60"/
+            th.text-center width="60%"
+              h3.my-0 AGRICOLA LAS ALBARDAS
+            th.text-right width="20%"
+              h3 style="color: gray;" = copy.upcase
         tr
           th width="100%"
             table width="100%"
               tr
                 td.text-left width="65%"
-                  h1 REMISI&Oacute;N DE SALIDA
+                  h2 REMISI&Oacute;N DE SALIDA
                 td width="35%"
-                  table.s-12 width="100%"
+                  table.s-10 width="100%"
                     tr
                       th.text-right width="20%"
                         span.text-normal Fecha:
@@ -41,17 +42,17 @@
                       th.text-right width="50%"
                         span.text-normal F. flete:
                       th.text-left width="50%"
-                        span.s-12 = @shipment.folio
+                        span.s-12 = @shipment.freight.folio
               tr
                 th width="100%" colspan="2"
-                  hr.my-0
+                  hr style="margin: 0px 0px;"
       tbody.mt-0.pt-0
         tr
           th
             table.pt-0 width="100%"
               tr
                 th.text-left width="100%"
-                  table width="100%"
+                  table width="100%" style="font-size: 12px;"
                     tr
                       th.text-right width="13%"
                         b.mt-0.mr-1.pt-0 REMITENTE:
@@ -71,33 +72,32 @@
                         span.text-normal.pr-3 = @shipment.company.phone.upcase
               tr
                 th
-                  hr
+                  hr style="margin: 0px 0px;"
               tr
                 th.text-left width="100%"
-                  table width="100%"
+                  table width="100%" style="font-size: 12px;"
                     tr
                       th.text-right width="15%"
                         b.mt-1.mr-1 DESTINATARIO:
                       th width="85%"
-                        span.text-normal.pr-3 = @shipment.client.name.upcase
+                        span.text-normal.pr-3 = client.name.upcase
                     tr
                       th.text-right width="15%"
                         b.mt-1.mr-1 DOMICILIO:
                       th width="85%"
-                        span.text-normal.pr-3 = @shipment.client.full_address.upcase
+                        span.text-normal.pr-3 = client.full_address.upcase
                     tr
                       th.text-right width="15%"
                         b.mt-1.mr-1 RFC:
                       th width="85%"
-                        - client = @shipment.client
                         - rfc = client.fiscals.any? ? client.fiscals.first.rfc : client.rfc
                         span.text-normal.pr-3.mr-2 = rfc.upcase
                         b.mt-1.mr-1 TELÉFONO:
-                        span.text-normal.pr-3 = @shipment.client.phone.upcase
+                        span.text-normal.pr-3 = client.phone.upcase
               tr
                 th
-                  hr
-            table.pt-0.mt-0 width="100%"
+                  hr style="margin: 0px 0px;"
+            table.pt-0.mt-0 width="100%" style="font-size: 12px;"
               tr
                 th.text-left.pt-0.mt-0.text-left width="50%"
                   h4.mb-1.mt-0 ORIGEN
@@ -112,7 +112,7 @@
                   span TELÉFONO:
                   span.text-normal = @shipment.delivery_address.phone
 
-            table.mt-2.pdf_table width="100%"
+            table.mt-2.pdf_table width="100%" style="font-size: 12px;"
               thead
                 tr
                   th.text-left width="64%"
@@ -138,9 +138,7 @@
                     td
                       span.text-normal $0.00
                 tr style="background: #fff;"
-                  - height = "" 
-                  - height = n_products < 8 ? 'h-2' : '' 
-                  td class="#{height}" colspan="4"
+                  td colspan="4"
                     br
                 tr style="background: #fff;"
                   td style="border: none; background: #fff;"
@@ -165,19 +163,19 @@
                 th.text-right width="13%"
                   b.mt-1.mr-1 TRANSPORTISTA:
                 th.text-left width="87%"
-                  span.text-normal.pr-3 = freight.carrier.name.upcase
+                  span.text-normal.pr-3 = carrier.name.upcase
               tr
                 th.text-right width="15%"
                   b.mt-1.mr-1 DOMICILIO:
                 th.text-left width="85%"
-                  span.text-normal.pr-3 = freight.carrier.full_address.upcase
+                  span.text-normal.pr-3 = carrier.full_address.upcase
               tr
                 th.text-right width="15%"
                   b.mt-1.mr-1 RFC:
                 th.text-left width="85%"
-                  span.text-normal.pr-3.mr-2 = freight.carrier.rfc.upcase
+                  span.text-normal.pr-3.mr-2 = carrier.rfc.upcase
                   b.mt-1.mr-1 TELÉFONO:
-                  span.text-normal.pr-3 = freight.carrier.phone.upcase
+                  span.text-normal.pr-3 = carrier.phone.upcase
         tr
           th
             table.mt-2 width="100%"
@@ -201,22 +199,22 @@
                       th width="25%"
                         span CAAT:
                       th width="75%"
-                        span.text-normal = freight.carrier.caat.present? ? freight.carrier.caat : '--'
+                        span.text-normal = carrier.caat.present? ? carrier.caat : '--'
                     tr
                       th width="25%"
                         span ALPHA:
                       th width="75%"
-                        span.text-normal = freight.carrier.alpha.present? ? freight.carrier.alpha : '--'
+                        span.text-normal = carrier.alpha.present? ? carrier.alpha : '--'
                     tr
                       th width="25%"
                         span ICCMX:
                       th width="75%"
-                        span.text-normal = freight.carrier.iccmx.present? ? freight.carrier.iccmx : '--'
+                        span.text-normal = carrier.iccmx.present? ? carrier.iccmx : '--'
                     tr
                       th width="25%"
                         span USDOT:
                       th width="75%"
-                        span.text-normal = freight.carrier.usdot.present? ? freight.carrier.usdot : '--'
+                        span.text-normal = carrier.usdot.present? ? carrier.usdot : '--'
 
                 th.text-left width="35%"
                   h4.mb-0 UNIDAD
@@ -267,33 +265,33 @@
         tr
           th
             hr
-        tr
-          th.text-left
-            b.mt-1.mr-1 COMENTARIOS
-            br
-            span.text-normal = @shipment.comments.upcase
-      tfoot
-        tr
-          td width="100%"
-            table width="100%"
-              tr
-                th.text-center.pt-4 width="50%"
-                  span __________________________________________
-                  br
-                  - user = @shipment.user.nil? ? @shipment.freight.user : @shipment.user 
-                  small = user.full_name
-                  br
-                  small REMISIONISTA
-                th.text-center.pt-4 width="50%"
-                  span __________________________________________
-                  br
-                  small = freight.driver.full_name 
-                  br
+        - if @shipment.comments.present?
+          tr
+            th.text-left
+              b.mt-1.mr-1 COMENTARIOS
+              br
+              span.text-normal = @shipment.comments.upcase
+      tr
+        td width="100%"
+          table width="100%"
+            tr
+              th.text-center.pt-4 width="50%"
+                span __________________________________________
+                br
+                - user = @shipment.user.nil? ? @shipment.freight.user : @shipment.user 
+                small = user.full_name
+                br
+                small REMISIONISTA
+              th.text-center.pt-4 width="50%"
+                span __________________________________________
+                br
+                small = freight.driver.full_name 
+                br
                 small OPERADOR
   // Fin de remision ----------------------
 
 // CARTA RESPONSIVA 
-div style="height: 34.5cm;" 
+div style="min-height: 34.5cm;" 
   table.s-14.letter_height_pdf width="100%"
     thead
       tr
@@ -389,21 +387,22 @@ div style="height: 34.5cm;"
           table width="100%"
             tr
               th.text-right width="15%"
-                b.mt-1.mr-1 CLIENTE---------------:
+                b.mt-1.mr-1 CLIENTE:
               th width="85%"
-                span.text-normal.pr-3 = @shipment.client.name.upcase
+                span.text-normal.pr-3 = client.name.upcase
             tr
               th.text-right width="15%"
                 b.mt-1.mr-1 DOMICILIO:
               th width="85%"
-                span.text-normal.pr-3 = @shipment.client.full_address.upcase
+                span.text-normal.pr-3 = client.full_address.upcase
             tr
               th.text-right width="15%"
                 b.mt-1.mr-1 RFC:
               th width="85%"
-                span.text-normal.pr-3.mr-2 = @shipment.client.rfc.upcase
+                - client_rfc = client.fiscals.any? ? client.fiscals.first.rfc : client.rfc 
+                span.text-normal.pr-3.mr-2 = client_rfc.upcase
                 b.mt-1.mr-1 TELÉFONO:
-                span.text-normal.pr-3 = @shipment.client.phone.upcase
+                span.text-normal.pr-3 = client.phone.upcase
       tr
         th
           hr
@@ -414,17 +413,18 @@ div style="height: 34.5cm;"
               th.text-right width="13%"
                 b.mt-1.mr-1 TRANSPORTISTA:
               th.text-left width="87%"
-                span.text-normal.pr-3 = freight.carrier.name.upcase
+                span.text-normal.pr-3 = carrier.name.upcase
             tr
               th.text-right width="15%"
                 b.mt-1.mr-1 DOMICILIO:
               th.text-left width="85%"
-                span.text-normal.pr-3 = freight.carrier.full_address.upcase
+                span.text-normal.pr-3 = carrier.full_address.upcase
             tr
               th.text-right width="15%"
                 b.mt-1.mr-1 RFC:
               th.text-left width="85%"
-                span.text-normal.pr-3.mr-2 = freight.carrier.rfc.upcase
+                - carrier_rfc = carrier.fiscals.any? ? carrier.fiscals.first : carrier.rfc  
+                span.text-normal.pr-3.mr-2 = carrier_rfc
                 b.mt-1.mr-1 TELÉFONO:
                 span.text-normal.pr-3 = freight.carrier.phone.upcase
       tr
@@ -458,7 +458,7 @@ div style="height: 34.5cm;"
           small Operador
 
 // CERTIFICADO DE INSPECCION 
-div style="height: 34.5cm;" 
+div style="min-height: 34.5cm;" 
   table.s-14.letter_height_pdf width="100%"
     thead
       tr

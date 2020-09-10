@@ -51,7 +51,7 @@ module Config
       private
 
       def activity_params
-        params.require(:activity).permit(:action, :production_unit_id)
+        params.require(:activity).permit(:action, :production_unit_id, :jornals)
       end
 
       def find_activity

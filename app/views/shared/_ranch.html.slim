@@ -1,0 +1,63 @@
+section#general.s-12
+	.row
+		.col-4	
+			.row
+				.col-lg-6.s-14
+					b.mb-1 Nombre:
+				.col-lg-6.text-left
+					b.mb-1.s-14 = @obj.ranch_name.upcase
+			.row.mt-1
+				.col-lg-6
+					label.mb-1 Estado:
+				.col-lg-6.text-left
+					p.mb-1 = @obj.ranch_state_name.upcase
+			.row.mt-1
+				.col-lg-6
+					label.mb-1 Municipio / condado:
+				.col-lg-6.text-left
+					p.mb-1 = @obj.ranch_municipality_name.upcase
+			.row.mt-1
+				.col-lg-6
+					label.mb-1 Gerente:
+				.col-lg-6.text-left
+					p.mb-1 = @obj.ranch_manager_name.upcase
+			.row.mt-1
+				.col-lg-6
+					label.mb-1 Superficie:
+				.col-lg-6.text-left
+					p.mb-1 = @obj.ranch_territory
+			.row.mt-1
+				.col-lg-6
+					label.mb-1 Region Hidrologica:
+				.col-lg-6.text-left
+					p.mb-1 = @obj.ranch_hydrological_region.upcase
+			.row.mt-1
+				.col-lg-6
+					label.mb-1 Nombre del Aquifero:
+				.col-lg-6.text-left
+					p.mb-1 = @obj.ranch_aquifer_name.upcase
+			.row.mt-1
+				.col-lg-6
+					label.mb-1 Georeferencia:
+				.col-lg-6.text-left
+					p.mb-1 = @obj.ranch_georeference.upcase
+			.row.mt-1
+				.col-lg-6
+					label.mb-1 Documentos:
+				.col-lg-6.text-left
+					-	if @obj.ranch_document.present?
+						p.mb-1.text-center
+							.btn-group
+							= link_to '#', title: "Ver documento", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+								i.far.fa-file-pdf
+					-	else
+						p.mb-1 = '--'
+			.row.mt-1
+				.col-lg-6
+					label.mb-1 Acciones:
+				.col-lg-6.text-left
+					p.mb-1.text-left
+						= link_to config_production_ranch_path(@obj.ranch), title: "Ver Rancho", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+							svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+								path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+								circle cx="12" cy="12" r="3"

@@ -8,6 +8,10 @@ class Ranch < ApplicationRecord
   belongs_to :state
   belongs_to :municipality
 
+  delegate :name, to: :state, prefix: "state", allow_nil: :true
+  delegate :name, to: :municipality, prefix: "municipality", allow_nil: :true
+  delegate :name, to: :manager, prefix: "manager", allow_nil: :true
+
   has_rich_text :parcel_certificate
   has_one_attached :document
 end

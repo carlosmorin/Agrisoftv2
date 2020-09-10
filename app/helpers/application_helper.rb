@@ -51,6 +51,10 @@ module ApplicationHelper
 		["clients", "expenses", "provider_categories"]
 	end
 
+	def crm_menu_items
+		["crm"]
+	end
+
 	def valid_nil(str)
 		str.nil? ? "--" : str
 	end

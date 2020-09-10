@@ -1,0 +1,82 @@
+section.content-header.pb-0
+  .container-fluid
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "gestión de enfermedades".upcase 
+section.content
+  .container-fluid
+  	.row
+      .col-lg-12
+        = render "shared/alerts"
+    .row
+      .col-md-12
+        .card
+          .card-header.p-2.pb-1.bg-light-gray
+            .row
+              .col-md-6.col-sm-12
+                = render 'shared/search_form', search_path: config_production_deseases_path do
+                  = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por Nombre, nombre cientifico, patogeno')
+              .col-lg-6.text-right
+                = link_to new_config_production_desease_path, class: 'btn btn-success btn-sm s-12 mt-1' do 
+                    svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+                      path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+                    span.pl-2 Nueva enfermedad
+          .card-body.table-responsive.p-0
+            table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+              thead
+                tr.bg-light-gray
+                  th style=("width: 5%")  #
+                  th Nombre
+                  th Nombre Cientifico
+                  th Patogeno
+                  th Enfermedad
+                  th.text-center colspan="2" style=("width: 12%") Acciones
+              tbody#tbody
+                - if @index_facade.deseases.empty?
+                  tr
+                    td.text-center colspan="9"
+                      = link_to 'Nuevo registro', new_config_production_desease_path, class: "s-12"
+                - else
+                  - @index_facade.deseases.each do |desease|
+                    tr
+                      td = desease.id
+                      td = desease.name.upcase
+                      td = desease.scientific_name.upcase
+                      td = desease.pathogen.upcase
+                      td = desease.desease_name.upcase
+                      td.text-center
+                        = link_to config_production_desease_path(desease, tab: :general), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
+                         svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+												  path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+												  circle cx="12" cy="12" r="3" 
+                        = link_to edit_config_production_desease_path(desease), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
+                         svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                          path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                          path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+                        = link_to config_production_desease_path(desease), title: "Eliminar", data: { placement: 'left', toggle: 'tooltip', controller: 'users', behavior: 'delete' }  do
+                         svg.feather.feather-trash-2.text-danger fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                          polyline points=("3 6 5 6 21 6") 
+                          path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 
+                          line x1="10" x2="10" y1="11" y2="17" 
+                          line x1="14" x2="14" y1="11" y2="17"
+                        .btn-group
+                          button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
+                          .dropdown-menu.py-0 style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px), 38px, 0px);") x-placement="top-start" 
+                            = link_to new_config_production_desease_damage_path(desease), class: 'dropdown-item s-12'
+                              i.fas.fa-exclamation.mr-2
+                              span Agregar Daño
+                            = link_to '#', class: 'dropdown-item s-12' do
+                              i.fas.fa-leaf.mr-2
+                              span Agregar Tratamiento
+                            = link_to new_config_production_desease_host_path(desease), class: 'dropdown-item s-12' do
+                              svg.svg-inline--fa.fa-map-marker-alt.fa-w-12.h-12.mr-2 aria-hidden="true" data-icon="map-marker-alt" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 384 512") xmlns="http://www.w3.org/2000/svg" 
+                                path d=("M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z") fill="currentColor" 
+                              span Agregar Hospedera
+          .card-footer.p-2.pb-1.bg-light-gray
+            .row
+              .col-lg-12.d-flex.justify-content-center
+                .digg_pagination.mt-2.s-14
+                  = will_paginate @index_facade.deseases, :container => false, :page_links => true
