@@ -1,9 +1,9 @@
 - url = @order_sale.persisted? ?  crm_sales_order_path : crm_sales_orders_path 
-= simple_form_for([:crm, @order_sale], url: url, data: { controller: "quotes slim-select" }) do |f|
+= simple_form_for([:crm, @order_sale], url: url, data: { controller: "quotes slim-select crm--sales-orders datepickers" }) do |f|
 	.card.card-body
 		.row
 			.col-6
-				.row
+				.row.d-none
 					.col-2.text-right
 						= f.label :user_id
 					.col-10
@@ -24,14 +24,6 @@
 					.col-10
 						= f.input :delivery_address_id, collection: delivery_addresses, label: false, required: true, autofocus: true, input_html: { class: 's-12 addresses-select' }
 			.col-6
-				.row
-					.col-3
-						= f.label :issue_at, class: "bold"
-					.col-9
-						.input-group.date.d-block data-provide="datepicker" 
-							= f.input :issue_at, label: false,  as: :date, html5: true, input_html: { class: "mr-2 form-control form-control-sm date-picker" }
-							.input-group-addon
-								span.glyphicon.glyphicon-th
 				.row.mt-2
 					.col-3
 						= f.label :currency, class: "bold"
@@ -58,93 +50,137 @@
 								= f.label :contact_id, class: "bold"
 							.col-9
 								= f.input :contact_id, collection: contacts, label: false, required: true, autofocus: true, input_html: { class: 's-12 contacts-select', data: { target: 'quotes.contactsSelect' } }
-						.row.mt-3
-							.col-3.text-right
-								= f.label :expirated_days, class: "bold"
-							.col-4
-								- expirated_days = f.object.expirated_days.nil? ? "7" : f.object.expirated_days
-								= f.input :expirated_days, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm', value: expirated_days }
-						
-		section.mt-4
-			.row.mt-2
-				.col-12.table.table-sm.mt-2
-					.row.bold.bg-light-gray.p-1.mb-2
-						.col-lg-5
-							span.s-14 DESCRIPCIÓN DE PRODUCTO  
-						.col-lg-2
-							span.s-14 CANTIDAD
-	
-						.col-lg-3
-							span.s-14 P. UNITARIO
-						.col-lg-1
-							span.s-14 TOTAL
-						.col-lg-1
-					.row
-						.col-12
-							#products.products
-								= f.simple_fields_for :shipments_products do |product|
-									= render 'shipments_product_fields', f: product
-					.row.mt-2
-						.col-12.text-center
-							= link_to_add_association f, :shipments_products, class: "btn btn-sm btn-primary s-12", data: {association_insertion_node: '#products', association_insertion_method: :append } do
-								svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-									path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
-								span.pl-2 Nuevo producto
-			.row
-				.col-8
-				.col-4
-					table.table.table-sm.table-bordered
-						tbody.s-13
-							tr
-								th Neto:
-								th
-									span data-target="quotes.netOutput" $ 0
-							tr
-								th.text-danger Descuento:
-								th
-									.input-group
-										.input-group-prepend
-											span.input-group-text
-												svg.feather.feather-percent fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewbox=("0 0 24 24") width="12" xmlns="http://www.w3.org/2000/svg" 
-													line x1="19" x2="5" y1="5" y2="19" 
-													circle cx="6.5" cy="6.5" r="2.5" 
-													circle cx="17.5" cy="17.5" r="2.5" 
-											= f.input :discount, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm', value: "0", data: { target: "quotes.inputDiscount", action: "change->quotes#applyDiscount" }  }
-							tr
-								th Sub total:
-								th data-target="quotes.subTotalOutput" $ 0
-							tr
-								th IVA:
-								th
-									.input-group
-										.input-group-prepend
-											span.input-group-text
-												svg.feather.feather-percent fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewbox=("0 0 24 24") width="12" xmlns="http://www.w3.org/2000/svg" 
-													line x1="19" x2="5" y1="5" y2="19" 
-													circle cx="6.5" cy="6.5" r="2.5" 
-													circle cx="17.5" cy="17.5" r="2.5" 
-											= f.input :iva, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm', value: "0", data: { target: "quotes.ivaInput", action: "change->quotes#changeIvaValue"} }
-							tr.bg-light-gray
-								th TOTAL:
-								th data-target="quotes.totalOutput" $ 0
-
-
+	section.card.card-body
 		.row.mt-2
+			.col-12.table.table-sm.mt-2
+				.row.bold.bg-light-gray.p-1.mb-2
+					.col-lg-5
+						span.s-14 DESCRIPCIÓN DE PRODUCTO  
+					.col-lg-2
+						span.s-14 CANTIDAD
+
+					.col-lg-3
+						span.s-14 P. UNITARIO
+					.col-lg-1
+						span.s-14 TOTAL
+					.col-lg-1
+				.row
+					.col-12
+						#products.products
+							= f.simple_fields_for :shipments_products do |product|
+								= render 'shipments_product_fields', f: product
+				.row.mt-2
+					.col-12.text-center
+						= link_to_add_association f, :shipments_products, class: "btn btn-sm btn-primary s-12", data: {association_insertion_node: '#products', association_insertion_method: :append } do
+							svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+								path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
+							span.pl-2 Nuevo producto
+		.row
+			.col-8
+			.col-4
+				table.table.table-sm.table-bordered
+					tbody.s-13
+						tr
+							th Neto:
+							th
+								span data-target="quotes.netOutput" $ 0
+						tr
+							th.text-danger Descuento:
+							th
+								.input-group
+									.input-group-prepend
+										span.input-group-text
+											svg.feather.feather-percent fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewbox=("0 0 24 24") width="12" xmlns="http://www.w3.org/2000/svg" 
+												line x1="19" x2="5" y1="5" y2="19" 
+												circle cx="6.5" cy="6.5" r="2.5" 
+												circle cx="17.5" cy="17.5" r="2.5" 
+										= f.input :discount, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm', value: "0", data: { target: "quotes.inputDiscount", action: "change->quotes#applyDiscount" }  }
+						tr
+							th Sub total:
+							th data-target="quotes.subTotalOutput" $ 0
+						tr
+							th IVA:
+							th
+								.input-group
+									.input-group-prepend
+										span.input-group-text
+											svg.feather.feather-percent fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewbox=("0 0 24 24") width="12" xmlns="http://www.w3.org/2000/svg" 
+												line x1="19" x2="5" y1="5" y2="19" 
+												circle cx="6.5" cy="6.5" r="2.5" 
+												circle cx="17.5" cy="17.5" r="2.5" 
+										= f.input :iva, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm', value: "0", data: { target: "quotes.ivaInput", action: "change->quotes#changeIvaValue"} }
+						tr.bg-light-gray
+							th TOTAL:
+							th data-target="quotes.totalOutput" $ 0
+
+	section.card.card-body
+		.row
 			.col-12.s-12.pl-4.bg-light-gray.py-2
 				= f.label :description, class: "bold s-14"
 				= f.rich_text_area :description
+	.row.my-2.mt-4
 		.col-12
-			.hr
-		.row.mt-2
-			.col-12
-				.form-actions.text-right
-					= link_to crm_quotes_path, notice: 'Are you sure?', class: 'btn btn-default btn-sm pl-1 mr-2' do
-						i.fas.fa-chevron-left.s-10.mr-2
-						span Volver
-					button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
-						svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-						  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
-						  polyline points=("17 21 17 13 7 13 7 21") 
-						  polyline points=("7 3 7 8 15 8") 
-						span Guardar
+			.custom-control.custom-checkbox
+				input#toggleAppoinmentContainer.custom-control-input type="checkbox" data-action="change->crm--sales-orders#toggleAppoinmentContainer" checked=f.object.appointments.any? /
+				label.custom-control-label for="toggleAppoinmentContainer" Agregar información adicional
+	section.card.card-body.p-0.py-3 class="#{f.object.appointments.any? ? '' : 'd-none'}" data-target="crm--sales-orders.appoinmentContainer"
+		.col-12
+			= f.simple_fields_for :appointments do |appointment|
+				.row
+					.col-md-6.px-3.py-1.px-4
+						.row
+							.col-2
+								b = appointment.label :n_request, class: 'bold'
+							.col-9
+								= appointment.input :n_request, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+						.row
+							.col-2
+								b = appointment.label :appointment_number, class: 'bold'
+							.col-9
+								= appointment.input :appointment_number, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+					.col-md-6.px-3.py-1.px-4
+						.row
+							.col-2
+								b = appointment.label :started_at, class: 'bold'
+							.col-9
+								.input-group.date.d-block
+									.form-group
+										.input-group.w-80
+											.input-group-prepend
+												span.input-group-text
+													i.far.fa-calendar-alt
+											- started_at = appointment.object.started_at&.strftime('%d-%m-%Y')
+											- finished_at = appointment.object.finished_at&.strftime('%d-%m-%Y')
+											- date_range = "#{started_at} to #{finished_at}"
+											= appointment.input :started_at, as: :string, label: false, input_html: { value: date_range, autocomplete: 'off', class: 's-12 form-control form-control-sm picker-range' }
+						.row
+							.col-2
+								b = appointment.label :appointment_at, class: 'bold'
+							.col-9
+								.input-group.date.d-block
+									.form-group
+										.input-group.w-80
+											.input-group-prepend
+												span.input-group-text
+													i.far.fa-calendar-alt
+
+											- appointment_at = appointment.object.appointment_at&.strftime('%d-%m-%Y')
+											= appointment.input :appointment_at, as: :string, label: false, input_html: { value: appointment_at, autocomplete: 'off', class: 's-12 form-control form-control-sm date-picker' }
+				.row.mt-2
+					.col-12.s-12.pl-4.bg-light-gray
+						= appointment.label :comments, class: "bold s-14"
+						= appointment.rich_text_area :comments
+	hr
+	.row.mt-2
+		.col-12
+			.form-actions.text-right
+				= link_to crm_quotes_path, notice: 'Are you sure?', class: 'btn btn-default btn-sm pl-1 mr-2' do
+					i.fas.fa-chevron-left.s-10.mr-2
+					span Volver
+				button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
+					svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+					  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
+					  polyline points=("17 21 17 13 7 13 7 21") 
+					  polyline points=("7 3 7 8 15 8") 
+					span Guardar
 

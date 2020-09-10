@@ -4,41 +4,49 @@ section.content-header.pb-0
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
     .row.mb-2
-      .col-12
+      .col-8
         h5 = "Gestionar ordenes de venta".upcase
-section.content data-controller="order-sales slim-select"
+      .col-4.text-right
+        .btn-group.dropleft
+          button.btn.btn-success.btn-sm.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+            | Nueva orden de venta
+          .dropdown-menu
+            = link_to new_crm_sales_order_path, class: 'dropdown-item s-12' do
+              i.fas.fa-plus-circle.mr-2
+              span Orden de venta directa
+            = link_to "", class: 'dropdown-item s-12', data: { toggle: "modal", target: "#quotesModal" } do
+              i.fas.fa-file-upload.mr-2
+              span.pl-1 Orden de venta desde cotización 
+section.content data-controller="order-sales slim-select crm--sales-orders-confirm"
   .container-fluid
     .row
       .col-md-12
         .card
           .card-header.p-2.pb-1
-            .row
-              .col-md-8.col-sm-12
-                = form_tag(crm_sales_orders_path, method: "GET") do
-                  - value = params[:q].present? ? params[:q] : ''
-                  .form-row.align-items-center
-                    .col-5
-                      label.s-12.mb-0 Buscar por:
-                      = text_field_tag(:q, value, class: 'form-control form-control-sm', placeholder: 'Folio de cotización, Productos ...')
-                    .col-5
-                      label.s-12.mb-0 Cliente
-                      = select_tag :c, options_for_select(Client.all.pluck(:name, :id), selected: params[:c]), include_blank: 'Todos', class: 's-12 text-upcase'
-                    .col-2.my-1
-                      button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"  
-                        span.mr-2.s-12 Buscar
-                        i.fas.fa-search
-              .col-md-4.text-right
-                .btn-group.dropleft.mt-4
-                  button.btn.btn-success.btn-sm.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
-                    | Nueva orden de venta
-                  .dropdown-menu
-                    = link_to new_crm_sales_order_path, class: 'dropdown-item s-12' do
-                      i.fas.fa-plus-circle.mr-2
-                      span Orden de venta directa
-                    = link_to "", class: 'dropdown-item s-12', data: { toggle: "modal", target: "#quotesModal" } do
-                      i.fas.fa-file-upload.mr-2
-                      span.pl-1 Orden de venta desde cotización 
-
+            = form_tag(crm_sales_orders_path, method: "GET") do
+              - value = params[:q].present? ? params[:q] : ''
+              .form-row.align-items-center
+                .col-2
+                  label.s-12.mb-0 Buscar por:
+                  = text_field_tag(:q, value, class: 'form-control form-control-sm', placeholder: 'Folios ...')
+                .col-2
+                  label.s-12.mb-0 Cliente
+                  = select_tag :c, options_for_select(Client.all.pluck(:name, :id), selected: params[:c]), include_blank: 'Todos', class: 's-12 text-upcase'
+                .col-2
+                  label.s-12.mb-0 Cultivo
+                  = select_tag :crop_id, options_for_select(Crop.all.pluck(:name, :id), selected: params[:crop_id]), include_blank: 'Todos', class: 's-12 text-upcase'
+                .col-2
+                  label.s-12.mb-0 Calidad
+                  = select_tag :quality_id, options_for_select(Quality.all.pluck(:name, :id), selected: params[:quality_id]), include_blank: 'Todos', class: 's-12 text-upcase'
+                .col-2
+                  label.s-12.mb-0 Empaque
+                  = select_tag :package_id, options_for_select(Package.all.pluck(:name, :id), selected: params[:package_id]), include_blank: 'Todos', class: 's-12 text-upcase'
+                .col-2.my-1
+                  button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"  
+                    span.mr-2.s-12 Buscar
+                    i.fas.fa-search
+                  = link_to crm_sales_orders_path, class: "btn btn-sm btn-flat  btn-default mt-4 ml-2" do
+                    i.fas.fa-eraser
           .card-body.p-0
             = form_tag(consolidate_crm_quotes_path, method: "GET") do
               table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped data-controller="drop-down-table"
@@ -57,8 +65,11 @@ section.content data-controller="order-sales slim-select"
                       td.text-center colspan="7"
                         i.order_salestext-muted Sin ordenes de venta
                   - @order_sales.each do |order| 
-                    - valid_class = order.valid ? '' : 'inavlid_row'
-                    tr class="#{valid_class}"
+                    - if order.appointments.any?
+                      - valid_class = order.appointments.first.valid ? '' : 'inavlid_row'
+                    - else
+                      - valid_class = nil
+                    tr
                       td 
                         span.fas.fa-chevron-down.s-16.mr-2.c-blue.c-pointer data-id=order.id data-action="click->drop-down-table#toggleDropDown"
                         span = order.company.name.upcase
@@ -68,18 +79,29 @@ section.content data-controller="order-sales slim-select"
                         span = raw order.total_kg
                       td
                         span = order.order_sale_folio
+
                       td
                         - if order.quote_folio.present?
                           = link_to order.quote_folio, crm_quote_path(order) 
                         - else
                           = "--"
                       td
-                        p.c-pointer.mb-0.s-12
-                          span Expiración: 
-                          b = order.expirated_at.nil? ? '--' : order.expirated_at.strftime("%d/%m/%Y")
-                        small = "#{distance_of_time_in_words(Time.now, order.expirated_at)} para expirar" if order.valid
-                        small.text-d-none
-                          b  = "Orden de venta vencida" unless order.valid
+                        - if order.appointments.any?
+                          - appointment = order.appointments.first
+                          p.c-pointer.mb-0.s-12
+                            span Expiración: 
+                            b = appointment.finished_at.nil? ? '--' : appointment.finished_at.strftime("%d/%m/%Y")
+                          small.d-none = "#{distance_of_time_in_words(Time.now, appointment.finished_at)} para expirar" if appointment.valid
+                          small.text-d-none
+                            b  = "Orden de venta vencida" unless order.valid
+                          br
+                          .badge.bg-success
+                            i.fas.fa-check.mr-2
+                            span Datos de cita
+                        - else  
+                          .badge.bg-warning.btn.btn-sm
+                            i.fas.fa-times.mr-2
+                            span Sin datos de cita
 
                       td.text-center
                         .btn-group
@@ -97,108 +119,61 @@ section.content data-controller="order-sales slim-select"
                             = link_to crm_sales_order_print_path(order, format: :pdf), target: "_blank", class: "dropdown-item s-12 text-danger bold" do
                                 i.fas.fa-file-pdf.mr-2
                                 span Exportar PDF
-                            = link_to crm_quote_path(order, format: :pdf), class: "dropdown-item s-12 text-danger bold" do
+                            = link_to crm_sales_order_print_aditional_data_path(order, format: :pdf), class: "dropdown-item s-12 text-danger bold" do
                                 i.fas.fa-file-pdf.mr-2
-                                span Exportar datos adcionales                                
-                            .dropdown-divider.my-1
-                            = link_to crm_quote_path(order, format: :pdf), class: "dropdown-item s-12  bold" do
-                                span Generar embarque
-                                i.fas.fa-arrow-right.ml-2
-                    tr.d-none class="dropdown_#{order.id}"
-                      th colspan="7"
-                        .row.mt-3
-                          .col-10
-                            .card
-                              .card-header.p-1
-                                .row
-                                  .col-6
-                                    span.bold.s-12 DESCRIPCIÓN DE PRODUCTO
-                                  .col-2
-                                    span.bold.s-12 CANTIDAD
-                                  .col-2
-                                    span.bold.s-12 P. UNITARIO
-                                  .col-2
-                                    span.bold.s-12 TOTAL
-                              .card-body.p-1
-                                - order.shipments_products.each do |sp|
+                                span Exportar información adcional
+                                .dropdown-divider.my-1
+                            = link_to "", class: "dropdown-item s-12  bold", 'data-id' => order.id, 'data-url' => edit_shipment_path(order), 'data-folio' => order.order_sale_folio, 'data-action' => 'click->crm--sales-orders-confirm#confirmSaleOrder' do
+                              span Generar embarque
+                              i.fas.fa-arrow-right.ml-2
+                      tr.d-none class="dropdown_#{order.id}"
+                        th colspan="7"
+                          .row.mt-3
+                            .col-9
+                              .card
+                                .card-header.p-1
                                   .row
                                     .col-6
-                                      span.s-12 = sp.product.name
+                                      span.bold.s-12 DESCRIPCIÓN DE PRODUCTO
                                     .col-2
-                                      span.s-12 = sp.quantity
+                                      span.bold.s-12 CANTIDAD
                                     .col-2
-                                      span.s-12 = raw "$#{sp.price} <small>#{ order.currency.upcase }</small>"
+                                      span.bold.s-12 P. UNITARIO
                                     .col-2
-                                      span.bold.s-12 = raw "$#{sp.quantity * sp.price} <small>#{ order.currency.upcase }</small>"
+                                      span.bold.s-12 TOTAL
+                                .card-body.p-1
+                                  - order.shipments_products.each do |sp|
+                                    .row
+                                      .col-6
+                                        span.s-12 = sp.product.name
+                                      .col-2
+                                        span.s-12 = sp.quantity
+                                      .col-2
+                                        span.s-12 = raw "$#{sp.price} <small>#{ order.currency.upcase }</small>"
+                                      .col-2
+                                        span.bold.s-12 = raw "$#{sp.quantity * sp.price} <small>#{ order.currency.upcase }</small>"
+                            .col-3
+                              .card
+                                .card-header.p-1
+                                  span.bold.s-12 INFORMACIÓN ADICIONAL
+                                .card-body.p-1
+                                  - if order.appointments.any?
+                                    - appointment = order.appointments.first
+                                    .row
+                                      .col-4
+                                        label N° de cita
+                                      .col-8
+                                        b = appointment.appointment_number.upcase
+                                    .row
+                                      .col-4
+                                        label N° de pedido
+                                      .col-8
+                                        b = appointment.n_request.upcase
+                                    .row
+                                      .col-4
+                                        label Fecha de cita
+                                      .col-8
+                                        b = appointment.appointment_at.strftime("%d/%m/%Y %H:%M")
 
 
-#quotesModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
-  .modal-dialog.modal-xl role="document" 
-    .modal-content
-      .modal-header
-        h5#exampleModalLabel.modal-title Selecciona una cotización
-        button.close aria-label="Close" data-dismiss="modal" type="button" 
-          span aria-hidden="true"  ×
-      .modal-body
-        table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
-          thead
-            tr.bg-light-gray
-              th Folio
-              th Cliente
-              th.text-left Fecha de expedición
-              th.text-left Fecha de expiración
-              th.text-left Neto
-              th.text-left Descuento
-              th.text-left Subtotal
-              th.text-left IVA
-              th.text-left Total
-              th.text-center colspan="2" style=("width: 12%") Acciónes
-          tbody#tbody.s-13
-            - if @quotes.empty?
-              tr 
-                td.text-center colspan="11"
-                  i Sin registros
-            - else
-              - @quotes.each_with_index do |quote, index|
-                - valid_class = quote.valid ? '' : 'inavlid_row'
-                tr class="#{valid_class}" data-target='quote-to-order-sale.row'
-                  td.d-none disabled="true"
-
-                    .custom-control.custom-checkbox
-                      input.custom-control-input data-target="quote-to-order-sale.checkQuote" id="customCheckbox#{quote.id}" type="checkbox" value="#{quote.id}" required="true" name="quotes[]"  /
-                      label.custom-control-label for="customCheckbox#{quote.id}" 
-                  td.bold 
-                    span = quote.quote_folio
-                  td = quote.client.name.upcase
-                  td.text-left
-                    span = quote.issue_at.nil? ? "--" : quote.issue_at.strftime("%d/%m/%Y")
-                    - expiration_date = quote.issue_at - quote.issue_at
-                  td.text-left
-                    p.c-pointer.mb-0
-                      = quote.expirated_at.strftime("%d/%m/%Y")
-
-                    small = "#{distance_of_time_in_words(Time.now, quote.expirated_at)} para expirar" if quote.valid
-                    small.text-d-none
-                      b  = "Cotizacion vencida" unless quote.valid
-                  td.text-left
-                    - sub_total = quote.subtotal
-                    - discount = quote.discount 
-                    span.bold = "$ #{quote.subtotal}"
-                  td.text-left
-                    - discount = ((sub_total.to_d / 100) * discount)
-                    span.text-danger.bold = " #{quote.discount}% - $#{discount}"
-                    span --
-                  td.text-left.bold
-                    - sub_total = (sub_total.to_d - discount)  
-                    = "$#{sub_total}"
-                  td.text-left
-                    - iva = ((quote.subtotal.to_d - discount) / 100) * quote.iva
-                    span.bold = "%#{quote.iva} - $#{iva.round(2)}"
-                  td.text-left.bold
-                    = "$#{sub_total + iva}"
-                  th.text-center
-                    = link_to edit_crm_sales_order_path(quote), title: "Crear orden de venta", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-primary" do
-                      i.fas.fa-arrow-circle-right.mx-1
-
-      .modal-footer
-        button.btn.btn-sm.btn-secondary data-dismiss="modal" type="button" Cancelar
+= render "quotes_modal"

@@ -1,6 +1,8 @@
 class Freight < ApplicationRecord
   default_scope { order(:created_at) }
-  before_create :set_folio
+  #before_create :set_folio if shipments.first.order_sale_folio.nil?
+  before_create :set_folio, if: -> { shipments.any? }
+  before_update :set_folio, if: -> { folio.nil? }
   validates :carrier_id, :driver_id, :unit_id, :box_id, presence: true
   belongs_to :carrier, optional: true
   belongs_to :driver, optional: true

@@ -19,17 +19,20 @@ section.content data-controller="reference"
 							i.fas.fa-chevron-left.s-12.mr-2
 							span Volver
 					.col-md-6.text-right
-						= link_to edit_crm_sales_order_path(@order_sale), class: 'btn btn-xs btn-success mr-3' do
+						= link_to edit_crm_sales_order_path(@order_sale), class: 'btn btn-sm btn-success mr-1 s-12' do
 							i.fas.fa-edit.s-12.mr-1
 							span Editar
-						= link_to crm_sales_order_print_path(@order_sale, format: :pdf), target: "_blank", class: "btn btn-xs btn-danger mr-1" do
+						= link_to crm_sales_order_print_path(@order_sale, format: :pdf), target: "_blank", class: "btn btn-sm btn-default mr-1 text-danger s-12" do
 							i.fas.fa-file-pdf.s-12.mr-1
-							span Exportar PDF
+							b Exportar OV
+						- if @order_sale.appointments.any?
+							= link_to crm_sales_order_print_aditional_data_path(@order_sale, format: :pdf), target: "_blank", class: "btn btn-sm btn-default mr-1 text-danger s-12" do
+								i.fas.fa-file-pdf.s-12.mr-1
+								b Exportar Datos Adicionales
 		.card.card-body.s-14.p-3
 			.row.mt-2
 				.col-md-12.text-right
 					h5.bold.ml-3.mb-0 = raw "Orden de Venta: #<span class='text-underline'>#{@order_sale.order_sale_folio}</span>"
-					p.my-0.mt-3 = "Fecha de emisión: #{@order_sale.issue_at.strftime("%d/%m/%Y")}"
 					p.my-0 = "Vigencia: #{@order_sale.expirated_days} Dias"
 					p.my-0 = "Fecha de vigencia: #{@order_sale.expirated_at.strftime("%d/%m/%Y")}"
 					p.mt-2.mb-0.bold = "Remitente: #{@order_sale.user.full_name}"

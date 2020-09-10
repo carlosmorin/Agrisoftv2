@@ -1,6 +1,8 @@
 class Shipment < ApplicationRecord
+	require 'action_view'
 	include FolioGenerator
-
+	include ActionView::Helpers::DateHelper
+  
   default_scope { order(freight_folio: :desc) }
 
 	before_create :set_products
@@ -22,15 +24,16 @@ class Shipment < ApplicationRecord
 	belongs_to :user
 	belongs_to :freight, optional: true
 
-	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: -> { order_sale? || quotation? }
+	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: -> { quotation? }
+	validates :client_id, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: -> { order_sale? }
 	validates :client_id, :company_id, :delivery_address_id, presence: true, if: :sale?
 	validates :exchange_rate, presence: true, if: :currency_is_usd?
 	
 	has_rich_text :description
 	has_many :shipments_products, dependent: :destroy
 	has_many :products, through: :shipments_products, dependent: :destroy
-	
-	accepts_nested_attributes_for :shipments_products, allow_destroy: true
+	has_many :appointments
+	accepts_nested_attributes_for :shipments_products, :appointments, allow_destroy: true
 	
 	enum status: { quotation: 0, order_sale: 1, sale: 2 }
 	enum currency: { mxn: 0, usd: 1 }
@@ -45,8 +48,12 @@ class Shipment < ApplicationRecord
 	end
 
 	def expirated_at
-		return if issue_at.nil? 
-		issue_at + expirated_days.days
+		if self.issue_at.present?
+			issue_at + expirated_days.days
+		else
+			return false unless appointments.first.finished_at.present?
+			appointments.first.finished_at
+		end
 	end
 
 	def subtotal
@@ -58,7 +65,12 @@ class Shipment < ApplicationRecord
 
 	## Quote
 	def valid
-		self.expirated_at.beginning_of_day > Time.now.end_of_day
+		if expirated_at.present?
+			self.expirated_at.beginning_of_day > Time.now.end_of_day
+		else
+			return true unless appointments.first.finished_at.present?
+			appointments.first.finished_at.beginning_of_day > Time.now.end_of_day
+		end
 	end
 
 	private

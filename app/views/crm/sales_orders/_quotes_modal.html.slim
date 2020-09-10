@@ -1,0 +1,98 @@
+#quotesModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
+  .modal-dialog.modal-xl role="document" 
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Selecciona una cotización
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  ×
+      .modal-body
+        table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped data-controller="drop-down-table"
+          thead
+            tr.bg-light-gray
+              th Folio
+              th Cliente
+              th.text-left Fecha de expedición
+              th.text-left Fecha de expiración
+              th.text-left Neto
+              th.text-left Descuento
+              th.text-left Subtotal
+              th.text-left IVA
+              th.text-left Total
+              th.text-center colspan="2" style=("width: 12%") Acciónes
+          tbody#tbody.s-13
+            - if @quotes.empty?
+              tr 
+                td.text-center colspan="11"
+                  i Sin registros
+            - else
+              - @quotes.each_with_index do |quote, index|
+                - valid_class = quote.valid ? '' : 'inavlid_row'
+                tr class="#{valid_class}" data-target='quote-to-order-sale.row'
+                  td.d-none disabled="true"
+
+                    .custom-control.custom-checkbox
+                      input.custom-control-input data-target="quote-to-order-sale.checkQuote" id="customCheckbox#{quote.id}" type="checkbox" value="#{quote.id}" required="true" name="quotes[]"  /
+                      label.custom-control-label for="customCheckbox#{quote.id}" 
+                  td.bold 
+                    span.fas.fa-chevron-down.s-16.mr-2.c-blue.c-pointer data-id=quote.id data-action="click->drop-down-table#toggleDropDown"
+                    span = quote.quote_folio
+                  td = quote.client.name.upcase
+                  td.text-left
+                    span = quote.issue_at.nil? ? "--" : quote.issue_at.strftime("%d/%m/%Y")
+                    - expiration_date = quote.issue_at - quote.issue_at
+                  td.text-left
+                    p.c-pointer.mb-0
+                      = quote.expirated_at.strftime("%d/%m/%Y")
+
+                    small = "#{distance_of_time_in_words(Time.now, quote.expirated_at)} para expirar" if quote.valid
+                    small.text-d-none
+                      b  = "Cotizacion vencida" unless quote.valid
+                  td.text-left
+                    - sub_total = quote.subtotal
+                    - discount = quote.discount 
+                    span.bold = "$ #{quote.subtotal}"
+                  td.text-left
+                    - discount = ((sub_total.to_d / 100) * discount)
+                    span.text-danger.bold = " #{quote.discount}% - $#{discount}"
+                    span --
+                  td.text-left.bold
+                    - sub_total = (sub_total.to_d - discount)  
+                    = "$#{sub_total}"
+                  td.text-left
+                    - iva = ((quote.subtotal.to_d - discount) / 100) * quote.iva
+                    span.bold = "%#{quote.iva} - $#{iva.round(2)}"
+                  td.text-left.bold
+                    = "$#{sub_total + iva}"
+                  th.text-center
+                    = link_to edit_crm_sales_order_path(quote), title: "Crear orden de venta", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-primary" do
+                      i.fas.fa-arrow-circle-right.mx-1
+                tr.d-none class="dropdown_#{quote.id}"
+                  th colspan="10"
+                    .row.mt-3
+                      .col-10
+                        .card
+                          .card-header.p-1
+                            .row
+                              .col-6
+                                span.bold.s-12 DESCRIPCIÓN DE PRODUCTO
+                              .col-2
+                                span.bold.s-12 CANTIDAD
+                              .col-2
+                                span.bold.s-12 P. UNITARIO
+                              .col-2
+                                span.bold.s-12 TOTAL
+                          .card-body.p-1
+                            - quote.shipments_products.each do |sp|
+                              .row
+                                .col-6
+                                  span.s-12 = sp.product.name
+                                .col-2
+                                  span.s-12 = sp.quantity
+                                .col-2
+                                  span.s-12 = raw "$#{sp.price} <small>#{ quote.currency.upcase }</small>"
+                                .col-2
+                                  span.bold.s-12 = raw "$#{sp.quantity * sp.price} <small>#{ quote.currency.upcase }</small>"
+
+
+      .modal-footer
+        button.btn.btn-sm.btn-secondary data-dismiss="modal" type="button" Cancelar
