@@ -1,4 +1,4 @@
-class CreateIAppointments < ActiveRecord::Migration[6.0]
+class CreateAppioinments < ActiveRecord::Migration[6.0]
   def change
     create_table :appointments do |t|
       t.string :appointment_number
