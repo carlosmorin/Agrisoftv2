@@ -244,4 +244,11 @@ es:
         scientific_name: Nombre Cientifico
         pathogen: Patogeno
         desease_name: Enfermedad
-
+      appointment:
+        n_request: Numero de pedido
+        started_at: Fechas
+        finished_at: Fecha maxima
+        appointment_at: Fecha de cita
+        commitment_at: Fecha compromiso
+        appointment_number: Numero de cita
+        comments: Comentarios / Notas

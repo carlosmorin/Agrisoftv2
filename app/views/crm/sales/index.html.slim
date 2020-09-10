@@ -6,7 +6,7 @@ section.content-header.pb-0
     .row.mb-2
       .col-12
         h5 = "Gestion de ventas".upcase 
-section.content
+section.content data-controller="slim-select"
 	.container-fluid
 		.row
 			.col-lg-12
@@ -16,22 +16,33 @@ section.content
 				.card
 					.card-header.p-2.pb-1.bg-light-gray
 						.row
-							.col-md-10.col-sm-12
-								= form_tag(crm_sales_path, method: "GET", data: { controller: "slim-select" }) do
+							.col-md-12.col-sm-12
+ 								= form_tag(crm_sales_path, method: "GET") do
 									- value = params[:q].present? ? params[:q] : ''
 									.form-row.align-items-center
-										.col-4
+										.col-2
 											label.s-12.mb-0 Buscar por:
-											= text_field_tag(:q, value, class: 'form-control form-control-sm', placeholder: 'Folios, Productos ...')
-										.col-4
+											= text_field_tag(:q, value, class: 'form-control form-control-sm', placeholder: 'Folio de cotización, Folio de OV..')
+										.col-2
 											label.s-12.mb-0 Cliente
-											= select_tag :c, options_for_select(Client.all.pluck(:name, :id), selected: params[:c]), include_blank: 'Todos', class: 's-12 slim-select'
+											= select_tag :c, options_for_select(Client.all.pluck(:name, :id), selected: params[:c]), include_blank: 'Todos', class: 's-12 text-upcase'
+										.col-2
+											label.s-12.mb-0 Cultivo
+											= select_tag :crop_id, options_for_select(Crop.all.pluck(:name, :id), selected: params[:crop_id]), include_blank: 'Todos', class: 's-12 text-upcase'
+										.col-2
+											label.s-12.mb-0 Calidad
+											= select_tag :quality_id, options_for_select(Quality.all.pluck(:name, :id), selected: params[:quality_id]), include_blank: 'Todos', class: 's-12 text-upcase'
+										.col-2
+											label.s-12.mb-0 Empaque
+											= select_tag :package_id, options_for_select(Package.all.pluck(:name, :id), selected: params[:package_id]), include_blank: 'Todos', class: 's-12 text-upcase'
 										.col-2.my-1
-											button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"  
+											button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"
 												span.mr-2.s-12 Buscar
-												i.fas.fa-search.s-12.mx-1
+												i.fas.fa-search
+											= link_to crm_sales_path, class: "btn btn-sm btn-flat  btn-default mt-4 ml-2" do
+												i.fas.fa-eraser
 					.card-body.table-responsive.p-0
-						table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped
+						table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped data-controller="drop-down-table"
 							thead
 								tr.bg-light-gray
 									th Remisionista
@@ -50,7 +61,9 @@ section.content
 								- else
 									- @sales.each do |sale|
 										tr
-											td = sale.company.name.upcase
+											td
+												span.fas.fa-chevron-down.s-16.mr-2.c-blue.c-pointer data-id=sale.id data-action="click->drop-down-table#toggleDropDown"
+												span = sale.company.name.upcase
 											td = sale.client.name.upcase
 											td.s-12 
 												span == "#{sale.n_products} <small>Bultos</small>"
@@ -64,6 +77,32 @@ section.content
 												.btn-group
 													= link_to shipment_path(sale), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
 														i.far.fa-eye.s-12
+										tr.d-none class="dropdown_#{sale.id}"
+											th colspan="8"
+												.row.mt-3
+													.col-10
+														.card
+															.card-header.p-1
+																.row
+																	.col-6
+																		span.bold.s-12 DESCRIPCIÓN DE PRODUCTO
+																	.col-2
+																		span.bold.s-12 CANTIDAD
+																	.col-2
+																		span.bold.s-12 P. UNITARIO
+																	.col-2
+																		span.bold.s-12 TOTAL
+															.card-body.p-1
+																- sale.shipments_products.each do |sp|
+																	.row
+																		.col-6
+																			span.s-12 = sp.product.name
+																		.col-2
+																			span.s-12 = sp.quantity
+																		.col-2
+																			span.s-12 = raw "$#{sp.price} <small>#{ sale.currency&.upcase }</small>"
+																		.col-2
+																			span.bold.s-12 = raw "$#{sp.quantity * sp.price} <small>#{ sale.currency&.upcase }</small>"
 								tfoot
 									tr
 										th.pl-3 colspan="5" 

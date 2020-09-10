@@ -7,10 +7,14 @@ module Crm
     def index
       @quotes = Shipment.quotation
                   .joins(:products)
-                  .includes(:products)
+                  .joins(products: [:crop, :color, :quality])
+                  .includes(products: [:crop, :color, :quality])
                   .paginate(page: params[:page], per_page: 25)
       search if params[:q].present?
       search_by_client if params[:c].present?
+      search_by_crop if params[:crop_id].present?
+      search_by_quality if params[:quality_id].present?
+      search_by_package if params[:package_id].present?
     end
 
     def show
@@ -93,11 +97,26 @@ module Crm
       client_id = params[:c]
       @quotes = @quotes.where(client_id: client_id)
     end
+    
+    def search_by_crop
+      crop_id = params[:crop_id]
+      @quotes = @quotes.where("products.crop_id = ?", crop_id)
+    end
+
+    def search_by_quality
+      quality_id = params[:quality_id]
+      @quotes = @quotes.where("products.quality_id = ?", quality_id)
+    end
+
+    def search_by_package
+      package_id = params[:package_id]
+      @quotes = @quotes.where("products.package_id = ?", package_id)
+    end
 
     def search
       q = Regexp.escape(params[:q])
 
-      @quotes = @quotes.where('quote_folio ~* ? OR products.name ~* ?', q, q)
+      @quotes = @quotes.where('quote_folio ~* ?', q)
     end
 
     def set_object

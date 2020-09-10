@@ -121,6 +121,7 @@ Rails.application.routes.draw do
     end
     resources :sales_orders do
       get '/print', to: 'sales_orders#print'
+      get '/print_aditional_data', to: 'sales_orders#print_aditional_data'
     end
     
     namespace :config do

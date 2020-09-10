@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_09_09_010907) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,6 +81,17 @@ ActiveRecord::Schema.define(version: 2020_09_09_010907) do
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
     t.index ["country_id"], name: "index_addresses_on_country_id"
     t.index ["state_id"], name: "index_addresses_on_state_id"
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.string "n_request"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.datetime "appointment_at"
+    t.datetime "commitment_at"
+    t.string "appointment_number"
+    t.bigint "shipment_id", null: false
+    t.index ["shipment_id"], name: "index_appointments_on_shipment_id"
   end
 
   create_table "areas", force: :cascade do |t|
@@ -288,6 +298,19 @@ ActiveRecord::Schema.define(version: 2020_09_09_010907) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["crop_id"], name: "index_crop_damages_on_crop_id"
+  end
+  
+  create_table "create_appointments", force: :cascade do |t|
+    t.string "n_request"
+    t.datetime "startet_at"
+    t.datetime "finished_at"
+    t.datetime "appointment_at"
+    t.datetime "commitment_at"
+    t.string "appointment_number"
+    t.bigint "shipment_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shipment_id"], name: "index_create_appointments_on_shipment_id"
   end
 
   create_table "crops", force: :cascade do |t|
@@ -809,6 +832,7 @@ ActiveRecord::Schema.define(version: 2020_09_09_010907) do
   add_foreign_key "activities", "users"
   add_foreign_key "addresses", "countries"
   add_foreign_key "addresses", "states"
+  add_foreign_key "appointments", "shipments"
   add_foreign_key "areas", "ranches"
   add_foreign_key "bank_accounts", "banks"
   add_foreign_key "bank_accounts", "currencies"
@@ -832,6 +856,7 @@ ActiveRecord::Schema.define(version: 2020_09_09_010907) do
   add_foreign_key "contracts_products", "contracts"
   add_foreign_key "contracts_products", "currencies"
   add_foreign_key "contracts_products", "products"
+  add_foreign_key "create_appointments", "shipments"
   add_foreign_key "crops_colors", "colors"
   add_foreign_key "crops_colors", "crops"
   add_foreign_key "crops_deseases", "crops"

@@ -119,6 +119,9 @@ body{
 .m-w-80{ max-width: 80px !important; }
 .w-40{ width: 40px !important; }
 h2.swal2-title{ margin-bottom: 0px; }
+.w-80{ width: 80%; }
+.input.string{ width: 80%; }
+//
 
 // Backgrounds
 .bg-blue{ background-color: #0051a8; }
@@ -297,4 +300,11 @@ li.line-divider > hr{
 
 .text-color::hover {
   text-decoration: none !important;
+} 
+.h-0{
+	height: 0px !important;
+	overflow: hidden;
+}
+.h-auto{
+	height: auto;
 }
