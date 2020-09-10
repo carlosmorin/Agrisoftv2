@@ -42,7 +42,7 @@
                       th.text-right width="50%"
                         span.text-normal F. flete:
                       th.text-left width="50%"
-                        span.s-12 = @shipment.folio
+                        span.s-12 = @shipment.freight.folio
               tr
                 th width="100%" colspan="2"
                   hr style="margin: 0px 0px;"
@@ -128,106 +128,6 @@
                 - n_products = @shipment.shipments_products.size
                 - @shipment.shipments_products.each do |product|
                   - total_quantity += product.quantity.to_i
-                  tr
-                    td.text-left
-                      span.text-normal.s-13 = product.product.name.upcase
-                    td
-                      span.text-normal = product.quantity
-                    td
-                      span.text-normal $0.00
-                    td
-                      span.text-normal $0.00
-                  tr
-                    td.text-left
-                      span.text-normal.s-13 = product.product.name.upcase
-                    td
-                      span.text-normal = product.quantity
-                    td
-                      span.text-normal $0.00
-                    td
-                      span.text-normal $0.00
-                  tr
-                    td.text-left
-                      span.text-normal.s-13 = product.product.name.upcase
-                    td
-                      span.text-normal = product.quantity
-                    td
-                      span.text-normal $0.00
-                    td
-                      span.text-normal $0.00
-                  tr
-                    td.text-left
-                      span.text-normal.s-13 = product.product.name.upcase
-                    td
-                      span.text-normal = product.quantity
-                    td
-                      span.text-normal $0.00
-                    td
-                      span.text-normal $0.00
-                  tr
-                    td.text-left
-                      span.text-normal.s-13 = product.product.name.upcase
-                    td
-                      span.text-normal = product.quantity
-                    td
-                      span.text-normal $0.00
-                    td
-                      span.text-normal $0.00
-
-                  tr
-                    td.text-left
-                      span.text-normal.s-13 = product.product.name.upcase
-                    td
-                      span.text-normal = product.quantity
-                    td
-                      span.text-normal $0.00
-                    td
-                      span.text-normal $0.00
-                  tr
-                    td.text-left
-                      span.text-normal.s-13 = product.product.name.upcase
-                    td
-                      span.text-normal = product.quantity
-                    td
-                      span.text-normal $0.00
-                    td
-                      span.text-normal $0.00
-                  tr
-                    td.text-left
-                      span.text-normal.s-13 = product.product.name.upcase
-                    td
-                      span.text-normal = product.quantity
-                    td
-                      span.text-normal $0.00
-                    td
-                      span.text-normal $0.00
-                  tr
-                    td.text-left
-                      span.text-normal.s-13 = product.product.name.upcase
-                    td
-                      span.text-normal = product.quantity
-                    td
-                      span.text-normal $0.00
-                    td
-                      span.text-normal $0.00
-                  tr
-                    td.text-left
-                      span.text-normal.s-13 = product.product.name.upcase
-                    td
-                      span.text-normal = product.quantity
-                    td
-                      span.text-normal $0.00
-                    td
-                      span.text-normal $0.00
-                  tr
-                    td.text-left
-                      span.text-normal.s-13 = product.product.name.upcase
-                    td
-                      span.text-normal = product.quantity
-                    td
-                      span.text-normal $0.00
-                    td
-                      span.text-normal $0.00
                   tr
                     td.text-left
                       span.text-normal.s-13 = product.product.name.upcase
