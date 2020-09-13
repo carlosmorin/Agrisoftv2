@@ -108,13 +108,13 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
                 i.fas.fa-circle.s-10.mr-2
                 p.s-14.text-normal 
                   span Gestionar Ordenes de V
-                  span.badge.badge-info.right.s-10 = Shipment.order_sales.size
+                  span.badge.badge-info.right.s-10 = Shipment.active_order_sales_shipments.size
             li.nav-item.pb-2
               = link_to crm_sales_path(tab: :all), class: 'nav-link pt-0 pb-0 pl-3 mb-0 #{current_link?(crm_sales_path)}' do
                 i.fas.fa-circle.s-10.mr-2
                 p.s-14
                   span Gestionar Ventas
-                  span.badge.badge-info.right.s-10 = Shipment.sale.size
+                  span.badge.badge-info.right.s-10 = Shipment.sale.active_sales.size
         li class="nav-item has-treeview" 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
             i.fas.fa-cogs.s-15.mr-1.ml-1

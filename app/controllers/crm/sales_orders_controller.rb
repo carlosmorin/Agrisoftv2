@@ -76,8 +76,7 @@ module Crm
     end
 
     def cancel
-      binding.pry
-      @order_sale.update(cancel_sale: params[:cancel])
+      @order_sale.update(cancel_sale_order: params[:cancel])
     end
 
     def order_sale_params

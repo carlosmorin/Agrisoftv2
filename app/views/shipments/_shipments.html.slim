@@ -1,4 +1,4 @@
-.card.mb-0 data-controller="slim-select"
+  .card.mb-0 data-controller="slim-select"
   .card-body.p-0
     = form_tag(shipments_path, method: "GET") do
       - value = params[:q].present? ? params[:q] : ''

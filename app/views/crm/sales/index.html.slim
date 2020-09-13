@@ -112,7 +112,11 @@ section.content data-controller="slim-select crm--sales"
 														i.far.fa-eye.s-12
 												.btn-group
 													button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
-													.dropdown-menu.py-0.adjust-dropdown style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-43px, 22px, 0px);") x-placement="top-start" 
+													.dropdown-menu.py-0.adjust-dropdown style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-43px, 22px, 0px);") x-placement="top-start"
+														- if sale.appointments.any?
+															= link_to crm_sales_order_print_aditional_data_path(sale, format: :pdf), target: :_blank, class: "dropdown-item s-12 text-danger bold" do
+																	i.fas.fa-file-pdf.mr-2
+																	span Exportar información adcional
 														- if sale.cancel_sale?
 															= link_to "", class: "dropdown-item s-12 bold text-primary", data: { action: "click->crm--sales#confirmCancelSale", id: sale.id, cancel: sale.cancel_sale? ? 0 : 1, saleNumber: sale.folio } do
 																	i.fas.fa-check-circle.mr-1

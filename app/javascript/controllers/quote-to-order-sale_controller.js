@@ -60,6 +60,7 @@ export default class extends Controller {
   }
 
   confirmCancelQuote(e){
+    console.log("confirmCancelQuote")
     e.preventDefault()
     var quoteNumber = event.currentTarget.getAttribute('data-quoteNumber')
     var quote_id = event.currentTarget.getAttribute('data-id')
@@ -84,7 +85,7 @@ export default class extends Controller {
   }
 
   cancelQuote(id, cancel){
-    var url = `/crm/sales/${id}/cancel`
+    var url = `/crm/quotes/${id}/cancel`
     Axios({
       method: 'patch',
       url: url,
