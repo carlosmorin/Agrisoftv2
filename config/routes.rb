@@ -106,7 +106,9 @@ Rails.application.routes.draw do
       get '/get_delivery_address', to: 'clients#get_delivery_address'
       get '/get_contacts', to: 'clients#get_contacts'
     end
-    resources :sales
+    resources :sales do
+      patch '/cancel', to: 'sales#cancel'
+    end
     resources :contracts, only: [:create, :update]
     resources :bank_accounts, except: [:index]
 
@@ -115,12 +117,14 @@ Rails.application.routes.draw do
     resources :quotes do
       get '/print', to: 'quotes#print'
       patch '/update_status', to: 'quotes#update_status'
+      patch '/cancel', to: 'quotes#cancel'
       collection do
         get :consolidate
       end
     end
     resources :sales_orders do
       get '/print', to: 'sales_orders#print'
+      patch '/cancel', to: 'sales_orders#cancel'
       get '/print_aditional_data', to: 'sales_orders#print_aditional_data'
     end
     

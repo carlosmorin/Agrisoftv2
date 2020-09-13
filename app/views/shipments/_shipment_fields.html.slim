@@ -5,8 +5,10 @@
         .col-12.text-right
           = link_to_remove_association f, class: "btn btn-danger s-12 rounded-remove" do
             span.fas.fa-times.s-14
+
       .row
         .col-md-10
+          = f.input :shipment_at, as: :hidden, input_html: { value: Time.zone.now }
           = f.input :user_id, as: :hidden, input_html: { value: current_user.id }
           = f.input :status, as: :hidden, input_html: { value: "sale" }
         .col-md-2.text-right

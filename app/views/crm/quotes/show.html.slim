@@ -4,8 +4,19 @@ section.content-header.pb-0
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
     .row.mb-2
-      .col-12
+      .col-8
         h5 = "Detalle de Cotización".upcase 
+      .col-4.text-right
+
+				- if @quote.cancel_quote?
+					span.btn.btn-sm.badge.badge-danger.right.s-16
+						span Cancelada
+						i.fas.fa-lock.ml-2
+				- if @quote.folio.present?
+					span.btn.btn-sm.badge.badge-success.right.s-16
+						= link_to crm_sale_path(@quote), class: "c-white", target: :_blank do
+							span Ir a venta
+							i.fas.fa-check-double.ml-2 
 section.content data-controller="reference"
 	.container
 		.row
@@ -19,9 +30,10 @@ section.content data-controller="reference"
 							i.fas.fa-chevron-left.s-12.mr-2
 							span Volver
 					.col-md-6.text-right
-						= link_to edit_crm_quote_path(@quote), class: 'btn btn-xs btn-success mr-3' do
-							i.fas.fa-edit.s-12.mr-1
-							span Editar
+						- unless @quote.folio.present? || @quote.cancel_quote?
+							= link_to edit_crm_quote_path(@quote), class: 'btn btn-xs btn-success mr-3' do
+								i.fas.fa-edit.s-12.mr-1
+								span Editar
 						= link_to crm_quote_print_path(@quote, format: :pdf), target: "_blank", class: "btn btn-xs btn-danger mr-1" do
 							i.fas.fa-file-pdf.s-12.mr-1
 							span Exportar PDF

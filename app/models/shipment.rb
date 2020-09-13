@@ -4,6 +4,21 @@ class Shipment < ApplicationRecord
 	include ActionView::Helpers::DateHelper
   
   default_scope { order(freight_folio: :desc) }
+  scope :quotes, -> { where("quote_folio IS NOT NULL") }
+  scope :active_quotes, -> { where("quote_folio IS NOT NULL AND CURRENT_TIMESTAMP < issue_at + CAST(CONCAT(expirated_days::text, 'days') AS INTERVAL) AND NOT cancel_quote") }
+  scope :expirated_quotes, -> { where("quote_folio IS NOT NULL AND CURRENT_TIMESTAMP > issue_at + CAST(CONCAT(expirated_days::text, 'days') AS INTERVAL)") }
+  scope :canceled_quotes, -> { where("quote_folio IS NOT NULL AND cancel_quote::text = 'true'") }
+
+  scope :order_sales, -> { where("order_sale_folio IS NOT  NULL") }
+  scope :active_order_sales, -> { where("order_sale_folio IS NOT NULL AND cancel_sale_order::text = 'false'") }
+  scope :active_order_sales_shipments, -> { where("order_sale_folio IS NOT NULL AND folio IS NULL AND cancel_sale_order::text = 'false'") }
+  scope :expirated_order_sales, -> {  where("order_sale_folio IS NOT NULL AND appointments.finished_at IS NOT NULL AND CURRENT_TIMESTAMP > appointments.finished_at") }
+  scope :canceled_order_sales, -> { where("order_sale_folio IS NOT NULL AND cancel_sale_order::text = 'true'") }
+
+  scope :sales, -> { where("folio IS NOT  NULL") }
+  scope :active_sales, -> { where("folio IS NOT NULL AND cancel_sale::text = 'false'") }
+  scope :canceled_sales, -> { where("folio IS NOT NULL AND cancel_sale::text = 'true'") }
+
 
 	before_create :set_products
 	before_update :set_products
@@ -26,17 +41,29 @@ class Shipment < ApplicationRecord
 
 	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: -> { quotation? }
 	validates :client_id, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: -> { order_sale? }
+	
 	validates :client_id, :company_id, :delivery_address_id, presence: true, if: :sale?
 	validates :exchange_rate, presence: true, if: :currency_is_usd?
+
 	
 	has_rich_text :description
 	has_many :shipments_products, dependent: :destroy
 	has_many :products, through: :shipments_products, dependent: :destroy
-	has_many :appointments
+	has_many :appointments, inverse_of: :shipment
 	accepts_nested_attributes_for :shipments_products, :appointments, allow_destroy: true
 	
 	enum status: { quotation: 0, order_sale: 1, sale: 2 }
 	enum currency: { mxn: 0, usd: 1 }
+
+	def valid_order_sale
+		if appointments.any?
+			appointment = appointments.first
+			return true if appointment.finished_at.nil? || appointment.finished_at.nil?
+			Time.zone.now < appointment.finished_at
+		else
+			return true
+		end
+	end
 
 	def total_kg
 		total = 0
@@ -49,11 +76,17 @@ class Shipment < ApplicationRecord
 
 	def expirated_at
 		if self.issue_at.present?
-			issue_at + expirated_days.days
+			self.issue_at + expirated_days.days
 		else
-			return false unless appointments.first.finished_at.present?
-			appointments.first.finished_at
+			return false if self.appointments.any? 
+			self.appointments.finished_at
 		end
+	end
+
+	def expirated_order_sale
+		return false unless appointments.any?
+		appointment = self.appointments.first
+		appointment. + expirated_days.days
 	end
 
 	def subtotal
@@ -65,12 +98,8 @@ class Shipment < ApplicationRecord
 
 	## Quote
 	def valid
-		if expirated_at.present?
-			self.expirated_at.beginning_of_day > Time.now.end_of_day
-		else
-			return true unless appointments.first.finished_at.present?
-			appointments.first.finished_at.beginning_of_day > Time.now.end_of_day
-		end
+		return false unless expirated_at.present?
+		Time.zone.now < self.expirated_at
 	end
 
 	private
@@ -144,5 +173,6 @@ class Shipment < ApplicationRecord
 			"#{total_shipments.to_i + 1 }"
 		end
 	end
+    :discount_cannot_be_greater_than_total_value
 
 end

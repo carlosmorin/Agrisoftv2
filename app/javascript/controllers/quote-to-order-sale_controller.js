@@ -23,8 +23,6 @@ export default class extends Controller {
     })
     .then((willDelete) => {
       if (willDelete) {
-        var row = this.rowTargets[rowPosition]
-        $(row).fadeOut('fast')
         this.createOrderSale(itemId, rowPosition)
       } 
     });
@@ -60,4 +58,45 @@ export default class extends Controller {
   enableConsolidateButton(){
   	console.log(this.checkQuoteTargets)
   }
+
+  confirmCancelQuote(e){
+    e.preventDefault()
+    var quoteNumber = event.currentTarget.getAttribute('data-quoteNumber')
+    var quote_id = event.currentTarget.getAttribute('data-id')
+    var cancel = event.currentTarget.getAttribute('data-cancel')
+    var msg = ''
+    if (cancel == '0') {
+      msg = 'Deseas activar la cotizacón'
+    }else{
+      msg = 'Deseas cancelar la cotizacón'
+    }
+    swal({
+      title: "Requiere confirmación!",
+      text: `${msg} ${quoteNumber}?`,
+      buttons: true,
+      buttons: ['Cancelar', 'Aceptar']
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        this.cancelQuote(quote_id, cancel)
+      } 
+    });
+  }
+
+  cancelQuote(id, cancel){
+    var url = `/crm/sales/${id}/cancel`
+    Axios({
+      method: 'patch',
+      url: url,
+      headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+      data: { cancel: cancel }
+    })
+    .then(function (response) {
+      if (response['status'] == 204) {
+        toastr.success('Operación realizada con exito!', {timeOut: 1000})
+        setTimeout(function(){ Turbolinks.visit(window.location, { action: 'replace' }) }, 1000);
+      }
+    });
+  }
+
 }
