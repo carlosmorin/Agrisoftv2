@@ -25,6 +25,10 @@ section.content
             = link_to shipment_print_path(@shipment, format: :pdf), target: '_blank', class: " btn btn-sm btn-danger text-center pr-2 s-12" do
               i.fas.fa-file-pdf.mr-2
               span Generar documentos
+            - if @shipment.appointments.any?
+              = link_to crm_sales_order_print_aditional_data_path( @shipment, format: :pdf),  target: "_blank", class: "btn btn-sm btn-danger text-center pr-2 s-12 ml-2" do
+                i.fas.fa-file-pdf.mr-2
+                span Exportar información adicional
     .card.card-body.s-14.p-3.mt-3
       .row
         .col-12

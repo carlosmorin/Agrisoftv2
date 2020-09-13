@@ -52,7 +52,7 @@ module ApplicationHelper
 	end
 
 	def crm_menu_items
-		["crm"]
+		['sales', 'quotes', 'sales_orders']
 	end
 
 	def valid_nil(str)

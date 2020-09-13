@@ -155,5 +155,6 @@ export default class extends Controller {
     var number = numeral(total);
     this.totalOutputTarget.textContent = `$ ${total}`
   }
-    
+
+
 }

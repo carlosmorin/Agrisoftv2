@@ -41,15 +41,6 @@
 							= f.input :exchange_rate, label: false, input_html: { class: "mr-2 form-control form-control-sm", data: { target: 'quotes.exchangeRateInput'}}
 							.input-group-addon
 								span.glyphicon.glyphicon-th
-				.row.mt-4
-					.col-lg-2
-						h6.bold.s-12.c-dark-gray Opcionales:
-					.col-lg-10
-						.row
-							.col-3.text-right
-								= f.label :contact_id, class: "bold"
-							.col-9
-								= f.input :contact_id, collection: contacts, label: false, required: true, autofocus: true, input_html: { class: 's-12 contacts-select', data: { target: 'quotes.contactsSelect' } }
 	section.card.card-body
 		.row.mt-2
 			.col-12.table.table-sm.mt-2
@@ -127,7 +118,7 @@
 		.col-12
 			= f.simple_fields_for :appointments do |appointment|
 				.row
-					.col-md-6.px-3.py-1.px-4
+					.col-md-8.px-3.py-1.px-4
 						.row
 							.col-2
 								b = appointment.label :n_request, class: 'bold'
@@ -138,34 +129,50 @@
 								b = appointment.label :appointment_number, class: 'bold'
 							.col-9
 								= appointment.input :appointment_number, label: false, input_html: { class: 's-12 form-control form-control-sm' }
-					.col-md-6.px-3.py-1.px-4
-						.row
-							.col-2
-								b = appointment.label :started_at, class: 'bold'
-							.col-9
-								.input-group.date.d-block
-									.form-group
-										.input-group.w-80
-											.input-group-prepend
-												span.input-group-text
-													i.far.fa-calendar-alt
-											- started_at = appointment.object.started_at&.strftime('%d-%m-%Y')
-											- finished_at = appointment.object.finished_at&.strftime('%d-%m-%Y')
-											- date_range = "#{started_at} to #{finished_at}"
-											= appointment.input :started_at, as: :string, label: false, input_html: { value: date_range, autocomplete: 'off', class: 's-12 form-control form-control-sm picker-range' }
-						.row
+					.col-md-4.px-3.px-4
+						.row.mt-2
 							.col-2
 								b = appointment.label :appointment_at, class: 'bold'
-							.col-9
+							.col-10
 								.input-group.date.d-block
 									.form-group
 										.input-group.w-80
 											.input-group-prepend
 												span.input-group-text
 													i.far.fa-calendar-alt
+											- appointment_at = appointment.object.appointment_at&.strftime('%d-%m-%Y %H:%M')
+											= appointment.input :appointment_at, as: :string, label: false, input_html: { value: appointment_at, autocomplete: 'off', class: 's-12 form-control form-control-sm date-time-picker' }
+						.row
+							.col-12
+								label
+									b Fechas de vigencia (opcionales):
+						.row
+							.col-2
+								label
+									b De:
+							.col-10
+								.input-group.date.d-block
+									.form-group
+										.input-group.w-80
+											.input-group-prepend
+												span.input-group-text
+													i.far.fa-calendar-alt
+											- started_at = appointment.object.started_at&.strftime('%d-%m-%Y')											
+											= appointment.input :started_at, as: :string, label: false, input_html: { value: started_at, autocomplete: 'off', class: 's-12 form-control form-control-sm date-picker' }
+						.row
+							.col-2
+								label
+									b Hasta:
+							.col-10
+								.input-group.date.d-block
+									.form-group
+										.input-group.w-80
+											.input-group-prepend
+												span.input-group-text
+													i.far.fa-calendar-alt
+											- finished_at = appointment.object.finished_at&.strftime('%d-%m-%Y')											
+											= appointment.input :finished_at, as: :string, label: false, input_html: { value: finished_at, autocomplete: 'off', class: 's-12 form-control form-control-sm date-picker' }
 
-											- appointment_at = appointment.object.appointment_at&.strftime('%d-%m-%Y')
-											= appointment.input :appointment_at, as: :string, label: false, input_html: { value: appointment_at, autocomplete: 'off', class: 's-12 form-control form-control-sm date-picker' }
 				.row.mt-2
 					.col-12.s-12.pl-4.bg-light-gray
 						= appointment.label :comments, class: "bold s-14"
