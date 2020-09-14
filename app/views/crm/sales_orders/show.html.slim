@@ -33,11 +33,12 @@ section.content data-controller="reference"
 			.row.mt-2
 				.col-md-12.text-right
 					h5.bold.ml-3.mb-0 = raw "Orden de Venta: #<span class='text-underline'>#{@order_sale.order_sale_folio}</span>"
-					- if @order_sale.appointments.any?
+					- if @order_sale.appointments.any? 
 						- appointment = @order_sale.appointments.first
-						- days = "#{distance_of_time_in_words(Time.now, appointment.finished_at)} para expirar"
-						p.my-0 = "Vigencia: #{days}"
-						p.my-0 = "Fecha de vigencia: #{appointment.finished_at.strftime("%d/%m/%Y")}"
+						- if appointment.finished_at.present?
+							- days = "#{distance_of_time_in_words(Time.now, appointment.finished_at)} para expirar"
+							p.my-0 = "Vigencia: #{days}"
+							p.my-0 = "Fecha de vigencia: #{appointment.finished_at.strftime("%d/%m/%Y")}"
 					p.mt-2.mb-0.bold = "Remitente: #{@order_sale.user.full_name}"
 		.card.card-body.s-14.p-3.mt-1
 			.row
