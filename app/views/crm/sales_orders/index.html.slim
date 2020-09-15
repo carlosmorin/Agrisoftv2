@@ -210,7 +210,7 @@ section.content data-controller="order-sales slim-select crm--sales-orders-confi
                                       .col-4
                                         label Fecha de cita
                                       .col-8
-                                        b = appointment.appointment_at.strftime("%d/%m/%Y %H:%M")
+                                        b =  appointment.appointment_at&.strftime("%d/%m/%Y %H:%M")
 
 
 = render "quotes_modal"
