@@ -173,6 +173,4 @@ class Shipment < ApplicationRecord
 			"#{total_shipments.to_i + 1 }"
 		end
 	end
-    :discount_cannot_be_greater_than_total_value
-
 end
