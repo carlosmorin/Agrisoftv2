@@ -1,12 +1,11 @@
 section.content-header.pb-0
-	.container-fluid
-		.row
-			.col-12.text-left.s-12
-				= render_breadcrumbs :separator => ' / '
+  .container-fluid
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
 		.row.mb-2
 			.col-sm-6
-				h5 Control de fletes
-
+				h5 = "Control de fletes".upcase
 section.content
 	.container-fluid
 		.row
@@ -15,7 +14,7 @@ section.content
 		.row
 			.col-md-12
 				.card
-					.card-header.p-2.pb-1.bg-light-gray
+					.card-header.p-2.pb-1.bg-light-gray data-controller="datepickers"
 						.row
 							.col-md-10.col-sm-12
 								= form_tag(logistic_freights_path, method: "GET", data: { controller: "select" }) do
@@ -24,11 +23,24 @@ section.content
 										.col-3
 											label.s-12.mb-0 Buscar por:
 											= text_field_tag(:q, value, class: 'form-control form-control-sm', placeholder: 'Folio de flete')
+										.col-3
+											label.s-12.mb-0 Transportista
+											= select_tag :carrier_id, options_for_select(Carrier.all.pluck(:name, :id), selected: params[:carrier_id]), include_blank: 'Todos', class: 's-12 text-upcase'
+										.col-3.pt-3
+											label.s-12.mb-0 Fechas
+											.input-group.date.d-block
+												.form-group
+													.input-group.w-80
+														.input-group-prepend
+															span.input-group-text
+																i.far.fa-calendar-alt
+														input.s-12.form-control.form-control-sm.picker-range name="dates" value=params[:dates]
 										.col-2.my-1
 											button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"  
-												span.mr-2.s-12 Filtrar
-												svg.svg-inline--fa.fa-filter.fa-w-16.h-10 aria-hidden="true" data-icon="filter" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-													path d=("M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z") fill="currentColor"
+												span.mr-2.s-12 Buscar
+												i.fas.fa-search
+											= link_to logistic_freights_path(tab: params[:tab]), class: "btn btn-sm btn-flat  btn-default mt-4 ml-2" do
+												i.fas.fa-eraser
 					.card-body.table-responsive.p-0
 						table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
 							thead
@@ -36,10 +48,10 @@ section.content
 									th.bold.text-center style=("width: 5%")  #
 									th Folio de flete
 									th Transpotista
-									th Deudor
+									th Destino
+									th Fecha de envío
 									th Costo
 									th Saldo
-									th Destino
 									th.text-center Factura
 									th.text-center colspan="2" style=("width: 12%") Acciones
 							tbody#tbody.s-13
@@ -53,12 +65,17 @@ section.content
 										- n_freights += freight.cost.nil? ? 0 : freight.cost
 										tr
 											td.bold.text-center = freight.id
-											td.bold = freight.folio.upcase
-											td = freight.carrier.name.upcase
-											td = freight.debtable.present? ? freight.debtable.name : '--' 
+											td.bold = freight&.folio&.upcase
+											td = freight.carrier.present? ? freight.carrier.name.upcase : '--'
+											td 
+												- if freight.shipments.any?
+													= freight.shipments.first.delivery_address.short_address.upcase
+												- else
+													'--'
+											td = freight.created_at.strftime("%d/%m/%Y")
 											td = freight.cost.present? ? "$ #{ freight.cost }" : '$ 0.00' 
 											td = freight.cost.present? ? "$ #{ freight.cost }" : '$ 0.00' 
-											td = freight.shipments.first.delivery_address.short_address.upcase
+					
 											td.text-center
 												- if freight.pdf_invoice.attached?
 													= link_to freight.pdf_invoice, target: "_blank", class: "badge bg-danger btn btn-sm mr-2" do 

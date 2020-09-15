@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_09_010907) do
+ActiveRecord::Schema.define(version: 2020_09_13_163740) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -84,13 +85,15 @@ ActiveRecord::Schema.define(version: 2020_09_09_010907) do
   end
 
   create_table "appointments", force: :cascade do |t|
+    t.string "appointment_number"
     t.string "n_request"
     t.datetime "started_at"
     t.datetime "finished_at"
     t.datetime "appointment_at"
     t.datetime "commitment_at"
-    t.string "appointment_number"
-    t.bigint "shipment_id", null: false
+    t.bigint "shipment_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["shipment_id"], name: "index_appointments_on_shipment_id"
   end
 
@@ -291,15 +294,6 @@ ActiveRecord::Schema.define(version: 2020_09_09_010907) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "crop_damages", force: :cascade do |t|
-    t.integer "crop_damageable_id"
-    t.string "crop_damageable_type"
-    t.integer "crop_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["crop_id"], name: "index_crop_damages_on_crop_id"
-  end
-  
   create_table "create_appointments", force: :cascade do |t|
     t.string "n_request"
     t.datetime "startet_at"
@@ -660,8 +654,8 @@ ActiveRecord::Schema.define(version: 2020_09_09_010907) do
   end
 
   create_table "ranches", force: :cascade do |t|
-    t.bigint "state_id"
-    t.bigint "municipality_id"
+    t.string "state_id"
+    t.string "municipality_id"
     t.bigint "manager_id"
     t.string "territory"
     t.string "hydrological_region"
@@ -700,6 +694,10 @@ ActiveRecord::Schema.define(version: 2020_09_09_010907) do
     t.integer "currency"
     t.decimal "exchange_rate"
     t.string "order_sale_folio"
+    t.boolean "cancel_quote", default: false
+    t.boolean "cancel_sale_order", default: false
+    t.boolean "cancel_sale", default: false
+    t.datetime "shipment_at"
     t.index ["client_id"], name: "index_shipments_on_client_id"
     t.index ["company_id"], name: "index_shipments_on_company_id"
     t.index ["contact_id"], name: "index_shipments_on_contact_id"

@@ -34,11 +34,12 @@ span.error ~ input.form-control{
 
 ///Font weight
 .bold{ font-weight: bold !important; }
-.active_menu_item{ 
+.active_menu_item, .c-white{ 
 	color: #fff !important;
 }
 .f-normal{ font-weight: normal !important; }
 //Color
+.c-withe{ color: #f9f9f9; }
 .c-red{ color: #881822; }
 .c-green{ color: #002400; }
 .bg-light-gray{ background: #f4f4f4 !important;}
@@ -207,8 +208,11 @@ span.notificator{
 }
 
 //Costum tabs
-.card-primary.card-outline-tabs > .card-header a.active{
-	border-top: 3px solid #293742 !important;
+.card-header a.active{
+	border-top: 0px !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
+	border-bottom: 3px solid #293742 !important;
 	color: #293742 !important;
 }
 
@@ -280,9 +284,16 @@ li.line-divider > hr{
 .selectize-input {
  padding: 5px 6px !important;
 }
-
+.canceled_row{
+	background: #ffc2c2 !important;
+  text-decoration: line-through;
+}
 .inavlid_row{
 	background-color: #ffc2c2 !important;
+}
+.saled_row{
+
+	background-color: #00560036 !important;
 }
 /////TEXT STYLES
 .text-underline{

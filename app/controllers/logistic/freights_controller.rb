@@ -8,6 +8,8 @@ module Logistic
       @freights = Freight.paginate(page: params[:page], per_page: 25)
       
       search if params[:q].present?
+      search_by_carrier if params[:carrier_id].present?
+      search_by_dates if params[:dates].present?
     end
 
     def edit
@@ -45,6 +47,20 @@ module Logistic
       q = Regexp.escape(params[:q])
       
       @freights = @freights.where("concat(folio) ~* ?", q)
+    end
+
+    def search_by_carrier
+      carrier_id = Regexp.escape(params[:carrier_id])
+      
+      @freights = @freights.where("carrier_id = ?", carrier_id)
+    end
+
+    def search_by_dates
+      dates = params[:dates].split(" to ")
+      from = Date.parse(dates.first).beginning_of_day
+      to = Date.parse(dates.second).end_of_day
+
+      @freights = @freights.where(created_at: from..to)
     end
 
     def frieght_params

@@ -1,25 +1,28 @@
 module Crm
   class SalesOrdersController < ApplicationController
-  	before_action :set_object, only: %i[show edit update print print_aditional_data]
+  	before_action :set_object, only: %i[show edit update print print_aditional_data cancel]
 
     add_breadcrumb "CRM", :crm_root_path
-    add_breadcrumb "Ordenes de venta", :crm_sales_orders_path
 
     def index
-    	@order_sales = Shipment.order_sale
-                        .order('order_sale_folio DESC')
-                        .joins(products: [:crop, :color, :quality])
-                        .includes(products: [:crop, :color, :quality])
-                        .paginate(page: params[:page], per_page: 25)
+      add_breadcrumb "Ordenes de venta", crm_sales_orders_path(tab: :all)
+    	@order_sales = Shipment.order_sales if params[:tab] == 'all'
+      @order_sales = Shipment.canceled_order_sales if params[:tab] == 'canceled'
+      @order_sales = Shipment.left_outer_joins(:appointments).active_order_sales if params[:tab] == 'actives'
+      @order_sales = Shipment.joins(:appointments).expirated_order_sales if params[:tab] == 'expirated'
+
+      @order_sales = @order_sales.order('order_sale_folio DESC')
+                      .joins(products: [:crop, :color, :quality])
+                      .includes(products: [:crop, :color, :quality])
+                      .paginate(page: params[:page], per_page: 25)
       @quotes = Shipment.quotation
       search if params[:q].present?
       search_by_client if params[:c].present?
-      search_by_crop if params[:crop_id].present?
-      search_by_quality if params[:quality_id].present?
-      search_by_package if params[:package_id].present?
+      advanced_filters if params[:advanced].present? && params[:active_advanced]
     end
 
     def new 
+      add_breadcrumb "Ordenes de venta", crm_sales_orders_path(tab: :all)
       add_breadcrumb "Nueva"
       @order_sale = Shipment.new(status: :order_sale)
       @order_sale.shipments_products.build
@@ -27,6 +30,7 @@ module Crm
     end
 
     def edit
+      add_breadcrumb "Ordenes de venta", crm_sales_orders_path(tab: :all)
       add_breadcrumb "Editar"
       if @order_sale.appointments.any?
         started_at = @order_sale.appointments.first.started_at&.strftime('%d-%m-%Y')
@@ -39,18 +43,13 @@ module Crm
     end
 
     def show
+      add_breadcrumb "Ordenes de venta", crm_sales_orders_path(tab: :all)
       add_breadcrumb "Detalle de orden de venta"
     end
 
     def create
       @order_sale = Shipment.new(order_sale_params)
-      if @order_sale.appointments.any? 
-        dates = params[:shipment][:appointments_attributes]["0"][:started_at].split(" to ")
-        @order_sale.appointments.first.started_at = dates[0]
-        @order_sale.appointments.first.finished_at = dates[1]
-        @order_sale.status = :order_sale
-      end
-      
+      @order_sale.status = :order_sale if @order_sale.status != :order_sale
       if @order_sale.save
         flash[:notice] = "<i class='fa fa-check-circle mr-2'></i> Orden de venta creada exitosamente"
         redirect_to crm_sales_order_path(@order_sale)
@@ -63,13 +62,6 @@ module Crm
     end
 
     def update
-      if @order_sale.appointments.any? 
-        dates = params[:shipment][:appointments_attributes]["0"][:started_at].split(" to ")
-        @order_sale.appointments.first.started_at = dates[0]
-        @order_sale.appointments.first.finished_at = dates[1]
-        @order_sale.status = :order_sale
-      end
-
       @order_sale.status = :order_sale if @order_sale.status != :order_sale
       if @order_sale.update(order_sale_params)
         flash[:notice] = "<i class='fa fa-check-circle mr-2'></i> Orden de venta actualizada exitosamente"
@@ -81,6 +73,10 @@ module Crm
 
     def destroy
       @order_sale.destroy
+    end
+
+    def cancel
+      @order_sale.update(cancel_sale_order: params[:cancel])
     end
 
     def order_sale_params
@@ -124,23 +120,29 @@ module Crm
 
     private
 
+    def advanced_filters
+      search_by_crop if params[:advanced][:crop_id].present?
+      search_by_quality if params[:advanced][:quality_id].present?
+      search_by_package if params[:advanced][:package_id].present?
+    end
+
     def search_by_client
       client_id = params[:c]
       @order_sales = @order_sales.where(client_id: client_id)
     end
 
     def search_by_crop
-      crop_id = params[:crop_id]
+      crop_id = params[:advanced][:crop_id]
       @order_sales = @order_sales.where("products.crop_id = ?", crop_id)
     end
 
     def search_by_quality
-      quality_id = params[:quality_id]
+      quality_id = params[:advanced][:quality_id]
       @order_sales = @order_sales.where("products.quality_id = ?", quality_id)
     end
 
     def search_by_package
-      package_id = params[:package_id]
+      package_id = params[:advanced][:package_id]
       @order_sales = @order_sales.where("products.package_id = ?", package_id)
     end
 
@@ -148,7 +150,7 @@ module Crm
       q = Regexp.escape(params[:q])
       
       @order_sales = @order_sales.where(
-        "quote_folio ~* ? OR order_sale_folio ~* ?", q, q)
+        " order_sale_folio ~* ?", q)
     end
 
     def set_object

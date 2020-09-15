@@ -14,9 +14,10 @@ class ShipmentsController < ApplicationController
                   .joins(products: [:crop, :color, :quality])
                   .includes(products: [:crop, :color, :quality])
                   .paginate(page: params[:page], per_page: 25)
-    @orders_sales = Shipment.order_sale
+
+    @orders_sales = Shipment.left_outer_joins(:appointments).active_order_sales_shipments
     @all_shipments = Shipment.sale
-    @orders = Shipment.order_sale if params[:tab] == "order_sale"
+    @orders = @orders_sales if params[:tab] == "order_sale"
 
     search if params[:q].present?
     search_by_client if params[:c].present?
@@ -142,7 +143,7 @@ class ShipmentsController < ApplicationController
   def shipment_params
   	params.require(:freight).permit(
       :carrier_id, :driver_id, :unit_id, :box_id, :user_id,
-          shipments_attributes: [:id, :company_id, :client_id,
+          shipments_attributes: [:id, :company_id, :client_id, :shipment_at,
             :delivery_address_id, :user_id, :status, :comments, :_destroy, :pay_freight,
           shipments_products_attributes: [:id, :price, :quantity, :shipment_id,
             :product_id, :_destroy]]

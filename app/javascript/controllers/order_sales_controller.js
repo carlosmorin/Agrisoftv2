@@ -6,4 +6,8 @@ export default class extends Controller {
   connect() {
   	console.log("Order sales")
   }
+
+  confirmCancelOV(){
+  	console.log("confirmCancelOV")
+  }
 }

@@ -2,6 +2,8 @@
 - copies = ["original", "copia caseta", "copia operador"]
 - freight = @shipment.freight
 - carrier = freight.carrier
+- carrier_rfc = carrier.fiscals.any? ? carrier.fiscals.first : carrier.rfc  
+
 - client = @shipment.client
 - copies.each do |copy|
   div style="min-height: 34.5cm;"
@@ -173,7 +175,7 @@
                 th.text-right width="15%"
                   b.mt-1.mr-1 RFC:
                 th.text-left width="85%"
-                  span.text-normal.pr-3.mr-2 = carrier.rfc.upcase
+                  span.text-normal.pr-3.mr-2 = carrier_rfc
                   b.mt-1.mr-1 TELÉFONO:
                   span.text-normal.pr-3 = carrier.phone.upcase
         tr

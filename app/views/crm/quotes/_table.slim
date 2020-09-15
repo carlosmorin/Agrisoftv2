@@ -1,0 +1,134 @@
+table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped data-controller="drop-down-table"
+  thead
+    tr.bg-light-gray
+      th.d-none
+        - unless @quotes.empty?
+          .custom-control.custom-checkbox
+            input#customCheckboxAll.custom-control-input type="checkbox" value="all" name="quotes[]" data-target="quote-to-order-sale.selectAll" data-action="change->quote-to-order-sale#selectAll" /
+            label.custom-control-label for="customCheckboxAll" 
+      th #
+      th Cliente
+      th.text-left Seguimiento
+      th.text-left Fechas
+      th.text-left Neto
+      th.text-left Descuento
+      th.text-left Subtotal
+      th.text-left IVA
+      th.text-left Total
+      th.text-left colspan="2" style=("width: 12%") Acciónes
+  tbody#tbody.s-13
+    - if @quotes.empty?
+      tr 
+        td.text-center colspan="11"
+          = link_to "Nuevo registro", new_crm_quote_path, class: "link"
+    - else
+      - @quotes.each_with_index do |quote, index|
+        tr class="#{row_class(quote)}" data-target='quote-to-order-sale.row'
+          td.d-none disabled="true"
+            .custom-control.custom-checkbox
+              input.custom-control-input data-target="quote-to-order-sale.checkQuote" id="customCheckbox#{quote.id}" type="checkbox" value="#{quote.id}" required="true" name="quotes[]"  /
+              label.custom-control-label for="customCheckbox#{quote.id}" 
+          td.bold.pl-3
+            span.fas.fa-chevron-down.s-16.mr-2.c-blue.c-pointer data-id=quote.id data-action="click->drop-down-table#toggleDropDown"
+            span = quote.quote_folio
+          td = quote.client.name.upcase
+          td.text-left
+            span.badge.badge-info.btn.btn-sm.s-10
+              = link_to 'Cotizacion', crm_quote_path(quote), title: quote.quote_folio, 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: 'c-withe', target: :_blank
+            - if quote.order_sale_folio.present?
+              span.fas.fa-long-arrow-alt-right.s-14.mx-1
+              span.badge.badge-primary.btn.btn-sm.s-10 
+                = link_to 'Orden de V', crm_sales_order_path(quote), title: quote.order_sale_folio, 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: 'c-withe', target: :_blank
+            - if quote.folio.present?
+              span.fas.fa-long-arrow-alt-right.s-14.mx-1
+              span.badge.badge-success.btn.btn-sm.s-10
+                = link_to 'Venta', crm_sale_path(quote), title: quote.folio, 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: 'c-withe', target: :_blank
+          td.text-left
+            p.c-pointer.mb-0
+            - if quote.folio.present?
+              b.s-14 Fecha venta: 
+              span.s-12 = quote.updated_at.strftime("%d/%m/%Y")
+            - else
+              p.s-12.mb-0 
+              b = "#{quote.issue_at.strftime("%d/%m/%Y")} - #{quote.expirated_at.strftime("%d/%m/%Y")}"
+              p.text-d-none.s-12.mb-0 = "#{distance_of_time_in_words(Time.zone.now, quote.expirated_at)} para expirar" if quote.valid
+              p.text-d-none.s-12.mb-0
+                b = "Cotizacion vencida" unless quote.valid
+          td.text-left
+            - sub_total = quote.subtotal
+            - discount = quote.discount 
+            span.bold = "$ #{quote.subtotal}"
+          td.text-left
+            - discount = ((sub_total.to_d / 100) * discount)
+            span.text-danger.bold = " #{quote.discount}% - $#{discount}"
+          td.text-left.bold
+            - sub_total = (sub_total.to_d - discount)  
+            = "$#{sub_total}"
+          td.text-left
+            - iva = ((quote.subtotal.to_d - discount) / 100) * quote.iva
+            span.bold = "%#{quote.iva} - $#{iva.round(2)}"
+          td.text-left.bold
+            = "$#{sub_total + iva}"
+          td.text-left
+            .btn-group
+              = link_to crm_quote_path(quote), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg"
+                  path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z")
+                  circle cx="12" cy="12" r="3"
+              - unless quote.cancel_quote? || quote.folio?
+                = link_to edit_crm_quote_path(quote), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+                  svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                    path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7")
+                    path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+            .btn-group
+              button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
+              .dropdown-menu.py-0.adjust-dropdown style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-43px, 22px, 0px);") x-placement="top-start" 
+                = link_to crm_quote_print_path(quote, format: :pdf), target: "_blank", class: "dropdown-item s-12 text-danger bold" do
+                    i.fas.fa-file-pdf.mr-2
+                    span Exportar PDF
+                = link_to crm_quote_path(quote, format: "xlsx"), title: "Exportar XLS", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "dropdown-item s-12 text-success bold" do
+                    i.fas.fa-file-excel.mr-2
+                    span Exportar EXCEL
+                - if quote.valid and !quote.cancel_quote? 
+                  - unless quote.folio
+                    - unless quote.order_sale_folio.present?
+                      .dropdown-divider.my-1
+                      = link_to "", class: "dropdown-item s-12 bold text-danger", data: { action: "click->quote-to-order-sale#confirmCancelQuote", id: quote.id, position: index, cancel: quote.cancel_quote? ? 0 : 1, quoteNumber: quote.quote_folio } do
+                        i.fas.fa-ban.mr-1
+                        span Cancelar Cotizacion
+
+                      = link_to "", class: "dropdown-item s-12 bold", data: { action: "click->quote-to-order-sale#confirmOrderSale", id: quote.id, position: index, quoteNumber: quote.quote_folio } do
+                        i.fas.fa-file-invoice-dollar.mr-2
+                        span Generar OV
+                - elsif quote.cancel_quote?
+                  .dropdown-divider.my-1
+                  = link_to "", class: "dropdown-item s-12 bold text-primary", data: { action: "click->quote-to-order-sale#confirmCancelQuote", id: quote.id, position: index, cancel: quote.cancel_quote? ? 0 : 1, quoteNumber: quote.quote_folio } do
+                      i.fas.fa-check-circle.mr-1
+                      span Activar Cotizacion
+
+        tr.d-none class="dropdown_#{quote.id}"
+          th colspan="10"
+            .row.mt-3
+              .col-10
+                .card
+                  .card-header.p-1
+                    .row
+                      .col-6
+                        span.bold.s-12 DESCRIPCIÓN DE PRODUCTO
+                      .col-2
+                        span.bold.s-12 CANTIDAD
+                      .col-2
+                        span.bold.s-12 P. UNITARIO
+                      .col-2
+                        span.bold.s-12 TOTAL
+                  .card-body.p-1
+                    - quote.shipments_products.each do |sp|
+                      .row
+                        .col-6
+                          span.s-12 = sp.product.name
+                        .col-2
+                          span.s-12 = sp.quantity
+                        .col-2
+                          span.s-12 = raw "$#{sp.price} <small>#{ quote.currency.upcase }</small>"
+                        .col-2
+                          span.bold.s-12 = raw "$#{sp.quantity * sp.price} <small>#{ quote.currency.upcase }</small>"
