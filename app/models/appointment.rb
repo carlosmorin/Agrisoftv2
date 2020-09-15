@@ -10,7 +10,7 @@ class Appointment < ApplicationRecord
 	private
 
 	def range_dates
-  	return if finished_at.nil? && started_at.nil?
+  	return if finished_at.nil? || started_at.nil?
     if started_at > finished_at
       errors.add(:finished_at, "Debe de ser mayor que la fecha de Inicio")
     end
