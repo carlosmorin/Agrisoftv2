@@ -1,5 +1,6 @@
 class Freight < ApplicationRecord
   default_scope { order(:created_at) }
+  scope :link_shipments, -> { where("folio IS NOT NULL") }
   #before_create :set_folio if shipments.first.order_sale_folio.nil?
   before_create :set_folio, if: -> { shipments.any? }
   before_update :set_folio, if: -> { folio.nil? }
@@ -27,7 +28,7 @@ class Freight < ApplicationRecord
   end
   
   def get_total_freight(year)
-    total_freight = Freight.where('extract(year from created_at) = ?', year).size
+    total_freight = Freight.link_shipments.where('extract(year from created_at) = ?', year).size
     case total_freight.to_s.size
     when 1
       "000#{total_freight.to_i + 1 }"

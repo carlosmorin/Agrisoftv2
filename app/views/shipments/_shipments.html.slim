@@ -33,7 +33,7 @@
           th Folio de flete
           th Folio de embarque
           th Folio de cliente
-          th Fecha de envio
+          th Fecha de embarque
           th.text-center colspan="2" style=("width: 12%") Acciónes
       tbody#tbody.s-13
         - if @shipments.empty?
@@ -56,7 +56,7 @@
                   = shipment.freight.folio.present? ? shipment.freight.folio.upcase : '--'
               td = shipment.folio.present? ? shipment.folio.upcase : '--'
               td = shipment.client_folio.present? ? shipment.client_folio.upcase : '--' 
-              td = shipment.updated_at.strftime("%m/%d/%Y  %I:%M %p")
+              td = shipment.shipment_at.strftime("%m/%d/%Y  %I:%M %p")
               td.text-center
                 .btn-group
                   = link_to shipment_path(shipment), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
