@@ -147,7 +147,7 @@ section.content data-controller="slim-select crm--sales"
 																	- quantity = sp.quantity.nil? ? 0 : sp.quantity
 																	- total += sp.quantity.nil? ? 0 : sp.quantity
 																	- price = sp.price.nil? ? 0 : sp.price
-																	- total_price += (sp.quantity * sp.price)
+																	- total_price += (quantity * price)
 																	.row
 																		.col-6
 																			span.s-12 = sp.product.name
