@@ -2,7 +2,7 @@
 - copies = ["original", "copia caseta", "copia operador"]
 - freight = @shipment.freight
 - carrier = freight.carrier
-- carrier_rfc = carrier.fiscals.any? ? carrier.fiscals.first : carrier.rfc  
+- carrier_rfc = carrier.fiscals.any? ? carrier.fiscals.first.rfc : carrier.rfc  
 
 - client = @shipment.client
 - copies.each do |copy|
@@ -29,7 +29,7 @@
                       th.text-right width="20%"
                         span.text-normal Fecha:
                       th.text-left.pr-2 width="80%"
-                        span = @shipment.created_at.strftime("%m/%d/%Y  %I:%M%p")
+                        span = @shipment.shipment_at.strftime("%m/%d/%Y  %I:%M%p")
                     tr
                       th.text-right
                         span.text-normal F. embarque:
@@ -175,7 +175,7 @@
                 th.text-right width="15%"
                   b.mt-1.mr-1 RFC:
                 th.text-left width="85%"
-                  span.text-normal.pr-3.mr-2 = carrier_rfc
+                  span.text-normal.pr-3.mr-2 = carrier_rfc.upcase
                   b.mt-1.mr-1 TELÉFONO:
                   span.text-normal.pr-3 = carrier.phone.upcase
         tr
@@ -425,8 +425,7 @@ div style="min-height: 34.5cm;"
               th.text-right width="15%"
                 b.mt-1.mr-1 RFC:
               th.text-left width="85%"
-                - carrier_rfc = carrier.fiscals.any? ? carrier.fiscals.first : carrier.rfc  
-                span.text-normal.pr-3.mr-2 = carrier_rfc
+                span.text-normal.pr-3.mr-2 = carrier_rfc.upcase
                 b.mt-1.mr-1 TELÉFONO:
                 span.text-normal.pr-3 = freight.carrier.phone.upcase
       tr

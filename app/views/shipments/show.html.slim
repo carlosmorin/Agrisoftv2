@@ -69,9 +69,10 @@ section.content
             .col-md-4.text-right
               span.mb-1.bold = @shipment.client_folio.upcase
           .row.mt-2
-            .col-md-12.text-right.s-12.text-muted
-              i.fas.fa-clock.mr-2
-              span.mb-1.bold = @shipment.created_at.strftime("%d %bio %Y, %-l:%M %P")
+            .col-md-8.text-right
+              label.mb-1.mr-1 Fecha de embarque:
+            .col-md-4.text-right.s-12.text-muted
+              span.mb-1.bold = @shipment.shipment_at.strftime("%m/%d/%Y  %I:%M %p")
       .row
         .col-lg-12
           label.mr-1 Origen:
