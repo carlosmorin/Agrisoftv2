@@ -11,7 +11,7 @@ module Crm
       @order_sales = Shipment.left_outer_joins(:appointments).active_order_sales if params[:tab] == 'actives'
       @order_sales = Shipment.joins(:appointments).expirated_order_sales if params[:tab] == 'expirated'
 
-      @order_sales = @order_sales.order('order_sale_folio DESC')
+      @order_sales = @order_sales.reorder('order_sale_folio DESC')
                       .joins(products: [:crop, :color, :quality])
                       .includes(products: [:crop, :color, :quality])
                       .paginate(page: params[:page], per_page: 25)
