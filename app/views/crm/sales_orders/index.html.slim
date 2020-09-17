@@ -112,7 +112,6 @@ section.content data-controller="order-sales slim-select crm--sales-orders-confi
                             b = appointment.finished_at.nil? || appointment.started_at.nil? ? '--' : appointment.finished_at.strftime("%d/%m/%Y")
                             small.d-none = "#{distance_of_time_in_words(Time.now, appointment.finished_at)} para expirar" if order.valid_order_sale
                           small.text-d-none
-
                             b  = "Orden de venta vencida" unless order.valid_order_sale
                           br
                           .badge.bg-success

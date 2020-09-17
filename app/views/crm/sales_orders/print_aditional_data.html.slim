@@ -27,17 +27,17 @@ table width="100%"
 						tr
 							td.text-left
 								br
-								b.s-16.text-normal = raw "Numero de pedido: <b>#{appointment.n_request.upcase}<b>"
+								b.s-16.text-normal = raw "Numero de pedido: <b>#{appointment&.n_request&.upcase}<b>"
 					table width="100%"
 						tr
 							td.text-left
 								br
-								b.s-16.text-normal = raw "Numero de cita: <b>#{appointment.appointment_number.upcase}<b>"
+								b.s-16.text-normal = raw "Numero de cita: <b>#{appointment&.appointment_number&.upcase}<b>"
 					table width="100%"
 						tr
 							td.text-left
 								br
-								b.s-16.text-normal = raw "Fecha cita: <b> #{appointment.appointment_at.strftime("%d/%m/%Y %H:%M")}<b>"
+								b.s-16.text-normal = raw "Fecha cita: <b> #{appointment&.appointment_at&.strftime("%d/%m/%Y %H:%M")}<b>"
 					table width="100%"
 						tr
 							td.text-left
@@ -45,4 +45,4 @@ table width="100%"
 								b.s-16.text-normal = "Notas:"
 								br
 								div style="color: #646464; margin-top: 10px;"
-									== appointment.comments
+									== appointment&.comments
