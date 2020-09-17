@@ -5,15 +5,15 @@ class Shipment < ApplicationRecord
   
   default_scope { order(freight_folio: :desc) }
   scope :quotes, -> { where("quote_folio IS NOT NULL") }
-  scope :active_quotes, -> { where("quote_folio IS NOT NULL AND CURRENT_TIMESTAMP < issue_at + CAST(CONCAT(expirated_days::text, 'days') AS INTERVAL) AND NOT cancel_quote") }
-  scope :expirated_quotes, -> { where("quote_folio IS NOT NULL AND CURRENT_TIMESTAMP > issue_at + CAST(CONCAT(expirated_days::text, 'days') AS INTERVAL)") }
-  scope :canceled_quotes, -> { where("quote_folio IS NOT NULL AND cancel_quote::text = 'true'") }
+  scope :active_quotes, -> { where("quote_folio IS NOT NULL AND CURRENT_TIMESTAMP < issue_at + CAST(CONCAT(expirated_days::text, 'days') AS INTERVAL) AND NOT cancel_quote AND folio IS NULL") }
+  scope :expirated_quotes, -> { where("quote_folio IS NOT NULL AND CURRENT_TIMESTAMP > issue_at + CAST(CONCAT(expirated_days::text, 'days') AS INTERVAL) AND folio IS NULL ") }
+  scope :canceled_quotes, -> { where("quote_folio IS NOT NULL AND cancel_quote::text = 'true' AND folio IS NULL") }
 
   scope :order_sales, -> { where("order_sale_folio IS NOT  NULL") }
-  scope :active_order_sales, -> { where("order_sale_folio IS NOT NULL AND cancel_sale_order::text = 'false'") }
-  scope :active_order_sales_shipments, -> { where("order_sale_folio IS NOT NULL AND folio IS NULL AND cancel_sale_order::text = 'false'") }
-  scope :expirated_order_sales, -> {  where("order_sale_folio IS NOT NULL AND appointments.finished_at IS NOT NULL AND CURRENT_TIMESTAMP > appointments.finished_at") }
-  scope :canceled_order_sales, -> { where("order_sale_folio IS NOT NULL AND cancel_sale_order::text = 'true'") }
+  scope :active_order_sales, -> { where("order_sale_folio IS NOT NULL AND cancel_sale_order::text = 'false' AND folio IS NULL") }
+  scope :active_order_sales_shipments, -> { where("order_sale_folio IS NOT NULL AND folio IS NULL AND cancel_sale_order::text = 'false' AND folio IS NULL") }
+  scope :expirated_order_sales, -> {  where("order_sale_folio IS NOT NULL AND appointments.finished_at IS NOT NULL AND CURRENT_TIMESTAMP > appointments.finished_at AND folio IS NULL") }
+  scope :canceled_order_sales, -> { where("order_sale_folio IS NOT NULL AND cancel_sale_order::text = 'true' AND folio IS NULL") }
 
   scope :sales, -> { where("folio IS NOT  NULL") }
   scope :active_sales, -> { where("folio IS NOT NULL AND cancel_sale::text = 'false'") }
@@ -117,7 +117,7 @@ class Shipment < ApplicationRecord
 	def set_folio
 		return if folio.present?
 		
-		year =  Time.now.year
+		year = Time.now.year
 		shipments = get_total_shipments(year)
 		year = Time.now.year.to_s[2, 2]
 
@@ -146,7 +146,7 @@ class Shipment < ApplicationRecord
 	end
 
 	def get_total_shipments_by_client(year)
-		total_shipments = client.shipments.sale.where('extract(year from created_at) = ?', year).size
+		total_shipments = client.shipments.sales.where('extract(year from created_at) = ?', year).size
 		update_shipments(total_shipments)
 		case total_shipments.to_s.size
 		when 1
@@ -161,7 +161,7 @@ class Shipment < ApplicationRecord
 	end
 
 	def get_total_shipments(year)
-		total_shipments = Shipment.sale.where('extract(year from created_at) = ?', year).size
+		total_shipments = Shipment.sales.where('extract(year from created_at) = ?', year).size
 		case total_shipments.to_s.size
 		when 1
 			"000#{total_shipments.to_i + 1 }"
@@ -173,6 +173,4 @@ class Shipment < ApplicationRecord
 			"#{total_shipments.to_i + 1 }"
 		end
 	end
-    :discount_cannot_be_greater_than_total_value
-
 end
