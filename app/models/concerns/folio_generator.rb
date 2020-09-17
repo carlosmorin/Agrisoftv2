@@ -10,7 +10,7 @@ module FolioGenerator
 	end
 
 	def generate_quote_folio
-		quote_number = Shipment.where.not(quote_folio: nil).size
+		quote_number = Shipment.quotes.size
 		quote_number = quote_number + 1 
 		case quote_number.to_s.size
 		when 1
@@ -25,7 +25,7 @@ module FolioGenerator
 	end
 
 	def generate_order_sale_folio
-		order_sale_number = Shipment.where.not(order_sale_folio: nil).size
+		order_sale_number = Shipment.order_sales.size
 		order_sale_number = order_sale_number + 1 
 		case order_sale_number.to_s.size
 		when 1
