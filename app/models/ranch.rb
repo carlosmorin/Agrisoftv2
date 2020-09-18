@@ -14,4 +14,8 @@ class Ranch < ApplicationRecord
 
   has_rich_text :parcel_certificate
   has_one_attached :document
+
+  def area_names
+    areas.pluck(:name)
+  end
 end

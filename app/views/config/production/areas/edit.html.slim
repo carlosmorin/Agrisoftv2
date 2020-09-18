@@ -10,6 +10,7 @@ section.content-header.pb-0
 section.content
   .container
     = render "shared/form_info"
+    = render partial: "shared/errors", locals: { object: @area }
     .row
       .col-md-12
         .card
