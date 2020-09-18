@@ -30,8 +30,10 @@ section.content data-controller="users"
                 tr.bg-light-gray
                   th style=("width: 5%")  #
                   th Nombre
-                  th Jornales
+                  th Cantidad por jornal
                   th Unidad de produccion
+                  th Unidad de Pezo
+                  th Pezo
                   th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody
                 - if @index_facade.activities.empty?
@@ -44,7 +46,9 @@ section.content data-controller="users"
                       td = activity.id
                       td = activity.action&.upcase
                       td = activity.jornals.to_f
-                      td = activity.production_unit&.name&.upcase
+                      td = activity.production_unit_name.upcase
+                      td = activity.production_unit_weight_name.nil? ? '--' : activity.production_unit_weight_name.upcase
+                      td = activity.production_unit_weight.nil? ? '--' : activity.production_unit_weight.to_f
                       td.text-center
                         .btn-group
                           = link_to edit_config_production_activity_path(activity), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do

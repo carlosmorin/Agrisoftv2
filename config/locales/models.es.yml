@@ -252,3 +252,7 @@ es:
         commitment_at: Fecha compromiso
         appointment_number: Numero de cita
         comments: Comentarios / Notas
+      production_unit:
+        name: Nombre
+        weight: Pezo
+        weight_unit_id: Unidad de pezo

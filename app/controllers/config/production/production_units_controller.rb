@@ -2,12 +2,12 @@ module Config
   module Production
     class ProductionUnitsController < ApplicationController
       before_action :find_production_unit, only: %i[destroy]
+      before_action :initialize_facade, only: %i[create index]
     
       add_breadcrumb "Produccion", :config_production_root_path
       add_breadcrumb "Unidades de Produccion", :config_production_production_units_path
       
       def index
-        @index_facade = ProductionUnits::IndexFacade.new(params)
         @production_unit = ProductionUnit.new
       end
 
@@ -17,7 +17,6 @@ module Config
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Unidad de produccion creada correctamente"
           redirect_to config_production_production_units_path
         else
-          @index_facade = ProductionUnit::IndexFacade.new(params)
           render :index
         end
       end
@@ -29,11 +28,15 @@ module Config
       private
 
       def production_units_params
-        params.require(:production_unit).permit(:name)
+        params.require(:production_unit).permit(:name, :weight, :weight_unit_id)
       end
 
       def find_production_unit
         @production_unit = ProductionUnit.find(params[:id])
+      end
+
+      def initialize_facade
+        @index_facade = ProductionUnits::IndexFacade.new(params)
       end
     end
   end

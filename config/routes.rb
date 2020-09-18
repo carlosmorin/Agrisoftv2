@@ -25,6 +25,7 @@ Rails.application.routes.draw do
         resources :perforations
       end
       resources :production_units, only: %i[index create destroy]
+      resources :weight_units, only: %i[index create destroy]
       resources :irrigation_types, only: %i[index create destroy]
       resources :areas
       resources :activities

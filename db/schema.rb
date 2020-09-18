@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_13_163740) do
+ActiveRecord::Schema.define(version: 2020_09_18_180901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -576,6 +576,9 @@ ActiveRecord::Schema.define(version: 2020_09_13_163740) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "weight_unit_id"
+    t.decimal "weight"
+    t.index ["weight_unit_id"], name: "index_production_units_on_weight_unit_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -822,6 +825,12 @@ ActiveRecord::Schema.define(version: 2020_09_13_163740) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "weight_units", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
   add_foreign_key "addresses", "countries"
@@ -885,6 +894,7 @@ ActiveRecord::Schema.define(version: 2020_09_13_163740) do
   add_foreign_key "pests_damages", "pests"
   add_foreign_key "pests_hosts", "hosts"
   add_foreign_key "pests_hosts", "pests"
+  add_foreign_key "production_units", "weight_units"
   add_foreign_key "products", "client_brands"
   add_foreign_key "products", "colors"
   add_foreign_key "products", "crops"

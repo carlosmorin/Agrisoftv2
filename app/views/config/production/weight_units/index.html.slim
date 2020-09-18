@@ -5,14 +5,14 @@ section.content-header.pb-0
         = render "shared/breadcrumbs_nav"
     .row.mb-2
       .col-12
-        h5 = "catalogo de unidades de produccion".upcase
+        h5 = "catalogo de unidades de pezo".upcase
 section.content data-controller="users"
   .container-fluid
     .row
       .col-12
         .card
           .card-header
-            h5.s-14.my-0 = "Agregar unidad de produccion".upcase
+            h5.s-14.my-0 = "Agregar unidad de pezo".upcase
           .card-body
             = render "form"
     = render "shared/alerts"
@@ -22,7 +22,7 @@ section.content data-controller="users"
           .card-header.p-2.pb-1.bg-light-gray
             .row
               .col-md-6.col-sm-12
-                = render 'shared/search_form', search_path: config_production_production_units_path do
+                = render 'shared/search_form', search_path: config_production_weight_units_path do
                   = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por nombre')
           .card-body.table-responsive.p-0
             table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
@@ -30,34 +30,24 @@ section.content data-controller="users"
                 tr.bg-light-gray
                   th style=("width: 5%")  #
                   th Nombre
-                  th Unidad de pezo
-                  th Pezo
                   th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody
-                - if @index_facade.production_units.empty?
+                - if @index_facade.weight_units.empty?
                   tr
                     td.text-center colspan="9"
                     	span.s-12 Sin registros
                 - else
-                  - @index_facade.production_units.each do |production_unit|
+                  - @index_facade.weight_units.each do |weight_unit|
                     tr
-                      td = production_unit.id
-                      td = production_unit.name&.upcase
-                      - if production_unit.weight_unit
-                        td = production_unit.weight_name
-                      - else
-                        td.text-center = '--'
-                      - if production_unit.weight
-                        td = production_unit.weight
-                      - else
-                        td.text-center = '--'
+                      td = weight_unit.id
+                      td = weight_unit.name&.upcase
                       td.text-center
                         .btn-group
-                          = link_to config_production_production_unit_path(production_unit), title: "Eliminar", class: "btn btn-xs btn-danger ml-1", data: { placement: 'left', toggle: 'tooltip', controller: 'users', behavior: 'delete' } do
+                          = link_to config_production_weight_unit_path(weight_unit), title: "Eliminar", class: "btn btn-xs btn-danger ml-1", data: { placement: 'left', toggle: 'tooltip', controller: 'users', behavior: 'delete' } do
                               i.fas.fa-trash
                              
           .card-footer.p-2.pb-1.bg-light-gray
             .row
               .col-lg-12.d-flex.justify-content-center
                 .digg_pagination.mt-2.s-14
-                  = will_paginate @index_facade.production_units, :container => false, :page_links => true
+                  = will_paginate @index_facade.weight_units, :container => false, :page_links => true
