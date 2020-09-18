@@ -40,6 +40,6 @@ section#general.s-12
               line x1="12" x2="12" y1="22.08" y2="12" 
             span Empaques
           ul.p-2
-            - @crop.qualities.each do |size|
+            - @crop.packages.each do |size|
               li.mb-1 
                 b.badge.badge-pill.badge-info.pt-1 = size.name

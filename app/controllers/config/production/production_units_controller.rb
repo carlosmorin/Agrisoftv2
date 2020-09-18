@@ -1,7 +1,7 @@
 module Config
   module Production
     class ProductionUnitsController < ApplicationController
-      before_action :find_production_unit, only: %i[destroy]
+      before_action :find_production_unit, only: %i[destroy edit update]
       before_action :initialize_facade, only: %i[create index]
     
       add_breadcrumb "Produccion", :config_production_root_path
@@ -9,6 +9,19 @@ module Config
       
       def index
         @production_unit = ProductionUnit.new
+      end
+
+      def edit
+        add_breadcrumb "Editar"
+      end
+
+      def update
+        if @production_unit.update(production_units_params)
+          flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Unidad de produccion actualizada correctamente"
+          redirect_to config_production_production_units_path
+        else
+          render :edit
+        end
       end
 
       def create

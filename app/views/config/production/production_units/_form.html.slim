@@ -7,7 +7,7 @@
         = f.input :weight, required: false, html5: true,  autofocus: false, input_html: { class: 'form-control form-control-sm' }
       .col-lg-3.mb-2
         = f.input :weight_unit_id, collection: WeightUnit.all, required: false, html5: true,  autofocus: true, input_html: { class: 'form-control form-control-sm' }
-      .col-lg-2.d-flex.justify-content-center.align-items-center
+      .col-lg-2.d-flex.justify-content-center.align-items-center.mt-3
         button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
           i.fas.fa-save.mx-1
           span Guardar
