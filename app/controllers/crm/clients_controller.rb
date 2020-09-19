@@ -7,8 +7,15 @@ module Crm
     add_breadcrumb "Clientes", :crm_clients_path
 
     def index
-    	@clients = Client.paginate(page: params[:page], per_page: 16)
+    	@clients = Client.paginate(page: params[:page], per_page: 25)
       search if params[:q].present?
+    end
+    
+    def delivery_addresses
+      @addresses = DeliveryAddress.paginate(page: params[:page], per_page: 25)
+      filter_by_query if params[:query].present?
+      filter_by_client if params[:client_id].present?
+      filter_by_country if params[:country_id].present?
     end
 
     def new
@@ -63,6 +70,21 @@ module Crm
     end
   	
     private
+
+    def filter_by_query
+      query = Regexp.escape(params[:query])
+      @addresses = @addresses.where("concat(name, ' ', comments) ~* ?", query)
+    end
+
+    def filter_by_client
+      client_id = Regexp.escape(params[:client_id])
+      @addresses = @addresses.where(client_id: client_id)
+    end
+
+    def filter_by_country
+      country_id = Regexp.escape(params[:country_id])
+      @addresses = @addresses.where(country_id: country_id)
+    end
 
     def search
       q = Regexp.escape(params[:q])

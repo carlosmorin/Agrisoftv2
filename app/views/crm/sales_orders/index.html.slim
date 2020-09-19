@@ -13,10 +13,10 @@ section.content-header.pb-0
           .dropdown-menu
             = link_to new_crm_sales_order_path, class: 'dropdown-item s-12' do
               i.fas.fa-plus-circle.mr-2
-              span Orden de venta directa
-            = link_to "", class: 'dropdown-item s-12', data: { toggle: "modal", target: "#quotesModal" } do
-              i.fas.fa-file-upload.mr-2
-              span.pl-1 Orden de venta desde cotización 
+                span Orden de venta directa
+              = link_to "", class: 'dropdown-item s-12', data: { toggle: "modal", target: "#quotesModal" } do
+                i.fas.fa-file-upload.mr-2
+                span.pl-1 Orden de venta desde cotización 
 section.content data-controller="order-sales slim-select crm--sales-orders-confirm crm--sales-orders"
   .container-fluid
     .row
