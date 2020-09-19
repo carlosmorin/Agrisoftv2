@@ -18,9 +18,6 @@ Rails.application.routes.draw do
     resources :delivery_addresses
     resources :client_brands
     resources :currencies
-    namespace :adminn do
-      resources :payment_methods
-    end 
     namespace :production do 
       root to: 'main#index'
       resources :ranches do
