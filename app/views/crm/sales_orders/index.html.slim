@@ -13,10 +13,10 @@ section.content-header.pb-0
           .dropdown-menu
             = link_to new_crm_sales_order_path, class: 'dropdown-item s-12' do
               i.fas.fa-plus-circle.mr-2
-              span Orden de venta directa
-            = link_to "", class: 'dropdown-item s-12', data: { toggle: "modal", target: "#quotesModal" } do
-              i.fas.fa-file-upload.mr-2
-              span.pl-1 Orden de venta desde cotización 
+                span Orden de venta directa
+              = link_to "", class: 'dropdown-item s-12', data: { toggle: "modal", target: "#quotesModal" } do
+                i.fas.fa-file-upload.mr-2
+                span.pl-1 Orden de venta desde cotización 
 section.content data-controller="order-sales slim-select crm--sales-orders-confirm crm--sales-orders"
   .container-fluid
     .row
@@ -100,8 +100,8 @@ section.content data-controller="order-sales slim-select crm--sales-orders-confi
                         span = order.company.name.upcase
                       td = order.client.name.upcase
                       td
-                        span.d-block = raw "#{order.n_products} <small>Bultos</small>"
-                        span = raw order.total_kg
+                        b.d-block = raw "#{order.n_products} <small>Bultos</small>"
+                        b = raw order.total_kg
 
                       td
                         - if order.appointments.any?
@@ -112,7 +112,6 @@ section.content data-controller="order-sales slim-select crm--sales-orders-confi
                             b = appointment.finished_at.nil? || appointment.started_at.nil? ? '--' : appointment.finished_at.strftime("%d/%m/%Y")
                             small.d-none = "#{distance_of_time_in_words(Time.now, appointment.finished_at)} para expirar" if order.valid_order_sale
                           small.text-d-none
-
                             b  = "Orden de venta vencida" unless order.valid_order_sale
                           br
                           .badge.bg-success
@@ -180,15 +179,17 @@ section.content data-controller="order-sales slim-select crm--sales-orders-confi
                                       span.bold.s-12 TOTAL
                                 .card-body.p-1
                                   - order.shipments_products.each do |sp|
+                                    - quantity = sp.quantity.nil? ? 0 : sp.quantity
+                                    - price = sp.price.nil? ? 0 : sp.price 
                                     .row
                                       .col-6
                                         span.s-12 = sp.product.name
                                       .col-2
-                                        span.s-12 = sp.quantity
+                                        span.s-12 = quantity
                                       .col-2
-                                        span.s-12 = raw "$#{sp.price} <small>#{ order.currency.upcase }</small>"
+                                        span.s-12 = raw "$#{price} <small>#{ order.currency.upcase }</small>"
                                       .col-2
-                                        span.bold.s-12 = raw "$#{sp.quantity * sp.price} <small>#{ order.currency.upcase }</small>"
+                                        span.bold.s-12 = raw "$#{quantity * price} <small>#{ order.currency.upcase }</small>"
                             .col-3
                               .card
                                 .card-header.p-1
