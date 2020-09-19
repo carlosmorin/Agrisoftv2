@@ -52,12 +52,22 @@ class Config::Production::PestsController < ApplicationController
     @pest.destroy
   end
 
+  def update_pictures
+    @pest = Pest.find(params[:id])
+    @pest.update(pest_picture_params)
+    redirect_to config_production_pest_url(@pest, tab: :general)
+  end
+
   private
 
   def pest_nested_params
     params.require(:pest).permit(:name, :scientific_name, 
       :description, pictures: [],
       crops_pests_attributes: [:id, :crop_id, :pest_id, :_destroy])
+  end
+
+  def pest_picture_params
+    params.require(:pest).permit(pictures: [])
   end
 
   def pest_params

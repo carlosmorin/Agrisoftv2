@@ -52,6 +52,9 @@ Rails.application.routes.draw do
       resources :pests do
         resources :hosts
         resources :damages
+        member do 
+          patch '/update_pictures', to: 'pests#update_pictures'
+        end
       end
       resources :deseases do
         resources :hosts
