@@ -147,16 +147,15 @@ section.content data-controller="slim-select crm--sales"
 																	- quantity = sp.quantity.nil? ? 0 : sp.quantity
 																	- total += sp.quantity.nil? ? 0 : sp.quantity
 																	- price = sp.price.nil? ? 0 : sp.price
-																	- total_price += (sp.quantity * sp.price)
+																	- total_price += (quantity * price)
 																	.row
 																		.col-6
 																			span.s-12 = sp.product.name
 																		.col-2
-																			span.s-12 = sp.quantity
+																			span.s-12 = quantity
 																		.col-2
 																			span.s-12 
-																				- price = sp.price.nil? ? 0 : sp.price 
-																				= number_to_currency(price,  unit: currency.upcase, separator: ",")
+																				= number_to_currency(price, unit: currency.upcase, separator: ",")
 																		.col-2
 																			span.bold.s-12 	
 																				= number_to_currency((quantity * price),  unit: currency, separator: ",")

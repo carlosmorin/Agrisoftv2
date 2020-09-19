@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_13_163740) do
+ActiveRecord::Schema.define(version: 2020_09_18_051711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -397,8 +397,11 @@ ActiveRecord::Schema.define(version: 2020_09_13_163740) do
     t.string "contact_name"
     t.string "email"
     t.boolean "external"
+    t.decimal "estimated_price"
+    t.bigint "currency_id"
     t.index ["client_id"], name: "index_delivery_addresses_on_client_id"
     t.index ["country_id"], name: "index_delivery_addresses_on_country_id"
+    t.index ["currency_id"], name: "index_delivery_addresses_on_currency_id"
     t.index ["municipality_id"], name: "index_delivery_addresses_on_municipality_id"
     t.index ["state_id"], name: "index_delivery_addresses_on_state_id"
   end
@@ -869,6 +872,7 @@ ActiveRecord::Schema.define(version: 2020_09_13_163740) do
   add_foreign_key "crops_sizes", "sizes"
   add_foreign_key "delivery_addresses", "clients"
   add_foreign_key "delivery_addresses", "countries"
+  add_foreign_key "delivery_addresses", "currencies"
   add_foreign_key "delivery_addresses", "municipalities"
   add_foreign_key "delivery_addresses", "states"
   add_foreign_key "deseases_damages", "damages"

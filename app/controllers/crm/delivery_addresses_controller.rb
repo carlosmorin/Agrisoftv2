@@ -49,6 +49,10 @@ module Crm
       @address.destroy
     end
 
+    def update_prices
+      binding.pry
+    end
+
     private
     
     def search
