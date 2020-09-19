@@ -50,7 +50,14 @@ module Crm
     end
 
     def update_prices
-      binding.pry
+      return if params[:id].empty?
+      ids = params[:id]
+      prices = params[:price]
+      currencies = params[:currency]
+      ids.each.with_index do |address_id, index|
+        fields = { estimated_price: prices[index], currency_id: currencies[index] }
+        DeliveryAddress.find(address_id).update(fields)
+      end
     end
 
     private

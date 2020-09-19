@@ -48,7 +48,8 @@ section.content
                     th Nombre
                     th Direccion
                     th Comentarios
-                    th.text-center colspan="2" style=("width: 12%") Costo estimado
+                    th.text-center colspan="1" style=("width: 12%") Costo estimado
+                    th.text-center colspan="1" style=("width: 9%") Moneda
                 tbody#tbody
                   - if @addresses.empty?
                     tr
@@ -66,9 +67,11 @@ section.content
                           span.c-gray.s-10 = address.comments.upcase
                         td
                           input type="hidden" name="id[]" value=id
-                          input.form-control.form-control-sm type="number" name="price[]"
+                          input.form-control.form-control-sm type="number" name="price[]" value=address.estimated_price
+                        td
+                           = select_tag "currency[]", options_for_select(Currency.all.pluck(:code, :id), address.currency_id), class: "text-upcase"
                 tfooter
                   tr
                     td colspan="5"
-                    td 
-                      input.btn.btn-sm.btn-primary type="submit" value="Guardar precios"
+                    td.text-right colspan="2"
+                      input.btn.btn-sm.btn-primary.s-12 type="submit" value="Actualizar precios"
