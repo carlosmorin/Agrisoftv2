@@ -18,6 +18,9 @@ Rails.application.routes.draw do
     resources :delivery_addresses
     resources :client_brands
     resources :currencies
+    namespace :adminn do
+      resources :payment_methods
+    end 
     namespace :production do 
       root to: 'main#index'
       resources :ranches do
@@ -98,6 +101,9 @@ Rails.application.routes.draw do
   namespace :crm do
     root to: "main#index" #CRM dashboard
     resources :clients do
+      collection  do
+        get 'delivery_addresses'
+      end
       resources :contacts, except: [:index]
       resources :delivery_addresses, except: [:index]
       resources :contracts, only: [:new, :edit, :show]
@@ -112,7 +118,11 @@ Rails.application.routes.draw do
     resources :contracts, only: [:create, :update]
     resources :bank_accounts, except: [:index]
 
-    resources :delivery_addresses, except: [:index]
+    resources :delivery_addresses, except: [:index] do
+      collection do
+        patch :update_prices
+      end
+    end
     resources :contacts, except: [:index]
     resources :quotes do
       get '/print', to: 'quotes#print'

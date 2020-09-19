@@ -52,7 +52,7 @@ export default class extends Controller {
   filterColors(cropId){
 		var colorsSelect = $('select#product_color_id')
 		colorsSelect.empty()
-		var url = `/crops/${cropId}/get_colors`
+		var url = `/config/production/crops/${cropId}/get_colors`
 		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',
@@ -69,7 +69,7 @@ export default class extends Controller {
 	filterQualities(cropId){
 		var qualitySelect = $('select#product_quality_id')
 		qualitySelect.empty()
-		var url = `/crops/${cropId}/get_qualities`
+		var url = `/config/production/crops/${cropId}/get_qualities`
 		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',
@@ -86,7 +86,7 @@ export default class extends Controller {
 	filterSizes(cropId){
 		var sizeSelect = $('select#product_size_id')
 		sizeSelect.empty()
-		var url = `/crops/${cropId}/get_sizes`
+		var url = `/config/production/crops/${cropId}/get_sizes`
 		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',
@@ -103,7 +103,7 @@ export default class extends Controller {
 	filterPackages(cropId){
 		var packagesSelect = $('select#product_package_id')
 		packagesSelect.empty()
-		var url = `/crops/${cropId}/get_packages`
+		var url = `/config/production/crops/${cropId}/get_packages`
 		var options = "<option value=''>SELECCIONA</option>";
 		axios({
 			method: 'GET',

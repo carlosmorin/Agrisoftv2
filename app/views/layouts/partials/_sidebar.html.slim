@@ -59,6 +59,9 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
               = link_to crm_clients_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(crm_clients_path)}" do
                 i.fas.fa-circle.s-10.mr-2
                 p.s-14.text-normal Gestionar clientes
+              = link_to delivery_addresses_crm_clients_url, class: "nav-link py-1 pl-3 mb-0 #{current_link?(delivery_addresses_crm_clients_url)}" do
+                i.fas.fa-circle.s-10.mr-2
+                p.s-14.text-normal Gestionar direcciones de env
             li.nav-item.has-treeview.pb-2 class="#{current_nav_item?(request.fullpath, 'config_box_types')}"
               a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#" 
                 i.fas.fa-cogs.s-10.mr-2
@@ -125,6 +128,10 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
               = link_to config_production_root_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(config_production_root_path)}" do
                 i.fas.fa-cog.s-12.mr-2
                 p.s-14 Producción
+            li.nav-item.pt-2.pb-1.d-none
+              = link_to config_production_root_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(config_production_root_path)}" do
+                i.fas.fa-cog.s-12.mr-2
+                p.s-14 Adminsitrativos
             li.nav-item.pb-2
               a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#"
                 i.fas.fa-list-alt.s-12.mr-2
