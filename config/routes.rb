@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :currencies
     namespace :production do 
       root to: 'main#index'
+      resources :categories
       resources :ranches do
         resources :areas
         resources :perforations

@@ -256,3 +256,5 @@ es:
         name: Nombre
         weight: Pezo
         weight_unit_id: Unidad de pezo
+      category:
+        name: Nombre

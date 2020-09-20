@@ -20,7 +20,8 @@ export default class extends Controller {
     
     this.pictureTarget.addEventListener('change', (e) => {
       $(parent).empty();
-      let inputFile = label.querySelector('#pest_pictures');
+      console.log("chagned");
+      let inputFile = label.querySelector(['#pest_pictures', '#desease_pictures']);
       let fileName = e.srcElement.files[0].name
       $(inputFile).prev().replaceWith(`<p class="m-0">${fileName.slice(0,10).concat(fileName.slice(fileName.lastIndexOf('.')))}</p>`)
       this.addElements(parent, [label, submitIcon])
