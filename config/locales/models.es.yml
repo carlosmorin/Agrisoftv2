@@ -260,3 +260,9 @@ es:
         name: Nombre
       active_ingredient:
         name: Nombre
+      presentation:
+        name: Nombre
+        price: Precio
+        price_to_credit: Precio a credito
+        quantity: Cantidad
+        weight_unit_id: Unidad de pezo

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       root to: 'main#index'
       resources :categories
       resources :active_ingredients
+      resources :presentations
       resources :ranches do
         resources :areas
         resources :perforations

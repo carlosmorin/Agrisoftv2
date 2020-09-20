@@ -1,2 +1,3 @@
 class WeightUnit < ApplicationRecord
+
 end
