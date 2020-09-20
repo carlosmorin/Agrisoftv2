@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     namespace :production do 
       root to: 'main#index'
       resources :categories
+      resources :active_ingredients
       resources :ranches do
         resources :areas
         resources :perforations

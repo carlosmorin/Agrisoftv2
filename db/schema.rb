@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_181150) do
+ActiveRecord::Schema.define(version: 2020_09_20_185019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(version: 2020_09_20_181150) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
+  create_table "active_ingredients", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -578,6 +584,17 @@ ActiveRecord::Schema.define(version: 2020_09_20_181150) do
     t.index ["pest_id"], name: "index_pests_hosts_on_pest_id"
   end
 
+  create_table "presentations", force: :cascade do |t|
+    t.string "name"
+    t.decimal "quantity"
+    t.decimal "price"
+    t.decimal "price_to_credit"
+    t.bigint "weight_unit_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["weight_unit_id"], name: "index_presentations_on_weight_unit_id"
+  end
+
   create_table "production_units", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -900,6 +917,7 @@ ActiveRecord::Schema.define(version: 2020_09_20_181150) do
   add_foreign_key "pests_damages", "pests"
   add_foreign_key "pests_hosts", "hosts"
   add_foreign_key "pests_hosts", "pests"
+  add_foreign_key "presentations", "weight_units"
   add_foreign_key "production_units", "weight_units"
   add_foreign_key "products", "client_brands"
   add_foreign_key "products", "colors"

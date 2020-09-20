@@ -258,3 +258,5 @@ es:
         weight_unit_id: Unidad de pezo
       category:
         name: Nombre
+      active_ingredient:
+        name: Nombre
