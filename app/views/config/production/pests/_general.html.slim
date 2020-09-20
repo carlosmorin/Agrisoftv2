@@ -26,6 +26,9 @@ section#general.s-12
 				.form-picture-container.hidden-form
 					= simple_form_for([:update_pictures_config_production, @pest], html: { class: "form-inline"} ) do |f|
 						.mb-1
+							.cancel-icon data-target="pictures-form.cancelButton" data-action="click->pictures-form#resetForm"
+								button.btn type="button"
+									i.fas.fa-times
 							= f.file_field :pictures, multiple: true, required: true, autofocus: true, data: { target: "pictures-form.picture"}, input_html: { class: 'form-control form-control-sm ' }
 							.submit-icon
 								button.btn type="submit"

@@ -18,22 +18,19 @@
       // opacity: 0;
       .btn-add-picture {
         color: #fff;
+        padding: 0;
       }
-    }
-  
-    .form-picture-container.hidden-form {
-      display: none;
     }
   
     .form-picture-container {
       position: absolute;
       right: 4px;
-      width: 165px;
+      width: 170px;
       border-bottom: 3px solid #17a2b8;
       top: -53px;
       // display: none;
   
-      .submit-icon {
+      .submit-icon, .cancel-icon{
         width: 26px;
         height: 26px;
         border-radius: 100%;
@@ -50,6 +47,12 @@
           color: #fff;
         }
       }
+
+      // .cancel-icon {
+      //   position: absolute;
+      //   right: 4px;
+      //   top: 0px;
+      // }
   
       label.btn.btn-outline-primary.btn-upload {
         position: absolute;
@@ -67,5 +70,9 @@
     }
   }
 
-
+  .hidden-form {
+    // display: none;
+    opacity: 0;
+    visibility: hidden;
+  }
 }

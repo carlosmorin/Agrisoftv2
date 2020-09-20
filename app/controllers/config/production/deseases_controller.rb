@@ -52,6 +52,12 @@ class Config::Production::DeseasesController < ApplicationController
     @desease.destroy
   end
 
+  def update_pictures
+    @desease = Desease.find(params[:id])
+    @desease.update(desease_picture_params)
+    redirect_to config_production_desease_url(@desease, tab: :general)
+  end
+
   private
 
   def desease_nested_params
@@ -59,6 +65,10 @@ class Config::Production::DeseasesController < ApplicationController
       :pathogen, :desease_name,
       :development_conditions, pictures: [],
       crops_deseases_attributes: [:id, :crop_id, :desease_id, :_destroy])
+  end
+
+  def desease_picture_params
+    params.require(:desease).permit(pictures: [])
   end
 
   def desease_params

@@ -59,6 +59,9 @@ Rails.application.routes.draw do
       resources :deseases do
         resources :hosts
         resources :damages
+        member do
+          patch "/update_pictures", to: "deseases#update_pictures"
+        end
       end
     end
   end
