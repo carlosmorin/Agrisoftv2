@@ -266,3 +266,10 @@ es:
         price_to_credit: Precio a credito
         quantity: Cantidad
         weight_unit_id: Unidad de pezo
+      supply:
+        name: Nombre
+        currency: Moneda
+        iva: IVA(%)
+        ieps: IEPS(%)
+        category_id: Categoria
+        code: Clave

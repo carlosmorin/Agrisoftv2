@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_185019) do
+ActiveRecord::Schema.define(version: 2020_09_20_193537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -785,6 +785,18 @@ ActiveRecord::Schema.define(version: 2020_09_20_185019) do
     t.index ["categorytable_type", "categorytable_id"], name: "index_subcategories_on_categorytable_type_and_categorytable_id"
   end
 
+  create_table "supplies", force: :cascade do |t|
+    t.string "name"
+    t.integer "currency"
+    t.decimal "iva"
+    t.decimal "ieps"
+    t.bigint "category_id", null: false
+    t.string "code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_supplies_on_category_id"
+  end
+
   create_table "taxes", force: :cascade do |t|
     t.string "name"
     t.integer "value"
@@ -941,6 +953,7 @@ ActiveRecord::Schema.define(version: 2020_09_20_185019) do
   add_foreign_key "shipments_products", "products"
   add_foreign_key "shipments_products", "shipments"
   add_foreign_key "states", "countries"
+  add_foreign_key "supplies", "categories"
   add_foreign_key "units", "carriers"
   add_foreign_key "units", "unit_brands"
 end

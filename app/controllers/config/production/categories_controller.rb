@@ -39,6 +39,11 @@ module Config
         @category.destroy
       end
 
+      def get_supplies_codes
+        category = Category.find(params[:id])
+        render json: { codes: category.supplies.pluck(:code).uniq.compact, category: category.name }
+      end
+
       private
 
       def categories_params

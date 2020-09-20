@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     resources :products, only: [:index]
   end
 
+  scope module: 'config/production', path: 'categories/:id' do
+    get '/get_supplies_codes', to: 'categories#get_supplies_codes'
+  end
+
   namespace :config do
     resources :taxes
     resources :drivers
@@ -23,6 +27,7 @@ Rails.application.routes.draw do
       resources :categories
       resources :active_ingredients
       resources :presentations
+      resources :supplies
       resources :ranches do
         resources :areas
         resources :perforations
