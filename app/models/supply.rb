@@ -10,5 +10,9 @@ class Supply < ApplicationRecord
   has_many :active_ingredient_supplies
   has_many :active_ingredients, through: :active_ingredient_supplies
 
+  has_many :presentation_supplies
+  has_many :presentations, through: :presentation_supplies
+
   accepts_nested_attributes_for :active_ingredient_supplies
+  accepts_nested_attributes_for :presentation_supplies
 end

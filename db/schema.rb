@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_233449) do
+ActiveRecord::Schema.define(version: 2020_09_21_005910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -593,6 +593,15 @@ ActiveRecord::Schema.define(version: 2020_09_20_233449) do
     t.index ["pest_id"], name: "index_pests_hosts_on_pest_id"
   end
 
+  create_table "presentation_supplies", force: :cascade do |t|
+    t.bigint "supply_id", null: false
+    t.bigint "presentation_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["presentation_id"], name: "index_presentation_supplies_on_presentation_id"
+    t.index ["supply_id"], name: "index_presentation_supplies_on_supply_id"
+  end
+
   create_table "presentations", force: :cascade do |t|
     t.string "name"
     t.decimal "quantity"
@@ -940,6 +949,8 @@ ActiveRecord::Schema.define(version: 2020_09_20_233449) do
   add_foreign_key "pests_damages", "pests"
   add_foreign_key "pests_hosts", "hosts"
   add_foreign_key "pests_hosts", "pests"
+  add_foreign_key "presentation_supplies", "presentations"
+  add_foreign_key "presentation_supplies", "supplies"
   add_foreign_key "presentations", "weight_units"
   add_foreign_key "production_units", "weight_units"
   add_foreign_key "products", "client_brands"

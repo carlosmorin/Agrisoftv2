@@ -74,5 +74,5 @@ section.content
 					.card-body
 						#custom-tabs-four-tabContent.tab-content
 							#custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
-								= render "supplies" if params[:tab] == 'supplies'
+								= render "shared/supplies", obj: @presentation if params[:tab] == 'supplies'
 
