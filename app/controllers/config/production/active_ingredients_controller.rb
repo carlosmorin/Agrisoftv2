@@ -1,7 +1,7 @@
 module Config
   module Production
     class ActiveIngredientsController < ApplicationController
-      before_action :find_active_ingredient, only: %i[destroy edit update]
+      before_action :find_active_ingredient, only: %i[destroy edit update show]
     
       add_breadcrumb "Produccion", :config_production_root_path
       add_breadcrumb "Ingredientes Activos", :config_production_active_ingredients_path
@@ -26,6 +26,10 @@ module Config
         add_breadcrumb "Editar"
       end
 
+      def show
+        add_breadcrumb "Detalle"   
+      end
+
       def update
         if @active_ingredient.update(active_ingredients_params)
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Ingrediente activo actualizado correctamente"
@@ -42,7 +46,8 @@ module Config
       private
 
       def active_ingredients_params
-        params.require(:active_ingredient).permit(:name)
+        params.require(:active_ingredient).permit(:name,
+        active_ingredient_supplies_attributes: [:id, :supply_id, :active_ingredient_id, :_destroy])
       end
 
       def find_active_ingredient

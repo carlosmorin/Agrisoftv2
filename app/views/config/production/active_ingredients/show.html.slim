@@ -1,0 +1,38 @@
+section.content-header.pb-0
+  .container-fluid
+    .row.mb-2
+      .col-12
+        h5.mb-0 
+          b = "Detalle del ingrediente activo".upcase 
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+section.content
+  .container-fluid
+    .row.my-2
+      .col-md-8	
+        h3 = @active_ingredient.name.upcase
+      .col-md-4.text-right
+        .btn-group
+          = link_to :back, class: 'btn s-12 btn-default btn-sm mr-2' do
+              i.fas.fa-chevron-left.s-12.mr-2
+              span Volver
+          = link_to edit_config_production_active_ingredient_path(@active_ingredient), class: "btn btn-sm btn-success s-12 mr-2" do
+            svg.feather.feather-edit.mx-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+              path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+              path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+            span Editar
+
+      .col-lg-12
+        = render "shared/alerts"
+    .row.mt-2
+      .col-12
+        .card.card-primary.card-outline.card-outline-tabs
+          .card-header.p-0.border-bottom-0
+            ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
+              li.nav-item
+                = link_to 'Insumos', config_production_active_ingredient_path(@active_ingredient, tab: :supplies), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'supplies' ? 'active' : 'c-gray' }"
+          .card-body
+            #custom-tabs-four-tabContent.tab-content
+              #custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
+                = render "supplies" if params[:tab] == 'supplies'

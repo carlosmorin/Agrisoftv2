@@ -43,6 +43,10 @@ section.content data-controller="users"
                       td = active_ingredient.name&.upcase
                       td.text-center
                         .btn-group
+                          = link_to config_production_active_ingredient_path(active_ingredient, tab: :supplies), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                            svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                              path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+                              circle cx="12" cy="12" r="3"
                           = link_to edit_config_production_active_ingredient_path(active_ingredient), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
                             svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
                               path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
@@ -55,3 +59,4 @@ section.content data-controller="users"
               .col-lg-12.d-flex.justify-content-center
                 .digg_pagination.mt-2.s-14
                   = will_paginate @index_facade.active_ingredients, :container => false, :page_links => true
+

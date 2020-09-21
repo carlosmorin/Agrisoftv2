@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_193537) do
+ActiveRecord::Schema.define(version: 2020_09_20_233449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 2020_09_20_193537) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
+  create_table "active_ingredient_supplies", force: :cascade do |t|
+    t.bigint "supply_id", null: false
+    t.bigint "active_ingredient_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["active_ingredient_id"], name: "index_active_ingredient_supplies_on_active_ingredient_id"
+    t.index ["supply_id"], name: "index_active_ingredient_supplies_on_supply_id"
   end
 
   create_table "active_ingredients", force: :cascade do |t|
@@ -866,6 +875,8 @@ ActiveRecord::Schema.define(version: 2020_09_20_193537) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "active_ingredient_supplies", "active_ingredients"
+  add_foreign_key "active_ingredient_supplies", "supplies"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
   add_foreign_key "addresses", "countries"
