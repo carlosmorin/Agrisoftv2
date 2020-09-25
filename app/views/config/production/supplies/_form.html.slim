@@ -1,4 +1,4 @@
-= simple_form_for([:config_production, @supply], data: { controller: 'slim-select supplies-form' }) do |f|
+= simple_form_for([:config_production, @supply], data: { controller: 'supplies-form, treatments-form' }) do |f|
 	.form-group
 		.row
 			.col-lg-12
@@ -7,7 +7,7 @@
 					span Informacion General del Insumo
 		.row
 			.col-lg-12
-				= f.input :category_id, collection: Category.all, required: true, autofocus: true, input_html: { data: { action: 'change->supplies-form#generateCode',target: "supplies-form.categoryId"} } 
+				= f.input :category_id, collection: Category.all, required: true, autofocus: true, input_html: { class: "form-control form-control-sm s-12 h-25", data: { action: 'change->supplies-form#generateCode',target: "supplies-form.categoryId"} }
 			.col-lg-12
 				= f.input :code, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ', data: { target: 'supplies-form.code'} }
 			.col-lg-12
@@ -15,142 +15,73 @@
 					.col-lg-8
 						= f.input :name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
 					.col-lg-4
-						= f.input :currency, collection: ["usd", "mxn"], required: true, autofocus: true
+						= f.input :currency, collection: ["usd", "mxn"], required: true, autofocus: true, input_html: { class: "form-control form-control-sm s-12 h-25" }
 			.col-lg-12
 				= f.input :iva, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
 			.col-lg-12
 				= f.input :ieps, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
 				hr.my-2
                                     
-		/ section.pl-2.card.p-2.pb-3.br-0
-		/ 	.row
-		/ 		.col-lg-10
-		/ 			h6.s-16 Tamaños
-		/ 		.col-lg-2.text-right
-		/ 			= link_to_add_association f, :crops_sizes, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#sizes', association_insertion_method: :append } do
-		/ 				svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-		/ 					path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-		/ 				span.ml-2 Agregar
-		/ 	#sizes.ml-2
-		/ 		.row.bg-light-gray.mt-1
-		/ 			.col-lg-10
-		/ 				b.s-14 Nombre
-		/ 			.col-lg-2
-		/ 		.row.bg-light-gray
-		/ 			.col-lg-12
-		/ 				hr.my-0
-		/ 		.row.mt-1
-		/ 			.col-lg-12
-		/ 				= f.fields_for :crops_sizes do |size|
-		/ 					= render 'crops_size_fields', f: size
-		/ section.pl-2.card.p-2.pb-3.br-0
-		/ 	.row
-		/ 		.col-lg-10
-		/ 			h6.s-16 Enfermedades
-		/ 		.col-lg-2.text-right
-		/ 			= link_to_add_association f, :crops_deseases, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#deseases', association_insertion_method: :append } do
-		/ 				svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-		/ 					path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-		/ 				span.ml-2 Agregar
-		/ 	#deseases.ml-2
-		/ 		.row.bg-light-gray.mt-1
-		/ 			.col-lg-10
-		/ 				b.s-14 Nombre
-		/ 			.col-lg-2
-		/ 		.row.bg-light-gray
-		/ 			.col-lg-12
-		/ 				hr.my-0
-		/ 		.row.mt-1
-		/ 			.col-lg-12
-		/ 				= f.fields_for :crops_deseases do |desease|
-		/ 					= render 'crops_desease_fields', f: desease
-		/ section.pl-2.card.p-2.pb-3.br-0
-		/ 	.row
-		/ 		.col-lg-10
-		/ 			h6.s-16 Plagas
-		/ 		.col-lg-2.text-right
-		/ 			= link_to_add_association f, :crops_pests, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#pests', association_insertion_method: :append } do
-		/ 				svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-		/ 					path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-		/ 				span.ml-2 Agregar
-		/ 	#pests.ml-2
-		/ 		.row.bg-light-gray.mt-1
-		/ 			.col-lg-10
-		/ 				b.s-14 Nombre
-		/ 			.col-lg-2
-		/ 		.row.bg-light-gray
-		/ 			.col-lg-12
-		/ 				hr.my-0
-		/ 		.row.mt-1
-		/ 			.col-lg-12
-		/ 				= f.fields_for :crops_pests do |pest|
-		/ 					= render 'crops_pest_fields', f: pest
-		/ hr
-		/ section.pl-2.card.p-2.pb-3
-		/ 	.row
-		/ 		.col-lg-10
-		/ 			h6.s-16 Variedades
-		/ 		.col-lg-2.text-right
-		/ 			= link_to_add_association f, :crops_colors, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#colors', association_insertion_method: :append } do
-		/ 				svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-		/ 					path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
-		/ 				span.ml-2 Agregar
-		/ 	#colors.ml-2
-		/ 		.row.bg-light-gray.mt-1
-		/ 			.col-lg-10
-		/ 				b.s-14 Nombre
-		/ 			.col-lg-2
-		/ 		.row.bg-light-gray
-		/ 			.col-lg-12
-		/ 				hr.my-0
-		/ 		.row.mt-1
-		/ 			.col-lg-12
-		/ 				= f.fields_for :crops_colors do |color|
-		/ 					= render 'crops_color_fields', f: color
-		/ hr
-		/ section.pl-2.card.p-2.pb-3
-		/ 	.row
-		/ 		.col-lg-10
-		/ 			h6.s-16 Calidades
-		/ 		.col-lg-2.text-right
-		/ 			= link_to_add_association f, :crops_qualities, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#qualities', association_insertion_method: :append } do
-		/ 				svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-		/ 					path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
-		/ 				span.ml-2 Agregar
-		/ 	#qualities.ml-2
-		/ 		.row.bg-light-gray.mt-1
-		/ 			.col-lg-10
-		/ 				b.s-14 Nombre
-		/ 			.col-lg-2
-		/ 		.row.bg-light-gray
-		/ 			.col-lg-12
-		/ 				hr.my-0
-		/ 		.row.mt-1
-		/ 			.col-lg-12
-		/ 				= f.fields_for :crops_qualities do |quality|
-		/ 					= render 'crops_quality_fields', f: quality
-		/ hr
-		/ section.pl-2.card.p-2.pb-3
-		/ 	.row
-		/ 		.col-lg-10
-		/ 			h6.s-16 Empaques
-		/ 		.col-lg-2.text-right
-		/ 			= link_to_add_association f, :crops_packages, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#packages', association_insertion_method: :append } do
-		/ 				svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-		/ 					path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
-		/ 				span.ml-2 Agregar
-		/ 	#packages.ml-2
-
-		/ 		.row.bg-light-gray.mt-1
-		/ 			.col-md-12
-		/ 				b.s-14 Nombre
-		/ 		.row.bg-light-gray
-		/ 			.col-lg-12
-		/ 				hr.my-0
-		/ 		.row.mt-1
-		/ 			.col-lg-12
-		/ 				= f.fields_for :crops_packages do |pack|
-		/ 					= render 'crops_package_fields', f: pack
+		section.pl-2.card.p-2.pb-3.br-0
+			.row
+				.col-lg-10
+					h6.s-16 Presentaciones
+				.col-lg-2.text-right
+					= link_to_add_association f, :presentation_supplies, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#presentations', association_insertion_method: :append } do
+						svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+							path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+						span.ml-2 Agregar
+			#presentations.ml-2
+				.row.bg-light-gray.mt-1
+					.col-lg-10
+						b.s-14 Nombre
+					.col-lg-2
+				.row.bg-light-gray
+					.col-lg-12
+						hr.my-0
+				.row.mt-1
+					.col-lg-12
+						= f.fields_for :presentation_supplies do |presentation|
+							= render 'presentation_supply_fields', f: presentation
+		section.pl-2.card.p-2.pb-3.br-0
+			.row
+				.col-lg-10
+					h6.s-16 Ingredientes Activos
+				.col-lg-2.text-right
+					= link_to_add_association f, :active_ingredient_supplies, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#active_ingredients', association_insertion_method: :append } do
+						svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+							path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+						span.ml-2 Agregar
+			#active_ingredients.ml-2
+				.row.bg-light-gray.mt-1
+					.col-lg-10
+						b.s-14 Nombre
+					.col-lg-2
+				.row.bg-light-gray
+					.col-lg-12
+						hr.my-0
+				.row.mt-1
+					.col-lg-12
+						= f.fields_for :active_ingredient_supplies do |active_ingredient|
+							= render 'active_ingredient_supply_fields', f: active_ingredient
+		section.pl-2.card.p-2.pb-3.br-0
+			.row
+				.col-lg-10
+					h6.s-16 Tratamientos
+				.col-lg-2.text-right data-target="treatments-form.links"
+					= link_to "#", class: "btn btn-xs btn-default text-center px-2", data: { action: 'treatments-form#appendForm' } do
+						svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+							path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+						span.ml-2 Agregar
+			template data-target="treatments-form.template"
+				.col-lg-12
+					= form_tag "#", method: 'GET', child_index: 'NEW_RECORD'
+						= render 'treatments_fields' 
+			#treatments.ml-2
+				.row.mt-1 data-target="treatments-form.container"
+					.col-lg-12
+						= form_tag "config/production/supplies", method: 'GET'
+							= render 'treatments_fields'                    
 	hr
 	.form-actions.text-right
 		= link_to config_production_supplies_path, class: 'btn btn-default btn-sm pl-1 mr-2' do

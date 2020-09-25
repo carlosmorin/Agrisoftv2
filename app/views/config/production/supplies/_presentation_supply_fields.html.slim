@@ -1,7 +1,7 @@
 .nested-fields
 	.row.mt-1
 		.col-md-6
-			= f.input :size_id, collection: Size.all, include_blank: true, label: false, input_html: { class: "form-control form-control-sm s-12 h-25" }
+			= f.input :presentation_id, collection: Presentation.all, include_blank: true, label: false, input_html: { class: "form-control form-control-sm s-12 h-25" }
 		.col-md-2.text-right
 			= link_to_remove_association f, class: "btn btn-danger btn-xs" do
 				svg.feather.feather-trash-2 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 

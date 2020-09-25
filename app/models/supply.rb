@@ -7,11 +7,13 @@ class Supply < ApplicationRecord
 
   delegate :name, to: :category, prefix: "category", allow_nil: :true
 
-  has_many :active_ingredient_supplies
+  has_many :active_ingredient_supplies, dependent: :destroy
   has_many :active_ingredients, through: :active_ingredient_supplies
 
-  has_many :presentation_supplies
+  has_many :presentation_supplies, dependent: :destroy
   has_many :presentations, through: :presentation_supplies
+
+  has_many :treatments, -> { where(supplies: "CommercialDocument") }, as: :treatable
 
   accepts_nested_attributes_for :active_ingredient_supplies
   accepts_nested_attributes_for :presentation_supplies

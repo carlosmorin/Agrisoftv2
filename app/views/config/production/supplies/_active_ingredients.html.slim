@@ -1,0 +1,12 @@
+section#general.s-12
+  .row
+    .col-12
+      .row
+        .col-10
+          b.s-14.text-left
+            i.fas.fa-boxes.mr-2
+            span Ingredientes Activos
+          div.p-2
+            - @supply.active_ingredients.each do |active_ingredient|
+              span.mb-1
+                = link_to active_ingredient.name.upcase, config_production_active_ingredient_path(active_ingredient, tab: :supplies), title: "Ver Ingredient Activo", 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: "text-color badge badge-pill bg-info mb-2 mr-2 pt-1"

@@ -11,6 +11,12 @@ class State < ApplicationRecord
   has_many :carriers, inverse_of: :state
   has_many :companies, inverse_of: :state
 	
-	validates :name, :short_name, :country_id, presence: true
+  validates :name, :short_name, :country_id, presence: true
+  
+  
+  def change_state_name
+    print "UPDATEING ANME"
+    update(country_id: country_id + 1)
+  end
 
 end

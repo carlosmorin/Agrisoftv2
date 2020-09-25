@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_21_005910) do
+ActiveRecord::Schema.define(version: 2020_09_24_035625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -823,6 +823,23 @@ ActiveRecord::Schema.define(version: 2020_09_21_005910) do
     t.datetime "deleted_at"
   end
 
+  create_table "treatment_supplies", force: :cascade do |t|
+    t.bigint "treatment_id", null: false
+    t.integer "supply_id"
+    t.jsonb "recommended_dose"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["supply_id"], name: "index_treatment_supplies_on_supply_id"
+    t.index ["treatment_id"], name: "index_treatment_supplies_on_treatment_id"
+  end
+
+  create_table "treatments", force: :cascade do |t|
+    t.integer "treatable_id"
+    t.string "treatable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "unit_brands", force: :cascade do |t|
     t.string "name"
     t.string "short_name"
@@ -976,6 +993,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_005910) do
   add_foreign_key "shipments_products", "shipments"
   add_foreign_key "states", "countries"
   add_foreign_key "supplies", "categories"
+  add_foreign_key "treatment_supplies", "treatments"
   add_foreign_key "units", "carriers"
   add_foreign_key "units", "unit_brands"
 end

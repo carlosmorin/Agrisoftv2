@@ -14,6 +14,12 @@ Rails.application.routes.draw do
     get '/get_supplies_codes', to: 'categories#get_supplies_codes'
   end
 
+  scope module: 'config/production', path: 'crops' do
+    get '/get_crops', to: 'crops#get_crops'
+    get '/:id/get_pests', to: 'crops#get_pests'
+  end
+
+
   namespace :config do
     resources :taxes
     resources :drivers
@@ -27,7 +33,9 @@ Rails.application.routes.draw do
       resources :categories
       resources :active_ingredients
       resources :presentations
-      resources :supplies
+      resources :supplies do
+        resources :treatments
+      end
       resources :ranches do
         resources :areas
         resources :perforations

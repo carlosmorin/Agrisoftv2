@@ -1,0 +1,17 @@
+hr
+.form-group
+  .row.mt-1
+    .col-lg-10
+      b.s-14.ml-1 Cultivo
+    .col-lg-2
+  .row.mt-2
+    .col-lg-12
+      = select_tag(:crop_id, options_for_select(Crop.all.map {|crop| [crop[:name], crop[:id]]}), class: 'form-control form-control-sm', data: { action: "change->treatments-form#filterPests"} )
+.form-group
+  .row.mt-1
+    .col-lg-10
+      b.s-14.ml-1 Plaga
+    .col-lg-2
+  .row.mt-2
+    .col-lg-12
+      = select_tag(:pest_id, options_for_select([]), class: 'form-control form-control-sm ', data: { target: "treatments-form.pestSelect", action: "change->treatments-form#showDoseFields"} ) 

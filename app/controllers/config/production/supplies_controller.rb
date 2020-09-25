@@ -12,12 +12,7 @@ class Config::Production::SuppliesController < ApplicationController
   def new
     add_breadcrumb "Nuevo"
     @supply = Supply.new
-    # @supply.crops_colors.build
-    # @supply.crops_sizes.build
-    # @supply.crops_qualities.build
-    # @supply.crops_packages.build
-    # @supply.crops_pests.build
-    # @supply.crops_deseases.build
+    @treatment = Treatment.new
   end
 
   def edit
@@ -60,7 +55,14 @@ class Config::Production::SuppliesController < ApplicationController
   end
 
 	def supply_params
-    params.require(:supply).permit(:name, :currency, :iva, :ieps, :code, :category_id)   
+    params.require(:supply).permit(:name, :currency, :iva, :ieps, :code, :category_id,
+      presentation_supplies_attributes: [:id, :supply_id, :presentation_id, :_destroy],
+      active_ingredient_supplies_attributes: [:id, :supply_id, :active_ingredient_id, :_destroy])   
+  end
+
+  def treatment_params
+    params.require(:treatment).permit(:treatable_id, :treatable_type, 
+      treatment_supplies_attributes: [:id, :supply_id, :treatment_id, :recommended_dose, :_destroy])
   end
 
   def set_supply

@@ -1,0 +1,12 @@
+section#general.s-12
+  .row
+    .col-12
+      .row
+        .col-10
+          b.s-14.text-left
+            i.fas.fa-boxes.mr-2
+            span Presentaciones
+          div.p-2
+            - @supply.presentations.each do |presentation|
+              span.mb-1
+                = link_to presentation.name.upcase, config_production_presentation_path(presentation, tab: :supplies), title: "Ver Presentacion", 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: "text-color badge badge-pill bg-info mb-2 mr-2 pt-1"
