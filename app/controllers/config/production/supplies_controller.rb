@@ -24,13 +24,16 @@ class Config::Production::SuppliesController < ApplicationController
   end
 
   def create
-  	@supply = Supply.new(supply_params)
-    if @supply.save
-      flash[:notice] = "Insumo #{ @supply.name } creado correctamente"
-      redirect_to config_production_supplies_url
-    else
-      render :new
-    end
+  	# @supply = Supply.new(supply_params)
+    # if @supply.save
+      respond_to do |format|
+        format.html
+        format.js
+        format.json
+      end
+    # else
+    #   render :new
+    # end
   end
 
    def update

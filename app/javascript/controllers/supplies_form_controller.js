@@ -2,15 +2,9 @@ import { Controller } from 'stimulus';
 
 export default class extends Controller {
   static targets = ["categoryId", "code"]
-  // static targets = ["picture", "pictureAddButton", "cancelButton"]
-
-  initialize() {
-  }
   
   generateCode(e) {
     e.preventDefault();
-    // let form = $('#new_supply');
-    // let url = form.attr('action');
     let id = $(this.categoryIdTarget).children("option:selected").val()
     $.ajax({
       type: 'GET',
@@ -28,10 +22,6 @@ export default class extends Controller {
         
       }
     })
-    // console.log(url);
-    // console.log(this.categoryIdTarget);
-    // console.log("generate code");
-    // console.log($(this.categoryIdTarget).children("option:selected").val());
   }
 
   generateInitialCategoryCode({ category}) {
@@ -51,7 +41,6 @@ export default class extends Controller {
       }
     }
     
-    // codes.map(code => code.slice(code.split('').lastIndexOf('-') + 1, code.split('').length)).sort((a, b) => a - b).pop();
     let nextNum = Math.abs(lastCodeNumber);
     if (String(nextNum).split('').length == 1) {
       this.calculateCodeValue("-00", nextNum, category)
@@ -63,7 +52,6 @@ export default class extends Controller {
   calculateCodeValue(ceros, nextNum, category){
     let arr = String(nextNum).split('')
     arr.unshift(ceros)
-    console.log(arr);
     this.codeTarget.value = category.toUpperCase().slice(0, 3).concat(arr.join(""));
   }
 } 
