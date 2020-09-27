@@ -273,3 +273,5 @@ es:
         ieps: IEPS(%)
         category_id: Categoria
         code: Clave
+      treatment:
+        application_instructions: Instrucciones de applicacion

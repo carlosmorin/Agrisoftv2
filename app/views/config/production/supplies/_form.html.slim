@@ -90,8 +90,7 @@
 
 			span Guardar
 #treatments.ml-2
-		= form_tag '/treatments', data: { controller: 'treatments-form'} do
-	    .mt-1 data-target="treatments-form.container"
-			  = render 'treatments_fields'
-			  = submit_tag 'Create'
+		= form_tag '/treatments', data: { controller: 'treatments-form'}, id: "treatments-form" do
+			= render 'treatments_fields'
+			= submit_tag 'Create', data: { action: 'click->treatments-form#appendForm'}
 

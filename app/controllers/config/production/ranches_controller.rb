@@ -18,7 +18,6 @@ module Config
 
       def create
         @ranch = Ranch.new(ranch_params)
-        binding.pry
         if @ranch.save
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Rancho creado correctamente"
           redirect_to config_production_ranch_url(@ranch)

@@ -1,9 +1,10 @@
 import { Controller } from 'stimulus';
 
 export default class extends Controller {
-  static targets = ["template", "container", "pestSelect"]
+  static targets = ["template", "container", "pestSelect", "treatmentType"]
 
   initialize() {
+    this.crop_id = null
     let crops = []
     $.ajax({
       type: 'GET',
@@ -20,65 +21,64 @@ export default class extends Controller {
   
   appendForm(e) {
     e.preventDefault();
-    var content = this.templateTarget.innerHTML.replace(/NEW_RECORD/g, new Date().getTime())
-    this.containerTarget.insertAdjacentHTML('beforeend', content);
+    console.log(document.getElementById('treatments-form'));
+    let form = new FormData($('#treatments-form')[0])
+    console.log(form.values());
+    console.log(form.entries());
+    console.log(form.values());
+    console.log(form);
+    window.form = form
+    // var content = this.templateTarget.innerHTML.replace(/NEW_RECORD/g, new Date().getTime())
+    // this.containerTarget.insertAdjacentHTML('beforeend', content);
   }
 
   filterPests(e) {
-    let crop_id = $(e.target).children("option:selected").val();
-    let pestSelect = $(e.target).parents('.form-group').first().next().find('.row.mt-2 .col-lg-12 #pest_id');
-    console.log($(e.target).parents('.form-group').first().next().find('.row.mt-2 .col-lg-12 #pest_id'));
-    console.log("filtering");
-    $.ajax({
-      type: 'GET',
-      url: `/crops/${crop_id}/get_pests`,
-      success: (data) => {
-        console.log(data);
-        for(let option of data) {
-          pestSelect.append('<option value="' + option.id + '">' + option.name + '</option>');
-        }
-      },
-      error: (xhr) => {
-        console.log(xhr);
-      }
-    })
+    console.log("kjjjgjjj")
+    let parent = $(e.target).parents('.form-group').first().after(html);
+    $(e.target).prop('disabled', 'disabled')
+    console.log(parent);
+    // let crop_id = $(e.target).children("option:selected").val();
+    // let treatbleTypeSelect = $(e.target).parents('.form-group').first().next().find('.row.mt-2 .col-lg-12 #pest_id');
+    // console.log($(e.target).parents('.form-group').first().next().find('.row.mt-2 .col-lg-12 #pest_id'));
+    // console.log("filtering");
+    // $.ajax({
+    //   type: 'GET',
+    //   url: `/crops/${crop_id}/get_pests`,
+    //   success: (data) => {
+    //     console.log(data);
+    //     for(let option of data) {
+    //       treatbleTypeSelect.append('<option value="' + option.id + '">' + option.name + '</option>');
+    //     }
+    //   },
+    //   error: (xhr) => {
+    //     console.log(xhr);
+    //   }
+    // })
+  }
+
+  appendTreatableType() {
+  }
+
+  enabledTypeSelect(e) {
+    console.log($(e.target).children("option:selected").val())
+    console.log(typeof $(e.target).children("option:selected").val())
+    if ($(e.target).children("option:selected").val() === "") {
+      $(this.treatmentTypeTarget).prop('disabled', 'disabled');  
+      return;
+    }
+    this.crop_id = $(e.target).children("option:selected").val()
+    $(this.treatmentTypeTarget).prop('disabled', false);
+  }
+
+  filterTreatableType(e) {
+    let treatableType = $(e.target).children("option:selected").val();
+    console.log(treatableType);
+    console.log(this.crop_id);
   }
 
   showDoseFields(e) {
     let html = `
-      <div class="col-lg-12 mt-4">
-        <h6>Dosis recomendada</h6>
-        <b>Foliar</b>
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label>Cantidad</label>
-              <input name="foliar_quantity" type="number" class="form-control form-control-sm" id="foliar_quantity"/>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label>Unidad</label>
-              <input name="foliar_unit" class="form-control form-control-sm" id="foliar_unit"/>
-            </div>
-          </div>
-        </div>
-        <b>Riego</b>
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label>Cantidad</label>
-              <input name="irrigation_quantity" type="number" class="form-control form-control-sm" id="irrigation_quantity"/>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label>Unidad</label>
-              <input name="irrigation_unit" class="form-control form-control-sm" id="irrigation_unit"/>
-            </div>
-          </div>
-        </div>
-      </div>
+
     `
     $(html).insertAfter($(e.target).parent().parent());
   }

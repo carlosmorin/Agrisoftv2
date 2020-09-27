@@ -6,7 +6,7 @@ hr
     .col-lg-2
   .row.mt-2
     .col-lg-12
-      = select_tag(:crop_id, options_for_select(Crop.all.map {|crop| [crop[:name], crop[:id]]}), class: 'form-control form-control-sm', data: { action: "change->treatments-form#filterPests"} )
+      = select_tag(:crop_id, options_for_select(Crop.all.map {|crop| [crop[:name], crop[:id]]}), name: "[treatments][crop_id][]", class: 'form-control form-control-sm', data: { action: "change->treatments-form#filterPests"} )
 .form-group
   .row.mt-1
     .col-lg-10

@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     namespace :production do 
       root to: 'main#index'
       resources :categories
+      resources :treatments
       resources :active_ingredients
       resources :presentations
       resources :supplies do
