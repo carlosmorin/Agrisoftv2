@@ -60,20 +60,54 @@ export default class extends Controller {
   }
 
   enabledTypeSelect(e) {
-    console.log($(e.target).children("option:selected").val())
-    console.log(typeof $(e.target).children("option:selected").val())
+    // console.log("crop_id: ", $(e.target).children("option:selected").val())
+    // console.log("class crop_id: ", typeof $(e.target).children("option:selected").val())
     if ($(e.target).children("option:selected").val() === "") {
       $(this.treatmentTypeTarget).prop('disabled', 'disabled');  
       return;
     }
     this.crop_id = $(e.target).children("option:selected").val()
+    // console.log("tipo: ", $(this.treatmentTypeTarget).children("option:selected").val());
     $(this.treatmentTypeTarget).prop('disabled', false);
+    if ($(this.treatmentTypeTarget).children("option:selected").val() != "") {
+      // console.log("fjjfjjjjj")
+      let action = $(this.treatmentTypeTarget).children("option:selected").val() === "Pest" ? 'get_pests' : 'get_deseases'
+      let url = `/crops/${this.crop_id}/${action}`
+      let title = $(this.treatmentTypeTarget).children("option:selected").val() + "s"
+      console.log($(e.target).parents('.form-group').first().next().next().find('#treatable_id'))
+      let treatbleTypeSelect = $(e.target).parents('.form-group').first().next().next().find('#treatable_id')
+      this.getTreatbleTypes(url, treatbleTypeSelect, title)
+    }
+  }
+
+  getTreatbleTypes(url, treatbleTypeSelect, title) {
+    console.log(treatbleTypeSelect.parents('.form-group').first().find('.s-14.ml-1'))
+    treatbleTypeSelect.parents('.form-group').first().find('.s-14.ml-1').html(title)
+    $.ajax({
+      type: 'GET',
+      url: url,
+      success: (data) => {
+        console.log(data);
+        treatbleTypeSelect.empty();
+        treatbleTypeSelect.append('<option value="">Selecciona Plaga</option>');
+        for(let option of data) {
+          treatbleTypeSelect.append('<option value="' + option.id + '">' + option.name + '</option>');
+        }
+      },
+      error: (xhr) => {
+        console.log(xhr);
+      }
+    })
   }
 
   filterTreatableType(e) {
-    let treatableType = $(e.target).children("option:selected").val();
-    console.log(treatableType);
-    console.log(this.crop_id);
+    let treatableType = $(this.treatmentTypeTarget).children("option:selected").val();
+    let treatbleTypeSelect = $(e.target).parents('.form-group').first().next().find('#treatable_id')
+    let action = treatableType === 'Desease' ? 'get_deseases' : 'get_pests';
+    let url = `/crops/${this.crop_id}/${action}` 
+    let title = treatableType + "s"
+    console.log(url)
+    this.getTreatbleTypes(url, treatbleTypeSelect, title)
   }
 
   showDoseFields(e) {

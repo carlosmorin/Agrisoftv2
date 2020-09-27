@@ -20,7 +20,7 @@
           b.s-14.ml-1
       .row.mt-2
         .col-lg-10
-          = select_tag(:pest_id, options_for_select([]), class: 'form-control form-control-sm ', data: { target: "treatments-form.treatbleTypeSelect", action: "change->treatments-form#showDoseFields"} ) 
+          = select_tag(:treatable_id, options_for_select([]), class: 'form-control form-control-sm ', data: { target: "treatments-form.treatbleTypeSelect", action: "change->treatments-form#showDoseFields"} ) 
     .form-group.col-md-3
       .row.mt-1
         .col-lg-10

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   scope module: 'config/production', path: 'crops' do
     get '/get_crops', to: 'crops#get_crops'
     get '/:id/get_pests', to: 'crops#get_pests'
+    get '/:id/get_deseases', to: 'crops#get_deseases'
   end
 
 
