@@ -17,6 +17,7 @@ class Config::Production::TreatmentsController < ApplicationController
   end
 
   def create
+    binding.pry
     @treatment = Treatment.new(treatment_params)
     if @treatment.save
       flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Tratamiento creado correctamente"
@@ -47,7 +48,7 @@ class Config::Production::TreatmentsController < ApplicationController
 
   def treatment_params
     params.require(:treatment).permit(:treatable_id, :treatable_type, 
-      treatment_supplies_attributes: [:id, :treatment_id, :supply_id, :_destroy, recommended_dose: {}])
+      treatment_supplies_attributes: [:id, :treatment_id, :supply_id, :_destroy, :recommended_doses])
   end 
 
   def find_treatment

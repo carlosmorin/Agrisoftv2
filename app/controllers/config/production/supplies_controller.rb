@@ -24,16 +24,17 @@ class Config::Production::SuppliesController < ApplicationController
   end
 
   def create
-  	# @supply = Supply.new(supply_params)
-    # if @supply.save
+    binding.pry
+  	@supply = Supply.new(supply_params)
+    if @supply.save
       respond_to do |format|
         format.html
         format.js
         format.json
       end
-    # else
-    #   render :new
-    # end
+    else
+      render :new
+    end
   end
 
    def update
