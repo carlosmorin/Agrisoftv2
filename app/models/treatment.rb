@@ -8,4 +8,9 @@ class Treatment < ApplicationRecord
   delegate :supplies_count, :supplies_names, to: :treatment_supplies, prefix: false
 
   accepts_nested_attributes_for :treatment_supplies, allow_destroy: true
+
+  def treatable_name
+    return Pest.find(treatable_id).name if treatable_type == "Pest"
+    Desease.find(treatable_id).name
+  end
 end

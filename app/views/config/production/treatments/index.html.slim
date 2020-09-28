@@ -29,8 +29,10 @@ section.content
               thead
                 tr.bg-light-gray
                   th style=("width: 5%")  #
+                  th Nombre
                   th Tipo de tratamiento
                   th Insumos Applicados
+                  th Insumos
                   th.text-center colspan="2" style=("width: 12%") Acciones
               tbody#tbody
                 - if @index_facade.treatments.empty?
@@ -41,8 +43,13 @@ section.content
                   - @index_facade.treatments.each do |treatment|
                     tr
                       td = treatment.id
-                      td = treatment.treatable_type
+                      td = treatment.treatable_name
+                      td = treatment.treatable_type == "Pest" ? "Plaga" : "Enfermedad"
                       td = treatment.supplies_count
+                      td
+                        - treatment.supplies_names.each do |name|
+                          span.badge.badge-info.mx-1
+                            = name
                       td.text-center
                         = link_to config_production_treatment_path(treatment, tab: :general), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
                          svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 

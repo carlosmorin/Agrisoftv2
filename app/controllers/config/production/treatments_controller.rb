@@ -22,17 +22,19 @@ class Config::Production::TreatmentsController < ApplicationController
     @treatment.treatable_id = treatment_params[:treatable_id]
     @treatment.treatable_type = treatment_params[:treatable_type]
     if @treatment.save
-      treatment_params[:treatment_supplies_attributes].values.each do |treatment_supply|
-        @supply = @treatment.treatment_supplies.new
-        @supply.supply_id = treatment_supply[:supply_id]
-        @supply.foliar_quantity = treatment_supply[:foliar_quantity]
-        @supply.foliar_unit = treatment_supply[:foliar_unit]
-        @supply.irrigation_quantity = treatment_supply[:irrigation_quantity]
-        @supply.irrigation_unit = treatment_supply[:irrigation_unit]
-        @supply.save
+      if !!treatment_params[:treatment_supplies_attributes] 
+        treatment_params[:treatment_supplies_attributes].values.each do |treatment_supply|
+          @supply = @treatment.treatment_supplies.new
+          @supply.supply_id = treatment_supply[:supply_id]
+          @supply.foliar_quantity = treatment_supply[:foliar_quantity]
+          @supply.foliar_unit = treatment_supply[:foliar_unit]
+          @supply.irrigation_quantity = treatment_supply[:irrigation_quantity]
+          @supply.irrigation_unit = treatment_supply[:irrigation_unit]
+          @supply.save
+        end
       end
       flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Tratamiento creado correctamente"
-      redirect_to config_production_treatment_url(@treatment)
+      redirect_to config_production_treatment_url(@treatment, tag: :general)
     else
       render :new
     end
@@ -45,7 +47,7 @@ class Config::Production::TreatmentsController < ApplicationController
   def update
     if @treatment.update(treatment_params)
       flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Tratamiento actualizado correctamente"
-      redirect_to config_production_treatment_url(@treatment)
+      redirect_to config_production_treatment_url(@treatment, tab: :general)
     else
       render :edit
     end
@@ -58,7 +60,7 @@ class Config::Production::TreatmentsController < ApplicationController
   private
 
   def treatment_params
-    params.require(:treatment).permit(:treatable_id, :treatable_type, 
+    params.require(:treatment).permit(:treatable_id, :treatable_type, :application_instructions,
       treatment_supplies_attributes: [:id, :treatment_id, :supply_id, :_destroy, :foliar_quantity, :foliar_unit,
       :irrigation_quantity, :irrigation_unit])
   end 

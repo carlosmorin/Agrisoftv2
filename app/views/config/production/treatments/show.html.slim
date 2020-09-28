@@ -11,7 +11,7 @@ section.content
   .container-fluid
     .row.my-2
       .col-md-8	
-        h3 = @treatment.treatable_type.upcase
+        h3 = @treatment.treatable_name.upcase
       .col-md-4.text-right
         .btn-group
           = link_to :back, class: 'btn s-12 btn-default btn-sm mr-2' do
@@ -22,13 +22,6 @@ section.content
               path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
               path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
             span Editar
-          .btn-group.dropleft
-            button.btn.btn-dark-blue.btn-sm.s-12.mr-2.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
-              | Acciones
-            .dropdown-menu
-              = link_to edit_config_production_treatment_path(@treatment), class: 'dropdown-item s-12' do
-                i.fas.fa-boxes.mr-2
-                span Agregar insumos
 
       .col-lg-12
         = render "shared/alerts"
