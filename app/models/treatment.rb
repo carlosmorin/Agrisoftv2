@@ -5,7 +5,7 @@ class Treatment < ApplicationRecord
 
   has_rich_text :application_instructions
 
-  delegate :supplies_count, to: :treatment_supplies, prefix: false
+  delegate :supplies_count, :supplies_names, to: :treatment_supplies, prefix: false
 
   accepts_nested_attributes_for :treatment_supplies, allow_destroy: true
 end

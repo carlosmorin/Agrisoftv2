@@ -71,48 +71,48 @@ export default class extends Controller {
   }
 
   showRecommendedDoses(e) {
-    let firstChild = $(e.target).parents('.col-md-6').first().next().next()
-    let id = firstChild.find('textarea').attr('name').split(']')[1].slice(1)
-    console.log(id);
-    let html = `
-        <div class="col-lg-12">
-          <h6>Dosis recomendada</h6>
-          <b>Foliar</b>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Cantidad</label>
-                <input class="form-control form-control-sm" id="foliar_quantity" name="treatment[treatment_supplies_attributes][${id}][recommended_doses][foliar][foliar_quantity]" type="number">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Unidad</label>
-                <input class="form-control form-control-sm" id="foliar_unit" name="treatment[treatment_supplies_attributes][${id}][recommended_doses][foliar][foliar_unit]">
-              </div>
-            </div>
-          </div>
-          <b>Riego</b>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Cantidad</label>
-                <input class="form-control form-control-sm" id="irrigation_quantity" name="treatment[treatment_supplies_attributes][${id}][recommended_doses][irrigation][irrigation_quantity]" type="number">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Unidad</label>
-                <input class="form-control form-control-sm" id="irrigation_unit" name="treatment[treatment_supplies_attributes][${id}][recommended_doses][irrigation][irrigation_unit]">
-              </div>
-            </div>
-          </div>
-        </div>
-    `
+    // let firstChild = $(e.target).parents('.col-md-6').first().next().next()
+    // let id = firstChild.find('textarea').attr('name').split(']')[1].slice(1)
+    // console.log(id);
+    // let html = `
+    //     <div class="col-lg-12">
+    //       <h6>Dosis recomendada</h6>
+    //       <b>Foliar</b>
+    //       <div class="row">
+    //         <div class="col-lg-6">
+    //           <div class="form-group">
+    //             <label>Cantidad</label>
+    //             <input class="form-control form-control-sm" id="foliar_quantity" name="treatment[treatment_supplies_attributes][${id}][recommended_doses][foliar][foliar_quantity]" type="number">
+    //           </div>
+    //         </div>
+    //         <div class="col-lg-6">
+    //           <div class="form-group">
+    //             <label>Unidad</label>
+    //             <input class="form-control form-control-sm" id="foliar_unit" name="treatment[treatment_supplies_attributes][${id}][recommended_doses][foliar][foliar_unit]">
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <b>Riego</b>
+    //       <div class="row">
+    //         <div class="col-lg-6">
+    //           <div class="form-group">
+    //             <label>Cantidad</label>
+    //             <input class="form-control form-control-sm" id="irrigation_quantity" name="treatment[treatment_supplies_attributes][${id}][recommended_doses][irrigation][irrigation_quantity]" type="number">
+    //           </div>
+    //         </div>
+    //         <div class="col-lg-6">
+    //           <div class="form-group">
+    //             <label>Unidad</label>
+    //             <input class="form-control form-control-sm" id="irrigation_unit" name="treatment[treatment_supplies_attributes][${id}][recommended_doses][irrigation][irrigation_unit]">
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    // `
 
-    let container = $(e.target).parents('.row.mt-1').first().next()
-    console.log(container);
-    container.html(html)
+    // let container = $(e.target).parents('.row.mt-1').first().next()
+    // console.log(container);
+    // container.html(html)
   }
  
   createTreatments() {
