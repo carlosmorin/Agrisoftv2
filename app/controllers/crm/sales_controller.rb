@@ -2,7 +2,7 @@ module Crm
 	class SalesController < ApplicationController
 		add_breadcrumb "CRM", :crm_root_path
 		add_breadcrumb "Ventas", :crm_sales_path
-		before_action :set_object, only: %i[show cancel]
+		before_action :set_object, only: %i[show cancel set_contract expenses products]
 
 		def index
 			@sales = Shipment.sale.sales if params[:tab] == 'all'
@@ -25,7 +25,42 @@ module Crm
       @sale.update(cancel_sale: params[:cancel])
     end
 
+    def set_contract
+    	contract_id = params[:contract_id]
+    	echange = params[:echange]
+
+    	@sale.update(contract_id: contract_id, exchange_rate: echange) 
+    end
+
+    def show
+    	add_breadcrumb "Gestion de venta"
+
+    	@sale = @sale
+    	@sale.shipments_products.new unless @sale.shipments_products.any?
+			@sale.shipments_products.build.shipments_product_reports.build unless @sale.shipments_expenses.any?
+    end
+
+    def products
+    	@sale.update(sale_params)
+    end
+
+    def expenses
+    	@sale.update(sale_params)
+    	render partial: 'crm/sales/show/collection_espenses', locals: { sale: @sale }
+    end
+
 		private
+
+		def sale_params
+			params.require(:shipment).permit(:client_id, :company_id, :contact_id,
+        :user_id, :expirated_days, :expired_at, :status, :iva, :delivery_address_id,
+        :issue_at, :discount, :currency, :exchange_rate, :description, 
+        shipments_products_attributes: [:id, :price, :quantity, :shipment_id, 
+        	:product_id, :productable_type, :productable_id, :_destroy],
+        shipments_expenses_attributes: [:id, :expense_id, :unit, :total, :amount, 
+        	:currency_id, :percentage, :_destroy]
+      )
+		end
 
 		def advanced_filters
 			search_by_crop if params[:advanced][:crop_id].present?

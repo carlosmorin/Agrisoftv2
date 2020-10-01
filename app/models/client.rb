@@ -11,6 +11,7 @@ class Client < ApplicationRecord
 	has_many :shipments, inverse_of: :client
 	has_many :freights, as: :debtable, inverse_of: :client
 	has_many :contracts, inverse_of: :client
+	has_many :client_configs, inverse_of: :client
 
 	validates_uniqueness_of :phone, :code, case_sensitive: false
 	has_many :contacts, as: :contactable
@@ -21,4 +22,15 @@ class Client < ApplicationRecord
 	def full_address
 		"#{address}, #{municipality.name}, #{state.name}, #{country.name}"
 	end
+
+	def settings
+		return unless client_configs.any?
+		self.client_configs.first
+	end
+	
+
+	def contract
+		self.contracts.frst
+	end
+
 end

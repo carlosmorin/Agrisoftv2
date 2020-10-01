@@ -125,6 +125,8 @@ h2.swal2-title{ margin-bottom: 0px; }
 
 // Backgrounds
 .bg-blue{ background-color: #0051a8; }
+.bg-dark-blue{ background-color: #293742 !important; }
+.border-blue{ border: 1px solid #293742; }
 
 //Colors
 .c-blue{ color: #0051a8; }
@@ -317,4 +319,24 @@ li.line-divider > hr{
 }
 .h-auto{
 	height: auto;
+}
+.costum_radios span.radio > label{
+	font-size: 12px !important;
+	margin-right: 10px !important;
+}
+
+.edit-contract:hover > i.fa-edit{
+	color: red !important;
+}
+.alert-info {
+  color: #0c5460 !important;
+  background-color: #d1ecf1 !important;
+  border-color: #bee5eb !important;
+}
+select.error, input.error{
+	border: 1px solid red;
+}
+label.error{
+	color: red;
+	font-weight: bold !important;
 }

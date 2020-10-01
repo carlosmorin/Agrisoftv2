@@ -1,0 +1,43 @@
+- unless @sale.contract_id.present?
+  button.btn.btn-success.btn-block.s-14 data-target="#acModal" data-toggle="modal" type="button"
+    i.fas.fa-file-invoice-dollar.mr-2
+    b Relacionar Acuerdo Comercial
+- else
+  .card.mt-2
+    .card-header.bg-dark-blue.c-white
+      .row
+        .col-10
+          h6.s-16.bold.mb-0.mt-1
+            = "Desglose de descuentos".upcase
+        .col-2.text-right
+          button.btn.btn-xs.btn-secondary data-action="click->crm--show-sales#showForm" data-target="crm--show-sales.showForm" type="button"
+            i.fas.fa-edit.s-14
+          button.btn.btn-xs.btn-secondary.d-none data-action="click->crm--show-sales#hideForm" data-target="crm--show-sales.hideForm" type="button"
+            i.fas.fa-eye.s-14
+    .card-body.py-2.border-blue
+      = simple_form_for(@sale, url: '', data: { action: 'submit->crm--show-sales#saveExpenses' }) do |form|
+        .row.text-upcase.s-12.bg-light-gray.py-2
+          .col-3
+            b.mb-0 Concepto
+          .col-3
+            b.mb-0 Unidad
+          .col-2
+            b.mb-0 Monto
+          .col-1
+            b.mb-0.text-upcase %
+          .col-1
+            b.mb-0 Moneda
+          .col-1
+            b.mb-0 Total
+          .col-1
+            = link_to_add_association form, :shipments_expenses, class: "btn btn-xs btn-primary s-12 d-none", data: { association_insertion_node: '.shipments_expenses', association_insertion_method: :append, target: 'crm--show-sales.addExpenseButton' } do
+                i.fas.fa-plus-circle.mx-1
+        .shipments_expenses.mt-2.d-none data-target='crm--show-sales.formContainer'
+          = form.simple_fields_for :shipments_expenses do |expense|
+            = render  'shipments_expense_fields', f: expense
+        #shipments_expenses_view.shipments_expenses_view data-target='crm--show-sales.expensesContainer'
+          = render 'crm/sales/show/collection_espenses', sale: @sale 
+        hr.my-2
+        button.btn.btn-sm.btn-dark-blue.pull-right.d-none type='submit' data-target='crm--show-sales.submitButton'
+          i.fas.fa-save.mr-2
+          | Guardar

@@ -22,32 +22,31 @@ section.content data-controller="products"
 									// cb is client_brand abbreviation
 									- cb_id = params[:cb].present? ? params[:cb] : ''
 									.form-row.align-items-center
-										.col-3
+										.col-4
 											= select_tag :c, options_for_select(Crop.all.pluck(:name, :id), selected: params[:c]), include_blank: 'Producto', class: 's-14', id: 'product_id'
 										.col-3
 											= select_tag :q, options_for_select(Quality.all.pluck(:name, :id), selected: params[:q]), include_blank: 'Calidad', class: 's-14', id: 'quality_id'
-										.col-3
+										.col-4
 											= select_tag :cb, options_for_select(ClientBrand.all.pluck(:name, :id), selected: params[:cb]), include_blank: 'Marca', class: 's-14', id: 'client_brand_id'
-										.col-2.my-1
-											button.btn.btn-sm.btn-flat.btn-default.bold type="submit"  
-												svg.svg-inline--fa.fa-filter.fa-w-16.h-14 aria-hidden="true" data-icon="filter" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-													path d=("M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z") fill="currentColor" 
+										.col-1.my-1
+											button.btn.btn-sm.btn-flat.btn-default.bold.s-14 type="submit"
+												span.mr-2 Buscar
+												i.fas.fa-search
 							.col-md-4.col-sm-6.text-right.pt-1
-								= link_to new_config_production_product_path, class: 'btn btn-success btn-sm s-12' do 
-									svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-										path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-									span.pl-2 Nuevo producto
+								= link_to new_config_production_product_path, class: 'btn btn-success btn-sm' do 
+									span.mr-2 Nuevo producto
+									i.fas.fa-plus-circle
 					.card-body.p-0
 						table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
 							thead
 								tr.bg-light-gray
-								th style=("width: 5%")  #
 								th Producto
 								th Marca
 								th Calidad 
 								th Variedad
 								th Tamaño
 								th Empaque
+								th U. por pallet
 								th.text-center colspan="2" style=("width: 12%") Acciónes
 							tbody#tbody
 								- if @products.empty?
@@ -57,18 +56,14 @@ section.content data-controller="products"
 								- else
 									- @products.each do |product|
 										tr
-											td = product.id
 											td = product.crop.name.upcase
 											td = product.client_brand.name.upcase
 											td = product.quality.name.upcase
 											td = product.color.name.upcase
 											td = product.size.name.upcase
-											td = product.package.name.upcase
+											td = "#{product.package.name.upcase} #{product.weight} #{product.unit_meassure}".upcase
+											td = product&.units_per_pallet
 											td.text-center
-												= link_to config_production_product_path(product), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'mr-1' do
-													svg.feather.feather-eye fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-														path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
-														circle cx="12" cy="12" r="3"
 												= link_to edit_config_production_product_path(product), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left' do
 													svg.feather.feather-edit.mr-2 fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
 														path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 

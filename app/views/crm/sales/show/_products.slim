@@ -1,0 +1,37 @@
+.card
+  .card-header.bg-dark-blue.c-white
+    .row
+      .col-7
+        h6.s-16.bold.mb-0.mt-1
+          span.text-upcase Productos
+      .col-5.text-right
+        button.btn.btn-xs.btn-secondary data-action="click->crm--show-sales#showFormProducts" data-target="crm--show-sales.showProductsForm" type="button"
+          i.fas.fa-edit.s-14
+        button.btn.btn-xs.btn-secondary.d-none data-action="click->crm--show-sales#hideFormProducts" data-target="crm--show-sales.btnHideFormProducts" type="button"
+          i.fas.fa-eye.s-14
+  .card-body.border-blue.s-14.p-3
+    = simple_form_for(@sale, url: '', data: { action: 'submit->crm--show-sales#saveProducts' }) do |form|
+      .row.text-upcase.s-12.bg-light-gray.py-2
+        .col-5
+          b.mb-0 DESCRIPCIÓN DE PRODUCTO
+        .col-2
+          b.mb-0 CANTIDAD
+        .col-2
+          b.mb-0 PRECIO
+        .col-2
+          b.mb-0.text-upcase TOTAL
+        .col-1
+          = link_to_add_association form, :shipments_products, class: "btn btn-xs btn-primary s-12 d-none", data: { association_insertion_node: '.shipments_products', association_insertion_method: :append, target: 'crm--show-sales.addProductButton' } do
+            .fas.fa-plus-circle.mx-1
+      div data-target='crm--show-sales.productsContainer'
+        = render 'crm/sales/show/collection_products', sale: @sale 
+      .shipments_products.mt-2.d-none data-target='crm--show-sales.formProductsContainer'
+        = form.simple_fields_for :shipments_products do |product|
+          = render  'shipments_product_fields', f: product
+      hr.my-2
+      button.btn.btn-sm.btn-dark-blue.pull-right.d-none type='submit' data-target='crm--show-sales.submitProductsButton'
+        i.fas.fa-save.mr-2
+        | Guardar
+      button.btn.btn-sm.btn-dark-blue.pull-right.d-none type='submit' data-target='crm--show-sales.submitProductsButton'
+        i.fas.fa-save.mr-2
+        | Guardar

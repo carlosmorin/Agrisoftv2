@@ -1,0 +1,18 @@
+.card
+  .card-header.bg-light-gray
+    .row
+      .col-1.text-center
+        = link_to config_clients_path, class: 'link s-14' do
+          i.fas.fa-arrow-left
+      .col-10.text-center.pt-1
+        h5.s-16.mb-0 
+          b = @client.name.upcase
+      .col-1
+  .card-body
+    .row
+      .col-3.col-sm-2
+        = render 'tabs'
+      .col-9.col-sm-10
+        #vert-tabs-tabContent.tab-content
+        	= render "shared/alerts"
+        	= render 'sales' if params[:tab] == 'sales'

@@ -4,7 +4,7 @@ class ProvidersController < ApplicationController
   add_breadcrumb "Proveedores", :providers_path
 
 	def index
-  	@providers = Provider.paginate(page: params[:page], per_page: 16)
+  	@providers = Provider.paginate(page: params[:page], per_page: 25)
 
     search if params[:q].present?
   end

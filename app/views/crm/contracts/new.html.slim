@@ -1,12 +1,19 @@
 section.content-header.pb-0
   .container
     .row
-      .col-12.text-left.pr-2.s-12
+      .col-1
+      .col-10.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
     .row.mb-2
-      .col-12
-        h5 = "Nuevo contrato".upcase 
+      .col-1
+      .col-10
+        h5 
+          i.fas.fa-file-invoice-dollar.mr-2
+          b = "Nuevo acuerdo comercial".upcase 
 section.content
   .container
-    = render "shared/form_info"
-    = render 'form'
+    .row
+      .col-1
+      .col-10
+        = render "shared/form_info"
+        = render 'form'

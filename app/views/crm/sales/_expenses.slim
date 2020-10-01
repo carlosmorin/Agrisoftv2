@@ -1,0 +1,41 @@
+.card.mt-2
+  .card-header.bg-dark-blue.c-white
+    h6.s-14.mb-0.my-0
+      .row.text-upcase
+        .col-10
+          b.mb-0 Desglose de gastos
+        .col-2.text-right
+          button.btn.btn-xs.btn-success.px-2 data-target="#expenseModal" data-toggle="modal" type="button" 
+            i.fas.fa-plus
+  .card-body.py-2.border-blue
+    .row.text-upcase
+      .col-3
+        b.mb-0 Concepto
+      .col-3
+        b.mb-0 Unidad
+      .col-3
+        b.mb-0 Precio
+      .col-3
+        b.mb-0 Total
+    - total_expenses = 0
+    - @sale.expenses.each do |exp|
+      - code = exp.currency.code
+      - total_expenses += get_total(exp.unit_sale, exp.price, exp.percentage)
+      - total_row = get_total(exp.unit_sale, exp.price, exp.percentage)
+      .row
+        .col-3
+          label.s-12 = exp.expense.name.upcase
+        .col-3
+          label.mb-0.text-upcase.s-10 = units_sales.invert[exp.unit_sale] 
+        .col-3
+          - if exp.percentage
+            label.s-12 = to_percentage(exp.price)
+          - else
+            label.s-12 == currency(exp.price, code)
+        .col-3.pl-0
+          b.mb-0.s-12 == currency(total_row, code)
+          p.s-12.mb-0 == currency_usd_to_mxn(total_row) if code == 'usd'
+          p.s-12.mb-0 == currency_mxn_to_usd(total_row) if code == 'mxn'
+      .row
+        .col-12
+          hr.my-0

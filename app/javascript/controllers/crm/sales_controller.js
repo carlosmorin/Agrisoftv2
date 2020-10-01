@@ -7,8 +7,8 @@ export default class extends Controller {
   static targets = [ "output" ]
 
   connect() {
-
   }
+
   confirmCancelSale(event){
     event.preventDefault();
     var saleNumber = event.currentTarget.getAttribute('data-saleNumber')
@@ -41,5 +41,9 @@ export default class extends Controller {
         setTimeout(function(){ Turbolinks.visit(window.location, { action: 'replace' }) }, 1000);
       }
     });
+  }
+
+  validQuantity(){
+    console.log("validQuantity")
   }
 }

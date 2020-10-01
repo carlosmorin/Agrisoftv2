@@ -57,6 +57,10 @@ Rails.application.routes.draw do
         resources :damages
       end
     end
+    namespace :admin do
+      resources :expense_concepts
+    end
+    resources :clients, except: [:edit]
   end
 
   namespace :logistic do
@@ -110,7 +114,9 @@ Rails.application.routes.draw do
       get '/get_contacts', to: 'clients#get_contacts'
     end
     resources :sales do
+      patch '/expenses', to: 'sales#expenses'
       patch '/cancel', to: 'sales#cancel'
+      patch '/set_contract', to: 'sales#set_contract'
     end
     resources :contracts, only: [:create, :update]
     resources :bank_accounts, except: [:index]

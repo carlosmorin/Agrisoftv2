@@ -1,38 +1,138 @@
 section.content-header.pb-0
-	.container
-		.row.mb-2
-			.col-12
-				h5 = "Detalle de venta".upcase
-		.row
-			.col-12.text-left.pr-2.s-12
-				= render "shared/breadcrumbs_nav"
-		.row.mb-2
-			.col-12
-				h5 = "VENTA: #{@sale.folio.upcase} - #{@sale.updated_at.strftime("%d/%m/%Y")}"
-		.row
-			.col-8
-				.card.card-body.p-3
-					h6 Datos de venta
-					.row
-						.col-12
-							label.mb-0.mr-2
-								b.s-13 Remisionista:
-							br
-							label = @sale.company.name
-					.row
-						.col-12
-							label.mb-0.mr-2
-								b.s-13 Cliente:
-							br
-							label = @sale.client.name
-					.row
-						.col-12
-							label.mb-0.mr-2
-								b.s-13 Direccion de entrega:
-							br
-							label = @sale.delivery_address.full_address
-			.col-4
-				.card.card-body.pr-2
-					h6 Seguimiento
+  .container
+    .row.mb-2
+      .col-8
+        h5 = "Detalle de venta".upcase
+      .col-4.text-right
+        button.btn.btn-sm.btn-dark-blue.s-14 data-target="#acModal" data-toggle="modal" type="button" data-placement='left'
+          i.fas.fa-plus.mr-2
+          b Agregar acuerdo comercial
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h5 = "VENTA: #{@sale.folio.upcase} - #{@sale.updated_at.strftime("%d/%m/%Y")}"
+section.content data-controller="crm--show-sales"
+  .container
+    .row
+      .col-lg-12
+        = render "shared/alerts"
+    .card.mb-2
+      .card-header
+        .row
+          .col-md-4
+            = link_to :back, class: 'btn s-12 btn-default btn-sm' do
+              i.fas.fa-chevron-left.s-12.mr-2
+              span Volver
+          - if @sale.contract_id.present?
+            .col-md-6.text-right
+              b.s-16.text-success
+                i.fas.fa-file-invoice-dollar.mr-2
+                = @sale.contract.name.upcase
+            .col-md-2.text-right
+              b.s-16 == "TC: #{ currency(@sale.exchange_rate, "MXN")}"
+            .col-md-3.text-right
 
+    .row.mt-4
+      .col-12
+        .card
+          .card-header.bg-dark-blue.c-white
+            h6.s-14.bold.mb-0
+              span.text-upcase Información GENERAL
+          .card-body.border-blue.s-14.p-3
+            .row
+              .col-md-8
+                .row
+                  .col-md-4
+                    label.mb-1 Transportista:
+                  .col-lg-8.text-left
+                    p.mb-1.bold = @sale.freight.carrier.name.upcase
+                .row
+                  .col-lg-4
+                    label.mb-1 Conductor:
+                  .col-lg-8.text-left
+                    - driver  = @sale.freight.driver
+                    p.mb-1 = "#{driver.full_name.upcase}, # LIC: #{driver.licence.upcase}"
+                .row
+                  .col-lg-4
+                    label.mb-1 Unidad:
+                  .col-lg-8.text-left
+                    p.mb-1 = "#{@sale.freight.unit.name.upcase}"
+              .col-md-4
+                .row
+                  .col-md-7.text-right
+                    label.mb-1.mr-1 Folio flete:
+                  .col-md-5.text-right
+                    span.mb-1.bold = @sale.freight.folio
+                .row
+                  .col-md-7.text-right
+                    label.mb-1.mr-1 Folio embarque:
+                  .col-md-5.text-right
+                    span.mb-1.bold = @sale.folio
+                .row
+                  .col-md-7.text-right
+                    label.mb-1.mr-1 Folio cliente:
+                  .col-md-5.text-right
+                    span.mb-1.bold = @sale.client_folio.upcase
+                .row.mt-2
+                  .col-md-7.text-right
+                    label.mb-1.mr-1 Fecha de embarque:
+                  .col-md-5.text-right.s-12.text-muted
+                    span.mb-1.bold = @sale.shipment_at.strftime("%m/%d/%Y  %I:%M %p")
+            .row.mt-4
+              .col-lg-6
+                label Origen
+                br
+                i.fas.fa-map-marker-alt.s-20.mr-2.text-success
+                span.mb-1.bold.s-16 Parras de la Fuente, Coahuila, México, Agricola las albardas
+              .col-lg-6
+                label Destino
+                br
+                i.fas.fa-map-marker-alt.s-20.mr-2.text-danger
+                span.mb-1.bold.s-16 = @sale.delivery_address.full_address
+            .row.mt-4
+              .col-md-12
+                .row
+                  .col-md-5
+                    label.mb-0.d-block Empresa remisionista
+                    span.s-14 = @sale.company.name.upcase
+                  .col-md-5
+                    label.mb-0.d-block Cliente
+                    span.s-14 = @sale.client.name.upcase
+            .row.mt-4
+              .col-lg-12
+                label.mb-1.d-block.bold.s-14 Comentarios
+                span.s-14 = @sale.comments.upcase
+    .row.mt-4
+      .col-12
+        = render 'crm/sales/show/products'
+      .col-12.text-left
+        = render 'crm/sales/show/discounts'
+        = render 'crm/sales/show/expenses'
+
+       
+  #acModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
+    .modal-dialog role="document" 
+      .modal-content
+        .modal-header
+          h6#exampleModalLabel.modal-title.text-upcase.bold Relacionar Acuerdo Comercial
+          button.close aria-label="Close" data-dismiss="modal" type="button" 
+            i aria-hidden="true"  ×
+        = form_tag({ action: 'create'}, { data: { action: 'submit->crm--show-sales#linkContract'}}) do
+          input type="hidden" data-target='crm--show-sales.saleId' value=@sale.id
+          .modal-body
+            - if @sale.client.settings.international? 
+              .alert.alert-info.s-13
+                i.fas.fa-info-circle.mr-2
+                span Tipo de cambio obligatorio para clientes Internacionales
+            label Acuerdo comercial: 
+            = select_tag 'contract_id', options_for_select(@sale.client.contracts.pluck(:name, :id), selected: @sale.contract_id), class: 'form-control form-control-sm', include_blank: true, required: true, 'data-target': 'crm--show-sales.contractId'
+            label.mt-4 Tipo de cambio:
+            - if @sale.client.settings.international? 
+              input.form-control.form-control-sm type="decimal" required=@sale.client.settings.international? data-target='crm--show-sales.contractExchange' value=@sale.exchange_rate / 
+          .modal-footer.mt-4
+		        button.btn.btn-sm.btn-secondary.s-12 data-dismiss="modal" type="button" Cerrar
+		        button.btn.btn-sm.btn-dark-blue.s-12 type="submit"  
+		        	span Guardar
 

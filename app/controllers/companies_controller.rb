@@ -24,12 +24,12 @@ class CompaniesController < ApplicationController
 
   def create
   	@company = Company.new(company_params)
-      if @company.save
-        flash[:notice] = "La empresa fue registrada exitosamente."
-        redirect_to company_url(@company)
-      else
-        render :new
-      end
+    if @company.save
+      flash[:notice] = "La empresa fue registrada exitosamente."
+      redirect_to company_url(@company)
+    else
+      render :new
+    end
   end
 
    def update

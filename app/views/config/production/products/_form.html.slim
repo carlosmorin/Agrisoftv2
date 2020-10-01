@@ -4,22 +4,26 @@
 		.row.mb-1
 			.col-md-12
 				= f.input :client_brand_id, collection: ClientBrand.all, input_html: { class: 's-12' }
-		.row.mb-1
+		.row.mt-2
 			.col-md-12
 				= f.input :crop_id, collection: Crop.all, input_html: { class: 's-12', data: { action: 'change->products#filterColorsByCropId', target: 'products.cropId' } }
-		.row.mb-1
-			.col-md-6
+		.row.mt-2
+			.col-md-12
 				= f.input :color_id, collection: Color.all, input_html: { class: 's-12' }
-			.col-md-6
+			.col-md-12
 				= f.input :quality_id, collection: Quality.all, input_html: { class: 's-12' }
-			.col-md-6
+		.row.mt-2
+			.col-md-12
 				= f.input :size_id, collection: Size.all, input_html: { class: 's-12' }
-			.col-md-6
+			.col-md-12
 				= f.input :package_id, collection: Package.all, input_html: { class: 's-12' }
-			.col-md-8
+		.row.mt-2
+			.col-md-4
 				= f.input :weight, input_html: { class: 's-12 form-control form-control-sm' }
 			.col-md-4
 				= f.input :unit_meassure, collection: [:lbs, :kg, :granel], input_html: { class: 's-12' }
+			.col-md-4
+				= f.input :units_per_pallet, input_html: { class: 's-12 form-control form-control-sm' }
 	hr
 	.form-actions.text-center
 		button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"

@@ -70,10 +70,9 @@ section.content data-controller="slim-select crm--sales"
 									th Remisionista
 									th Cliente
 									th Seguimiento
-									th.text-center Folio de flete
-									th.text-center Folio de embarque
-									th.text-center Folio de cliente
+									th.text-center Folio de venta
 									th.text-center Fecha de venta
+									th.text-center Acuerdo comercial
 									th.text-center colspan="2" style=("width: 12%") Acciónes
 							tbody#tbody.s-13
 								- if @sales.empty?
@@ -102,10 +101,13 @@ section.content data-controller="slim-select crm--sales"
 														span.fas.fa-long-arrow-alt-right.s-14.mx-1
 													span.badge.badge-success.btn.btn-sm.s-10
 														= link_to 'Venta', crm_sale_path(sale), title: sale.folio, 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: 'c-withe', target: :_blank
-											td.text-center = sale.freight.folio.present? ? sale.freight.folio.upcase : '--'
 											td.text-center = sale.folio.present? ? sale.folio.upcase : '--'
-											td.text-center = sale.client_folio.present? ? sale.client_folio.upcase : '--' 
 											td.text-center.s-12 = sale.created_at.strftime("%m/%d/%Y  %I:%M %p")
+											td.text-left
+												- if sale.contract.present?
+													= link_to crm_client_contract_path(sale.client, sale.contract), target: :_blank, class: 's-12 badge badge-success' do
+														i.fas.fa-file-invoice-dollar.mr-2
+														span = sale.contract&.name&.upcase
 											td.text-center
 												.btn-group
 													= link_to crm_sale_path(sale), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
@@ -169,17 +171,11 @@ section.content data-controller="slim-select crm--sales"
 																		b == "#{total} <small>Bultos</small>"
 																	.col-2
 																	.col-2
-
-																		= number_to_currency(total_price,  unit: currency, separator: ",")
+																		= number_to_currency(total_price, unit: currency, separator: ",")
 								tfoot
 									tr
-										th.pl-3 colspan="5" 
-											i.text-lght.f-normal = raw "Total: <b>#{@all_sales.size}</b> embarques"
-										th.text-center
-											- total_package = 0
-											- @all_sales.map{ |sale| total_package += sale.n_products.to_i }
-											p = total_package
-										th colspan="3"
+										th.pl-3 colspan="7" 
+											i.text-lght.f-normal = raw "Total: <b>#{@all_sales.size}</b> ventas"
 					.card-footer.p-2.pb-1.bg-light-gray
 						.row
 							.col-lg-12.d-flex.justify-content-center

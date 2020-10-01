@@ -1,0 +1,28 @@
+#vert-tabs-home.tab-pane.text-left.fade.show.active aria-labelledby="vert-tabs-home-tab" role="tabpanel"
+	- url = @client_config.persisted? ? config_client_path : config_clients_path
+	= simple_form_for(@client_config, url: url) do |f|
+		= f.input :id, as: :hidden
+		= f.input :client_id, as: :hidden
+		.form-group.mb-1
+			.row.mt-2
+				.col-md-2.text-right
+					= f.label :client_type, class: "pt-1 mr-2  s-14" 
+				.col-md-4.costum_radios
+					= f.input :client_type, as: :radio_buttons, collection: client_types_es, label: false
+			.row.mt-3
+				.col-md-2.text-right
+					= f.label :pay_freight, class: "pt-1 mr-2  s-14" 
+				.col-md-4.costum_radios
+					= f.input :pay_freight, as: :radio_buttons, collection: pay_freights_es, label: false
+			.row.mt-3
+				.col-md-2.text-right
+					= f.label :currency_id, class: "pt-1 mr-2  s-14" 
+				.col-md-4.text-normal
+					= f.input :currency_id, collection: Currency.all.pluck(:code, :id), label: false, input_html: { class: 's-12 form-control form-control-sm' }
+			.row
+				.col-6
+					hr
+			.row
+				.col-md-2.text-right
+				.col-md-4.text-left
+					= f.submit "Guardar cambios", class: "btn btn-sm btn-primary"

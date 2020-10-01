@@ -1,0 +1,12 @@
+- neto = 0
+- sale.shipments_products.each do |sp|
+  - neto += sp.price.nil? && sp.quantity.nil? ? (sp.quantity * sp.price) : 0
+  .row
+    .col-5
+      label.s-12 = sp.product.name
+    .col-2
+      label.mb-0.text-upcase.s-10 = sp.quantity 
+    .col-2
+      = raw "$#{sp.price} <small>#{ @sale.currency.upcase }</small>"
+    .col-2
+      b = raw "$#{sp.quantity * sp.price} <small>#{ @sale.currency.upcase }</small>" if sp.price.nil? && sp.quantity.nil?
