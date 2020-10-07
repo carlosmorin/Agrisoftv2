@@ -37,7 +37,8 @@ Rails.application.routes.draw do
       resources :presentations
       resources :supplies do
         resources :treatments
-        resources :presentations, only: %i[update edit]
+        resources :presentations, only: %i[update edit show]
+        resources :active_ingredients, only: %i[update edit show]
       end
       resources :ranches do
         resources :areas

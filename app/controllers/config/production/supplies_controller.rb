@@ -68,7 +68,7 @@ class Config::Production::SuppliesController < ApplicationController
 	def supply_params
     params.require(:supply).permit(:name, :currency, :iva, :ieps, :code, :category_id,
       presentation_supplies_attributes: [:id, :supply_id, :presentation_id, :price, :price_to_credit, :_destroy],
-      active_ingredient_supplies_attributes: [:id, :supply_id, :active_ingredient_id, :_destroy])   
+      active_ingredient_supplies_attributes: [:id, :supply_id, :active_ingredient_id, :percentage, :_destroy])   
   end
 
   def treatment_params

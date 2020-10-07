@@ -31,12 +31,19 @@ module Config
       end
 
       def update
-        if @active_ingredient.update(active_ingredients_params)
-          flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Ingrediente activo actualizado correctamente"
-          redirect_to config_production_active_ingredients_path
-        else
-          render :edit
-        end 
+        if params[:supply_id].present?
+          @active_ingredient.update!(active_ingredients_params)
+          # binding.pry
+          @active_ingredient_supply.update!(active_ingredient_supply_params)
+          # binding.pry
+          flash[:notice] = "El Ingrediente activo fue actualizado correctamente."
+          return redirect_to config_production_supply_url(@supply.id, tab: :active_ingredients)
+        end
+        @active_ingredient.update!(active_ingredients_params)
+        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Ingrediente activo actualizado correctamente"
+        redirect_to config_production_active_ingredients_path
+      rescue ActiveRecord::RecordInvalid
+        render :edit
       end
 
       def destroy
@@ -50,7 +57,15 @@ module Config
         active_ingredient_supplies_attributes: [:id, :supply_id, :active_ingredient_id, :_destroy])
       end
 
+      def active_ingredient_supply_params
+        params.require(:active_ingredient).require(:active_ingredient_supply).permit(:percentage)
+      end
+
       def find_active_ingredient
+        if params[:supply_id].present?
+          @supply = Supply.find(params[:supply_id]) 
+          @active_ingredient_supply = ActiveIngredientSupply.where(supply_id: params[:supply_id], active_ingredient_id: params[:id]).first
+        end
         @active_ingredient = ActiveIngredient.find(params[:id])
       end
     end

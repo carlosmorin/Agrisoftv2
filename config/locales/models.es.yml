@@ -259,6 +259,7 @@ es:
       category:
         name: Nombre
       active_ingredient:
+        percentage: Porcentaje(%)
         name: Nombre
       presentation:
         name: Nombre
@@ -278,3 +279,5 @@ es:
       presentation_supply:
         price_to_credit: Precio a credito
         price: Precio
+      active_ingredient_supply:
+        percentage: Porcentaje(%)

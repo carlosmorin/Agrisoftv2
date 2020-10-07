@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_07_002309) do
+ActiveRecord::Schema.define(version: 2020_10_07_043041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_002309) do
     t.bigint "active_ingredient_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "percentage"
     t.index ["active_ingredient_id"], name: "index_active_ingredient_supplies_on_active_ingredient_id"
     t.index ["supply_id"], name: "index_active_ingredient_supplies_on_supply_id"
   end
