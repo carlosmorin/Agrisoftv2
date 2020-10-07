@@ -17,7 +17,6 @@ class Config::Production::TreatmentsController < ApplicationController
   end
 
   def create
-    binding.pry
     @treatment = Treatment.new
     @treatment.treatable_id = treatment_params[:treatable_id]
     @treatment.treatable_type = treatment_params[:treatable_type]

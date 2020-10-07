@@ -39,17 +39,7 @@ section.content
                       span = @presentation.quantity.to_f                
                   .row
                     .col-md-4
-                      label.mb-1.s-14 Precio:
-                    .col-md-8
-                      span = '$' + @presentation.price.to_f.to_s
-                  .row
-                    .col-md-4
-                      label.mb-1.s-14 Precio a credito
-                    .col-md-8
-                      span = '$' + @presentation.price_to_credit.to_f.to_s
-                  .row
-                    .col-md-4
-                      label.mb-1.s-14 Unidad de Pezo:
+                      label.mb-1.s-14 Unidad de pezo:
                     .col-md-8
                       span = @presentation.weight_unit_name&.upcase
     .row

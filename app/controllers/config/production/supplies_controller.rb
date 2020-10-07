@@ -24,7 +24,6 @@ class Config::Production::SuppliesController < ApplicationController
   end
 
   def create
-    binding.pry
   	@supply = Supply.new(supply_params)
     if @supply.save
       respond_to do |format|

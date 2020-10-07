@@ -28,9 +28,7 @@ section.content
                   th style=("width: 5%")  #
                   th Nombre
                   th Cantidad
-                  th Precio
-                  th Precio a Credito
-                  th Unidad de Pezo
+                  th Unidad de pezo
                   th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody
                 - if @index_facade.presentations.empty?
@@ -43,8 +41,6 @@ section.content
                       td = presentation.id
                       td = presentation.name&.upcase
                       td = presentation.quantity.to_f
-                      td = '$' +  presentation.price.to_f.to_s
-                      td = '$' + presentation.price_to_credit.to_f.to_s
                       td = presentation.weight_unit_name&.upcase
                       td.text-center
                         .btn-group

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_24_035625) do
+ActiveRecord::Schema.define(version: 2020_10_07_002309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -598,6 +598,8 @@ ActiveRecord::Schema.define(version: 2020_09_24_035625) do
     t.bigint "presentation_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "price"
+    t.decimal "price_to_credit"
     t.index ["presentation_id"], name: "index_presentation_supplies_on_presentation_id"
     t.index ["supply_id"], name: "index_presentation_supplies_on_supply_id"
   end
@@ -605,8 +607,6 @@ ActiveRecord::Schema.define(version: 2020_09_24_035625) do
   create_table "presentations", force: :cascade do |t|
     t.string "name"
     t.decimal "quantity"
-    t.decimal "price"
-    t.decimal "price_to_credit"
     t.bigint "weight_unit_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

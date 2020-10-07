@@ -52,7 +52,7 @@ module Config
       private
 
       def presentation_params
-        params.require(:presentation).permit(:name, :quantity, :price, :price_to_credit, :weight_unit_id, :supply_id,
+        params.require(:presentation).permit(:name, :quantity, :weight_unit_id, :supply_id,
           presentation_supplies_attributes: [:id, :presentation_id, :supply_id, :_destroy])
       end
 
