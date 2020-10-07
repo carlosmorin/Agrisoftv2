@@ -37,12 +37,20 @@ module Config
       end
 
       def update
-        if @presentation.update(presentation_params)
+        # binding.pry
+        if params[:supply_id].present?
+          @presentation.update!(presentation_params)
+          # binding.pry
+          @presentation_supply.update!(presentation_supply_params)
+          # binding.pry
           flash[:notice] = "La Presentacion fue actualizada correctamente."
-          redirect_to config_production_presentation_url(@presentation, tab: :supplies)
-        else
-          render :edit
+          return redirect_to config_production_supply_url(@supply.id, tab: :presentations)
         end
+        @presentation.update!(presentation_params)
+        flash[:notice] = "La Presentacion fue actualizada correctamente."
+        redirect_to config_production_presentation_url(@presentation, tab: :supplies)
+      rescue ActiveRecord::RecordInvalid
+        render :edit
       end
 
       def destroy
@@ -53,10 +61,20 @@ module Config
 
       def presentation_params
         params.require(:presentation).permit(:name, :quantity, :weight_unit_id, :supply_id,
-          presentation_supplies_attributes: [:id, :presentation_id, :supply_id, :_destroy])
+          presentation_supplies_attributes: [:id, :presentation_id, :supply_id, :price, :price_to_credit, :_destroy])
+      end
+
+      def presentation_supply_params
+        params.require(:presentation).require(:presentation_supply).permit(:price, :price_to_credit)
       end
 
       def find_presentation
+        # binding.pry
+        if params[:supply_id].present?
+          @supply = Supply.find(params[:supply_id]) 
+          @presentation_supply = PresentationSupply.where(supply_id: params[:supply_id], presentation_id: params[:id]).first
+        end
+        # binding.pry
         @presentation = Presentation.find(params[:id])
         @obj = @presentation
       end

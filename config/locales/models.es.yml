@@ -275,3 +275,6 @@ es:
         code: Clave
       treatment:
         application_instructions: Instrucciones de applicacion
+      presentation_supply:
+        price_to_credit: Precio a credito
+        price: Precio

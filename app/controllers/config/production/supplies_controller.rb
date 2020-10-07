@@ -24,13 +24,21 @@ class Config::Production::SuppliesController < ApplicationController
   end
 
   def create
-  	@supply = Supply.new(supply_params)
+  	# @supply = Supply.new(supply_params)
+    # if @supply.save
+    #   respond_to do |format|
+    #     format.html
+    #     format.js
+    #     format.json
+    #   end
+    # else
+    #   render :new
+    # end
+    @supply = Supply.new(supply_params)
+    binding.pry
     if @supply.save
-      respond_to do |format|
-        format.html
-        format.js
-        format.json
-      end
+      flash[:notice] = "Insumo #{ @supply.name } creado correctamente"
+      redirect_to config_production_supplies_url
     else
       render :new
     end
@@ -59,7 +67,7 @@ class Config::Production::SuppliesController < ApplicationController
 
 	def supply_params
     params.require(:supply).permit(:name, :currency, :iva, :ieps, :code, :category_id,
-      presentation_supplies_attributes: [:id, :supply_id, :presentation_id, :_destroy],
+      presentation_supplies_attributes: [:id, :supply_id, :presentation_id, :price, :price_to_credit, :_destroy],
       active_ingredient_supplies_attributes: [:id, :supply_id, :active_ingredient_id, :_destroy])   
   end
 

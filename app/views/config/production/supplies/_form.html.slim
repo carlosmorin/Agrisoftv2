@@ -64,15 +64,15 @@
 					.col-lg-12
 						= f.fields_for :active_ingredient_supplies do |active_ingredient|
 							= render 'active_ingredient_supply_fields', f: active_ingredient
-		section.pl-2.card.p-2.pb-3.br-0
-			.row
-				.col-lg-10
-					h6.s-16 Tratamientos
-				.col-lg-2.text-right data-target="treatments-form.links"
-					= link_to "#", class: "btn btn-xs btn-default text-center px-2", data: { action: 'treatments-form#appendForm' } do
-						svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-							path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-						span.ml-2 Agregar
+		/ section.pl-2.card.p-2.pb-3.br-0
+		/ 	.row
+		/ 		.col-lg-10
+		/ 			h6.s-16 Tratamientos
+		/ 		.col-lg-2.text-right data-target="treatments-form.links"
+		/ 			= link_to "#", class: "btn btn-xs btn-default text-center px-2", data: { action: 'treatments-form#appendForm' } do
+		/ 				svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+		/ 					path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+		/ 				span.ml-2 Agregar
 			/ template data-target="treatments-form.template"
 			/ 	.col-lg-12
 			/ 		= form_tag "#", method: 'GET', child_index: 'NEW_RECORD'
@@ -89,8 +89,8 @@
 			  polyline points=("7 3 7 8 15 8") 
 
 			span Guardar
-#treatments.ml-2
-		= form_tag '/treatments', data: { controller: 'treatments-form'}, id: "treatments-form" do
-			= render 'treatments_fields'
-			= submit_tag 'Create', data: { action: 'click->treatments-form#appendForm'}
+/ #treatments.ml-2
+/ 		= form_tag '/treatments', data: { controller: 'treatments-form'}, id: "treatments-form" do
+/ 			= render 'treatments_fields'
+/ 			= submit_tag 'Create', data: { action: 'click->treatments-form#appendForm'}
 

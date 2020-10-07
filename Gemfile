@@ -41,7 +41,10 @@ gem 'time_difference'
 gem "jsonb_accessor", "~> 1.0.0"
 
 group :development, :test do  
-  gem 'pry', '~> 0.12.2'
+  gem 'pry', '~> 0.13.0'
+  gem 'pry-rails', '~> 0.3.9'
+  gem 'pry-byebug', '~> 3.9'
+  gem 'awesome_print', '~> 1.8'
   gem 'rspec-rails', '~> 4.0', '>= 4.0.1'
   gem 'factory_bot_rails', '~> 6.1'
   gem 'shoulda-matchers', '~> 4.3'

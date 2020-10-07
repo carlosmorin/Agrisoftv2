@@ -1,4 +1,5 @@
 class Presentation < ApplicationRecord
+  attr_accessor :price, :price_to_credit
   belongs_to :weight_unit
   validates :name, :quantity, :weight_unit_id, presence: true
 
