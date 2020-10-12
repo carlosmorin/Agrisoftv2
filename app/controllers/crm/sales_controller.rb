@@ -1,10 +1,11 @@
 module Crm
 	class SalesController < ApplicationController
 		add_breadcrumb "CRM", :crm_root_path
-		add_breadcrumb "Ventas", :crm_sales_path
-		before_action :set_object, only: %i[show cancel set_contract expenses products]
+		before_action :set_object, only: %i[show cancel set_contract update_products 
+      update_expenses update_reports update_documents to_collect]
 
 		def index
+      add_breadcrumb "Ventas", crm_sales_path(tab: :all)
 			@sales = Shipment.sale.sales if params[:tab] == 'all'
 			@sales = Shipment.sale.active_sales if params[:tab] == 'actived'
 			@sales = Shipment.sale.canceled_sales if params[:tab] == 'canceled'
@@ -29,36 +30,56 @@ module Crm
     	contract_id = params[:contract_id]
     	echange = params[:echange]
 
-    	@sale.update(contract_id: contract_id, exchange_rate: echange) 
+    	@sale.update(contract_id: contract_id, exchange_rate: echange)
+      remove_expenses
+      build_expenses(contract_id)
     end
 
     def show
+      add_breadcrumb "Ventas", crm_sales_path(tab: :all)
     	add_breadcrumb "Gestion de venta"
-
+      @report = ShipmentsProductReport.new
     	@sale = @sale
     	@sale.shipments_products.new unless @sale.shipments_products.any?
-			@sale.shipments_products.build.shipments_product_reports.build unless @sale.shipments_expenses.any?
+      @total_mxn_expenses = 0
+
+      if params[:format].present?
+        respond_to do |format|
+          format.html
+          format.xlsx
+        end
+      end
     end
 
-    def products
+    def update_products
     	@sale.update(sale_params)
+      render partial: 'crm/sales/show/collection_products', locals: { sale: @sale }
     end
 
-    def expenses
-    	@sale.update(sale_params)
-    	render partial: 'crm/sales/show/collection_espenses', locals: { sale: @sale }
+    def update_expenses
+      @sale.update(sale_params)
     end
 
-		private
+    def update_documents
+      @sale.documents.attach(params[:documents])
+      render partial: 'crm/sales/show/files_collection', locals: { sale: @sale }
+    end
+
+    def to_collect
+      @sale.update(to_collect_at: Time.zone.now)
+    end
+
+    private
 
 		def sale_params
-			params.require(:shipment).permit(:client_id, :company_id, :contact_id,
+			params.require(:shipment).permit(:id, :client_id, :company_id, :contact_id,
         :user_id, :expirated_days, :expired_at, :status, :iva, :delivery_address_id,
-        :issue_at, :discount, :currency, :exchange_rate, :description, 
+        :issue_at, :discount, :currency, :exchange_rate, :description, documents: [],
         shipments_products_attributes: [:id, :price, :quantity, :shipment_id, 
-        	:product_id, :productable_type, :productable_id, :_destroy],
-        shipments_expenses_attributes: [:id, :expense_id, :unit, :total, :amount, 
-        	:currency_id, :percentage, :_destroy]
+        	:product_id, :productable_type, :productable_id, :_destroy, 
+          shipments_product_reports_attributes: [ :id, :shipments_product_id, :quantity, :price, :currency_id, :_destroy]],
+        shipments_expenses_attributes: [:id, :expense_id, :unit, :total, :type_expense, :amount, 
+        	:currency_id, :percentage, :_destroy, :type_expense]
       )
 		end
 
@@ -99,6 +120,34 @@ module Crm
     def set_object
       id = params[:id].present? ? params[:id] : params[:sale_id]
       @sale = Shipment.find(id)
+    end
+
+    def remove_expenses
+      @sale.shipments_expenses.expense_type.destroy_all
+    end
+
+    def build_expenses(contact_id)
+      contract = Contract.find(contact_id)
+      expenses = contract.contracts_expenses
+      params = build_expenses_params(expenses)
+      @sale.shipments_expenses.build(params)
+      @sale.save
+    end
+
+    def build_expenses_params(expenses)
+      params = []
+      expenses.each do |expense|
+        params << {
+          shipment_id: @sale.id,
+          expense_id: expense.expense_id,
+          currency_id: expense.currency_id,
+          amount: expense.price,
+          unit: expense.unit_sale,
+          percentage: expense.percentage,
+          type_expense: 'expense_type'
+        }
+      end
+      params
     end
   end
 end

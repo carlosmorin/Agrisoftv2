@@ -23,14 +23,24 @@ class Client < ApplicationRecord
 		"#{address}, #{municipality.name}, #{state.name}, #{country.name}"
 	end
 
+	def currency
+		self.settings.currency
+	end
+
 	def settings
 		return unless client_configs.any?
 		self.client_configs.first
 	end
-	
+
+	def national?
+		self.settings.client_type == "national"
+	end
+
+	def international?
+		self.settings.client_type == "national"
+	end
 
 	def contract
 		self.contracts.frst
 	end
-
 end

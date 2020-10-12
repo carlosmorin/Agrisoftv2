@@ -2,6 +2,8 @@
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
+//= require jquery
+//= require jquery_ujs
 
 require("@rails/ujs").start()
 require("turbolinks").start()
@@ -9,6 +11,8 @@ require("@rails/activestorage").start()
 require("channels")
 require("admin-lte")
 require('jquery')
+const toastr = require('toastr');
+
 import "bootstrap"
 import "../stylesheets/application"
 import 'cocoon-js'
@@ -22,8 +26,10 @@ document.addEventListener("turbolinks:load", () => {
 	$('[data-toggle="tooltip"]').tooltip()
 	$('[data-toggle="popover"]').popover()
 })
-
 import "controllers"
+
+global.$ = require('jquery')
+global.toastr = require('toastr')
 
 require("trix")
 require("@rails/actiontext")
@@ -47,3 +53,4 @@ $.extend(jQuery.validator.messages, {
   max: jQuery.validator.format("Por favor, escribe un valor menor o igual a {0}."),
   min: jQuery.validator.format("Por favor, escribe un valor mayor o igual a {0}.")
 });
+

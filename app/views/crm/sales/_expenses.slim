@@ -35,7 +35,7 @@
         .col-3.pl-0
           b.mb-0.s-12 == currency(total_row, code)
           p.s-12.mb-0 == currency_usd_to_mxn(total_row) if code == 'usd'
-          p.s-12.mb-0 == currency_mxn_to_usd(total_row) if code == 'mxn'
+          p.s-12.mb-0 == currency_mxn_to_usd(total_row, @sale.exchange_rate) if code == 'mxn'
       .row
         .col-12
           hr.my-0

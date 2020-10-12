@@ -45,7 +45,7 @@ wb.add_worksheet(name: "Cotización") do |sheet|
   
   @quote.shipments_products.each do |sp|
     product = sp.product
-    sheet.add_row [product.short_name.upcase, @quote.company.origin_state.upcase, product.quality.name.upcase, product.size.name.upcase, product.client_brand.name.upcase, "#{ sp.quantity } #{sp.unit_meassure}", "$#{sp.price}"], style: products_item
+    sheet.add_row [product.name.upcase, @quote.company.origin_state.upcase, product.quality.name.upcase, product.size.name.upcase, product.client_brand.name.upcase, "#{ sp.quantity } #{sp.unit_meassure}", "$#{sp.price}"], style: products_item
   end
 
   sheet.add_row
@@ -58,4 +58,4 @@ wb.add_worksheet(name: "Cotización") do |sheet|
 
 end
 
-axlsx.serialize 'wwwwwww.xlsx'
+axlsx.serialize 'quote.xlsx'

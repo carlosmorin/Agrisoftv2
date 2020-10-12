@@ -1,4 +1,4 @@
-nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
+nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0.pb-1
   ul.navbar-nav
     li.nav-item
       a.nav-link data-widget="pushmenu" href="#" 
@@ -92,20 +92,10 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
             li
               = link_to 'Municipios', addresses_municipalities_path, class: 'dropdown-item s-12 pl-2' 
   ul.navbar-nav.ml-auto
-    li.nav-item.p-2 data-controller="dollar"
-      span.s-12.mr-1#outputDollar
+
+    li.nav-item.p-2.c-gray data-controller="weather"
+      b.s-12 = "Fecha: #{Time.zone.now().strftime("%d-%m-%Y").upcase}"
       span.ml-2 | 
-    li.nav-item.p-2 data-controller="weather"
-      span.s-12 = "#{Time.now().strftime("%-d %bio %Y").upcase} - "
-      span#output.mt-1.mr-2.s-14 
-      span | 
-    li.nav-item.p-2 
-      = link_to profile_index_path do
-        - if current_user.avatar.attached?
-          = image_tag(current_user.avatar, class: "rounded", width: 35)
-        - else
-          - img_url = "http://www.palcopharma.com/uploads/directors/5874c9e878bea81dc265f754b086a8df.png"
-          = image_tag(img_url, class: "rounded", width: 40)
     li.nav-item.pl-1
       = link_to admin_root_path, class: 'nav-link pl-0 ', title: 'Sistema', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 
         svg.feather.feather-users fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +105,7 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0
           path d=("M16 3.13a4 4 0 0 1 0 7.75")
     li.nav-item
       = link_to destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "nav-link pl-0 ", title: 'Salir', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 
-        svg.feather.feather-log-out fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+        svg.feather.feather-log-out fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg"   
             path d=("M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4") 
             polyline points=("16 17 21 12 16 7") 
             line x1="21" x2="9" y1="12" y2="12"

@@ -17,7 +17,7 @@ class Product < ApplicationRecord
 
   enum unit_meassure: { lbs: 0, kg: 1, granel: 2 }
 
-  def short_name
+  def name  
     "#{crop.name} #{color.name}"
   end
 

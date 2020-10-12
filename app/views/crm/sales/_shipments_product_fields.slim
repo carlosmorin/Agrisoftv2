@@ -1,25 +1,11 @@
-.nested-fields
-  .row
-    .col-md-5.px-3.py-1.px-4
-      = f.input :product_id, required: true, collection: Product.all, label: false, input_html: { class: 's-12 form-control form-control-sm ' }
-    .col-md-2.px-3.py-1
-      = f.input :quantity, required: true, label: false, input_html: { class: 's-14 form-control form-control-sm'  }
-    .col-md-2.px-3.py-1
-      = f.input :price, label: false, input_html: { class: 's-14 form-control form-control-sm' }
-    .col-md-2.px-3.py-1
-   
-    .col-md-1.pt-1.text-center
-      = link_to_remove_association f, class: "btn btn-outline-danger btn-xs s-12" do
-        svg.feather.feather-trash-2 fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-          polyline points=("3 6 5 6 21 6") 
-          path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 
-          line x1="10" x2="10" y1="11" y2="17" 
-          line x1="14" x2="14" y1="11" y2="17"
-  - if f.object.price.zero?
-    = link_to_add_association f, :shipments_product_reports, class: "btn btn-xs btn-primary s-12 ml-3", data: { association_insertion_traversal: :next, association_insertion_node: '.shipments_product_reports', association_insertion_method: :append }  do
-      i.fas.fa-dollar-sign.mr-1
-      span Reportar precios
-  .shipments_product_reports
-    = f.simple_fields_for :shipments_product_reports do |report|
-      = render  'shipments_product_report_fields', f: report
-          span Reportar 
+tr.nested-fields
+  td
+    = f.input :id, as: :hidden
+    = f.input :product_id, required: true, collection: Product.all, label: false, input_html: { class: 's-12 form-control form-control-sm ' }
+  td
+    = f.input :quantity, required: true, label: false, input_html: { class: 's-14 form-control form-control-sm'  }
+  td
+    = f.input :price, label: false, input_html: { class: 's-14 form-control form-control-sm' }
+  td.px-3.text-center
+    = link_to_remove_association f, class: "btn btn-danger btn-xs s-12 px-2" do
+      i.fas.fa-trash

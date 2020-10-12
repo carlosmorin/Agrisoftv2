@@ -6,7 +6,6 @@ section.content-header.pb-0
     .row.mb-2
       .col-12
         h5 = "Detalle de contrato".upcase
-        
 section.content
   .container
     .row
@@ -66,7 +65,7 @@ section.content
           h5.s-16
             i.fas.fa-boxes.mr-2
             span = "Información de productos".upcase
-      - if @contract.all_products?
+      - if @contract.all_products? || @contract.undefined_products
         .row.mt-3
           .col-12.pl-3
             h6.s-16.bold.text-primary
@@ -86,16 +85,21 @@ section.content
                 tbody
                   - total_quantity = 0
                   - total_price = 0
-                  - @contract.contracts_products.each do |object|
-                    - total_quantity += object.quantity.nil? ? 0 : object.quantity
-                    - subtotal_price = total_quantity * object.price
-                    - total_price += subtotal_price
-                    tr
-                      td.s-14 = object.product.name.upcase
-                      td.s-14.text-center = object.quantity
-                      td.s-14.text-center = "$ #{object.price}"
-                      td.s-14.text-center
-                        p.my-0.bold.s-14 = "$#{number_to_currency(subtotal_price, precision: 0, delimiter: ",", unit: object.currency.code.upcase)}"
+                  - if @contract.contracts_products.empty?
+                    tr  
+                      td.s-14.text-center colspan="4"
+                        i Sin productos
+                  - else 
+                    - @contract.contracts_products.each do |object|
+                      - total_quantity += object.quantity.nil? ? 0 : object.quantity
+                      - subtotal_price = total_quantity * object.price
+                      - total_price += subtotal_price
+                      tr
+                        td.s-14 = object.product.name.upcase
+                        td.s-14.text-center = object.quantity
+                        td.s-14.text-center = "$ #{object.price}"
+                        td.s-14.text-center
+                          p.my-0.bold.s-14 = "$#{number_to_currency(subtotal_price, precision: 0, delimiter: ",", unit: object.currency.code.upcase)}"
                 tfoot
                   tr
                     th.text-right.pr-2 Totales:
@@ -114,12 +118,15 @@ section.content
             table.table.table-sm.table-bordered.mb-1
               thead.thead-dark
                 tr
-                  th.s-12 width="60%" scope="col" CONCEPTOS DE GASTOS
-                  th.s-12 width="60%" scope="col" CANTIDAD
+                  th.s-12 width="40%" scope="col" CONCEPTOS DE GASTOS
+                  th.s-12 width="30%" scope="col" U. VENTA
+                  th.s-12 width="30%" scope="col" PRECIO
               tbody
-                - @contract.expenses.each do |expense|
+                - @contract.contracts_expenses.each do |exp|
                   tr
-                    td.s-14 = expense.name.upcase
+                    td.s-14 = exp.expense.name.upcase
+                    td.s-14 = exp.unit_sale
+                    td.s-14 == currency(exp.price, exp.currency.code)
     .card.card-body.mt-2
       .row
         .col-12

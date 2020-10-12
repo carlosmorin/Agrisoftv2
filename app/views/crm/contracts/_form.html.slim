@@ -12,13 +12,11 @@
 						= f.input :client_id, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @contract.client.id }
 						= f.input :user_id, as: :hidden, label: false, input_html: { class: 's-12 form-control form-control-sm', value: current_user.id }
 				.row.mt-3
-					.col-md-5
+					.col-md-6
 						label.mb-0 Cliente:
 						input.s-12.form-control.form-control-sm type="text" disabled="disabled" value="#{@contract.client.name}"
-					.col-md-5
+					.col-md-6
 						= f.input :delivery_address_id, collection: @contract.client.delivery_addresses, input_html: { class: 's-12 form-control form-control-sm', value: params[:client_id] }
-					.col-md-2
-						= f.input :currency_id, collection: Currency.all.pluck(:code, :id), input_html: { class: 's-12 form-control form-control-sm' }
 				.row.mt-4
 					.col-12
 						h5.s-12.mb-2	
@@ -29,12 +27,12 @@
 					.col-md-9
 						= f.input :undefined, as: :boolean, label: false, input_html: {class: "bold s-12", data: { action: "change->contracts#hideDatesContainer" ,  target: "contracts.undefinedCheckbox" }}
 				.row data-target="contracts.dateRangeContainer"
-					.col-md-5
+					.col-md-6
 						.input-group.date.d-block data-provide="datepicker"
 							= f.input :started_at, as: :string, input_html: { class: "mr-2 form-control form-control-sm date-picker", disabled: @contract.undefined?, data: { target: "contracts.dateRange" }}
 							.input-group-addon
 								span.glyphicon.glyphicon-th
-					.col-md-5
+					.col-md-6
 						.input-group.date.d-block data-provide="datepicker"
 							= f.input :finished_at, as: :string, input_html: { class: "mr-2 form-control form-control-sm date-picker", disabled: @contract.undefined?, data: { target: "contracts.dateRange" }}
 							.input-group-addon

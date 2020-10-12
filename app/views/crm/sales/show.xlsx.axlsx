@@ -1,0 +1,54 @@
+axlsx = Axlsx::Package.new
+
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Venta #{@sale.folio.upcase}") do |sheet|
+
+  header_style = wb.styles.add_style({ :sz => 12, :b => true ,:alignment => { :horizontal => :center }})
+  info_section = wb.styles.add_style(:sz => 10, :b => true, :border=> {:style => :thin, :color => "000000"}) 
+
+  borders = wb.styles.add_style(:sz => 12, :b => true, :border=> {:style => :thin, :color => "000000"})
+  s12 = wb.styles.add_style({:sz => 12})
+  s8 = wb.styles.add_style({:sz => 8})
+  fbold = wb.styles.add_style({:b => true})
+  buyer_styles = wb.styles.add_style(:b => true, :sz => 10)
+  company =  wb.styles.add_style({:sz => 10, :b => true})
+  products_header = wb.styles.add_style(:sz => 8, :b => true, :bg_color => "d0d0d0", :border=> {:style => :thin, :color => "000000"}, :alignment => { :horizontal => :center })
+
+  products_item = wb.styles.add_style(:sz => 8, :b => false, :border=> {:style => :thin, :color => "000000"})
+
+
+  sheet.add_row
+  sheet.merge_cells("A2:J2")
+  sheet.add_row ["VENTA #{@sale.folio.upcase}"], style: header_style
+
+  sheet.add_row
+  sheet.add_row
+  
+  sheet.merge_cells("B5:E5")
+  sheet.merge_cells("B6:E6")
+  sheet.merge_cells("B7:E7")
+
+  sheet.add_row ['NOMBRE O RAZÓN SOCIAL:', @sale.company.name.upcase, "","", "", "FECHA VENTA", @sale.created_at.strftime("%d/%m/%Y")], style: info_section
+  sheet.add_row ['CLIENTE:', @sale.client.name.upcase, "","", "", "", ""], style: info_section
+  sheet.add_row
+
+  sheet.add_row ["DESCRIPCIÓN DE PRODUCTO", "CANTIDAD", "PRECIO", "TOTAL"], style: products_header
+  
+  @sale.shipments_products.each do |sp|
+    product = sp.product
+    total_row = sp.quantity * sp.price
+    sheet.add_row [product.name.upcase, sp.quantity, sp.price, total_row ], style: products_item
+  end
+
+  sheet.add_row
+  sheet.add_row  ["OBSERVACIONES:"], style: info_section
+  sheet.merge_cells("A16:E16")
+  sheet.add_row  ["", "", "", "",""], style: info_section
+
+  col_widths = [24,12,12,12,12, 20,20] 
+  sheet.column_widths *col_widths
+
+end
+
+axlsx.serialize 'quote.xlsx'

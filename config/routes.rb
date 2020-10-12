@@ -101,6 +101,7 @@ Rails.application.routes.draw do
 
   namespace :crm do
     root to: "main#index" #CRM dashboard
+    resources :report_prices, except: [:index, :show] 
     resources :clients do
       collection  do
         get 'delivery_addresses'
@@ -114,9 +115,13 @@ Rails.application.routes.draw do
       get '/get_contacts', to: 'clients#get_contacts'
     end
     resources :sales do
-      patch '/expenses', to: 'sales#expenses'
+      patch '/expenses', to: 'sales#update_expenses'
+      patch '/products', to: 'sales#update_products'
+      patch '/reports', to: 'sales#update_reports'
       patch '/cancel', to: 'sales#cancel'
       patch '/set_contract', to: 'sales#set_contract'
+      patch '/documents', to: 'sales#update_documents'
+      get '/to_collect', to: 'sales#to_collect'
     end
     resources :contracts, only: [:create, :update]
     resources :bank_accounts, except: [:index]

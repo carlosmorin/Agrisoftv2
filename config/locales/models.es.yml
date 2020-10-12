@@ -283,3 +283,7 @@ es:
         total: Total
         amount: Monto
         currency_id: Moneda
+      shipments_product_report:
+        quantity: Numero de bultos
+        price: Precio untario
+        report_at: Fecha

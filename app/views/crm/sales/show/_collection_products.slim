@@ -1,12 +1,31 @@
-- neto = 0
-- sale.shipments_products.each do |sp|
-  - neto += sp.price.nil? && sp.quantity.nil? ? (sp.quantity * sp.price) : 0
-  .row
-    .col-5
-      label.s-12 = sp.product.name
-    .col-2
-      label.mb-0.text-upcase.s-10 = sp.quantity 
-    .col-2
-      = raw "$#{sp.price} <small>#{ @sale.currency.upcase }</small>"
-    .col-2
-      b = raw "$#{sp.quantity * sp.price} <small>#{ @sale.currency.upcase }</small>" if sp.price.nil? && sp.quantity.nil?
+- currency_code = sale.currenct_currency_code
+table.table.table-sm.table-bordered
+  thead
+    tr
+      th.c-gray.s-13 DESCRIPCIÓN DE PRODUCTO
+      th.c-gray.s-13 CANTIDAD
+      th.c-gray.s-13 PRECIO
+      th.c-gray.s-13 TOTAL
+  tbody
+    - total = 0
+    - sale.shipments_products.each do |sp|
+      - total_row = sp.quantity * sp.sale_price
+      - total += total_row
+      tr
+        td.s-13 = sp.product_name.upcase
+        td.s-13 
+          span.d-block = sp.quantity
+          small.s-12.text-info.bold = "#{sp.for_reporting} bultos por reportar" if sp.price = 0
+        td.s-13 
+          == currency(sp.sale_price, currency_code)
+        td.s-13 
+          b == currency(total_row, currency_code)
+          p.s-13.mb-0 == currency_usd_to_mxn(total_row) if currency_code == 'usd'
+          p.s-13.mb-0 == currency_mxn_to_usd(total_row, sale.exchange_rate) if currency_code == 'mxn'
+  tfooter
+    tr
+      th colspan=3
+      th
+        b.s-14 == currency(total, currency_code)
+        p.s-13.mb-0 == currency_usd_to_mxn(total) if currency_code == 'usd'
+        p.s-13.mb-0 == currency_mxn_to_usd(total, sale.exchange_rate) if currency_code == 'mxn'

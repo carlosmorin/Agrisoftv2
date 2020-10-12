@@ -41,4 +41,8 @@ class Freight < ApplicationRecord
     end
   end
 
+  def box_type
+    self.box.box_type.name.upcase
+  end
+
 end

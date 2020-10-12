@@ -13,6 +13,8 @@ class Contract < ApplicationRecord
   validates_presence_of :name, :delivery_address_id
   validates_presence_of :started_at, :finished_at, unless: :undefined
 
+  scope :current, -> { where("CURRENT_TIMESTAMP < finished_at OR undefined_products::text = 'true'") }
+
   def active?
     return true if self.undefined?
 
