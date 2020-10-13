@@ -47,6 +47,15 @@ module Crm::SalesHelper
 		"#{price * @sale.exchange_rate}<small>MXN</small>"
 	end
 
+	def currency_mxn_to_usd_str(price, exchange_rate)
+		return '0' if price.nil? || price.zero? || exchange_rate.nil?
+		if exchange_rate.nil?
+			"#{0}"
+		else
+			"#{price / exchange_rate} "
+		end
+	end
+
 	def currency_mxn_to_usd(price, exchange_rate)
 		return '0' if price.nil? || price.zero? || exchange_rate.nil?
 		if exchange_rate.nil?
@@ -98,4 +107,10 @@ module Crm::SalesHelper
 		return "<span class='badge badge-primary right s-10'> Gasto </span>" if expense.expense_type?
 		return "<span class='badge badge-info right s-10'> Descuento </span>" if expense.discount_type?
 	end
+
+	def type_expense_str(expense)
+		return "Gasto" if expense.expense_type?
+		return "Descuento" if expense.discount_type?
+	end
+
 end

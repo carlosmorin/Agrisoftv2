@@ -5,6 +5,7 @@ wb = xlsx_package.workbook
 wb.add_worksheet(name: "Venta #{@sale.folio.upcase}") do |sheet|
 
   header_style = wb.styles.add_style({ :sz => 12, :b => true ,:alignment => { :horizontal => :center }})
+  subheader_style = wb.styles.add_style({ :sz => 10, :b => true ,:alignment => { :horizontal => :center }})
   info_section = wb.styles.add_style(:sz => 10, :b => true, :border=> {:style => :thin, :color => "000000"}) 
 
   borders = wb.styles.add_style(:sz => 12, :b => true, :border=> {:style => :thin, :color => "000000"})
@@ -15,35 +16,81 @@ wb.add_worksheet(name: "Venta #{@sale.folio.upcase}") do |sheet|
   company =  wb.styles.add_style({:sz => 10, :b => true})
   products_header = wb.styles.add_style(:sz => 8, :b => true, :bg_color => "d0d0d0", :border=> {:style => :thin, :color => "000000"}, :alignment => { :horizontal => :center })
 
-  products_item = wb.styles.add_style(:sz => 8, :b => false, :border=> {:style => :thin, :color => "000000"})
+  products_item = wb.styles.add_style(:sz => 8, :b => true, :border=> {:style => :thin, :color => "000000"})
+  products_sub_item = wb.styles.add_style(:sz => 8, :b => false, :border=> {:style => :thin, :color => "797979"})
 
 
   sheet.add_row
-  sheet.merge_cells("A2:J2")
   sheet.add_row ["VENTA #{@sale.folio.upcase}"], style: header_style
-
   sheet.add_row
   sheet.add_row
-  
-  sheet.merge_cells("B5:E5")
-  sheet.merge_cells("B6:E6")
-  sheet.merge_cells("B7:E7")
 
   sheet.add_row ['NOMBRE O RAZÓN SOCIAL:', @sale.company.name.upcase, "","", "", "FECHA VENTA", @sale.created_at.strftime("%d/%m/%Y")], style: info_section
-  sheet.add_row ['CLIENTE:', @sale.client.name.upcase, "","", "", "", ""], style: info_section
+  sheet.add_row ['CLIENTE:', @sale.client.name.upcase, "","", "", "MONEDA", @sale&.currenct_currency_code], style: info_section
+  sheet.add_row
+  sheet.add_row
+  sheet.add_row ["PRODUCTOS"], style: header_style
   sheet.add_row
 
   sheet.add_row ["DESCRIPCIÓN DE PRODUCTO", "CANTIDAD", "PRECIO", "TOTAL"], style: products_header
   
   @sale.shipments_products.each do |sp|
     product = sp.product
-    total_row = sp.quantity * sp.price
-    sheet.add_row [product.name.upcase, sp.quantity, sp.price, total_row ], style: products_item
+    if sp.price.zero?
+      total_price = 0
+      sp.shipments_product_reports.map { |spr| total_price += spr.quantity * spr.price }
+      total_row = total_price / sp.quantity
+      sheet.add_row [product.name.upcase, sp.quantity, total_row, total_price], style: products_item
+    else 
+      total_row = sp.quantity * sp.price
+      sheet.add_row [product.name.upcase, sp.quantity, sp.price, total_row], style: products_item
+    end
+    
+    if sp.shipments_product_reports.any?
+      sp.shipments_product_reports.each do |spr|
+        sheet.add_row [
+          spr.shipments_product.product&.name.upcase, 
+          spr.quantity,
+          spr.price,
+          spr.price * spr.quantity], style: products_sub_item
+      end
+
+      sheet.add_row
+    end
   end
 
   sheet.add_row
+  sheet.add_row ["Gastos y descuentos"], style: header_style
+  sheet.add_row
+
+  sheet.add_row ["CONCEPTO", "UNIDAD", "MONTO", "TIPO", "TOTAL"], style: products_header
+  
+  currency_code = @sale.currenct_currency_code
+  total_expenses = 0
+  @sale.shipments_expenses.order(:type_expense).each do |exp|
+    code = exp.currency.code
+    total_expenses += get_total(exp.unit, exp.amount, exp.percentage)
+    total_row = get_total(exp.unit, exp.amount, exp.percentage)
+    @total_mxn_expenses += get_total_row_mxn(total_row, code)
+    
+    if exp.percentage
+      amount = to_percentage(exp.amount)
+    else
+      amount = exp.amount
+    end
+
+    sheet.add_row [
+      exp.expense.name.upcase, 
+      units_sales.invert[exp.unit] ,
+      amount,
+      type_expense_str(exp),
+      total_row], style: products_sub_item
+  end
+
+  sheet.add_row ["", "", "", @total_mxn_expenses, currency_mxn_to_usd_str(@total_mxn_expenses, @sale.exchange_rate)]
+
+  sheet.add_row
   sheet.add_row  ["OBSERVACIONES:"], style: info_section
-  sheet.merge_cells("A16:E16")
   sheet.add_row  ["", "", "", "",""], style: info_section
 
   col_widths = [24,12,12,12,12, 20,20] 
