@@ -1,11 +1,24 @@
 import { Controller } from 'stimulus';
 
 export default class extends Controller {
-  static targets = ["treatmentType", "cropSelect", "recommendedDose"]
+  static targets = [
+    "treatmentType", "cropSelect", 
+    "recommendedDose", "foliarQuantity", 
+    "foliarUnit", "irrigationQuantity",
+    "irrigationUnit"
+  ]
 
   initialize() {
+    console.log(this.foliarQuantityTarget)
+    $(this.foliarQuantityTarget).prop("disabled", true);
+    $(this.foliarUnitTarget).prop("disabled", true);
+    $(this.irrigationQuantityTarget).prop("disabled", true);
+    $(this.irrigationUnitTarget).prop("disabled", true);
+    // console.log(this.formGroupTarget)
+    // $(this.foliarQuantityTarget)
+    // $(this.formGroupTarget).addClass("d-none")
     this.crop_id = null
-    console.log($('select'))
+    // console.log($('select'))
     // let crops = []
     // $.ajax({
     //   type: 'GET',
@@ -18,6 +31,12 @@ export default class extends Controller {
         
     //   }
     // })
+  }
+
+  showTreatmentsForm(e) {
+    e.preventDefault();
+    console.log("jfjf")
+    $(this.formGroupTarget).removeClass("d-none")
   }
 
   enabledTypeSelect(e) {
@@ -68,6 +87,13 @@ export default class extends Controller {
 
   enableSuppliesSelect() {
     $(this.supplySelectTarget).prop('disabled', false);
+  }
+
+  enabledInputs() {
+    $(this.foliarQuantityTarget).prop("disabled", false);
+    $(this.foliarUnitTarget).prop("disabled", false);
+    $(this.irrigationQuantityTarget).prop("disabled", false);
+    $(this.irrigationUnitTarget).prop("disabled", false);
   }
 
   showRecommendedDoses(e) {

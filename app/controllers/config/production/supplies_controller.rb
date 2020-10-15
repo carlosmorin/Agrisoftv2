@@ -24,27 +24,18 @@ class Config::Production::SuppliesController < ApplicationController
   end
 
   def create
-  	# @supply = Supply.new(supply_params)
-    # if @supply.save
-    #   respond_to do |format|
-    #     format.html
-    #     format.js
-    #     format.json
-    #   end
-    # else
-    #   render :new
-    # end
-    @supply = Supply.new(supply_params)
-    binding.pry
+    # binding.pry
+  	@supply = Supply.new(supply_params)
     if @supply.save
-      flash[:notice] = "Insumo #{ @supply.name } creado correctamente"
+      flash[:notice] = "Insumo #{ @supply.name } actualizado correctamente"
+      return redirect_to new_config_production_supply_treatment_url(@supply.id) if params[:create_treatment]
       redirect_to config_production_supplies_url
     else
       render :new
     end
   end
 
-   def update
+  def update
     if @supply.update(supply_params)
       flash[:notice] = "Insumo #{ @supply.name } actualizado correctamente"
       redirect_to config_production_supplies_url
@@ -72,9 +63,10 @@ class Config::Production::SuppliesController < ApplicationController
   end
 
   def treatment_params
-    params.require(:treatment).permit(:treatable_id, :treatable_type, 
-      treatment_supplies_attributes: [:id, :supply_id, :treatment_id, :recommended_dose, :_destroy])
-  end
+    params.require(:treatment).permit(:treatable_id, :treatable_type, :application_instructions,
+      treatment_supplies_attributes: [:id, :treatment_id, :supply_id, :_destroy, :foliar_quantity, :foliar_unit,
+      :irrigation_quantity, :irrigation_unit])
+  end 
 
   def set_supply
     # id = params[:id].present? ? params[:id] : params[:crop_id]

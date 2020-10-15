@@ -2,6 +2,10 @@ import { Controller } from 'stimulus';
 
 export default class extends Controller {
   static targets = ["categoryId", "code"]
+
+  initialize() {
+    $('#new_supply').on('submit', (e) => this.createTreatments(e))
+  }
   
   generateCode(e) {
     e.preventDefault();
@@ -53,5 +57,34 @@ export default class extends Controller {
     let arr = String(nextNum).split('')
     arr.unshift(ceros)
     this.codeTarget.value = category.toUpperCase().slice(0, 3).concat(arr.join(""));
+  }
+
+  showTreatmentsForm(e) {
+    console.log("jfjf")
+    e.preventDefault();
+    $('#treatment-form').removeClass("d-none")
+  }
+
+  createTreatments(e) {
+    e.preventDefault();
+    let form = document.querySelector('.new_treatment')
+    let urlForm = form.action
+    let formData = new FormData(form);
+    console.log(form.action);
+    $.ajax({
+      url: urlForm,
+      type: 'POST',
+      dataType: 'json',
+      encode: true,
+      data: formData,
+      contentType:false,
+      processData:false,
+      success: function(data){
+				
+      }
+    })
+    .done(function() {
+      // console.log("success");
+    })	
   }
 } 

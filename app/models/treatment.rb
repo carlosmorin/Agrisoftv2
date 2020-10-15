@@ -1,7 +1,7 @@
 class Treatment < ApplicationRecord
-  attr_accessor :crop_id
+  # attr_accessor :crop_id
   belongs_to :treatable, polymorphic: true
-  has_many :treatment_supplies, inverse_of: :treatment, dependent: :destroy
+  has_many :treatment_supplies, dependent: :destroy
 
   has_rich_text :application_instructions
 

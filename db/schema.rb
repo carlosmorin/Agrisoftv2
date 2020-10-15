@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_07_043041) do
+ActiveRecord::Schema.define(version: 2020_10_08_004836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -839,6 +839,8 @@ ActiveRecord::Schema.define(version: 2020_10_07_043041) do
     t.string "treatable_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "crop_id", null: false
+    t.index ["crop_id"], name: "index_treatments_on_crop_id"
   end
 
   create_table "unit_brands", force: :cascade do |t|
@@ -995,6 +997,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_043041) do
   add_foreign_key "states", "countries"
   add_foreign_key "supplies", "categories"
   add_foreign_key "treatment_supplies", "treatments"
+  add_foreign_key "treatments", "crops"
   add_foreign_key "units", "carriers"
   add_foreign_key "units", "unit_brands"
 end
