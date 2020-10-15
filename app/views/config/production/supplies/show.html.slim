@@ -70,17 +70,20 @@ section.content
       .col-lg-12
         = render "shared/alerts"
     .row.mt-2
-			.col-12
-				.card.card-primary.card-outline.card-outline-tabs
-					.card-header.p-0.border-bottom-0
-						ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
-							li.nav-item
-								= link_to 'Presentaciones', config_production_supply_url(@supply, tab: :presentations), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'presentations' ? 'active' : 'c-gray' }"
-							li.nav-item
-								= link_to 'Ingredientes Activos', config_production_supply_url(@supply, tab: :active_ingredients), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'active_ingredients' ? 'active' : 'c-gray' }"                
-					.card-body
-						#custom-tabs-four-tabContent.tab-content
-							#custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
-								= render "presentations" if params[:tab] == 'presentations'
-								= render "active_ingredients" if params[:tab] == 'active_ingredients'
+      .col-12
+        .card.card-primary.card-outline.card-outline-tabs
+          .card-header.p-0.border-bottom-0
+            ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
+              li.nav-item
+                = link_to 'Presentaciones', config_production_supply_url(@supply, tab: :presentations), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'presentations' ? 'active' : 'c-gray' }"
+              li.nav-item
+                = link_to 'Ingredientes Activos', config_production_supply_url(@supply, tab: :active_ingredients), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'active_ingredients' ? 'active' : 'c-gray' }"                
+              li.nav-item
+                = link_to 'Tratamientos', config_production_supply_url(@supply, tab: :treatments), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'treatments' ? 'active' : 'c-gray' }"                
+          .card-body
+            #custom-tabs-four-tabContent.tab-content
+              #custom-tabs-four-home.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel"
+                = render "presentations" if params[:tab] == 'presentations'
+                = render "active_ingredients" if params[:tab] == 'active_ingredients'
+                = render "treatments" if params[:tab] == 'treatments'
 

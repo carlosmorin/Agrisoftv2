@@ -12,9 +12,19 @@
 
     .row
     hr
+    - if @treatment.crop_id
+      .form-group.mb-2
+        .row.mt-1
+          .col-lg-2
+            = "Cultivo:"
+          .col-lg-10
+            span.badge.badge-info.s-14.ml-1 
+              = Crop.find(@treatment.crop_id).name
     - if @treatment.treatable_id
       .form-group.mb-2
         .row.mt-1
+          .col-lg-2
+            = @treatment.treatable_type == "Pest" ? "Plaga:" : "Enfermadad:"
           .col-lg-10
             span.badge.badge-info.s-14.ml-1 
               = @treatment.treatable_name
@@ -45,7 +55,7 @@
     .row
       .col-lg-10
         hr.mb-3
-    - if !@supply.present?
+    - if @supply.present? || !@supply.present?
       .row.mb-3
         .col-lg-12
           h5
@@ -74,9 +84,9 @@
                 .col-lg-12
                   = f.fields_for :treatment_supplies do |treatment_supply|
                     = render 'treatment_supply_fields', f: treatment_supply
-    - if @supply.present?
-      = f.fields_for :treatment_suppliess do |treatment_supply|
-        = render 'treatment_supply_fields', f: treatment_supply
+    / - if @supply.present?
+    /   = f.fields_for :treatment_suppliess do |treatment_supply|
+    /     = render 'treatment_supply_fields', f: treatment_supply
   
   hr
   .form-actions.text-right

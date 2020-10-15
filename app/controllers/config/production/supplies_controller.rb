@@ -5,7 +5,8 @@ class Config::Production::SuppliesController < ApplicationController
   add_breadcrumb "Insumos", :config_production_supplies_path
 
   def index
-  	@supplies = Supply.paginate(page: params[:page], per_page: 16)
+    @supplies = Supply.paginate(page: params[:page], per_page: 16)
+    # binding.pry
     search if params[:q].present?
   end
 
@@ -20,6 +21,7 @@ class Config::Production::SuppliesController < ApplicationController
   end
 
   def show
+    # binding.pry
     add_breadcrumb "Detalle del Insumo"   
   end
 
@@ -71,5 +73,25 @@ class Config::Production::SuppliesController < ApplicationController
   def set_supply
     # id = params[:id].present? ? params[:id] : params[:crop_id]
     @supply = Supply.find(params[:id])
+    if params[:tab] == "treatments"
+      treatment_supplies = TreatmentSupply.where(supply_id: params[:id])
+      @treatments = []
+      treatment_supplies.each do |treatment_supply|
+        treatable_type = treatment_supply.treatment.treatable_type
+        id = treatment_supply.treatment.treatable_id
+        name = treatable_type == "Desease" ? Desease.find(id).name : Pest.find(id).name
+        # binding.pry
+        hash = {
+          id: treatment_supply.treatment.id,
+          recommended_dose: treatment_supply.recommended_dose,
+          crop_name: Crop.find(treatment_supply.treatment.crop_id).name,
+          treatable_type: name,
+          treatable_type_name: treatable_type,
+          supply_count: treatment_supply.treatment.supplies_count
+        }
+        @treatments.push(hash)
+      end
+      # binding.pry
+    end
   end
 end

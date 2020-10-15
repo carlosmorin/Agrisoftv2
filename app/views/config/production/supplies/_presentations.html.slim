@@ -19,7 +19,7 @@ section#general.s-12
                   - if presentations.empty?
                     tr
                       td.text-center colspan="6"
-                        = link_to 'Nuevo registro', new_config_production_ranch_presentation_path(@supply), class: "s-12" 
+                        = link_to 'Nuevo registro', "new_config_production_ranch_presentation_path(@supply)", class: "s-12" 
                   - else
                     - presentations.each do |presentation|
                       tr

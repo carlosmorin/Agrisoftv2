@@ -10,10 +10,10 @@ export default class extends Controller {
 
   initialize() {
     console.log(this.foliarQuantityTarget)
-    $(this.foliarQuantityTarget).prop("disabled", true);
-    $(this.foliarUnitTarget).prop("disabled", true);
-    $(this.irrigationQuantityTarget).prop("disabled", true);
-    $(this.irrigationUnitTarget).prop("disabled", true);
+    // $(this.foliarQuantityTarget).prop("disabled", true);
+    // $(this.foliarUnitTarget).prop("disabled", true);
+    // $(this.irrigationQuantityTarget).prop("disabled", true);
+    // $(this.irrigationUnitTarget).prop("disabled", true);
     // console.log(this.formGroupTarget)
     // $(this.foliarQuantityTarget)
     // $(this.formGroupTarget).addClass("d-none")

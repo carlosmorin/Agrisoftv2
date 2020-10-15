@@ -1,4 +1,5 @@
 class TreatmentSupply < ApplicationRecord
+  # attr_accessor :supply_id
   jsonb_accessor :recommended_dose, 
     irrigation_quantity: :string,
     irrigation_unit: :string,

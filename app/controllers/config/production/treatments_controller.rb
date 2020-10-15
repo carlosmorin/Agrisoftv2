@@ -1,6 +1,6 @@
 class Config::Production::TreatmentsController < ApplicationController
   before_action :find_treatment, only: %i[show edit update destroy]
-  before_action :find_supply, only: %i[new]
+  before_action :find_supply, only: %i[new edit]
   add_breadcrumb "Production", :config_production_root_path
   add_breadcrumb "Tratamientos", :config_production_treatments_path
 
@@ -32,6 +32,8 @@ class Config::Production::TreatmentsController < ApplicationController
     @treatment = Treatment.new(crop_id: treatment_params[:crop_id])
     @treatment.treatable_id = treatment_params[:treatable_id]
     @treatment.treatable_type = treatment_params[:treatable_type]
+    @treatment.application_instructions = treatment_params[:application_instructions]
+    binding.pry
     if @treatment.save
       # binding.pry
       if !!treatment_params[:treatment_supplies_attributes] 
@@ -53,13 +55,13 @@ class Config::Production::TreatmentsController < ApplicationController
         @supply.supply_id = treatment_params[:supply_id]
         # @supply.crop_id = treatment_params[:treatment_suppliess][:crop_id]
         @supply.foliar_quantity = treatment_params[:treatment_suppliess][:foliar_quantity]
-        @supply.foliar_unit = ProductionUnit.find_by_id(treatment_params[:treatment_suppliess][:foliar_unit])&.name
+        @supply.foliar_unit = treatment_params[:treatment_suppliess][:foliar_unit]
         @supply.irrigation_quantity = treatment_params[:treatment_suppliess][:irrigation_quantity]
-        @supply.irrigation_unit = ProductionUnit.find_by_id(treatment_params[:treatment_suppliess][:irrigation_unit])&.name
+        @supply.irrigation_unit = treatment_params[:treatment_suppliess][:irrigation_unit]
         # binding.pry
         @supply.save
         # binding.pry
-        return redirect_to config_production_supply_url(treatment_params[:supply_id])
+        return redirect_to config_production_supply_url(treatment_params[:supply_id], tab: :treatments)
       end
       flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Tratamiento creado correctamente"
       redirect_to config_production_treatment_url(@treatment, tag: :general)
@@ -95,6 +97,7 @@ class Config::Production::TreatmentsController < ApplicationController
 
   def find_treatment
     @treatment = Treatment.find(params[:id])
+    # binding.pry
   end
 
   def find_supply
