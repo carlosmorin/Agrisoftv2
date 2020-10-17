@@ -100,8 +100,21 @@ class Config::Production::TreatmentsController < ApplicationController
   end
 
   def destroy
-    binding.pry
-    @treatment.destroy
+    # binding.pry
+    if params[:desease_id].present?
+      @desease = Desease.find(params[:desease_id])
+      @desease.treatments.where(id: params[:id]).each { |treatment| treatment.destroy }
+    end
+
+    if params[:pest_id].present?
+      @pest = Pest.find(params[:pest_id])
+      @pest.treatments.where(id: params[:id]).each { |treatment| treatment.destroy }
+    end
+
+    if params[:supply_id].present?
+      # @desease = Desease.find(params[:desease_id])
+      # @desease.treatments.where(id: params[:id]).first.destroy
+    end
   end
 
   private

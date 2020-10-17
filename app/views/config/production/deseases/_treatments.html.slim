@@ -92,7 +92,13 @@ section#general.s-12
                                 = link_to edit_config_production_desease_treatment_path(id: treatment[:id], desease_id: @desease.id), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default border" do
                                   svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
                                     path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-                                    path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")                          
+                                    path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")    
+                                = link_to config_production_desease_treatment_path(id: treatment[:id], desease_id: @desease.id),  title: "Eliminar",class: "btn btn-xs btn-default border", data: { placement: 'left', toggle: 'tooltip', controller: 'users', behavior: 'delete' }  do
+                                  svg.feather.feather-trash-2.text-danger fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="14" xmlns="http://www.w3.org/2000/svg" 
+                                    polyline points=("3 6 5 6 21 6") 
+                                    path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 
+                                    line x1="10" x2="10" y1="11" y2="17" 
+                                    line x1="14" x2="14" y1="11" y2="17"                                                        
                         .col-2.ml-auto
                           .row.w-100.m-0.p-0
                             .col-12.m-0.p-0
