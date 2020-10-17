@@ -59,6 +59,7 @@ export default class extends Controller {
 
   getTreatbleTypes(url, treatbleTypeSelect, title) {
     treatbleTypeSelect.parents('.form-group').first().find('.s-14.ml-1').html(title)
+    console.log(treatbleTypeSelect);
     $.ajax({
       type: 'GET',
       url: url,

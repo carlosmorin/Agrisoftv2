@@ -2,7 +2,7 @@ class Config::Production::TreatmentsController < ApplicationController
   before_action :find_treatment, only: %i[show edit update destroy]
   before_action :find_supply, only: %i[new edit]
   add_breadcrumb "Production", :config_production_root_path
-  add_breadcrumb "Tratamientos", :config_production_treatments_path
+  # add_breadcrumb "Tratamientos", :config_production_treatments_path
 
   def index
     @index_facade = Treatments::IndexFacade.new(params)
@@ -11,10 +11,13 @@ class Config::Production::TreatmentsController < ApplicationController
   def new
     add_breadcrumb "Nuevo"
     # binding.pry
+    @is_supply_created ||= params[:create] || false
+    @show_destroy ||= true
     @treatment = Treatment.new
   end
 
   def show
+    add_breadcrumb "Tratamientos"
     add_breadcrumb "Detalle del Tratamiento"
   end
 
@@ -35,8 +38,9 @@ class Config::Production::TreatmentsController < ApplicationController
     @treatment.application_instructions = treatment_params[:application_instructions]
     binding.pry
     if @treatment.save
-      # binding.pry
+      binding.pry
       if !!treatment_params[:treatment_supplies_attributes] 
+        binding.pry
         treatment_params[:treatment_supplies_attributes].values.each do |treatment_supply|
           binding.pry
           @supply = @treatment.treatment_supplies.new
@@ -50,7 +54,9 @@ class Config::Production::TreatmentsController < ApplicationController
           @supply.save
           binding.pry
         end
-      else 
+      end
+      if !!treatment_params[:treatment_suppliess] 
+        binding.pry
         @supply = @treatment.treatment_supplies.new
         @supply.supply_id = treatment_params[:supply_id]
         # @supply.crop_id = treatment_params[:treatment_suppliess][:crop_id]
@@ -58,11 +64,12 @@ class Config::Production::TreatmentsController < ApplicationController
         @supply.foliar_unit = treatment_params[:treatment_suppliess][:foliar_unit]
         @supply.irrigation_quantity = treatment_params[:treatment_suppliess][:irrigation_quantity]
         @supply.irrigation_unit = treatment_params[:treatment_suppliess][:irrigation_unit]
-        # binding.pry
+        binding.pry
         @supply.save
-        # binding.pry
+        binding.pry
         return redirect_to config_production_supply_url(treatment_params[:supply_id], tab: :treatments)
       end
+      binding.pry
       flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Tratamiento creado correctamente"
       redirect_to config_production_treatment_url(@treatment, tag: :general)
     else
@@ -71,10 +78,13 @@ class Config::Production::TreatmentsController < ApplicationController
   end
 
   def edit
+    add_breadcrumb "Tratamientos"
     add_breadcrumb "Editar"
+    @is_edit = true
   end
 
   def update
+    # WORK ON THIS METHOD NEXT 
     if @treatment.update(treatment_params)
       flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Tratamiento actualizado correctamente"
       redirect_to config_production_treatment_url(@treatment, tab: :general)
@@ -90,9 +100,31 @@ class Config::Production::TreatmentsController < ApplicationController
   private
 
   def treatment_params
-    params.require(:treatment).permit(:treatable_id, :treatable_type, :application_instructions, :crop_id, :supply_id,
-      treatment_suppliess: [:id, :treatment_id, :supply_id, :_destroy, :foliar_quantity, :foliar_unit,
-      :irrigation_quantity, :irrigation_unit])
+    params.require(:treatment).permit(
+      :treatable_id, 
+      :treatable_type, 
+      :application_instructions, 
+      :crop_id, 
+      :supply_id,
+      treatment_suppliess: [
+        :id, 
+        :treatment_id, 
+        :supply_id, 
+        :_destroy, 
+        :foliar_quantity, 
+        :foliar_unit,
+        :irrigation_quantity, 
+        :irrigation_unit
+      ],
+      treatment_supplies_attributes: [
+        :supply_id, 
+        :foliar_quantity, 
+        :foliar_unit, 
+        :irrigation_quantity, 
+        :irrigation_unit,
+        :_destroy
+      ]
+    )
   end 
 
   def find_treatment

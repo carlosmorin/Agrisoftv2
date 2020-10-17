@@ -83,11 +83,10 @@
               .row.mt-1
                 .col-lg-12
                   = f.fields_for :treatment_supplies do |treatment_supply|
-                    = render 'treatment_supply_fields', f: treatment_supply
-    / - if @supply.present?
-    /   = f.fields_for :treatment_suppliess do |treatment_supply|
-    /     = render 'treatment_supply_fields', f: treatment_supply
-  
+                    = render 'treatment_supply_fields', f: treatment_supply, locals: { show_destroy: true }
+    - if !@is_edit.present?
+      = f.fields_for :treatment_suppliess do |treatment_supply|
+        = render 'recommended_doses', f: treatment_supply
   hr
   .form-actions.text-right
     = link_to :back, class: 'btn btn-default btn-sm pl-1 mr-2' do

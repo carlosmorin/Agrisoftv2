@@ -30,7 +30,7 @@ class Config::Production::SuppliesController < ApplicationController
   	@supply = Supply.new(supply_params)
     if @supply.save
       flash[:notice] = "Insumo #{ @supply.name } actualizado correctamente"
-      return redirect_to new_config_production_supply_treatment_url(@supply.id) if params[:create_treatment]
+      return redirect_to new_config_production_supply_treatment_url(@supply.id, create: true), create: true if params[:create_treatment]
       redirect_to config_production_supplies_url
     else
       render :new
@@ -40,6 +40,7 @@ class Config::Production::SuppliesController < ApplicationController
   def update
     if @supply.update(supply_params)
       flash[:notice] = "Insumo #{ @supply.name } actualizado correctamente"
+      return redirect_to new_config_production_supply_treatment_url(@supply.id, create: true), create: true if params[:create_treatment]
       redirect_to config_production_supplies_url
     else
       render :edit
