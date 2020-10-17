@@ -85,10 +85,10 @@ class Config::Production::TreatmentsController < ApplicationController
 
   def update
     # WORK ON THIS METHOD NEXT 
-    # binding.pry
+    binding.pry
     if @treatment.update(treatment_params)
       flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Tratamiento actualizado correctamente"
-      redirect_to config_production_treatment_url(@treatment, tab: :general)
+      redirect_to config_production_treatment_url(@treatment, tab: :general, supply_id: params[:supply_id])
     else
       render :edit
     end
@@ -131,7 +131,10 @@ class Config::Production::TreatmentsController < ApplicationController
 
   def find_treatment
     @treatment = Treatment.find(params[:id])
-    # # binding.pry
+    @treatment.treatment_supplies.each do |treatment_supply|
+      treatment_supply.destroy unless Supply.all.ids.include?(treatment_supply.supply_id)
+    end
+    # binding.pry
   end
 
   def find_supply

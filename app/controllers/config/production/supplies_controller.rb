@@ -77,6 +77,7 @@ class Config::Production::SuppliesController < ApplicationController
     if params[:tab] == "treatments"
       treatment_supplies = TreatmentSupply.where(supply_id: params[:id])
       @treatments = []
+      # binding.pry
       treatment_supplies.each do |treatment_supply|
         treatable_type = treatment_supply.treatment.treatable_type
         id = treatment_supply.treatment.treatable_id

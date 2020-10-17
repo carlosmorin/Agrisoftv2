@@ -11,7 +11,7 @@ class TreatmentSupply < ApplicationRecord
   delegate :name, to: :supply, prefix: "supply", allow_nil: true
 
   def self.supplies_count
-    all.size
+    where(supply_id: Supply.all.ids).size
   end
 
   def self.supplies_names
