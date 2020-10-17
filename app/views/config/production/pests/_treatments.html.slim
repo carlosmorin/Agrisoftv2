@@ -1,15 +1,15 @@
 section#general.s-12
   .row
     .col-12.text-left
-      = link_to  new_config_production_desease_treatment_path(@desease), class: 'btn btn-sm btn-primary' do
+      = link_to  new_config_production_pest_treatment_path(@pest), class: 'btn btn-sm btn-primary' do
         i.fas.fa-plus-circle.mr-1
         span Nuevo Tratamiento
   .row
     .col-12
       .row.mt-3
-        .col-12
+        .col-12.text-center
           - if @treatments.empty?
-            = link_to 'Nuevo registro', new_config_production_desease_treatment_path(@desease), class: "s-12" 
+            = link_to 'Nuevo registro', new_config_production_pest_treatment_path(@pest), class: "s-12" 
           - else
             - @treatments.each do |treatment|
               #accordionExample.accordion
@@ -39,15 +39,15 @@ section#general.s-12
                           .row.w-100
                             .col-12
                               .btn-group
-                                = link_to config_production_desease_treatment_path(id: treatment[:id], desease_id: @desease.id, tab: :general), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default border' do
+                                = link_to config_production_pest_treatment_path(id: treatment[:id], pest_id: @pest.id, tab: :general), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default border' do
                                   svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
                                     path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
                                     circle cx="12" cy="12" r="3"
-                                = link_to edit_config_production_desease_treatment_path(id: treatment[:id], desease_id: @desease.id), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default border" do
+                                = link_to edit_config_production_pest_treatment_path(id: treatment[:id], pest_id: @pest.id), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default border" do
                                   svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
                                     path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
                                     path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")    
-                                = link_to config_production_desease_treatment_path(id: treatment[:id], desease_id: @desease.id),  title: "Eliminar",class: "btn btn-xs btn-default border", data: { placement: 'left', toggle: 'tooltip', controller: 'users', behavior: 'delete' }  do
+                                = link_to config_production_pest_treatment_path(id: treatment[:id], pest_id: @pest.id),  title: "Eliminar",class: "btn btn-xs btn-default border", data: { placement: 'left', toggle: 'tooltip', controller: 'users', behavior: 'delete' }  do
                                   svg.feather.feather-trash-2.text-danger fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="14" xmlns="http://www.w3.org/2000/svg" 
                                     polyline points=("3 6 5 6 21 6") 
                                     path d=("M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2") 
@@ -77,7 +77,7 @@ section#general.s-12
                                   - if treatment[:supplies].empty?
                                     tr
                                       td.text-center colspan="9"
-                                        = link_to 'Nuevo registro', new_config_production_desease_treatment_path(@desease), class: "s-12" 
+                                        = link_to 'Nuevo registro', new_config_production_pest_treatment_path(@pest), class: "s-12 w-100 m-auto" 
                                   - else
                                     - treatment[:supplies].each do |supply|
                                       tr

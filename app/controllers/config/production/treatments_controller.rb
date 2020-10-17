@@ -9,6 +9,7 @@ class Config::Production::TreatmentsController < ApplicationController
   end
 
   def new
+    add_custom_breadcrumb
     add_breadcrumb "Nuevo"
     # binding.pry
     @desease = Desease.find(params[:desease_id]) if params[:desease_id].present?

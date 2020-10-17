@@ -55,10 +55,12 @@
           .row.mt-2
             .col-lg-10
               = f.input :crop_id, collection: Crop.joins(:pests).where('pests.id = ?', @pest.id), include_blank: true, label: false, input_html: { class: "form-control form-control-sm s-12 h-25" }
+              input type="hidden" name="treatment[treatable_type]" value="Pest"
         .form-group
           .row.mt-2
             .col-lg-10
               = f.input :treatable_type, collection: @options.map {|o| [o[:name], o[:value]]}, selected: "Pest", disabled: true, label: "Tipo", input_html: { class: "form-control form-control-sm s-12 h-25 data_treatable_type" }
+              input type="hidden" name="treatment[treatable_id]" value="#{@pest.id}"
         .form-group
           .row.mt-0
             .col-lg-10
