@@ -10,9 +10,11 @@ class Config::Production::TreatmentsController < ApplicationController
 
   def new
     add_breadcrumb "Nuevo"
-    # # binding.pry
+    # binding.pry
+    @desease = Desease.find(params[:desease_id]) if params[:desease_id].present?
+    @pest = Pest.find(params[:pest_id]) if params[:pest_id].present?
     @is_supply_created ||= params[:create] || false
-    @show_destroy ||= true
+    # @show_destroy ||= true
     @treatment = Treatment.new
   end
 
@@ -23,16 +25,6 @@ class Config::Production::TreatmentsController < ApplicationController
   end
 
   def create
-    # # binding.pry
-    # params[:treatment][:supply_id] = Supply.last.id
-    # @treatment = Treatment.new(treatment_params)
-    # if @treatment.save
-    #   flash[:notice] = "Insumo #{ Supply.last.name } creado correctamente"
-    #   redirect_to config_production_supplies_url
-    # else
-    # #   binding.pry
-    #   render 'supplies/new'
-    # end
     @treatment = Treatment.new(crop_id: treatment_params[:crop_id])
     @treatment.treatable_id = treatment_params[:treatable_id]
     @treatment.treatable_type = treatment_params[:treatable_type]
@@ -41,9 +33,9 @@ class Config::Production::TreatmentsController < ApplicationController
     if @treatment.save
       # binding.pry
       if !!treatment_params[:treatment_supplies_attributes] 
-        # binding.pry
+        # # binding.pry
         treatment_params[:treatment_supplies_attributes].values.each do |treatment_supply|
-          # binding.pry
+          # # binding.pry
           @supply = @treatment.treatment_supplies.new
           @supply.supply_id = treatment_supply[:supply_id]
           # @supply.crop_id = treatment_supply[:crop_id]
@@ -51,13 +43,13 @@ class Config::Production::TreatmentsController < ApplicationController
           @supply.foliar_unit = treatment_supply[:foliar_unit]
           @supply.irrigation_quantity = treatment_supply[:irrigation_quantity]
           @supply.irrigation_unit = treatment_supply[:irrigation_unit]
-          # binding.pry
+          # # binding.pry
           @supply.save
           # binding.pry
         end
       end
       if !!treatment_params[:treatment_suppliess] 
-        # binding.pry
+        # # binding.pry
         @supply = @treatment.treatment_supplies.new
         @supply.supply_id = treatment_params[:supply_id]
         # @supply.crop_id = treatment_params[:treatment_suppliess][:crop_id]
@@ -65,15 +57,19 @@ class Config::Production::TreatmentsController < ApplicationController
         @supply.foliar_unit = treatment_params[:treatment_suppliess][:foliar_unit]
         @supply.irrigation_quantity = treatment_params[:treatment_suppliess][:irrigation_quantity]
         @supply.irrigation_unit = treatment_params[:treatment_suppliess][:irrigation_unit]
-        # binding.pry
+        # # binding.pry
         @supply.save
         # binding.pry
         return redirect_to config_production_supply_url(treatment_params[:supply_id], tab: :treatments)
       end
       # binding.pry
       flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Tratamiento creado correctamente"
+      return redirect_to config_production_desease_path(params[:desease_id], tab: :treatments) if params[:desease_id].present?
+      return redirect_to config_production_pest_path(params[:pest_id], tab: :treatments) if params[:pest_id].present?
       redirect_to config_production_treatment_url(@treatment, tag: :general)
     else
+      # binding.pry
+      return redirect_to new_config_production_desease_treatment_path(desease_id: params[:desease_id]) if params[:desease_id].present?
       render :new
     end
   end
@@ -104,6 +100,7 @@ class Config::Production::TreatmentsController < ApplicationController
   end
 
   def destroy
+    binding.pry
     @treatment.destroy
   end
 

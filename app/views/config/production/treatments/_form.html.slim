@@ -8,7 +8,10 @@
           = "Insumo:"
         .col-lg-2
           = @supply.name.upcase
-
+    - if @desease.present?
+      input type="hidden" name="desease_id" value="#{@desease.id}" data-target="treatments-form.deseaseId"
+    - if @pest.present?
+      input type="hidden" name="pest_id" value="#{@pest.id}" data-target="treatments-form.pestId"
     .row
     hr
     - if @treatment.crop_id
@@ -26,27 +29,62 @@
           .col-lg-10
             = @treatment.treatable_name
     - else
-      .form-group
-        .row.mt-1
-          .col-lg-10
-            b.s-14.ml-1 Cultivo
-        .row.mt-2
-          .col-lg-10
-            = f.input :crop_id, collection: Crop.all, include_blank: true, label: false, input_html: { class: "form-control form-control-sm s-12 h-25" , data: { target: "treatments-form.cropSelect", action: "change->treatments-form#enabledTypeSelect"} }
-      .form-group
-        .row.mt-1
-          .col-lg-10
-            b.s-14.ml-1 Tipo
-        .row.mt-2
-          .col-lg-10
-            = f.input :treatable_type, collection: @options.map {|o| [o[:name], o[:value]]}, disabled: true, label: false, include_blank: true, input_html: { class: "form-control form-control-sm s-12 h-25 data_treatable_type", data: { target: "treatments-form.treatmentType", action: "change->treatments-form#filterTreatableType"} }
-      .form-group
-        .row.mt-1
-          .col-lg-10
-            b.s-14.ml-1
-        .row.mt-2
-          .col-lg-10
-            = f.input :treatable_id, collection: [], include_blank: true, label: false, input_html: { class: "form-control form-control-sm s-12 h-25 data_treatable_id", data: { action: "change->treatments-form#enabledInputs" } }
+      - if @desease.present?
+        .form-group
+          .row.mt-1
+            .col-lg-10
+              b.s-14.ml-1 Cultivo
+          .row.mt-2
+            .col-lg-10
+              = f.input :crop_id, collection: Crop.joins(:deseases).where('deseases.id = ?', @desease.id), include_blank: true, label: false, input_html: { class: "form-control form-control-sm s-12 h-25" }
+        .form-group
+          .row.mt-2
+            .col-lg-10
+              = f.input :treatable_type, collection: @options.map {|o| [o[:name], o[:value]]}, selected: "Desease", disabled: true, label: "Tipo", input_html: { class: "form-control form-control-sm s-12 h-25 data_treatable_type" }
+              input type="hidden" name="treatment[treatable_type]" value="Desease"
+        .form-group
+          .row.mt-0
+            .col-lg-10
+              = f.input :treatable_id, collection: Desease.all, selected: @desease.id, value: @desease.id, disabled: true, label: "Enfermedad", input_html: { class: "form-control form-control-sm s-12 h-25 data_treatable_id" }    
+              input type="hidden" name="treatment[treatable_id]" value="#{@desease.id}"
+      - elsif @pest.present? 
+        .form-group
+          .row.mt-1
+            .col-lg-10
+              b.s-14.ml-1 Cultivo
+          .row.mt-2
+            .col-lg-10
+              = f.input :crop_id, collection: Crop.joins(:pests).where('pests.id = ?', @pest.id), include_blank: true, label: false, input_html: { class: "form-control form-control-sm s-12 h-25" }
+        .form-group
+          .row.mt-2
+            .col-lg-10
+              = f.input :treatable_type, collection: @options.map {|o| [o[:name], o[:value]]}, selected: "Pest", disabled: true, label: "Tipo", input_html: { class: "form-control form-control-sm s-12 h-25 data_treatable_type" }
+        .form-group
+          .row.mt-0
+            .col-lg-10
+              = f.input :treatable_id, collection: Pest.all, selected: @pest.id, disabled: true, label: "Plaga", input_html: { class: "form-control form-control-sm s-12 h-25 data_treatable_id" }      
+      - else 
+        .form-group
+          .row.mt-1
+            .col-lg-10
+              b.s-14.ml-1 Cultivo
+          .row.mt-2
+            .col-lg-10
+              = f.input :crop_id, collection: Crop.all, include_blank: true, label: false, input_html: { class: "form-control form-control-sm s-12 h-25" , data: { target: "treatments-form.cropSelect", action: "change->treatments-form#enabledTypeSelect"} }
+        .form-group
+          .row.mt-1
+            .col-lg-10
+              b.s-14.ml-1 Tipo
+          .row.mt-2
+            .col-lg-10
+              = f.input :treatable_type, collection: @options.map {|o| [o[:name], o[:value]]}, disabled: true, label: false, include_blank: true, input_html: { class: "form-control form-control-sm s-12 h-25 data_treatable_type", data: { target: "treatments-form.treatmentType", action: "change->treatments-form#filterTreatableType"} }
+        .form-group
+          .row.mt-1
+            .col-lg-10
+              b.s-14.ml-1
+          .row.mt-2
+            .col-lg-10
+              = f.input :treatable_id, collection: [], include_blank: true, label: false, input_html: { class: "form-control form-control-sm s-12 h-25 data_treatable_id", data: { action: "change->treatments-form#enabledInputs" } }
     .form-group
       .row.mt-1
         .col-lg-10
@@ -54,7 +92,7 @@
       .row.mt-2
         .col-lg-10
           = f.rich_text_area :application_instructions, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
-    - if !@is_edit.present?
+    - if !@is_edit.present? && @supply.present?
       = f.fields_for :treatment_suppliess do |treatment_supply|
         = render 'recommended_doses', f: treatment_supply
         .row

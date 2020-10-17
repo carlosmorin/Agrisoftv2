@@ -9,7 +9,10 @@ export default class extends Controller {
   ]
 
   initialize() {
-    console.log(this.foliarQuantityTarget)
+    // console.log(this.foliarQuantityTarget)
+    // console.log(this);
+    // console.log($(this.deseaseIdTarget).val());
+    // console.log(this.pestIdTarget);
     // $(this.foliarQuantityTarget).prop("disabled", true);
     // $(this.foliarUnitTarget).prop("disabled", true);
     // $(this.irrigationQuantityTarget).prop("disabled", true);
@@ -17,7 +20,6 @@ export default class extends Controller {
     // console.log(this.formGroupTarget)
     // $(this.foliarQuantityTarget)
     // $(this.formGroupTarget).addClass("d-none")
-    this.crop_id = null
     // console.log($('select'))
     // let crops = []
     // $.ajax({
@@ -142,8 +144,4 @@ export default class extends Controller {
     // container.html(html)
   }
  
-  createTreatments() {
-    // console.log("create");
-    // console.log(containerTarget);
-  }
 } 
