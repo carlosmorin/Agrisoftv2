@@ -70,6 +70,7 @@ Rails.application.routes.draw do
       resources :hosts
       resources :damages
       resources :pests do
+        resources :treatments
         resources :hosts
         resources :damages
         member do 
@@ -77,6 +78,7 @@ Rails.application.routes.draw do
         end
       end
       resources :deseases do
+        resources :treatments
         resources :hosts
         resources :damages
         member do

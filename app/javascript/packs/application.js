@@ -8,10 +8,14 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("admin-lte")
-require('jquery')
+require("bootstrap");
+require("jquery");
 import "bootstrap"
 import "../stylesheets/application"
 import 'cocoon-js'
+import $ from 'jquery';
+global.$ = jQuery;
+
 
 // Fontaweomse
 import '@fortawesome/fontawesome-free/js/fontawesome'

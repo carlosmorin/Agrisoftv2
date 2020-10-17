@@ -31,8 +31,13 @@ section#general.s-12
                       tr
                         td = treatment[:id]
                         td = treatment[:treatable_type_name] == "Pest" ? "PLAGA" : "ENFERMEDAD"
-                        td = treatment[:crop_name]
-                        td = treatment[:treatable_type]&.upcase
+                        td 
+                          = link_to treatment[:crop_name]&.upcase, config_production_crop_path(treatment[:crop_id], tab: :general) 
+                        td
+                          - if treatment[:treatable_type_name] == "Pest"
+                            = link_to treatment[:treatable_type]&.upcase, config_production_pest_path(treatment[:treatable_id], tab: :treatments)
+                          - else
+                            = link_to treatment[:treatable_type]&.upcase, config_production_desease_path(treatment[:treatable_id], tab: :treatments)
                         td = treatment[:supply_count]
                         td = treatment[:foliar_quantity]
                         td = ProductionUnit.find(treatment[:foliar_unit]).name

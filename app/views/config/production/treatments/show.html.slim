@@ -17,11 +17,24 @@ section.content
           / = link_to :back, class: 'btn s-12 btn-default btn-sm mr-2' do
           /     i.fas.fa-chevron-left.s-12.mr-2
           /     span Volver
-          = link_to edit_config_production_treatment_path(@treatment, supply_id: @supply.id), class: "btn btn-sm btn-success s-12 mr-2" do
-            svg.feather.feather-edit.mx-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-              path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
-              path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
-            span Editar
+          - if @supply.present?
+            = link_to edit_config_production_treatment_path(@treatment, supply_id: @supply.id), class: "btn btn-sm btn-success s-12 mr-2" do
+              svg.feather.feather-edit.mx-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+              span Editar
+          - if @desease.present?
+            = link_to edit_config_production_treatment_path(@treatment, desease_id: @desease.id), class: "btn btn-sm btn-success s-12 mr-2" do
+              svg.feather.feather-edit.mx-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+              span Editar
+          - if @pest.present?
+            = link_to edit_config_production_treatment_path(@treatment, pest_id: @pest.id), class: "btn btn-sm btn-success s-12 mr-2" do
+              svg.feather.feather-edit.mx-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+              span Editar                            
 
       .col-lg-12
         = render "shared/alerts"

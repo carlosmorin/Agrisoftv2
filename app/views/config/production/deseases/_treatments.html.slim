@@ -1,0 +1,131 @@
+/ section#general.s-12
+/   .row
+/     .col-12.text-left
+/       = link_to  new_config_production_desease_treatment_path(@desease), class: 'btn btn-sm btn-primary' do
+/         i.fas.fa-plus-circle.mr-1
+/         span Nuevo Tratamiento
+/       .row
+/         .col-12
+/           .row.mt-3
+/             .col-12
+/               table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+/                 thead
+/                   tr.bg-light-gray
+/                     th #
+/                     th Cultivo
+/                     th Insumos Aplicados
+/                     th Cantidad Foliar
+/                     th Unidad Foliar
+/                     th Cantidad Riego
+/                     th Unidad Riego
+/                     th.text-center colspan="2" style=("width: 12%") Acciónes
+/                 tbody#tbody.s-13
+/                   - if @treatments.empty?
+/                     tr
+/                       td.text-center colspan="9"
+/                         = link_to 'Nuevo registro', new_config_production_desease_treatment_path(@desease), class: "s-12" 
+/                   - else
+/                     - @treatments.each do |treatment|
+/                       tr
+/                         td = treatment[:id]
+/                         td = treatment[:crop_name]
+/                         td = treatment[:supply_count]
+/                         td = treatment[:foliar_quantity]
+/                         td = ProductionUnit.find(treatment[:foliar_unit]).name
+/                         td = treatment[:irrigation_quantity]
+/                         td = ProductionUnit.find(treatment[:irrigation_unit]).name
+/                         td.text-center.pt-2
+/                           .btn-group
+/                             = link_to config_production_desease_treatment_path(id: treatment[:id], desease_id: @desease.id, tab: :general), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+/                               svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+/                                 path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+/                                 circle cx="12" cy="12" r="3"
+/                             = link_to edit_config_production_desease_treatment_path(id: treatment[:id], desease_id: @desease.id), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+/                               svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+/                                 path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+/                              path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+section#general.s-12
+  .row
+    .col-12.text-left
+      = link_to  new_config_production_desease_treatment_path(@desease), class: 'btn btn-sm btn-primary' do
+        i.fas.fa-plus-circle.mr-1
+        span Nuevo Tratamiento
+  .row
+    .col-12
+      .row.mt-3
+        .col-12
+          - if @treatments.empty?
+            = link_to 'Nuevo registro', new_config_production_desease_treatment_path(@desease), class: "s-12" 
+          - else
+            - @treatments.each do |treatment|
+              #accordionExample.accordion
+                .card
+                  #headingOne.card-header
+                    .content.d-flex
+                      .row.w-100.d-flex
+                        .col-1
+                          .row.w-100
+                            .col-12
+                              span #
+                            .col-12
+                              span = treatment[:id] 
+                        .col-2
+                          .row.w-100
+                            .col-12
+                              span Cultivo
+                            .col-12
+                              span = treatment[:crop_name] 
+                        .col-2
+                          .row.w-100
+                            .col-12
+                              span Insumos Applicados
+                            .col-12
+                              span = treatment[:supply_count]
+                        .col-2.ml-auto
+                          .row.w-100.m-0.p-0
+                            .col-12.m-0.p-0
+                              button.btn.btn-link.btn-block.text-left.text-right aria-controls="collapseOne" aria-expanded="true" data-target="#treatmentCollapse#{treatment[:id]}" data-toggle="collapse" type="button" 
+                                | Ver insumos                                                                                                    
+                  .collapse aria-labelledby="headingOne" data-parent="#accordionExample" id="treatmentCollapse#{treatment[:id]}"
+                    .card-body
+                      .row
+                        .col-12
+                          .row.mt-3
+                            .col-12
+                              table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+                                thead
+                                  tr.bg-light-gray
+                                    th #
+                                    th Insumo
+                                    th Cantidad Foliar
+                                    th Cantidad Riego
+                                    th Unidad Riego
+                                    th.text-center colspan="2" style=("width: 12%") Acciónes
+                                tbody#tbody.s-13
+                                  - if treatment[:supplies].empty?
+                                    tr
+                                      td.text-center colspan="9"
+                                        = link_to 'Nuevo registro', new_config_production_desease_treatment_path(@desease), class: "s-12" 
+                                  - else
+                                    - treatment[:supplies].each do |supply|
+                                      tr
+                                        td = supply[:id]
+                                        td 
+                                          = link_to supply[:name]&.upcase, config_production_supply_path(supply[:id], tab: :treatments)                                        
+                                        td = supply[:foliar_quantity]
+                                        td = ProductionUnit.find(supply[:foliar_unit]).name
+                                        td = supply[:irrigation_quantity]
+                                        td = ProductionUnit.find(supply[:irrigation_unit]).name
+                                        td.text-center.pt-2
+                                          .btn-group
+                                            = link_to config_production_desease_treatment_path(id: treatment[:id], desease_id: @desease.id, tab: :general), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                                              svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                                                path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+                                                circle cx="12" cy="12" r="3"
+                                            = link_to edit_config_production_desease_treatment_path(id: treatment[:id], desease_id: @desease.id), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+                                              svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                                                path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                                            path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+
+javascript:
+  $('.collapse').collapse()

@@ -1,6 +1,6 @@
 class Config::Production::TreatmentsController < ApplicationController
   before_action :find_treatment, only: %i[show edit update destroy]
-  before_action :find_supply, only: %i[new edit show]
+  before_action :find_objects, only: %i[new edit show]
   add_breadcrumb "Production", :config_production_root_path
   # add_breadcrumb "Tratamientos", :config_production_treatments_path
 
@@ -17,7 +17,8 @@ class Config::Production::TreatmentsController < ApplicationController
   end
 
   def show
-    add_breadcrumb "Insumo", config_production_supply_url(@supply, tab: :treatments)
+    # binding.pry
+    add_custom_breadcrumb
     add_breadcrumb "Detalle del Tratamiento"
   end
 
@@ -78,17 +79,25 @@ class Config::Production::TreatmentsController < ApplicationController
   end
 
   def edit
-    add_breadcrumb "Insumo", config_production_supply_url(@supply, tab: :treatments)
+    add_custom_breadcrumb
     add_breadcrumb "Editar"
     @is_edit = true
   end
 
   def update
     # WORK ON THIS METHOD NEXT 
-    binding.pry
+    # binding.pry
+    param_name = params[:supply_id].present? ? :supply_id : params[:desease_id].present? ? :desease_id : :pest_id
+    custom_param = if params[:supply_id].present?
+                      params[:supply_id]
+                    elsif params[:desease_id].present?
+                      params[:desease_id]
+                    else
+                      params[:pest_id]
+                    end
     if @treatment.update(treatment_params)
       flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Tratamiento actualizado correctamente"
-      redirect_to config_production_treatment_url(@treatment, tab: :general, supply_id: params[:supply_id])
+      redirect_to config_production_treatment_url(@treatment, tab: :general, "#{param_name}": custom_param)
     else
       render :edit
     end
@@ -137,7 +146,15 @@ class Config::Production::TreatmentsController < ApplicationController
     # binding.pry
   end
 
-  def find_supply
+  def find_objects
     @supply = Supply.find(params[:supply_id]) if params[:supply_id]
+    @desease = Desease.find(params[:desease_id]) if params[:desease_id]
+    @pest = Pest.find(params[:pest_id]) if params[:pest_id]
+  end
+
+  def add_custom_breadcrumb
+    add_breadcrumb "Insumo", config_production_supply_url(@supply, tab: :treatments) if @supply.present?
+    add_breadcrumb "Enfermedad", config_production_desease_url(@desease, tab: :treatments) if @desease.present?
+    add_breadcrumb "Plaga", config_production_pest_url(@pest, tab: :treatments) if @pest.present?
   end
 end

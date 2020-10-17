@@ -1,6 +1,9 @@
 class Treatment < ApplicationRecord
   # attr_accessor :crop_id
   belongs_to :treatable, polymorphic: true
+  belongs_to :crop
+
+  delegate :name, to: :crop, prefix: "crop", allow_nil: true
   has_many :treatment_supplies, dependent: :destroy
 
   has_rich_text :application_instructions

@@ -1,5 +1,5 @@
 class Config::Production::SuppliesController < ApplicationController
-  before_action :set_supply, only: %i[show edit update destroy]
+  before_action :find_supply, only: %i[show edit update destroy]
     
   add_breadcrumb "Produccion", :config_production_root_path
   add_breadcrumb "Insumos", :config_production_supplies_path
@@ -71,7 +71,7 @@ class Config::Production::SuppliesController < ApplicationController
       :irrigation_quantity, :irrigation_unit])
   end 
 
-  def set_supply
+  def find_supply
     # id = params[:id].present? ? params[:id] : params[:crop_id]
     @supply = Supply.find(params[:id])
     if params[:tab] == "treatments"
@@ -90,6 +90,8 @@ class Config::Production::SuppliesController < ApplicationController
           irrigation_quantity: treatment_supply.irrigation_quantity,
           irrigation_unit: treatment_supply.irrigation_unit,
           crop_name: Crop.find(treatment_supply.treatment.crop_id).name,
+          crop_id: treatment_supply.treatment.crop_id,
+          treatable_id: treatment_supply.treatment.treatable_id,
           treatable_type: name,
           treatable_type_name: treatable_type,
           supply_count: treatment_supply.treatment.supplies_count

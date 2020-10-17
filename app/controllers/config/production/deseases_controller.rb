@@ -79,6 +79,40 @@ class Config::Production::DeseasesController < ApplicationController
 
   def find_desease
     @desease = Desease.find(params[:id])
+    if params[:tab] == "treatments"
+      treatments = @desease.treatments
+      @treatments = []
+      treatments.each do |t|
+        hash = {
+          id: t.id,
+          crop_name: t.crop_name,
+          supply_count: t.treatment_supplies.size,
+          supplies: build_supply_hash(t.treatment_supplies)
+        }
+        t.destroy unless t.treatment_supplies.size > 0
+        @treatments.push(hash) if t.treatment_supplies.size > 0
+      end
+    end
+  end
+
+  def build_supply_hash(treatment_supplies)
+    delete_non_existing_supplies(treatment_supplies)
+    treatment_supplies.flat_map do |treatment_supply|
+      {
+        id: treatment_supply.supply.id,
+        name: treatment_supply.supply_name,
+        foliar_quantity: treatment_supply.foliar_quantity,
+        foliar_unit: treatment_supply.foliar_unit,
+        irrigation_quantity: treatment_supply.irrigation_quantity,
+        irrigation_unit: treatment_supply.irrigation_unit,
+      }
+    end
+  end 
+
+  def delete_non_existing_supplies(treatment_supplies)
+    treatment_supplies.each do |treatment_supply|
+      treatment_supply.destroy unless Supply.all.ids.include?(treatment_supply.supply_id)
+    end
   end
 
   def set_crop
