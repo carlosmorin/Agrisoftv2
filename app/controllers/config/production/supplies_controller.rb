@@ -6,7 +6,7 @@ class Config::Production::SuppliesController < ApplicationController
 
   def index
     @supplies = Supply.paginate(page: params[:page], per_page: 16)
-    # binding.pry
+    # # binding.pry
     search if params[:q].present?
   end
 
@@ -21,12 +21,12 @@ class Config::Production::SuppliesController < ApplicationController
   end
 
   def show
-    # binding.pry
+    # # binding.pry
     add_breadcrumb "Detalle del Insumo"   
   end
 
   def create
-    # binding.pry
+    # # binding.pry
   	@supply = Supply.new(supply_params)
     if @supply.save
       flash[:notice] = "Insumo #{ @supply.name } actualizado correctamente"
@@ -84,7 +84,10 @@ class Config::Production::SuppliesController < ApplicationController
         # binding.pry
         hash = {
           id: treatment_supply.treatment.id,
-          recommended_dose: treatment_supply.recommended_dose,
+          foliar_quantity: treatment_supply.foliar_quantity,
+          foliar_unit: treatment_supply.foliar_unit,
+          irrigation_quantity: treatment_supply.irrigation_quantity,
+          irrigation_unit: treatment_supply.irrigation_unit,
           crop_name: Crop.find(treatment_supply.treatment.crop_id).name,
           treatable_type: name,
           treatable_type_name: treatable_type,
@@ -92,7 +95,7 @@ class Config::Production::SuppliesController < ApplicationController
         }
         @treatments.push(hash)
       end
-      # binding.pry
+      # # binding.pry
     end
   end
 end

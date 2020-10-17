@@ -13,8 +13,6 @@ class Supply < ApplicationRecord
   has_many :presentation_supplies, dependent: :destroy
   has_many :presentations, through: :presentation_supplies
 
-  has_many :treatments, -> { where(supply_id: id) }
-
-  accepts_nested_attributes_for :active_ingredient_supplies
-  accepts_nested_attributes_for :presentation_supplies
+  accepts_nested_attributes_for :active_ingredient_supplies, allow_destroy: true
+  accepts_nested_attributes_for :presentation_supplies, allow_destroy: true
 end

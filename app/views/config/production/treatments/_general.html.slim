@@ -30,9 +30,10 @@ section#general.s-12
             - treatment_supplies.each do |treatment_supply|
               tr
                 td = treatment_supply.id
-                td = treatment_supply.supply_name
-                td = treatment_supply.foliar_quantity + ' ' + treatment_supply.foliar_unit
-                td = treatment_supply.irrigation_quantity + ' ' + treatment_supply.irrigation_unit
+                td 
+                  = link_to treatment_supply.supply_name.upcase, config_production_supply_path(treatment_supply.supply_id, tab: :treatments)
+                td = treatment_supply.foliar_quantity.to_s + ' -- ' + ProductionUnit.find(treatment_supply.foliar_unit).name
+                td = treatment_supply.irrigation_quantity.to_s + ' --  ' + ProductionUnit.find(treatment_supply.irrigation_unit).name
 hr
 section#general.s-12.mt-5
 	.col-10

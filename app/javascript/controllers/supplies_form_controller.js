@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["categoryId", "code"]
 
   initialize() {
-    $('#new_supply').on('submit', (e) => this.createTreatments(e))
+    // $('#new_supply').on('submit', (e) => this.createTreatments(e))
   }
   
   generateCode(e) {

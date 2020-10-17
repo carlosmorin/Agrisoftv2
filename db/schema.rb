@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_08_004836) do
+ActiveRecord::Schema.define(version: 2020_10_17_171514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -827,9 +827,12 @@ ActiveRecord::Schema.define(version: 2020_10_08_004836) do
   create_table "treatment_supplies", force: :cascade do |t|
     t.bigint "treatment_id", null: false
     t.integer "supply_id"
-    t.jsonb "recommended_dose"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "foliar_quantity"
+    t.string "foliar_unit"
+    t.decimal "irrigation_quantity"
+    t.string "irrigation_unit"
     t.index ["supply_id"], name: "index_treatment_supplies_on_supply_id"
     t.index ["treatment_id"], name: "index_treatment_supplies_on_treatment_id"
   end

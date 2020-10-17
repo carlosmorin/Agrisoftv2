@@ -30,14 +30,14 @@ section#general.s-12
                     - @treatments.each do |treatment|
                       tr
                         td = treatment[:id]
-                        td = treatment[:treatable_type_name] == "Pest" ? "Plaga" : "Enfermedad"
+                        td = treatment[:treatable_type_name] == "Pest" ? "PLAGA" : "ENFERMEDAD"
                         td = treatment[:crop_name]
-                        td = treatment[:treatable_type]
+                        td = treatment[:treatable_type]&.upcase
                         td = treatment[:supply_count]
-                        td = treatment[:recommended_dose]["foliar_quantity"]
-                        td = treatment[:recommended_dose]["foliar_unit"]
-                        td = treatment[:recommended_dose]["irrigation_quantity"]
-                        td = treatment[:recommended_dose]["irrigation_unit"]
+                        td = treatment[:foliar_quantity]
+                        td = ProductionUnit.find(treatment[:foliar_unit]).name
+                        td = treatment[:irrigation_quantity]
+                        td = ProductionUnit.find(treatment[:irrigation_unit]).name
                         td.text-center.pt-2
                           .btn-group
                             = link_to config_production_supply_treatment_path(id: treatment[:id], supply_id: @supply.id, tab: :general), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do

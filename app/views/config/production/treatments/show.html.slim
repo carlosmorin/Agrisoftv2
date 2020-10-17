@@ -14,9 +14,9 @@ section.content
         h3 = @treatment.treatable_name.upcase
       .col-md-4.text-right
         .btn-group
-          = link_to :back, class: 'btn s-12 btn-default btn-sm mr-2' do
-              i.fas.fa-chevron-left.s-12.mr-2
-              span Volver
+          / = link_to :back, class: 'btn s-12 btn-default btn-sm mr-2' do
+          /     i.fas.fa-chevron-left.s-12.mr-2
+          /     span Volver
           = link_to edit_config_production_treatment_path(@treatment), class: "btn btn-sm btn-success s-12 mr-2" do
             svg.feather.feather-edit.mx-1 fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
               path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
