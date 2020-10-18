@@ -32,10 +32,8 @@ module Config
 
       def update
         if params[:supply_id].present?
-          @active_ingredient.update!(active_ingredients_params)
-          # binding.pry
-          @active_ingredient_supply.update!(active_ingredient_supply_params)
-          # binding.pry
+          @active_ingredient.update!(active_ingredients_params)          
+          @active_ingredient_supply.update!(active_ingredient_supply_params)          
           flash[:notice] = "El Ingrediente activo fue actualizado correctamente."
           return redirect_to config_production_supply_url(@supply.id, tab: :active_ingredients)
         end

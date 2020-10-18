@@ -23,7 +23,6 @@ module Config
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Area creada correctamente"
           redirect_to new_config_production_area_path
         else
-          # binding.pry
           render :new
         end
       end

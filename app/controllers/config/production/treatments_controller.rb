@@ -77,10 +77,12 @@ class Config::Production::TreatmentsController < ApplicationController
   end
 
   def treatment_exist
-    # binding.pry
     @treatment = Treatment.find_by(treatable_id: params[:treatable_id], treatable_type: params[:treatable_type], crop_id: params[:crop_id])
     errors = [""]
-    errors = ["Este tratamiento ya existe"] unless @treatment.nil?
+    if !!@treatment
+      type = @treatment.treatable_type == "Pest" ? "plaga" : "enfermedad"
+      errors = ["Ya existe un tratamiento con la combinacion de cultivo: #{@treatment.crop_name}, #{type}: #{@treatment.treatable_name}"]
+    end
     render json: errors
   end
 

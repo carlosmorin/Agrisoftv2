@@ -119,7 +119,7 @@ export default class extends Controller {
 
           setTimeout(() => {
             $('.remove-alert').remove();
-          }, 3000);
+          }, 10000);
         }
       },
       error: (xhr, textStatus, errorThrown) => {

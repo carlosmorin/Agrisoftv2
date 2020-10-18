@@ -22,8 +22,7 @@ module Config
         if @presentation.save
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Presentacion creada correctamente"
           redirect_to new_config_production_presentation_path
-        else
-          # binding.pry
+        else          
           render :new
         end
       end
@@ -36,13 +35,10 @@ module Config
         add_breadcrumb "Detalle de la Presentacion"
       end
 
-      def update
-        # binding.pry
+      def update        
         if params[:supply_id].present?
-          @presentation.update!(presentation_params)
-          # binding.pry
-          @presentation_supply.update!(presentation_supply_params)
-          # binding.pry
+          @presentation.update!(presentation_params)          
+          @presentation_supply.update!(presentation_supply_params)          
           flash[:notice] = "La Presentacion fue actualizada correctamente."
           return redirect_to config_production_supply_url(@supply.id, tab: :presentations)
         end
@@ -68,13 +64,11 @@ module Config
         params.require(:presentation).require(:presentation_supply).permit(:price, :price_to_credit)
       end
 
-      def find_presentation
-        # binding.pry
+      def find_presentation        
         if params[:supply_id].present?
           @supply = Supply.find(params[:supply_id]) 
           @presentation_supply = PresentationSupply.where(supply_id: params[:supply_id], presentation_id: params[:id]).first
-        end
-        # binding.pry
+        end        
         @presentation = Presentation.find(params[:id])
         @obj = @presentation
       end
