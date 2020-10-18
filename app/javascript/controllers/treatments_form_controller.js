@@ -2,7 +2,7 @@ import { Controller } from 'stimulus';
 
 export default class extends Controller {
   static targets = [
-    "treatmentType", "cropSelect", 
+    "treatmentType", "cropSelect", "treatableId",
     "recommendedDose", "foliarQuantity", 
     "foliarUnit", "irrigationQuantity",
     "irrigationUnit"
@@ -92,11 +92,41 @@ export default class extends Controller {
     $(this.supplySelectTarget).prop('disabled', false);
   }
 
-  enabledInputs() {
-    $(this.foliarQuantityTarget).prop("disabled", false);
-    $(this.foliarUnitTarget).prop("disabled", false);
-    $(this.irrigationQuantityTarget).prop("disabled", false);
-    $(this.irrigationUnitTarget).prop("disabled", false);
+  // enabledInputs() {
+  //   $(this.foliarQuantityTarget).prop("disabled", false);
+  //   $(this.foliarUnitTarget).prop("disabled", false);
+  //   $(this.irrigationQuantityTarget).prop("disabled", false);
+  //   $(this.irrigationUnitTarget).prop("disabled", false);
+  // }
+
+  treatmentExist() {
+    $.ajax({
+      type: 'GET',
+      url: `/treatments/treatment_exist`,
+      data: {
+        treatable_id: $(this.treatableIdTarget).val(),
+        treatable_type: $(this.treatmentTypeTarget).val(),
+        crop_id: $(this.cropSelectTarget).val()
+      },
+      success: (data) => {
+        if (data[0] !== "") {
+          let html = `
+            <div class="callout callout-danger pb-2 pt-2 bg-light-red c-red s-14 remove-alert">
+              ${data[0]}
+            </div>  
+          `
+          $('.container').last().find('.row').first().after(html)
+
+          setTimeout(() => {
+            $('.remove-alert').remove();
+          }, 3000);
+        }
+      },
+      error: (xhr, textStatus, errorThrown) => {
+        console.log(xhr);
+        
+      }
+    })
   }
 
   showRecommendedDoses(e) {
@@ -143,5 +173,4 @@ export default class extends Controller {
     // console.log(container);
     // container.html(html)
   }
- 
 } 

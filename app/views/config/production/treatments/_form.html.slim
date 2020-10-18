@@ -86,7 +86,7 @@
               b.s-14.ml-1
           .row.mt-2
             .col-lg-10
-              = f.input :treatable_id, collection: [], include_blank: true, label: false, input_html: { class: "form-control form-control-sm s-12 h-25 data_treatable_id", data: { action: "change->treatments-form#enabledInputs" } }
+              = f.input :treatable_id, collection: [], include_blank: true, label: false, input_html: { class: "form-control form-control-sm s-12 h-25 data_treatable_id", data: { action: "change->treatments-form#treatmentExist", target: "treatments-form.treatableId" } }
     .form-group
       .row.mt-1
         .col-lg-10

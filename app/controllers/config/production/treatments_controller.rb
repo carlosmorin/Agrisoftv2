@@ -1,8 +1,7 @@
 class Config::Production::TreatmentsController < ApplicationController
   before_action :find_treatment, only: %i[show edit update destroy]
   before_action :find_objects, only: %i[new edit show]
-  add_breadcrumb "Production", :config_production_root_path
-  # add_breadcrumb "Tratamientos", :config_production_treatments_path
+  add_breadcrumb "Production", :config_production_root_path  
 
   def index
     @index_facade = Treatments::IndexFacade.new(params)
@@ -10,68 +9,31 @@ class Config::Production::TreatmentsController < ApplicationController
 
   def new
     add_custom_breadcrumb
-    add_breadcrumb "Nuevo"
-    # binding.pry
+    add_breadcrumb "Nuevo"    
     @desease = Desease.find(params[:desease_id]) if params[:desease_id].present?
     @pest = Pest.find(params[:pest_id]) if params[:pest_id].present?
-    @is_supply_created ||= params[:create] || false
-    # @show_destroy ||= true
+    @is_supply_created ||= params[:create] || false    
     @treatment = Treatment.new
   end
 
-  def show
-    # binding.pry
+  def show    
     add_custom_breadcrumb
     add_breadcrumb "Detalle del Tratamiento"
   end
 
   def create
-    @treatment = Treatment.new(crop_id: treatment_params[:crop_id])
-    @treatment.treatable_id = treatment_params[:treatable_id]
-    @treatment.treatable_type = treatment_params[:treatable_type]
-    @treatment.application_instructions = treatment_params[:application_instructions]
-    # binding.pry
+    @treatment = Treatment.new(treatment_params.except(:supply_id, :treatment_suppliess))
     if @treatment.save
-      # binding.pry
-      if !!treatment_params[:treatment_supplies_attributes] 
-        # # binding.pry
-        treatment_params[:treatment_supplies_attributes].values.each do |treatment_supply|
-          # # binding.pry
-          @supply = @treatment.treatment_supplies.new
-          @supply.supply_id = treatment_supply[:supply_id]
-          # @supply.crop_id = treatment_supply[:crop_id]
-          @supply.foliar_quantity = treatment_supply[:foliar_quantity]
-          @supply.foliar_unit = treatment_supply[:foliar_unit]
-          @supply.irrigation_quantity = treatment_supply[:irrigation_quantity]
-          @supply.irrigation_unit = treatment_supply[:irrigation_unit]
-          # # binding.pry
-          @supply.save
-          # binding.pry
-        end
-      end
-      if !!treatment_params[:treatment_suppliess] 
-        # # binding.pry
-        @supply = @treatment.treatment_supplies.new
-        @supply.supply_id = treatment_params[:supply_id]
-        # @supply.crop_id = treatment_params[:treatment_suppliess][:crop_id]
-        @supply.foliar_quantity = treatment_params[:treatment_suppliess][:foliar_quantity]
-        @supply.foliar_unit = treatment_params[:treatment_suppliess][:foliar_unit]
-        @supply.irrigation_quantity = treatment_params[:treatment_suppliess][:irrigation_quantity]
-        @supply.irrigation_unit = treatment_params[:treatment_suppliess][:irrigation_unit]
-        # # binding.pry
-        @supply.save
-        # binding.pry
+      if !!treatment_params[:treatment_suppliess]       
+        add_extra_treatment_supply     
         return redirect_to config_production_supply_url(treatment_params[:supply_id], tab: :treatments)
-      end
-      # binding.pry
+      end  
       flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Tratamiento creado correctamente"
       return redirect_to config_production_desease_path(params[:desease_id], tab: :treatments) if params[:desease_id].present?
       return redirect_to config_production_pest_path(params[:pest_id], tab: :treatments) if params[:pest_id].present?
-      redirect_to config_production_treatment_url(@treatment, tag: :general)
-    else
-      # binding.pry
-      return redirect_to new_config_production_desease_treatment_path(desease_id: params[:desease_id]) if params[:desease_id].present?
-      render :new
+      return redirect_to config_production_treatment_url(@treatment, tag: :general)
+    else    
+      redirect_to_current_resource
     end
   end
 
@@ -81,9 +43,7 @@ class Config::Production::TreatmentsController < ApplicationController
     @is_edit = true
   end
 
-  def update
-    # WORK ON THIS METHOD NEXT 
-    # binding.pry
+  def update    
     param_name = params[:supply_id].present? ? :supply_id : params[:desease_id].present? ? :desease_id : :pest_id
     custom_param = if params[:supply_id].present?
                       params[:supply_id]
@@ -100,8 +60,7 @@ class Config::Production::TreatmentsController < ApplicationController
     end
   end
 
-  def destroy
-    # binding.pry
+  def destroy    
     if params[:desease_id].present?
       @desease = Desease.find(params[:desease_id])
       @desease.treatments.where(id: params[:id]).each { |treatment| treatment.destroy }
@@ -113,9 +72,16 @@ class Config::Production::TreatmentsController < ApplicationController
     end
 
     if params[:supply_id].present?
-      # @desease = Desease.find(params[:desease_id])
-      # @desease.treatments.where(id: params[:id]).first.destroy
+      @treatment.destroy         
     end
+  end
+
+  def treatment_exist
+    # binding.pry
+    @treatment = Treatment.find_by(treatable_id: params[:treatable_id], treatable_type: params[:treatable_type], crop_id: params[:crop_id])
+    errors = [""]
+    errors = ["Este tratamiento ya existe"] unless @treatment.nil?
+    render json: errors
   end
 
   private
@@ -153,8 +119,7 @@ class Config::Production::TreatmentsController < ApplicationController
     @treatment = Treatment.find(params[:id])
     @treatment.treatment_supplies.each do |treatment_supply|
       treatment_supply.destroy unless Supply.all.ids.include?(treatment_supply.supply_id)
-    end
-    # binding.pry
+    end    
   end
 
   def find_objects
@@ -167,5 +132,25 @@ class Config::Production::TreatmentsController < ApplicationController
     add_breadcrumb "Insumo", config_production_supply_url(@supply, tab: :treatments) if @supply.present?
     add_breadcrumb "Enfermedad", config_production_desease_url(@desease, tab: :treatments) if @desease.present?
     add_breadcrumb "Plaga", config_production_pest_url(@pest, tab: :treatments) if @pest.present?
+  end
+
+  def set_supply_fields(treatment_supply)
+    @supply.foliar_quantity = treatment_supply[:foliar_quantity]
+    @supply.foliar_unit = treatment_supply[:foliar_unit]
+    @supply.irrigation_quantity = treatment_supply[:irrigation_quantity]
+    @supply.irrigation_unit = treatment_supply[:irrigation_unit]   
+  end
+
+  def redirect_to_current_resource
+    return redirect_to new_config_production_desease_treatment_path(desease_id: params[:desease_id]) if params[:desease_id].present?
+    return redirect_to new_config_production_pest_treatment_path(pest_id: params[:pest_id]) if params[:pest_id].present?
+    return redirect_to new_config_production_supply_treatment_path(supply_id: params[:supply_id]) if params[:supply_id].present?
+  end
+
+  def add_extra_treatment_supply     
+    @supply = @treatment.treatment_supplies.new
+    @supply.supply_id = treatment_params[:supply_id]  
+    set_supply_fields(treatment_params[:treatment_suppliess])                
+    @supply.save        
   end
 end

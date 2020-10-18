@@ -20,6 +20,9 @@ Rails.application.routes.draw do
     get '/:id/get_deseases', to: 'crops#get_deseases'
   end
 
+  scope module: 'config/production', path: 'treatments' do
+    get '/treatment_exist', to: 'treatments#treatment_exist'
+  end
 
   namespace :config do
     resources :taxes
