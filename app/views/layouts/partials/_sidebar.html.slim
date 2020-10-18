@@ -14,27 +14,32 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
       ul.nav.nav-pills.nav-sidebar.flex-column data-accordion="false" data-widget="treeview" role="menu" 
         li class=" nav-item has-treeview  #{current_nav_item?(request.fullpath, 'packing')} " 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
-            i.fas.fa-box.s-15.mr-2.ml-1
-            p.s-14 EMPAQUE
-            i.fa.fa-chevron-left.right style="font-size: 12px;"
+            == pallet_box_icon(color: 'light-gray')
+            p.s-14.ml-2 EMPAQUE
+            span.right
+              == circle_down_icon(size: 12, color: 'light-gray')
           ul.nav.nav-treeview
             li.nav-item
               = link_to shipments_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(shipments_path)}" do
-                i.fas.fa-circle.s-10.mr-2
+                == circle_icon(size: 10, color: 'light-gray')
+                
                 p.s-14.text-normal Gestionar Embarques
         li class=" nav-item has-treeview  #{current_nav_item?(request.fullpath, 'logistic')} " 
           a.nav-link.py-1.pl-2.mb-1 href="#" 
-            i.fas.fa-pallet.s-15.mr-2.ml-0
-            p.s-14 LOGISTICA
-            i.fa.fa-chevron-left.right style="font-size: 12px;"
+            == short_truck_icon(color: 'light-gray')
+            p.s-14.ml-2 LOGISTICA
+            span.right
+              == circle_down_icon(size: 12, color: 'light-gray')
           ul.nav.nav-treeview
             li.nav-item
               = link_to logistic_carriers_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(logistic_carriers_path)}" do
-                i.fas.fa-circle.s-10.mr-2
+                == circle_icon(size: 10, color: 'light-gray')
+                
                 p.s-14 Gestionar Transportistas
             li.nav-item
               = link_to logistic_freights_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(logistic_freights_path)}" do
-                i.fas.fa-circle.s-10.mr-2
+                == circle_icon(size: 10, color: 'light-gray')
+                
                 p.s-14 Gestionar Fletes
             li.nav-item.has-treeview.pb-2 class="#{current_nav_item?(request.fullpath, 'config_box_types')}"
               a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#" 
@@ -51,14 +56,20 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
         li.nav-header.pt-2.pb-1.s-12.pl-2.mt-1 CRM
         li class=" nav-item has-treeview  #{current_nav_item?(request.fullpath, 'clients')} " 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
-            i.fas.fa-users.s-15.mr-2.ml-1
-            p.s-14 CLIENTES
-            i.fa.fa-chevron-left.right style="font-size: 12px;"
+            == users_icon(color: 'light-gray') 
+            p.s-14.ml-2 CLIENTES
+            span.right
+              == circle_down_icon(size: 12, color: 'light-gray')
           ul.nav.nav-treeview
             li.nav-item
               = link_to crm_clients_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(crm_clients_path)}" do
-                i.fas.fa-circle.s-10.mr-2
+                == circle_icon(size: 10, color: 'light-gray')
+                
                 p.s-14.text-normal Gestionar clientes
+              = link_to delivery_addresses_crm_clients_url, class: "nav-link py-1 pl-3 mb-0 #{current_link?(delivery_addresses_crm_clients_url)}" do
+                == circle_icon(size: 10, color: 'light-gray')
+                
+                p.s-14.text-normal Gestionar direcciones de ent...
             li.nav-item.has-treeview.pb-2 class="#{current_nav_item?(request.fullpath, 'config_box_types')}"
               a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#" 
                 i.fas.fa-cogs.s-10.mr-2
@@ -67,19 +78,17 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
                 ul.nav.nav-treeview
                   li.nav-item
                     = link_to commercial_config_provider_categories_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(commercial_config_provider_categories_path)}" do
-                      p.s-12.pl-3 Categorias
-                  li.nav-item
-                    = link_to crm_config_expenses_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(crm_config_expenses_path)}" do
-                      p.s-12.pl-3 Catalogo de gastos
+                      p.s-12.pl-3 Categorias de proveedores
         li class="nav-item has-treeview d-none  #{current_nav_item?(request.fullpath, 'commercial')} " 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
             i.fas.fa-shopping-bag.s-15.mr-2.ml-1
             p.s-14.ml-1 COMPRAS
-            i.fa.fa-chevron-left.right style="font-size: 12px;"
+            span.right
+              == circle_down_icon(size: 12, color: 'light-gray')
           ul.nav.nav-treeview
             li.nav-item
               = link_to crm_quotes_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(commercial_providers_path)}" do
-                i.fas.fa-circle.s-10.mr-2
+                == circle_icon(size: 10, color: 'light-gray')
                 p.s-14.text-normal Gestionar cotizaciónes span
             li.nav-item.has-treeview.pb-2 class="#{current_nav_item?(request.fullpath, 'config_box_types')}"
               a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#" 
@@ -92,39 +101,77 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
                       p.s-12.pl-3 Categorias
         li class="nav-item has-treeview  #{current_nav_item?(request.fullpath, 'crm')} " 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
-            i.fas.fa-shopping-bag.s-15.mr-2.ml-1
-            p.s-14.ml-1 VENTAS
-            i.fa.fa-chevron-left.right style="font-size: 12px;"
+            == shop_bag_icon(color: 'light-gray')
+            p.s-14.ml-2 VENTAS
+            span.right
+              == circle_down_icon(size: 12, color: 'light-gray')
           ul.nav.nav-treeview
             li.nav-item
               = link_to crm_quotes_path(tab: :all), class: "nav-link py-1 pl-3 mb-0 #{current_link?(crm_quotes_path)}" do
-                i.fas.fa-circle.s-10.mr-2
-                p.s-14.text-normal 
+                == circle_icon(size: 10, color: 'light-gray')
+                p.s-14.text-normal
                   span Gestionar Cotizaciónes
                   span.badge.badge-info.right.s-10 = Shipment.active_quotes.size
         
             li.nav-item
               = link_to crm_sales_orders_path(tab: :all), class: "nav-link py-1 pl-3 mb-0 #{current_link?(crm_sales_orders_path)}" do
-                i.fas.fa-circle.s-10.mr-2
+                == circle_icon(size: 10, color: 'light-gray')
+                
                 p.s-14.text-normal 
-                  span Gestionar Ordenes de V
+                  span Gestionar Ordenes de V...
                   span.badge.badge-info.right.s-10 = Shipment.active_order_sales_shipments.size
             li.nav-item.pb-2
               = link_to crm_sales_path(tab: :all), class: 'nav-link pt-0 pb-0 pl-3 mb-0 #{current_link?(crm_sales_path)}' do
-                i.fas.fa-circle.s-10.mr-2
+                == circle_icon(size: 10, color: 'light-gray')
+                
                 p.s-14
                   span Gestionar Ventas
                   span.badge.badge-info.right.s-10 = Shipment.sale.active_sales.size
+        li class="nav-item has-treeview " 
+          a.nav-link.py-1.pl-2.mb-1  href="#" 
+            == hand_holding_icon(color: 'light-gray')
+            p.s-14.ml-2 CREDITO Y COBRANZA
+            span.right
+              == circle_down_icon(size: 12, color: 'light-gray')
+          ul.nav.nav-treeview
+            li.nav-item
+              = link_to crm_quotes_path(tab: :all), class: "nav-link py-1 pl-3 mb-0 #{current_link?(crm_quotes_path)}" do
+                == circle_icon(size: 10, color: 'light-gray')
+                
+                p.s-14.text-normal 
+                  span Gestionar Cotizaciónes
+                  span.badge.badge-info.right.s-10 = Shipment.active_quotes.size
         li class="nav-item has-treeview" 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
-            i.fas.fa-cogs.s-15.mr-1.ml-1
-            p.s-14.ml-1 = "Configuraciónes".upcase
-            i.fa.fa-chevron-left.right style="font-size: 12px;"
+            == cog_icon(color: 'light-gray')
+            p.s-14.ml-2 = "Configuraciónes".upcase
+            span.right
+              == circle_down_icon(size: 12, color: 'light-gray')
           ul.nav.nav-treeview
-            li.nav-item.pt-2.pb-1
+            li.nav-item.pt-2
+              = link_to config_production_root_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(config_production_root_path)}" do
+                == circle_icon(size: 10, color: 'light-gray')
+                
+                p.s-14 Producción
+            li.nav-item
+              = link_to config_clients_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(config_clients_path)}" do
+                == circle_icon(size: 10, color: 'light-gray')
+                
+                p.s-14 Clientes
+            li.nav-item.pt-2.pb-1.d-none
               = link_to config_production_root_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(config_production_root_path)}" do
                 i.fas.fa-cog.s-12.mr-2
-                p.s-14 Producción
+                p.s-14 Adminsitrativos
+            li.nav-item
+              a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#"
+                i.fas.fa-tools.s-12.mr-2
+                p.s-14.text-normal Administración
+                i.fa.fa-chevron-left.right.pull-right.mt-1 style="font-size: 12px; top: 0.1rem;"
+                ul.nav.nav-treeview
+                  li.nav-item
+                    = link_to crm_config_expenses_url, class: "nav-link py-0 pl-3 mb-0 #{current_link?(crm_config_expenses_url)}" do
+                      p.s-12.pl-3 Conceptos de gastos
+                      
             li.nav-item.pb-2
               a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#"
                 i.fas.fa-list-alt.s-12.mr-2
@@ -147,26 +194,28 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
           hr.my-0
         li class=" nav-item has-treeview" 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
-            i.fas.fa-file-invoice.s-15.mr-2.ml-1
-            p.s-14 REPORTES
-            i.fa.fa-chevron-left.right style="font-size: 12px;"
+            == file_alt_icon(color: 'light-gray')
+            p.s-14.ml-2 REPORTES
+            span.right
+              == circle_down_icon(size: 12, color: 'light-gray')
           ul.nav.nav-treeview
             li.nav-item
               = link_to reports_lumps_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(reports_lumps_path)}" do
-                i.fas.fa-circle.s-10.mr-2
+                == circle_icon(size: 10, color: 'light-gray')
                 p.s-14.text-normal Reporte de bultos
             li.nav-item
               = link_to reports_products_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(reports_products_path)}" do
-                i.fas.fa-circle.s-10.mr-2
+                == circle_icon(size: 10, color: 'light-gray')
+                
                 p.s-14.text-normal Reporte de productos
         li.line-divider 
           hr.my-0
         li.nav-item.has-treeview
           a.nav-link.pt-1.pb-1.pl-2 href="#"
-            svg.svg-inline--fa.fa-address-book.fa-w-14.h-16.mr-2.ml-1 aria-hidden="true" data-icon="address-book" data-prefix="far" focusable="false" role="img" viewbox=("0 0 448 512") xmlns="http://www.w3.org/2000/svg" 
-              path d=("M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-68 304H48V48h320v416zM208 256c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm-89.6 128h179.2c12.4 0 22.4-8.6 22.4-19.2v-19.2c0-31.8-30.1-57.6-67.2-57.6-10.8 0-18.7 8-44.8 8-26.9 0-33.4-8-44.8-8-37.1 0-67.2 25.8-67.2 57.6v19.2c0 10.6 10 19.2 22.4 19.2z") fill="currentColor" 
-            p.s-14.bold DIRECTORIOS
-            i.fa.fa-angle-left.right style="font-size: 16px;"
+            == address_book_icon(color: 'light-gray')
+            p.s-14.ml-2 DIRECTORIOS
+            span.right
+              == circle_down_icon(size: 12, color: 'light-gray')
           ul.nav.nav-treeview
             li.nav-item.has-treeview.pb-2.pt-2
               = link_to directories_clients_path, class: 'nav-link pt-0 pl-3 mb-0 pb-0' do

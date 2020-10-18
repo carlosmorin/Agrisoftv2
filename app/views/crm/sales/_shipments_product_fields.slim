@@ -1,0 +1,11 @@
+tr.nested-fields
+  td
+    = f.input :id, as: :hidden
+    = f.input :product_id, required: true, collection: Product.all, label: false, input_html: { class: 's-12 form-control form-control-sm ' }
+  td
+    = f.input :quantity, required: true, label: false, input_html: { class: 's-14 form-control form-control-sm'  }
+  td
+    = f.input :price, label: false, input_html: { class: 's-14 form-control form-control-sm' }
+  td.px-3.text-center
+    = link_to_remove_association f, class: "btn btn-danger btn-xs s-12 px-2" do
+      i.fas.fa-trash

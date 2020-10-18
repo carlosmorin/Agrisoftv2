@@ -1,0 +1,25 @@
+- url = @report.persisted? ? crm_report_price_path(@report) : crm_report_prices_path
+- for_report = @report.shipments_product.for_reporting
+= simple_form_for([:crm, @report], url: url, remote: true) do |f|
+	= f.input :shipments_product_id, as: :hidden, required: true, autofocus: true
+	= f.input :currency_id, as: :hidden, required: true, autofocus: true
+	.row.mt-1
+		.col-6
+			- max_for_report = @report.persisted? ? f.object.quantity + for_report : for_report
+			= f.input :quantity, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ', max: max_for_report }
+			small.s-12.c-gray  = "#{max_for_report} bultos por reportar"
+		.col-6
+			= f.input :price, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+	.row.mt-2
+		.col-12 data-controller="datepickers"
+			- date = f.object.report_at.present? ? f.object.report_at.strftime("%d-%m-%Y") : Time.zone.now.strftime("%d-%m-%Y")
+			= f.input :report_at, as: :string, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm date-picker', value: date }
+	.row
+		.col-12
+			hr
+	.row
+		.col-12
+	.row.text-right
+		.col-12
+			button.btn.btn-sm.btn-link.s-12.mr-2  data-dismiss="modal" type="button" Cerrar
+			= f.button :submit, 'Guardar', class: "btn btn-sm btn-dark-blue s-12"

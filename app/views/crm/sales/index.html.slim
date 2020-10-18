@@ -28,7 +28,8 @@ section.content data-controller="slim-select crm--sales"
 								= link_to crm_sales_path(tab: :canceled), class: "nav-link py-05 bold s-14 #{ params[:tab] == 'canceled' ? 'active' : 'c-gray' }" do
 									span Canceladas
 									badge.badge.badge-info.s-10.ml-3 = Shipment.sale.canceled_sales.size
-						.row
+					.card-header.p-2.border-bottom-0
+						.row.mb-2
 							.col-md-12.col-sm-12
  								= form_tag(crm_sales_path, method: "GET") do
  									input type='hidden' name='tab' value=params[:tab]
@@ -64,17 +65,16 @@ section.content data-controller="slim-select crm--sales"
 											= link_to crm_sales_path(tab: params[:tab]), class: "btn btn-sm btn-flat  btn-default mt-4 ml-2" do
 												i.fas.fa-eraser
 					.card-body.table-responsive.p-0
-						table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped data-controller="drop-down-table"
+						table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14	 data-controller="drop-down-table"
 							thead
 								tr.bg-light-gray
 									th Remisionista
 									th Cliente
 									th Seguimiento
-									th.text-center Folio de flete
-									th.text-center Folio de embarque
-									th.text-center Folio de cliente
+									th.text-center Folio de venta
 									th.text-center Fecha de venta
-									th.text-center colspan="2" style=("width: 12%") Acciónes
+									th.text-center style=("width: 15%") Progreso de venta
+									th.text-center colspan="2" style=("width: 8%") Acciónes
 							tbody#tbody.s-13
 								- if @sales.empty?
 									tr
@@ -102,27 +102,34 @@ section.content data-controller="slim-select crm--sales"
 														span.fas.fa-long-arrow-alt-right.s-14.mx-1
 													span.badge.badge-success.btn.btn-sm.s-10
 														= link_to 'Venta', crm_sale_path(sale), title: sale.folio, 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: 'c-withe', target: :_blank
-											td.text-center = sale.freight.folio.present? ? sale.freight.folio.upcase : '--'
-											td.text-center = sale.folio.present? ? sale.folio.upcase : '--'
-											td.text-center = sale.client_folio.present? ? sale.client_folio.upcase : '--' 
+											td.text-center 
+												span.mr-2 = sale.folio.present? ? sale.folio.upcase : '--'
+												- if sale.contract.present?
+													= link_to crm_client_contract_path(sale.client, sale.contract), target: :_blank, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => "AC: #{sale.contract.name}", class: 's-12 badge badge-success' do
+														i.fas.fa-file-invoice-dollar
+												- else
+													span.s-12.badge.badge-secondary
+														i.fas.fa-file-invoice-dollar
 											td.text-center.s-12 = sale.created_at.strftime("%m/%d/%Y  %I:%M %p")
+											td.text-left
+												== progress_bar(sale, 'lg')
 											td.text-center
 												.btn-group
-													= link_to crm_sale_path(sale), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
-														i.far.fa-eye.s-12
+													= link_to crm_sale_path(sale), title: "Gestionar venta", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+														i.fas.fa-money-check-alt.s-14
 												.btn-group
 													button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 
 													.dropdown-menu.py-0.adjust-dropdown style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-43px, 22px, 0px);") x-placement="top-start"
 														- if sale.appointments.any?
-															= link_to crm_sales_order_print_aditional_data_path(sale, format: :pdf), target: :_blank, class: "dropdown-item s-12 text-danger bold" do
+															= link_to crm_sales_order_print_aditional_data_path(sale, format: :pdf), target: :_blank, class: "dropdown-item s-14 text-danger bold" do
 																	i.fas.fa-file-pdf.mr-2
 																	span Exportar información adcional
 														- if sale.cancel_sale?
-															= link_to "", class: "dropdown-item s-12 bold text-primary", data: { action: "click->crm--sales#confirmCancelSale", id: sale.id, cancel: sale.cancel_sale? ? 0 : 1, saleNumber: sale.folio } do
+															= link_to "", class: "dropdown-item s-14 bold text-primary", data: { action: "click->crm--sales#confirmCancelSale", id: sale.id, cancel: sale.cancel_sale? ? 0 : 1, saleNumber: sale.folio } do
 																	i.fas.fa-check-circle.mr-1
 																	span Activar Venta
 														- else
-															= link_to "", class: "dropdown-item s-12 bold text-danger", data: { action: "click->crm--sales#confirmCancelSale", id: sale.id, cancel: sale.cancel_sale? ? 0 : 1, saleNumber: sale.folio } do
+															= link_to "", class: "dropdown-item s-14 bold text-danger", data: { action: "click->crm--sales#confirmCancelSale", id: sale.id, cancel: sale.cancel_sale? ? 0 : 1, saleNumber: sale.folio } do
 																i.fas.fa-ban.mr-1
 																span Cancelar Venta
 										tr.d-none class="dropdown_#{sale.id}"
@@ -169,17 +176,11 @@ section.content data-controller="slim-select crm--sales"
 																		b == "#{total} <small>Bultos</small>"
 																	.col-2
 																	.col-2
-
-																		= number_to_currency(total_price,  unit: currency, separator: ",")
+																		= number_to_currency(total_price, unit: currency, separator: ",")
 								tfoot
 									tr
-										th.pl-3 colspan="5" 
-											i.text-lght.f-normal = raw "Total: <b>#{@all_sales.size}</b> embarques"
-										th.text-center
-											- total_package = 0
-											- @all_sales.map{ |sale| total_package += sale.n_products.to_i }
-											p = total_package
-										th colspan="3"
+										th.pl-3 colspan="7" 
+											i.text-lght.f-normal = raw "Total: <b>#{@all_sales.size}</b> ventas"
 					.card-footer.p-2.pb-1.bg-light-gray
 						.row
 							.col-lg-12.d-flex.justify-content-center

@@ -1,0 +1,31 @@
+.card
+  .card-header
+    h5.s-16.text-dark-blue.my-0 style="color: #293742;"
+      .row
+        .col-8
+          b.text-dark-blue Documentos
+        .col-4.text-right
+          button.btn.btn-dark-blue.s-12.btn-sm data-target="#docsModal" data-toggle="modal" type="button" 
+            i.fas.fa-file-upload
+  .card-body
+    #docsContainer
+      = render 'crm/sales/show/files_collection', sale: sale
+#docsModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
+  .modal-dialog role="document" 
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Subir documentos
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  ×
+      .modal-body
+        = form_with(url: "", method: "patch", multipart: true, data: { action: 'submit->crm--show-sales#saveDocuments' }) do
+          input type="hidden" name="sale_id" value=@sale.id /
+          .row.mt-2
+            .col-12
+              = file_field_tag(:documents, multiple: true, name: 'documents[]', direct_upload: true, class: 'drop-target')
+              br
+              br
+              button.btn.btn-secondary.btn-sm.s-12 data-dismiss="modal" type="button"  Cerrar
+              '
+              = submit_tag("Guardar", class: "btn btn-sm btn-dark-blue s-12")
+

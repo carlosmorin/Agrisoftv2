@@ -22,6 +22,12 @@ es:
       company:
         one: Remisionista
         other: Remisionistas
+      contract:
+        one: Contrato
+        other: Contratos
+      shipments_expense:
+        one: Descuento
+        other: Descuentos
     attributes:
       user: 
         name: Nombre
@@ -163,6 +169,7 @@ es:
         client_brand_id: Marca
         weight: Peso
         unit_meassure: Unidad de medida
+        units_per_pallet: Unidades por pallet
       contact:
         name: Nombre(s)
         last_name: Apellidos
@@ -281,3 +288,31 @@ es:
         price: Precio
       active_ingredient_supply:
         percentage: Porcentaje(%)
+      client_config:
+        currency_id: Moneda
+        pay_freight: Gatos de envio
+        client_type: Tipo de cliente
+        client_id: Cliente
+      contract:
+        name: Nombre/alias de contrato
+        client_id: Cliente
+        started_at: Fecha de inicio de contrato
+        finished_at: Fecha de fin de contrato
+        all_products: Todos los productos
+        delivery_address_id: Dirección de entrega
+        user_id: Usuario
+        comments: Comentarios
+        undefined: Fechas Indefinidas
+        undefined_products: Productos indefinidos
+        currency_id: Moneda
+      shipments_expense:
+        shipment_id: Venta
+        expense_id: Concepto
+        unit: Unidad
+        total: Total
+        amount: Monto
+        currency_id: Moneda
+      shipments_product_report:
+        quantity: Numero de bultos
+        price: Precio untario
+        report_at: Fecha

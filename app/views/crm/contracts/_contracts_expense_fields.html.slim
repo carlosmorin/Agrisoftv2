@@ -1,7 +1,15 @@
 .nested-fields
 	.row
-		.col-lg-5
+		.col-lg-4
 			= f.input :expense_id, collection: Expense.all, label: false, input_html: { class: "form-control form-control-sm"  }
+		.col-lg-3
+			= f.input :unit_sale, collection: @units_sales, label: false, input_html: { class: "form-control form-control-sm"  }
+		.col-lg-2
+			= f.input :price, label: false, input_html: { class: "form-control form-control-sm"  }
+		.col-lg-1
+			= f.input :percentage, as: :boolean, label: false, input_html: { data: { action: 'change->contracts#disableCurrencySelect' } }
+		.col-lg-1
+			= f.input :currency_id, collection: Currency.all.pluck(:code, :id), label: false, input_html: { class: "form-control form-control-sm", disabled: f.object.percentage }
 		.col-lg-1
 			= f.hidden_field :_destroy
 			= link_to_remove_association f, class: "btn btn-danger btn-xs s-12" do

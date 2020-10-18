@@ -1,118 +1,120 @@
-= simple_form_for([:crm, @contract], data: { controller: "masks" }, data: { controller: "datepickers contracts" }) do |f|
+= simple_form_for([:crm, @contract], data: { controller: "datepickers contracts masks" }) do |f|
 	.card.card-body
 		.row
 			.col-md-8
 		.row
 			.col-12
-				h5.s-16.mb-3 
-					span.fas.fa-info-circle.mx-2
-					= "Datos generales".upcase
+				h5.s-12.mb-2
+					b = "Datos generales".upcase
 				.row
-					.col-md-3
-						= f.label :name, class: "bold s-12"
-					.col-md-9
-						= f.input :name, label: false, input_html: { class: 's-12 form-control form-control-sm' }
-						= f.input :client_id, as: :hidden, label: false, input_html: { class: 's-12 form-control form-control-sm', value: @contract.client.id }
+					.col-md-12
+						= f.input :name, input_html: { class: 's-12 form-control form-control-sm' }
+						= f.input :client_id, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @contract.client.id }
 						= f.input :user_id, as: :hidden, label: false, input_html: { class: 's-12 form-control form-control-sm', value: current_user.id }
-				.row.mt-2
-					.col-md-3
-						= f.label :client_id, class: "bold s-12"
-					.col-md-9
+				.row.mt-3
+					.col-md-6
+						label.mb-0 Cliente:
 						input.s-12.form-control.form-control-sm type="text" disabled="disabled" value="#{@contract.client.name}"
-				.row.mt-2
-					.col-md-3
-						= f.label :delivery_address_id, class: "bold s-12"
+					.col-md-6
+						= f.input :delivery_address_id, collection: @contract.client.delivery_addresses, input_html: { class: 's-12 form-control form-control-sm', value: params[:client_id] }
+				.row.mt-4
+					.col-12
+						h5.s-12.mb-2	
+							b = "Fechas".upcase
+				.row
+					.col-md-2
+						= f.label :undefined, class: "bold s-12"
 					.col-md-9
-						= f.input :delivery_address_id, collection: @contract.client.delivery_addresses, label: false, input_html: { class: 's-12 form-control form-control-sm', value: params[:client_id] }
+						= f.input :undefined, as: :boolean, label: false, input_html: {class: "bold s-12", data: { action: "change->contracts#hideDatesContainer" ,  target: "contracts.undefinedCheckbox" }}
+				.row data-target="contracts.dateRangeContainer"
+					.col-md-6
+						.input-group.date.d-block data-provide="datepicker"
+							= f.input :started_at, as: :string, input_html: { class: "mr-2 form-control form-control-sm date-picker", disabled: @contract.undefined?, data: { target: "contracts.dateRange" }}
+							.input-group-addon
+								span.glyphicon.glyphicon-th
+					.col-md-6
+						.input-group.date.d-block data-provide="datepicker"
+							= f.input :finished_at, as: :string, input_html: { class: "mr-2 form-control form-control-sm date-picker", disabled: @contract.undefined?, data: { target: "contracts.dateRange" }}
+							.input-group-addon
+								span.glyphicon.glyphicon-th
 	.card.card-body
 		.row
 			.col-12
-				h5.s-16.mb-3 
-					span.fas.fa-calendar-day.mx-2
-					= "Fechas".upcase
+				h5.s-12.mb-2
+					b = "Productos".upcase
 		.row
 			.col.md-3
-				= f.label :undefined, class: "bold s-12"
+				= f.label :undefined_products, class: "bold s-12"
 			.col-md-9
-				= f.input :undefined, as: :boolean, label: false, input_html: {class: "bold s-12", data: { action: "change->contracts#disableDates" ,  target: "contracts.undefinedCheckbox" }}
-		.row
-			.col-md-3
-				= f.label :started_at, class: "bold s-12"
-			.col-md-4
-				.input-group.date.d-block data-provide="datepicker"
-					= f.input :started_at, as: :string, label: false, input_html: { class: "mr-2 form-control form-control-sm picker-range", disabled: @contract.undefined?, data: { target: "contracts.dateRange" }}
-					.input-group-addon
-						span.glyphicon.glyphicon-th
-	.card.card-body
-		.row
-			.col-12
-				h5.s-16.mb-3 
-					span.fas.fa-boxes.mx-2
-					= "Información de productos".upcase
-		section
+				= f.input :undefined_products, as: :boolean, label: false, input_html: {class: "bold s-12", data: { action: "change->contracts#toggleProductsContainer" }}
+		section data-target="contracts.productsContainer"
+			.row.bold.bg-light-gray.mb-2
+				.col-lg-4.bg-light-gray
+					span.s-12 CONCEPTO
+				.col-lg-3.bg-light-gray
+					span.s-12 UNIDAD DE VENTA
+				.col-lg-2.bg-light-gray
+					span.s-12 COSTO
+				.col-lg-2.bg-light-gray
+					span.s-12 MONEDA
+				.col-lg-1.bg-light-gray
+			#products.products
+				= f.simple_fields_for :contracts_products do |product|
+					= render 'contracts_product_fields', f: product
 			.row.mt-2
-				.col-12.table.table-sm.mt-2
-					.row.bold.bg-light-gray.p-1.mb-2
-						.col-lg-5
-							span.s-14 DESCRIPCIÓN DE PRODUCTO  
-						.col-lg-3
-							span.s-14 CANTIDAD
-						.col-lg-3
-							span.s-14 P. UNITARIO
-						.col-lg-1
-					.row
-						.col-12
-							#products.products
-								= f.simple_fields_for :contracts_products do |product|
-									= render 'contracts_product_fields', f: product
-					.row.mt-2
-						.col-12.text-center
-							= link_to_add_association f, :contracts_products, class: "btn btn-sm btn-primary s-12", data: {association_insertion_node: '#products', association_insertion_method: :append } do
-								svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-									path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
-								span.pl-2 Agregar producto
+				.col-12.text-center
+					= link_to_add_association f, :contracts_products, class: "btn btn-sm btn-primary s-12", data: {association_insertion_node: '#products', association_insertion_method: :append } do
+						svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+							path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
+						span.pl-2 Agregar producto
 	.card.card-body
 		.row
 			.col-12
-				h5.s-16.mb-3 
-					span.fas.fa-boxes.mx-2
-					= "Conceptos de gastos".upcase
+				h5.s-12.mb-2
+					b = "DESCUENTOS".upcase
 		section
 			.row.mt-2
 				.col-12.table.table-sm.mt-2
 					.row.bold.p-1.mb-2
-						.col-lg-5.bg-light-gray
-							span.s-14 Concepto  
+						.col-lg-4.bg-light-gray
+							span.s-12 CONCEPTO
+						.col-lg-3.bg-light-gray
+							span.s-12 UNIDAD DE VENTA
+						.col-lg-2.bg-light-gray
+							span.s-12 COSTO
+						.col-lg-1.bg-light-gray
+							span.s-12 %
+						.col-lg-1.bg-light-gray
+							span.s-12 MONEDA
+						.col-lg-1.bg-light-gray
 					.row
 						.col-12
 							#contracts_expenses.contracts_expenses
 								= f.simple_fields_for :contracts_expenses do |expense|
 									= render 'contracts_expense_fields', f: expense
 					.row.mt-2
-						.col-5.text-center
+						.col-12.text-center
 							= link_to_add_association f, :contracts_expenses, class: "btn btn-sm btn-primary s-12", data: {association_insertion_node: '#contracts_expenses', association_insertion_method: :append } do
 								svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
 									path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
-								span.pl-2 Agregar concenpto
+								span.pl-2 Agregar gasto
 
 	.card.card-body
 		.row
 			.col-12
-				h5.s-16.mb-3 
-					span.fas.fa-comments.mx-2
-					= "Comentarios".upcase
+				h5.s-12.mb-2
+					b = "Comentarios".upcase
 		.row
 			.col-md-12
 				= f.input :comments, label: false, input_html: { class: 's-12 form-control' }
-		hr
-		.form-actions.text-right
-			= link_to :back, class: 'btn btn-default btn-sm pl-1 mr-2' do
-				span.fas.fa-chevron-left.s-10.mx-2
-				span Volver
-			button.btn.btn-dark-blue.btn-sm.pl-1 type="submit"
-				svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-				  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
-				  polyline points=("17 21 17 13 7 13 7 21") 
-				  polyline points=("7 3 7 8 15 8") 
-				span Guardar
+	.form-actions.text-right.mb-4
+		= link_to :back, class: 'btn btn-default btn-sm pl-1 mr-2' do
+			span.fas.fa-chevron-left.s-10.mx-2
+			span Volver
+		button.btn.btn-dark-blue.btn-sm.pl-1 type="submit"
+			svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+			  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
+			  polyline points=("17 21 17 13 7 13 7 21") 
+			  polyline points=("7 3 7 8 15 8") 
+			span Guardar
 

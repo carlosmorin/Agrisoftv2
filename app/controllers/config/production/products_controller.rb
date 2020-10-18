@@ -28,10 +28,9 @@ module Config
 
     def create
       @product = Product.new(product_params)
-
       if @product.save
-        redirect_to config_production_product_path(@product), notice: 
-          'Producto creado exitosamente.'
+        flash[:notice] = "Producto creado exitosamente"
+        redirect_to config_production_products_path
       else
         render :new
       end
@@ -40,7 +39,7 @@ module Config
     def update
       if @product.update(product_params)
         flash[:notice] = "Producto actualizado"
-        redirect_to config_production_product_path(@product.id)
+        redirect_to config_production_products_path
       else
         render :edit
       end
@@ -70,7 +69,7 @@ module Config
 
     def product_params
       params.require(:product).permit(:crop_id, :color_id, :quality_id, 
-        :size_id, :package_id, :client_brand_id, :weight, :unit_meassure)
+        :size_id, :package_id, :client_brand_id, :weight, :unit_meassure, :units_per_pallet)
     end
 
     def set_object

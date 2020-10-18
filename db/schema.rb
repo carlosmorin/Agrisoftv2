@@ -208,6 +208,17 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
     t.index ["client_id"], name: "index_client_brands_on_client_id"
   end
 
+  create_table "client_configs", force: :cascade do |t|
+    t.bigint "currency_id", null: false
+    t.integer "pay_freight"
+    t.integer "client_type"
+    t.bigint "client_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_client_configs_on_client_id"
+    t.index ["currency_id"], name: "index_client_configs_on_currency_id"
+  end
+
   create_table "clients", force: :cascade do |t|
     t.string "name"
     t.string "rfc"
@@ -282,7 +293,10 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "undefined"
+    t.boolean "undefined_products"
+    t.bigint "currency_id", null: false
     t.index ["client_id"], name: "index_contracts_on_client_id"
+    t.index ["currency_id"], name: "index_contracts_on_currency_id"
     t.index ["delivery_address_id"], name: "index_contracts_on_delivery_address_id"
     t.index ["user_id"], name: "index_contracts_on_user_id"
   end
@@ -292,7 +306,12 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
     t.bigint "expense_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "currency_id", null: false
+    t.decimal "price"
+    t.string "unit_sale"
+    t.boolean "percentage"
     t.index ["contract_id"], name: "index_contracts_expenses_on_contract_id"
+    t.index ["currency_id"], name: "index_contracts_expenses_on_currency_id"
     t.index ["expense_id"], name: "index_contracts_expenses_on_expense_id"
   end
 
@@ -415,8 +434,11 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
     t.string "contact_name"
     t.string "email"
     t.boolean "external"
+    t.decimal "estimated_price"
+    t.bigint "currency_id"
     t.index ["client_id"], name: "index_delivery_addresses_on_client_id"
     t.index ["country_id"], name: "index_delivery_addresses_on_country_id"
+    t.index ["currency_id"], name: "index_delivery_addresses_on_currency_id"
     t.index ["municipality_id"], name: "index_delivery_addresses_on_municipality_id"
     t.index ["state_id"], name: "index_delivery_addresses_on_state_id"
   end
@@ -459,6 +481,12 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
     t.datetime "deleted_at"
     t.string "full_name"
     t.index ["carrier_id"], name: "index_drivers_on_carrier_id"
+  end
+
+  create_table "expense_concepts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -635,6 +663,7 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
     t.string "name"
     t.decimal "weight"
     t.integer "unit_meassure"
+    t.integer "units_per_pallet"
     t.index ["client_brand_id"], name: "index_products_on_client_brand_id"
     t.index ["color_id"], name: "index_products_on_color_id"
     t.index ["crop_id"], name: "index_products_on_crop_id"
@@ -739,21 +768,52 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
     t.boolean "cancel_sale_order", default: false
     t.boolean "cancel_sale", default: false
     t.datetime "shipment_at"
+    t.bigint "contract_id"
+    t.datetime "to_collect_at"
     t.index ["client_id"], name: "index_shipments_on_client_id"
     t.index ["company_id"], name: "index_shipments_on_company_id"
     t.index ["contact_id"], name: "index_shipments_on_contact_id"
+    t.index ["contract_id"], name: "index_shipments_on_contract_id"
     t.index ["delivery_address_id"], name: "index_shipments_on_delivery_address_id"
     t.index ["freight_id"], name: "index_shipments_on_freight_id"
     t.index ["user_id"], name: "index_shipments_on_user_id"
   end
 
+  create_table "shipments_expenses", force: :cascade do |t|
+    t.bigint "shipment_id", null: false
+    t.bigint "currency_id", null: false
+    t.bigint "expense_id", null: false
+    t.string "unit"
+    t.decimal "total"
+    t.decimal "amount"
+    t.boolean "percentage"
+    t.integer "type_expense"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["currency_id"], name: "index_shipments_expenses_on_currency_id"
+    t.index ["expense_id"], name: "index_shipments_expenses_on_expense_id"
+    t.index ["shipment_id"], name: "index_shipments_expenses_on_shipment_id"
+  end
+
+  create_table "shipments_product_reports", force: :cascade do |t|
+    t.bigint "shipments_product_id", null: false
+    t.integer "quantity"
+    t.decimal "price"
+    t.bigint "currency_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "report_at"
+    t.index ["currency_id"], name: "index_shipments_product_reports_on_currency_id"
+    t.index ["shipments_product_id"], name: "index_shipments_product_reports_on_shipments_product_id"
+  end
+
   create_table "shipments_products", force: :cascade do |t|
     t.bigint "shipment_id"
     t.bigint "product_id", null: false
-    t.decimal "price"
+    t.integer "price", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "quantity"
+    t.integer "quantity", default: 0
     t.string "productable_type"
     t.bigint "productable_id"
     t.integer "measurement_unit"
@@ -923,6 +983,8 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
   add_foreign_key "carriers", "municipalities"
   add_foreign_key "carriers", "states"
   add_foreign_key "client_brands", "clients"
+  add_foreign_key "client_configs", "clients"
+  add_foreign_key "client_configs", "currencies"
   add_foreign_key "clients", "countries"
   add_foreign_key "clients", "municipalities"
   add_foreign_key "clients", "states"
@@ -930,9 +992,11 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
   add_foreign_key "companies", "municipalities"
   add_foreign_key "companies", "states"
   add_foreign_key "contracts", "clients"
+  add_foreign_key "contracts", "currencies"
   add_foreign_key "contracts", "delivery_addresses"
   add_foreign_key "contracts", "users"
   add_foreign_key "contracts_expenses", "contracts"
+  add_foreign_key "contracts_expenses", "currencies"
   add_foreign_key "contracts_expenses", "expenses"
   add_foreign_key "contracts_products", "contracts"
   add_foreign_key "contracts_products", "currencies"
@@ -951,6 +1015,7 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
   add_foreign_key "crops_sizes", "sizes"
   add_foreign_key "delivery_addresses", "clients"
   add_foreign_key "delivery_addresses", "countries"
+  add_foreign_key "delivery_addresses", "currencies"
   add_foreign_key "delivery_addresses", "municipalities"
   add_foreign_key "delivery_addresses", "states"
   add_foreign_key "deseases_damages", "damages"
@@ -992,9 +1057,15 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
   add_foreign_key "shipments", "clients"
   add_foreign_key "shipments", "companies"
   add_foreign_key "shipments", "contacts"
+  add_foreign_key "shipments", "contracts"
   add_foreign_key "shipments", "delivery_addresses"
   add_foreign_key "shipments", "freights"
   add_foreign_key "shipments", "users"
+  add_foreign_key "shipments_expenses", "currencies"
+  add_foreign_key "shipments_expenses", "expenses"
+  add_foreign_key "shipments_expenses", "shipments"
+  add_foreign_key "shipments_product_reports", "currencies"
+  add_foreign_key "shipments_product_reports", "shipments_products"
   add_foreign_key "shipments_products", "products"
   add_foreign_key "shipments_products", "shipments"
   add_foreign_key "states", "countries"

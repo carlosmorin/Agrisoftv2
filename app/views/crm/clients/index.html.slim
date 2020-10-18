@@ -36,6 +36,7 @@ section.content
                   th N° embarques
                   th Teléfono
                   th Correo
+                  th Configuración 
                   th.text-center colspan="2" style=("width: 12%") Acciónes
               tbody#tbody
                 - if @clients.empty?
@@ -50,6 +51,11 @@ section.content
                       td = client.shipments.size
                       td = client.phone.upcase
                       td = client.email? ? client.email : '--'
+                      td.text-center
+                        - color = client.client_configs.any? ? 'btn-success' : 'btn-warning'
+                        = link_to config_client_path(client, tab: :sales), class: "btn btn-xs btn-flat s-12 #{color}"
+                          i.fas.fa-cogs.s-12.mr-1
+                          span Configuración
                       td.text-center
                         .btn-group
                           = link_to crm_client_path(client, tab: :general), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do

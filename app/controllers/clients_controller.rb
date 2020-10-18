@@ -5,7 +5,7 @@ class ClientsController < ApplicationController
   add_breadcrumb "Clientes", :clients_path
 
   def index
-  	@clients = Client.paginate(page: params[:page], per_page: 16)
+  	@clients = Client.paginate(page: params[:page], per_page: 25)
     search if params[:q].present?
   end
 

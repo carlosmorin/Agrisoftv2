@@ -12,7 +12,6 @@ export default class extends Controller {
 	  });
 
   	flatpickr(".date-picker", {
-	    minDate: "today",
 	    dateFormat: "d-m-Y"
 	  });
 

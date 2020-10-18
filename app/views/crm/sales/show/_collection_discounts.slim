@@ -1,0 +1,30 @@
+- currency_code = sale.currenct_currency_code
+- total_expenses = 0
+- sale.shipments_expenses.discount_type.each do |exp|
+  tr
+    - code = exp.currency.code
+    - total_expenses += get_total(exp.unit, exp.amount, exp.percentage)
+    - total_row = get_total(exp.unit, exp.amount, exp.percentage)
+    - @total_mxn_expenses += get_total_row_mxn(total_row, code)
+    td
+      label.s-13 = exp.expense.name.upcase
+    td
+      label.mb-0.text-upcase.s-13 = units_sales.invert[exp.unit] 
+    td
+      - if exp.percentage
+        label.s-13 = to_percentage(exp.amount)
+      - else
+        label.s-13 == currency(exp.amount, code)
+    td
+    td
+    td
+      b.mb-0.s-13 == currency(total_row, code)
+      p.s-13.mb-0 == currency_usd_to_mxn(total_row) if code == 'usd'
+      p.s-13.mb-0 == currency_mxn_to_usd(total_row, sale.exchange_rate) if code == 'mxn'
+    td
+tr.
+  td.text-right colspan="5"  
+  td.text-left colspan="2"  
+		b.s-14 == currency(0, 'mxn') 
+		br
+		b.s-14 == currency_mxn_to_usd(0, sale.exchange_rate)

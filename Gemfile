@@ -39,6 +39,7 @@ gem 'axlsx_rails'
 gem 'axlsx_styler', '~> 1.0'
 gem 'time_difference'
 gem "jsonb_accessor", "~> 1.0.0"
+gem "mini_magick"
 
 group :development, :test do  
   gem 'pry', '~> 0.13.0'

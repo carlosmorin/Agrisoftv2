@@ -1,6 +1,7 @@
 = simple_form_for([:crm, @bank_account], data: { controller: "masks selectize" }) do |f|
 	= f.input :accountable_type, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @client.model_name }
 	= f.input :accountable_id, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @client.id }
+	input type="skip_price" value="true"/
 	.form-group.mb-2
 		.row
 			.col-lg-3
@@ -16,7 +17,7 @@
 			.col-lg-3
 				= f.label :currency_id, class: "pt-1" 
 			.col-lg-9
-				= f.input :currency_id, collection: Currency.all, label: false, input_html: { class: 's-12 selectize' }
+				= f.input :currency_id, collection: Currency.all.pluck(:code, :id), label: false, input_html: { class: 's-12 selectize text-upcase' }
 		.row.mt-2
 			.col-lg-3
 				= f.label :branch, class: "pt-1" 

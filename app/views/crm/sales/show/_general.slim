@@ -1,0 +1,68 @@
+.card
+  .card-header.py-2
+    .row
+      .col-8
+        h5.s-16.text-dark-blue style="color: #293742;"
+          b.text-dark-blue Información general
+  .card-body.pt-0
+    .row.mt-2
+      .col-9
+        .row
+          .col-3.pl-2
+            label.s-13.c-gray Remisionista
+          .col-8
+            span.s-13 = sale.company.name.upcase
+        .row
+          .col-3
+            label.s-13.c-gray Cliente
+          .col-8
+            span.s-14 = sale.client.name.upcase
+        .row
+          .col-3
+            label.s-13.c-gray Fecha de venta
+          .col-8
+            span.s-14 = sale.shipment_at.strftime("%d/%m/%Y")
+      .col-3
+        span.mb-1.s-13.c-gray.mr-2 Folio F.
+        span.mb-1.s-13 = sale.freight.folio
+        br
+        span.mb-1.s-13.c-gray.mr-2 Folio E.
+        span.mb-1.s-13 = sale.folio
+        br
+        span.mb-1.s-13.c-gray.mr-2 Folio C.
+        span.mb-1.s-13 = sale.client_folio.upcase
+    .row.mt-2
+      .col-12
+        h6 
+          b.s-14.text-dark-blue Datos de envio
+
+        i.fas.fa-map-marker-alt.s-16.mr-2.text-success
+        span.s-14 Parras de la Fuente, Coahuila, México, Agricola las albardas
+        br
+        i.fas.fa-map-marker-alt.s-16.mr-2.text-danger
+        span.s-14 = sale.delivery_address.full_address
+    .row.mt-3 
+      .col-lg-7.pl-2
+        .row
+          .col-3
+            label.s-13.c-gray Transportista
+          .col-8
+            span.s-13 = sale.freight.carrier.name.upcase
+        .row
+          .col-3
+            label.s-13.c-gray Operador
+          .col-8
+            - driver  = sale.freight.driver
+            span.s-13 = "#{driver.full_name.upcase}  # LIC: #{driver.licence.upcase}"
+      .col-lg-5.pl-2
+        .row
+          .col-3
+            label.s-13.c-gray Unidad
+          .col-8
+            span.s-13 = sale.freight.unit.name.upcase
+        .row
+          .col-3
+            label.s-13.c-gray Caja
+          .col-8
+            - if sale.freight.box.present?
+              span.s-13 = sale.freight.box.box_type.name.upcase

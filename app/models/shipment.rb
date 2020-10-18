@@ -38,6 +38,7 @@ class Shipment < ApplicationRecord
 	belongs_to :delivery_address
 	belongs_to :user
 	belongs_to :freight, optional: true
+	belongs_to :contract, optional: true
 
 	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: -> { quotation? }
 	validates :client_id, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: -> { order_sale? }
@@ -49,8 +50,13 @@ class Shipment < ApplicationRecord
 	has_rich_text :description
 	has_many :shipments_products, dependent: :destroy
 	has_many :products, through: :shipments_products, dependent: :destroy
-	has_many :appointments, inverse_of: :shipment
-	accepts_nested_attributes_for :shipments_products, :appointments, allow_destroy: true
+	has_many :appointments, inverse_of: :shipment, dependent: :destroy
+	has_many :shipments_expenses, inverse_of: :shipment, dependent: :destroy
+  has_many_attached :documents
+
+	accepts_nested_attributes_for :shipments_products, allow_destroy: true
+	accepts_nested_attributes_for :shipments_expenses, allow_destroy: true
+	accepts_nested_attributes_for :appointments, allow_destroy: true
 	
 	enum status: { quotation: 0, order_sale: 1, sale: 2 }
 	enum currency: { mxn: 0, usd: 1 }
@@ -65,6 +71,16 @@ class Shipment < ApplicationRecord
 		end
 	end
 
+	def currenct_currency_code
+		return 'mxn' if client.client_configs.any?
+		self.client.client_configs.first.currency.code
+	end
+
+	def currenct_currency
+		return self.contract.currency if self.contract.present?
+		self.client.client_configs.first.currency
+	end
+
 	def total_kg
 		total = 0
 		unit_meassure = shipments_products.first.product.unit_meassure
@@ -72,6 +88,30 @@ class Shipment < ApplicationRecord
 			total += sp.quantity * sp.product.weight
 		end
 		"#{total} <small>#{unit_meassure}</small>"
+	end
+
+	def total_quantity
+		total = 0
+		shipments_products.each do |sp|
+			total += sp.quantity
+		end
+		total
+	end
+
+	def total_quantity_reported
+		total = 0
+		shipments_products.each do |sp|
+			total += sp.quantity_reported
+		end
+		total
+	end
+
+	def total_mxn
+		total = 0
+		shipments_products.each do |sp|
+			total += sp.quantity * sp.sale_price
+		end
+		total
 	end
 
 	def expirated_at
@@ -100,6 +140,15 @@ class Shipment < ApplicationRecord
 	def valid
 		return false unless expirated_at.present?
 		Time.zone.now < self.expirated_at
+	end
+
+	## Expenses
+	def expenses
+		self.contract.contracts_expenses
+	end
+
+	def in_collect?
+		to_collect_at != nil
 	end
 
 	private
