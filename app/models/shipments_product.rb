@@ -27,9 +27,14 @@ class ShipmentsProduct < ApplicationRecord
 		self.product.name
 	end
 
+
 	def sale_price
-		return 0 unless price.nil? || price.zero? 
-		return 0 unless shipments_product_reports.any?
+		return build_price if price.zero? && shipments_product_reports.any?
+		return 0 if price.nil?
+		return price unless shipments_product_reports.any?
+	end
+
+	def build_price
 		total_price = 0
 		self.shipments_product_reports.each do |report|
 			quantity = report.quantity.nil? ? 0 : report.quantity
@@ -38,6 +43,10 @@ class ShipmentsProduct < ApplicationRecord
 		end
 		return 0 if total_price.zero?
 		total_price / quantity
+	end
+
+	def total
+		sale_price * quantity
 	end
 
 end

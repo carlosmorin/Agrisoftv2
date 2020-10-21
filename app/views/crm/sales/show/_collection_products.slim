@@ -15,7 +15,7 @@ table.table.table-sm.table-bordered
         td.s-13 = sp.product_name.upcase
         td.s-13 
           span.d-block = sp.quantity
-          small.s-12.text-info.bold = "#{sp.for_reporting} bultos por reportar" if sp.nil?
+          small.s-12.text-info.bold = "#{sp.for_reporting} bultos por reportar" if sp.shipments_product_reports.any?
         td.s-13
           == currency(sp.sale_price, sale.currency_code)
         td.s-13 
