@@ -10,24 +10,24 @@ button#buttonReport.d-none data-target="#reportPriceModal" data-toggle="modal" t
           b.s-13 = sp.product.name.upcase
         .col-1
           b.s-13 = sp.quantity
-        - if sp.price.zero?
+        - if sp.price.nil?
           - total_price = 0
           - sp.shipments_product_reports.map { |spr| total_price += spr.quantity * spr.price }
           - total_row = total_price / sp.quantity
           .col-2
-            b.s-13 == currency(total_row, sale.currency)
+            b.s-13 == currency(total_row, sale.currency_code)
           .col-2
-            b.s-13 == currency(total_price, sale.currency )
+            b.s-13 == currency(total_price, sale.currency_code)
         - else
           - total_row = sp.price * sp.quantity
           .col-2
-            b.s-13 == currency(sp.price, sale.currency)
+            b.s-13 == currency(sp.price, sale.currency_code)
           .col-2
-            b.s-13 == currency(total_row, sale.currency )
+            b.s-13 == currency(total_row, sale.currency_code)
 
         .col-1.text-center
-          = link_to new_crm_report_price_path(shipments_product_id: sp.id, currency_id: sale.currenct_currency), remote: true, class: 'btn btn-xs btn-success btn-rounded px-2' do
-            i.fas.fa-dollar-sign   
-
-    - if sp.price.zero?
+          - if sp.price.nil?
+            = link_to new_crm_report_price_path(shipments_product_id: sp.id, currency_id: sale.current_currency), remote: true, class: 'btn btn-xs btn-success btn-rounded px-2' do
+              i.fas.fa-dollar-sign   
+    - if sp.price.nil?
       = render 'crm/sales/show/prices_reports', sp: sp, sale: sale

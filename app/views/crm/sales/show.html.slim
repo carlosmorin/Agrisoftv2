@@ -2,12 +2,17 @@
 section.content-header.pb-0 data-controller="crm--show-sales"
   .container-fluid
     .row.mb-2
-      .col-12
+      .col-4
         h5 = "Detalle de venta".upcase
+      .col-8
+        - if @sale.cancel_sale?
+          .alert.alert-danger
+            i.fas.fa-ban.s-16.mr-2
+            b Venta cancelada
     .row
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
-    .row.mb-2
+    .row.mb-2 class="#{@sale.cancel_sale? ? 'content-disabled' : '' }"
       .col-8
         h5 = "VENTA: #{@sale.folio.upcase} - #{@sale.updated_at.strftime("%d/%m/%Y")}"
         small.c-gray Progreso:
@@ -30,7 +35,7 @@ section.content-header.pb-0 data-controller="crm--show-sales"
           .alert.alert-warning.s-12 role="alert" 
             strong.mr-2 Anuncio!
             | Esta venta no tiene acuerdo comercial relacionado.
-  section.content 
+  section class="content  #{@sale.cancel_sale? ? 'content-disabled' : '' }"
     .container-fluid
       .row
         .col-lg-12
@@ -46,7 +51,6 @@ section.content-header.pb-0 data-controller="crm--show-sales"
           = render 'crm/sales/show/summary', sale: @sale
           = render 'crm/sales/show/tracing', sale: @sale
           = render 'crm/sales/show/documents', sale: @sale
-        
     = render 'crm/sales/show/link_contract_modal'
   #reportPriceModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
     .modal-dialog role="document" 

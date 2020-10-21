@@ -112,8 +112,7 @@ export default class extends Controller {
 
   showExchangeRate(){
     var currency = this.currencySelectTarget.value
-
-    if(currency == "usd"){
+    if(currency == 2){
       this.exchangeRateContainerTarget.classList.toggle("d-none", "")
     }else{
       this.exchangeRateContainerTarget.classList.add("d-none")
@@ -155,6 +154,5 @@ export default class extends Controller {
     var number = numeral(total);
     this.totalOutputTarget.textContent = `$ ${total}`
   }
-
 
 }

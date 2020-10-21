@@ -6,7 +6,7 @@ table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped d
           .custom-control.custom-checkbox
             input#customCheckboxAll.custom-control-input type="checkbox" value="all" name="quotes[]" data-target="quote-to-order-sale.selectAll" data-action="change->quote-to-order-sale#selectAll" /
             label.custom-control-label for="customCheckboxAll" 
-      th #
+      th.text-center Folio
       th Cliente
       th.text-left Seguimiento
       th.text-left Fechas
@@ -23,6 +23,7 @@ table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped d
           = link_to "Nuevo registro", new_crm_quote_path, class: "link"
     - else
       - @quotes.each_with_index do |quote, index|
+        - currency_code = quote.current_currency.code
         tr class="#{row_class(quote)}" data-target='quote-to-order-sale.row'
           td.d-none disabled="true"
             .custom-control.custom-checkbox
@@ -123,12 +124,14 @@ table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped d
                         span.bold.s-12 TOTAL
                   .card-body.p-1
                     - quote.shipments_products.each do |sp|
+                      
                       .row
                         .col-6
                           span.s-12 = sp.product.name
                         .col-2
                           span.s-12 = sp.quantity
                         .col-2
-                          span.s-12 = raw "$#{sp.price} <small>#{ quote.currency.upcase }</small>"
+                          span.s-12 = number_to_currency(sp.price, unit: currency_code.upcase, separator: ",")
                         .col-2
-                          span.bold.s-12 = raw "$#{sp.quantity * sp.price} <small>#{ quote.currency.upcase }</small>"
+                          - total = sp.quantity * sp.price
+                          span.s-12 = number_to_currency(total, unit: currency_code.upcase, separator: ",")

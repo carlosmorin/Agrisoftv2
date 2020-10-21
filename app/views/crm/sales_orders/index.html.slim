@@ -79,7 +79,7 @@ section.content data-controller="order-sales slim-select crm--sales-orders-confi
               table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped data-controller="drop-down-table"
                 thead
                   tr.bg-light-gray
-                    th Folio de OV
+                    th.text-center Folio
                     th.text-left Remisionsita
                     th Cliente
                     th N° bultos
@@ -171,7 +171,7 @@ section.content data-controller="order-sales slim-select crm--sales-orders-confi
                                   .row
                                     .col-6
                                       span.bold.s-12 DESCRIPCIÓN DE PRODUCTO
-                                    .col-2
+                                    .col-2.text-center
                                       span.bold.s-12 CANTIDAD
                                     .col-2
                                       span.bold.s-12 P. UNITARIO
@@ -184,12 +184,13 @@ section.content data-controller="order-sales slim-select crm--sales-orders-confi
                                     .row
                                       .col-6
                                         span.s-12 = sp.product.name
+                                      .col-2.text-center
+                                        span = quantity
                                       .col-2
-                                        span.s-12 = quantity
+                                        = number_to_currency(price, unit: order.currency.code.upcase, separator: ",")
                                       .col-2
-                                        span.s-12 = raw "$#{price} <small>#{ order.currency.upcase }</small>"
-                                      .col-2
-                                        span.bold.s-12 = raw "$#{quantity * price} <small>#{ order.currency.upcase }</small>"
+                                        - total = quantity * price
+                                        = number_to_currency(total, unit: order.currency.code.upcase, separator: ",")
                             .col-3
                               .card
                                 .card-header.p-1

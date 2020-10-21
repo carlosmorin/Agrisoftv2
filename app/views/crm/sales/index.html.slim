@@ -82,7 +82,7 @@ section.content data-controller="slim-select crm--sales"
 											= link_to 'Nuevo registro', new_shipment_path, class: "s-12"
 								- else
 									- @sales.each do |sale|
-										- currency = sale.currency.nil? ? '--' : sale.currency
+										- currency = sale.current_currency
 										tr class="#{row_sale_class(sale)	}"
 											td
 												span.fas.fa-chevron-down.s-16.mr-2.c-blue.c-pointer data-id=sale.id data-action="click->drop-down-table#toggleDropDown"
@@ -161,11 +161,11 @@ section.content data-controller="slim-select crm--sales"
 																		.col-2
 																			span.s-12 = quantity
 																		.col-2
-																			span.s-12 
-																				= number_to_currency(price, unit: currency.upcase, separator: ",")
+																			span.s-12
+																				= number_to_currency(price, unit: currency.code.upcase, separator: ",")
 																		.col-2
 																			span.bold.s-12 	
-																				= number_to_currency((quantity * price),  unit: currency, separator: ",")
+																				= number_to_currency((quantity * price),  unit: currency.code.upcase, separator: ",")
 															.card-footer.p-1
 																.row
 																	.col-2.text-left
@@ -176,7 +176,7 @@ section.content data-controller="slim-select crm--sales"
 																		b == "#{total} <small>Bultos</small>"
 																	.col-2
 																	.col-2
-																		= number_to_currency(total_price, unit: currency, separator: ",")
+																		= number_to_currency(total_price, unit: currency.code.upcase, separator: ",")
 								tfoot
 									tr
 										th.pl-3 colspan="7" 

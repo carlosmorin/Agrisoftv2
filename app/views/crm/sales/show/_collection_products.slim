@@ -1,4 +1,4 @@
-- currency_code = sale.currenct_currency_code
+- currency = sale.current_currency
 table.table.table-sm.table-bordered
   thead
     tr
@@ -15,17 +15,17 @@ table.table.table-sm.table-bordered
         td.s-13 = sp.product_name.upcase
         td.s-13 
           span.d-block = sp.quantity
-          small.s-12.text-info.bold = "#{sp.for_reporting} bultos por reportar" if sp.price = 0
+          small.s-12.text-info.bold = "#{sp.for_reporting} bultos por reportar" if sp.nil?
+        td.s-13
+          == currency(sp.sale_price, sale.currency_code)
         td.s-13 
-          == currency(sp.sale_price, currency_code)
-        td.s-13 
-          b == currency(total_row, currency_code)
-          p.s-13.mb-0 == currency_usd_to_mxn(total_row) if currency_code == 'usd'
-          p.s-13.mb-0 == currency_mxn_to_usd(total_row, sale.exchange_rate) if currency_code == 'mxn'
+          b == currency(total_row, sale.currency_code)
+          p.s-13.mb-0 == currency_usd_to_mxn(total_row) if currency.code == 'usd'
+          p.s-13.mb-0 == currency_mxn_to_usd(total_row, sale.exchange_rate) if currency.code == 'mxn'
   tfooter
     tr
       th colspan=3
       th
-        b.s-14 == currency(total, currency_code)
-        p.s-13.mb-0 == currency_usd_to_mxn(total) if currency_code == 'usd'
-        p.s-13.mb-0 == currency_mxn_to_usd(total, sale.exchange_rate) if currency_code == 'mxn'
+        b.s-14 == currency(total, sale.currency_code)
+        p.s-13.mb-0 == currency_usd_to_mxn(total) if currency.code == 'usd'
+        p.s-13.mb-0 == currency_mxn_to_usd(total, sale.exchange_rate) if currency.code == 'mxn'

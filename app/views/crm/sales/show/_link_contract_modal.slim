@@ -13,7 +13,7 @@
               i.fas.fa-info-circle.mr-2
               span Tipo de cambio obligatorio para clientes Internacionales
           label Acuerdo comercial: 
-          = select_tag 'contract_id', options_for_select(@sale.client.contracts.pluck(:name, :id), selected: @sale.contract_id), class: 'form-control form-control-sm', include_blank: true, required: true, 'data-target': 'crm--show-sales.contractId'
+          = select_tag 'contract_id', options_for_select(@sale.client.contracts.current.pluck(:name, :id), selected: @sale.contract_id), class: 'form-control form-control-sm', include_blank: true, required: true, 'data-target': 'crm--show-sales.contractId'
           label.mt-4 Tipo de cambio:
           input.form-control.form-control-sm type="decimal" required=@sale.client.settings.international? data-target='crm--show-sales.contractExchange' value=@sale.exchange_rate / 
         .modal-footer.mt-4

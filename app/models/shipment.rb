@@ -34,17 +34,18 @@ class Shipment < ApplicationRecord
 	before_update :set_order_sale_folio, if: -> { order_sale? && order_sale_folio.nil? }
 
 	belongs_to :company
+	belongs_to :currency
 	belongs_to :client
 	belongs_to :delivery_address
 	belongs_to :user
 	belongs_to :freight, optional: true
 	belongs_to :contract, optional: true
 
-	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: -> { quotation? }
-	validates :client_id, :company_id, :user_id, :delivery_address_id, :currency, presence: true, if: -> { order_sale? }
+	validates :client_id, :issue_at, :company_id, :user_id, :delivery_address_id, :currency_id, presence: true, if: -> { quotation? }
+	validates :client_id, :company_id, :user_id, :delivery_address_id, :currency_id, presence: true, if: -> { order_sale? }
 	
 	validates :client_id, :company_id, :delivery_address_id, presence: true, if: :sale?
-	validates :exchange_rate, presence: true, if: :currency_is_usd?
+	validates :exchange_rate, presence: true, if: -> { currency&.is_usd? }
 
 	
 	has_rich_text :description
@@ -59,7 +60,6 @@ class Shipment < ApplicationRecord
 	accepts_nested_attributes_for :appointments, allow_destroy: true
 	
 	enum status: { quotation: 0, order_sale: 1, sale: 2 }
-	enum currency: { mxn: 0, usd: 1 }
 
 	def valid_order_sale
 		if appointments.any?
@@ -71,14 +71,16 @@ class Shipment < ApplicationRecord
 		end
 	end
 
-	def currenct_currency_code
-		return 'mxn' if client.client_configs.any?
-		self.client.client_configs.first.currency.code
+	def current_currency
+		if currency.present?
+			currency
+		else
+			client.currency
+		end
 	end
 
-	def currenct_currency
-		return self.contract.currency if self.contract.present?
-		self.client.client_configs.first.currency
+	def currency_code
+		current_currency.code
 	end
 
 	def total_kg
@@ -101,7 +103,7 @@ class Shipment < ApplicationRecord
 	def total_quantity_reported
 		total = 0
 		shipments_products.each do |sp|
-			total += sp.quantity_reported
+			total += sp.price.nil? ? sp.quantity_reported : sp.quantity
 		end
 		total
 	end
@@ -152,10 +154,6 @@ class Shipment < ApplicationRecord
 	end
 
 	private
-
-	def currency_is_usd?
-		currency == Shipment.currencies.keys.second	
-	end
 
 	def set_products
 		sum = 0

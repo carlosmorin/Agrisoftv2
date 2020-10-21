@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_12_121632) do
+ActiveRecord::Schema.define(version: 2020_10_21_024818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -272,9 +272,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_121632) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "undefined"
     t.boolean "undefined_products"
-    t.bigint "currency_id", null: false
     t.index ["client_id"], name: "index_contracts_on_client_id"
-    t.index ["currency_id"], name: "index_contracts_on_currency_id"
     t.index ["delivery_address_id"], name: "index_contracts_on_delivery_address_id"
     t.index ["user_id"], name: "index_contracts_on_user_id"
   end
@@ -284,7 +282,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_121632) do
     t.bigint "expense_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "currency_id", null: false
+    t.integer "currency_id"
     t.decimal "price"
     t.string "unit_sale"
     t.boolean "percentage"
@@ -720,7 +718,6 @@ ActiveRecord::Schema.define(version: 2020_10_12_121632) do
     t.integer "iva"
     t.integer "discount"
     t.string "quote_folio"
-    t.integer "currency"
     t.decimal "exchange_rate"
     t.string "order_sale_folio"
     t.boolean "cancel_quote", default: false
@@ -729,10 +726,12 @@ ActiveRecord::Schema.define(version: 2020_10_12_121632) do
     t.datetime "shipment_at"
     t.bigint "contract_id"
     t.datetime "to_collect_at"
+    t.bigint "currency_id"
     t.index ["client_id"], name: "index_shipments_on_client_id"
     t.index ["company_id"], name: "index_shipments_on_company_id"
     t.index ["contact_id"], name: "index_shipments_on_contact_id"
     t.index ["contract_id"], name: "index_shipments_on_contract_id"
+    t.index ["currency_id"], name: "index_shipments_on_currency_id"
     t.index ["delivery_address_id"], name: "index_shipments_on_delivery_address_id"
     t.index ["freight_id"], name: "index_shipments_on_freight_id"
     t.index ["user_id"], name: "index_shipments_on_user_id"
@@ -909,7 +908,6 @@ ActiveRecord::Schema.define(version: 2020_10_12_121632) do
   add_foreign_key "companies", "municipalities"
   add_foreign_key "companies", "states"
   add_foreign_key "contracts", "clients"
-  add_foreign_key "contracts", "currencies"
   add_foreign_key "contracts", "delivery_addresses"
   add_foreign_key "contracts", "users"
   add_foreign_key "contracts_expenses", "contracts"
@@ -972,6 +970,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_121632) do
   add_foreign_key "shipments", "companies"
   add_foreign_key "shipments", "contacts"
   add_foreign_key "shipments", "contracts"
+  add_foreign_key "shipments", "currencies"
   add_foreign_key "shipments", "delivery_addresses"
   add_foreign_key "shipments", "freights"
   add_foreign_key "shipments", "users"

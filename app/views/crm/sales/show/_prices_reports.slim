@@ -10,9 +10,9 @@
       .col-1
         span.s-12 = spr.quantity
       .col-2
-        span.s-12 == currency(spr.price, sale.currency)
+        span.s-12 == currency(spr.price, sale.currency_code)
       .col-2
-        span.s-12 == currency(spr.price * spr.quantity, sale.currency)
+        span.s-12 == currency(spr.price * spr.quantity, sale.currency_code)
       .col-1.text-center
         .btn-group.mt-1
           button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon.text-primary.px-2 aria-expanded="false" data-toggle="dropdown" type="button" style="border-radius: 50px !important;"
