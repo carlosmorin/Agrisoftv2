@@ -1,6 +1,6 @@
 - if flash[:alert].present?
-	.callout.callout-danger.pb-2.pt-2.bg-light-red.c-red.s-14
-		= raw alert
+	.alert.alert-warning.py-3
+		b = raw alert
 - elsif flash[:notice].present?
-	.callout.callout-success.pb-2.pt-2.bg-light-green.c-green.s-14.hide-2s
-		= raw notice
+	.alert.alert-success.py-3 
+		b = raw notice

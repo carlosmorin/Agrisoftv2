@@ -16,7 +16,7 @@ export default class extends Controller {
     var cancel = event.currentTarget.getAttribute('data-cancel')
     swal({
       title: "Requiere confirmación!",
-      text: `Deseas Cancelar la venta ${saleNumber} ?`,
+      text: `Deseas cambiar el estatus de la venta ${saleNumber} ?`,
       buttons: true,
       buttons: ['Cancelar', 'Aceptar']
     })

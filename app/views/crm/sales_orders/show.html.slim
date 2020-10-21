@@ -73,9 +73,11 @@ section.content data-controller="reference"
 								tr
 									td = sp.product.name
 									td.text-center = sp.quantity
-									td.text-center = raw "$#{sp.price} <small>#{ @order_sale.currency.upcase }</small>"
+									td.text-center 
+										= number_to_currency(sp.price, unit: @order_sale.currency_code.upcase, separator: ",")
 									td 
-										b = raw "$#{sp.quantity * sp.price} <small>#{ @order_sale.currency.upcase }</small>"
+										- total = sp.price * sp.quantity
+										= number_to_currency(total, unit: @order_sale.currency_code.upcase, separator: ",")
 			.row
 				.col-9
 				.col-3
@@ -85,7 +87,7 @@ section.content data-controller="reference"
 								td.text-right 
 									span NETO
 								td
-									span = raw "$#{neto} <small>#{ @order_sale.currency.upcase }</small>"
+									= number_to_currency(neto, unit: @order_sale.currency_code.upcase, separator: ",")
 							tr
 								td.text-right 
 									span.text-danger DESCUENTO
@@ -97,7 +99,7 @@ section.content data-controller="reference"
 								td
 									- discount = (@order_sale.subtotal / 100) * @order_sale.discount
 									- sub_total = @order_sale.subtotal - discount
-									b = raw "$#{sub_total} <small>#{ @order_sale.currency.upcase }</small>"
+									= number_to_currency(sub_total, unit: @order_sale.currency_code.upcase, separator: ",")
 							tr
 								td.text-right 
 									span IVA
@@ -109,7 +111,7 @@ section.content data-controller="reference"
 								td
 									- iva_value = (sub_total / 100) * @order_sale.iva
 									- total = sub_total + iva_value
-									b = raw "$#{total} <small>#{ @order_sale.currency.upcase }</small>"
+									b = number_to_currency(total, unit: @order_sale.currency_code.upcase, separator: ",")
 
 		.card.card-body.s-14.p-3.mt-1
 			.row.mt-1

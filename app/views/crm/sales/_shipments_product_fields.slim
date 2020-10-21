@@ -3,7 +3,7 @@ tr.nested-fields
     = f.input :id, as: :hidden
     = f.input :product_id, required: true, collection: Product.all, label: false, input_html: { class: 's-12 form-control form-control-sm ' }
   td
-    = f.input :quantity, required: true, label: false, input_html: { class: 's-14 form-control form-control-sm'  }
+    = f.input :quantity, label: false, required: true, input_html: { class: 's-14 form-control form-control-sm' }
   td
     = f.input :price, label: false, input_html: { class: 's-14 form-control form-control-sm' }
   td.px-3.text-center

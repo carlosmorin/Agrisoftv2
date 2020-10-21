@@ -1,11 +1,11 @@
 - currency_code = sale.currenct_currency_code
 - total_expenses = 0
 - sale.shipments_expenses.discount_type.each do |exp|
+  - code = exp.currency.code
+  - total_expenses += get_total(exp.unit, exp.amount, exp.percentage)
+  - total_row = get_total(exp.unit, exp.amount, exp.percentage)
+  - @total_mxn_expenses += get_total_row_mxn(total_row, code)
   tr
-    - code = exp.currency.code
-    - total_expenses += get_total(exp.unit, exp.amount, exp.percentage)
-    - total_row = get_total(exp.unit, exp.amount, exp.percentage)
-    - @total_mxn_expenses += get_total_row_mxn(total_row, code)
     td
       label.s-13 = exp.expense.name.upcase
     td

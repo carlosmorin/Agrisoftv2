@@ -6,4 +6,12 @@ class Currency < ApplicationRecord
 	has_many :contracts, inverse_of: :currency
 	has_many :contracts_expenses, inverse_of: :currency
 	has_many :shipments_expenses, inverse_of: :currency
+
+	def is_usd?
+		code == "usd"
+	end
+
+	def is_mxn?
+		code == "mxn"
+	end
 end

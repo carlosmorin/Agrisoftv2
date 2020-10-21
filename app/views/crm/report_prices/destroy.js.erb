@@ -1,35 +1,5 @@
 <% if @report.errors.any? %>
   swal('Error', '<%= @report.errors.full_messages.to_sentence%>', 'error')
 <% else %>
-	<% container_id = "prices_report_container_#{@report.shipments_product.id}" %>
-
-	document.getElementById("<%= container_id %>").innerHTML = ""
-	document.getElementById("<%= container_id %>").insertAdjacentHTML(
-		"beforeend", 
-		"<%= j render 'crm/sales/show/prices_reports', sp: @report.shipments_product, sale: @report.sale %>"
-	);
-
-	document.getElementById("productsContainer").innerHTML = ""
-	document.getElementById("productsContainer").insertAdjacentHTML(
-		"beforeend", 
-		"<%= j render 'crm/sales/show/collection_products', sale: @report.sale %>"
-	);
-
-  document.getElementById("collectionProductsContainerPrices").innerHTML = ""
-  document.getElementById("collectionProductsContainerPrices").insertAdjacentHTML(
-    "beforeend", 
-    "<%= j render 'crm/sales/show/collection_products_prices', sale: @report.sale %>"
-  );
-  
-  document.getElementById("totalProducts").innerHTML = ""
-  document.getElementById("totalProducts").insertAdjacentHTML(
-    "beforeend", 
-    "<%== currency(@report.sale.total_mxn, @report.sale.currenct_currency_code) %>"
-  );
-
-  setTimeout(function(){
-    toastr.success('Reporte eliminado con exito', {timeOut: 2000})
-  }, 1000);
-
   Turbolinks.visit(window.location, { action: 'replace' })
 <% end %>

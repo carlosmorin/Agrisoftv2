@@ -89,10 +89,10 @@
                                 .col-2
                                   span.s-12 = sp.quantity
                                 .col-2
-                                  span.s-12 = raw "$#{sp.price} <small>#{ quote.currency.upcase }</small>"
+                                  = number_to_currency(sp.price, unit: quote.currency_code.upcase, separator: ",")
                                 .col-2
-                                  span.bold.s-12 = raw "$#{sp.quantity * sp.price} <small>#{ quote.currency.upcase }</small>"
-
+                                  - total = sp.quantity * sp.price
+                                  = number_to_currency(total, unit: quote.currency_code.upcase, separator: ",")
 
       .modal-footer
         button.btn.btn-sm.btn-secondary data-dismiss="modal" type="button" Cancelar

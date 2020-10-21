@@ -5,7 +5,6 @@
         h5.s-16.text-dark-blue.my-0 style="color: #293742;"
           b.text-dark-blue Resumen de venta
       .col-6.text-right
-
         span.s-12.badge-success-trasparent.text-dark-green.mr-2.c-pointer data-action="click->crm--show-sales#showMxnSumary"
           | MXN
         span.s-12.badge-primary-trasparent.text-dark-green.c-pointer data-action="click->crm--show-sales#showUsdSumary"
@@ -64,14 +63,14 @@
         .col-5.text-right
           b.s-13.badge-success-trasparent.text-dark-green.d-block#totalProducts
             span.pull-left.s-14 +
-            == currency(sale.total_mxn, @sale.currenct_currency_code)
+            == currency(sale.total_mxn, @sale.currency_code)
       .row.mt-1.row-redonded.hover.py-1
         .col-7
           b.s-13 Gastos
         .col-5.text-right
           b.s-13.badge-danger-trasparent.text-dark-red.d-block#totalExpenses
             span.pull-left.s-14 -
-            == currency(@total_mxn_expenses, @sale.currenct_currency_code)
+            == currency(@total_mxn_expenses, @sale.currency_code)
       .row.mt-1.row-redonded.hover.py-1.d-none
         .col-7
           b.s-13 Descuentos
@@ -88,4 +87,4 @@
           b.s-14 Total
         .col-4.text-right
           b.s-13.mr-2
-            == currency(total, @sale.currenct_currency_code)
+            == currency(total, @sale.currency_code)

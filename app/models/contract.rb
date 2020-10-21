@@ -1,7 +1,6 @@
 class Contract < ApplicationRecord
   belongs_to :client
   belongs_to :delivery_address
-  belongs_to :currency
   has_many :contracts_products, inverse_of: :contract, dependent: :destroy
   has_many :contracts_expenses, inverse_of: :contract, dependent: :destroy
   has_many :expenses, through: :contracts_expenses, dependent: :destroy
@@ -14,6 +13,11 @@ class Contract < ApplicationRecord
   validates_presence_of :started_at, :finished_at, unless: :undefined
 
   scope :current, -> { where("CURRENT_TIMESTAMP < finished_at OR undefined_products::text = 'true'") }
+  scope :overdue, -> { where("CURRENT_TIMESTAMP > finished_at") }
+
+  def validate!
+    errors.add(:name, :blank, message: "cannot be nil") if name.nil?
+  end
 
   def active?
     return true if self.undefined?

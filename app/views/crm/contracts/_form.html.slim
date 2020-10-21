@@ -46,13 +46,13 @@
 			.col.md-3
 				= f.label :undefined_products, class: "bold s-12"
 			.col-md-9
-				= f.input :undefined_products, as: :boolean, label: false, input_html: {class: "bold s-12", data: { action: "change->contracts#toggleProductsContainer" }}
-		section data-target="contracts.productsContainer"
+				= f.input :undefined_products, as: :boolean, label: false, input_html: {class: "bold s-12", data: { action: "change->contracts#toggleProductsContainer" } }
+		section class="#{f.object.undefined_products ? 'd-none' : '' }" data-target="contracts.productsContainer"
 			.row.bold.bg-light-gray.mb-2
 				.col-lg-4.bg-light-gray
-					span.s-12 CONCEPTO
+					span.s-12 PRODUCTO
 				.col-lg-3.bg-light-gray
-					span.s-12 UNIDAD DE VENTA
+					span.s-12 CANTIDAD
 				.col-lg-2.bg-light-gray
 					span.s-12 COSTO
 				.col-lg-2.bg-light-gray
@@ -90,6 +90,7 @@
 					.row
 						.col-12
 							#contracts_expenses.contracts_expenses
+								- f.object.contracts_expenses.new if f.object.contracts_expenses.empty?
 								= f.simple_fields_for :contracts_expenses do |expense|
 									= render 'contracts_expense_fields', f: expense
 					.row.mt-2
@@ -117,4 +118,3 @@
 			  polyline points=("17 21 17 13 7 13 7 21") 
 			  polyline points=("7 3 7 8 15 8") 
 			span Guardar
-

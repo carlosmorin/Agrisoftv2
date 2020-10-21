@@ -6,13 +6,11 @@ module Crm
     add_breadcrumb "Clientes", :crm_clients_url
 
 		def new
-			@contract = Contract.new(client_id: params[:client_id])
+			@contract = Contract.new(client_id: params[:client_id], undefined_products: true)
 
 			add_breadcrumb @contract.client.name.upcase, crm_client_path(@contract.client_id, tab: :contracts)
 			add_breadcrumb "Contratos", crm_client_path(@contract.client_id, tab: :contracts)
 			add_breadcrumb "Nuevo"
-			@contract.contracts_products.new
-			@contract.contracts_expenses.new
 		end
 
 		def create
@@ -21,7 +19,6 @@ module Crm
 			add_breadcrumb @contract.client.name.upcase, crm_client_path(@contract.client_id, tab: :contracts)
 			add_breadcrumb "Contratos", crm_client_path(@contract.client_id, tab: :contracts)
 			add_breadcrumb "Nuevo"
-			
 			if @contract.save
 				flash[:notice] =  "<i class='fa fa-check-circle mr-1 s-18'></i> Contracto registrado correctamente"
 				redirect_to crm_client_path(@contract.client_id, tab: :contracts) 

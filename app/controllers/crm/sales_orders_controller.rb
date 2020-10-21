@@ -82,7 +82,7 @@ module Crm
     def order_sale_params
       params.require(:shipment).permit(:client_id, :company_id, :contact_id,
         :user_id, :expirated_days, :expired_at, :status, :iva, :delivery_address_id,
-        :issue_at, :discount, :currency, :exchange_rate, :description, 
+        :issue_at, :discount, :currency_id, :exchange_rate, :description, 
           shipments_products_attributes: [:id, :price, :quantity, :shipment_id, :product_id, :productable_type, :productable_id, :_destroy],
           appointments_attributes: [:id, :n_request, :started_at, :finished_at, :appointment_at, :commitment_at, :appointment_number, :comments]
       )
