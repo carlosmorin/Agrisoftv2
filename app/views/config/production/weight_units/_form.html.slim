@@ -1,0 +1,11 @@
+= simple_form_for([:config_production, @weight_unit], html: { autocomplete: 'off' }) do |f|
+  .form-group.mb-1  
+    .row
+      .col-lg-1
+        = f.label :name, class: "s-14"
+      .col-lg-5
+        = f.input :name, label: false, required: true, html5: true,  autofocus: true, input_html: { class: 'form-control form-control-sm' }
+      .col-lg-2
+        button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
+          i.fas.fa-save.mx-1
+          span Guardar

@@ -1,0 +1,5 @@
+- if object.errors.any?
+  .callout.callout-danger.pb-2.pt-2.bg-light-red.c-red.s-14
+    - object.errors.full_messages.each do |message|
+      = message
+      br

@@ -1,0 +1,43 @@
+section#general.s-12
+  .row
+    .col-4	
+      .row
+        .col-lg-6.s-14
+          b.mb-1 Tipo de tratamiento:
+        .col-lg-6.text-left
+          b.mb-1.s-14 = @treatment.treatable_type === "Pest" ? "Plaga" : "Enfermedad"
+      .row.mt-1
+        .col-lg-6
+          label.mb-1 Insumos Applicados:
+        .col-lg-6.text-left
+          p.mb-1 = @treatment.supplies_count
+  .row.mt-3
+    .col-12
+      table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+        thead
+          tr.bg-light-gray
+            th #
+            th Insumo
+            th Dosis recomendad via Foliar
+            th Dosis recomendad via Irrigacion
+        tbody#tbody.s-13
+          - treatment_supplies = @treatment.treatment_supplies
+          - if treatment_supplies.empty?
+            tr
+              td.text-center colspan="6"
+                = link_to 'Agregar insumo', edit_config_production_treatment_path(@treatment), class: "s-12" 
+          - else
+            - treatment_supplies.each do |treatment_supply|
+              tr
+                td = treatment_supply.id
+                td 
+                  = link_to treatment_supply.supply_name&.upcase, config_production_supply_path(treatment_supply.supply_id, tab: :treatments)
+                td = treatment_supply.foliar_quantity.to_s + ' -- ' + ProductionUnit.find(treatment_supply.foliar_unit).name
+                td = treatment_supply.irrigation_quantity.to_s + ' --  ' + ProductionUnit.find(treatment_supply.irrigation_unit).name
+hr
+section#general.s-12.mt-5
+	.col-10
+		.row
+			.col-lg-12
+				h6.mb-2 Instrucciones de applicacion:
+				b.mb-1.s-14 = raw @treatment.application_instructions

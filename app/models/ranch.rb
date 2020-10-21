@@ -8,10 +8,18 @@ class Ranch < ApplicationRecord
   belongs_to :state
   belongs_to :municipality
 
+  after_save :change_state_name
+
+  delegate :change_state_name, to: :state, prefix: false
+
   delegate :name, to: :state, prefix: "state", allow_nil: :true
   delegate :name, to: :municipality, prefix: "municipality", allow_nil: :true
   delegate :name, to: :manager, prefix: "manager", allow_nil: :true
 
   has_rich_text :parcel_certificate
   has_one_attached :document
+
+  def area_names
+    areas.pluck(:name)
+  end
 end

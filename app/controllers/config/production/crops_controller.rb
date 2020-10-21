@@ -52,6 +52,21 @@ class Config::Production::CropsController < ApplicationController
     @crop.destroy
   end
 
+  def get_crops
+    crops = Crop.all.map {|crop| [crop[:name], crop[:id]] }
+    render json: crops
+  end
+
+  def get_pests
+    @crop = Crop.find(params[:id])
+    render json: @crop.pests
+  end
+
+  def get_deseases
+    @crop = Crop.find(params[:id])
+    render json: @crop.deseases
+  end
+
   ##End points
   def get_colors
     colors = @crop.colors

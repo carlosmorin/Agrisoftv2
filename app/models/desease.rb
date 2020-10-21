@@ -8,6 +8,8 @@ class Desease < ApplicationRecord
   has_many :deseases_damages, dependent: :destroy
   has_many :damages, through: :deseases_damages
 
+  has_many :treatments, as: :treatable, dependent: :destroy
+
   validates :name, :scientific_name, :pathogen, :desease_name, presence: true
 
   has_rich_text :development_conditions

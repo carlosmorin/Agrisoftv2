@@ -73,7 +73,6 @@ class ShipmentsController < ApplicationController
 
   def print
     respond_to do |format|
-      format.html
       format.pdf do
         render pdf: "Remision N° #{@shipment.folio}",
         page_size: 'A4',

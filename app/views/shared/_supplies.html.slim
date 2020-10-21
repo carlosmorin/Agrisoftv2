@@ -1,0 +1,12 @@
+section#general.s-12
+  .row
+    .col-12
+      .row
+        .col-10
+          b.s-14.text-left
+            i.fas.fa-boxes.mr-2
+            span Insumos
+          div.p-2
+            - obj.supplies.each do |supply|
+              span.mb-1
+                = link_to supply.name.upcase, config_production_supply_path(supply, tab: :presentations), title: "Ver Insumo", 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: "text-color badge badge-pill bg-info mb-2 mr-2 pt-1"

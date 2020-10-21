@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_21_024818) do
-
+ActiveRecord::Schema.define(version: 2020_10_17_171514) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,6 +22,22 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
+  create_table "active_ingredient_supplies", force: :cascade do |t|
+    t.bigint "supply_id", null: false
+    t.bigint "active_ingredient_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.decimal "percentage"
+    t.index ["active_ingredient_id"], name: "index_active_ingredient_supplies_on_active_ingredient_id"
+    t.index ["supply_id"], name: "index_active_ingredient_supplies_on_supply_id"
+  end
+
+  create_table "active_ingredients", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -178,6 +193,12 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
     t.index ["state_id"], name: "index_carriers_on_state_id"
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "client_brands", force: :cascade do |t|
     t.string "name"
     t.integer "client_id"
@@ -311,17 +332,13 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "create_appointments", force: :cascade do |t|
-    t.string "n_request"
-    t.datetime "startet_at"
-    t.datetime "finished_at"
-    t.datetime "appointment_at"
-    t.datetime "commitment_at"
-    t.string "appointment_number"
-    t.bigint "shipment_id", null: false
+  create_table "crop_damages", force: :cascade do |t|
+    t.integer "crop_damageable_id"
+    t.string "crop_damageable_type"
+    t.integer "crop_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["shipment_id"], name: "index_create_appointments_on_shipment_id"
+    t.index ["crop_id"], name: "index_crop_damages_on_crop_id"
   end
 
   create_table "crops", force: :cascade do |t|
@@ -602,10 +619,33 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
     t.index ["pest_id"], name: "index_pests_hosts_on_pest_id"
   end
 
+  create_table "presentation_supplies", force: :cascade do |t|
+    t.bigint "supply_id", null: false
+    t.bigint "presentation_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.decimal "price"
+    t.decimal "price_to_credit"
+    t.index ["presentation_id"], name: "index_presentation_supplies_on_presentation_id"
+    t.index ["supply_id"], name: "index_presentation_supplies_on_supply_id"
+  end
+
+  create_table "presentations", force: :cascade do |t|
+    t.string "name"
+    t.decimal "quantity"
+    t.bigint "weight_unit_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["weight_unit_id"], name: "index_presentations_on_weight_unit_id"
+  end
+
   create_table "production_units", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "weight_unit_id"
+    t.decimal "weight"
+    t.index ["weight_unit_id"], name: "index_production_units_on_weight_unit_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -681,8 +721,8 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
   end
 
   create_table "ranches", force: :cascade do |t|
-    t.string "state_id"
-    t.string "municipality_id"
+    t.bigint "state_id"
+    t.bigint "municipality_id"
     t.bigint "manager_id"
     t.string "territory"
     t.string "hydrological_region"
@@ -822,12 +862,46 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
     t.index ["categorytable_type", "categorytable_id"], name: "index_subcategories_on_categorytable_type_and_categorytable_id"
   end
 
+  create_table "supplies", force: :cascade do |t|
+    t.string "name"
+    t.integer "currency"
+    t.decimal "iva"
+    t.decimal "ieps"
+    t.bigint "category_id", null: false
+    t.string "code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_supplies_on_category_id"
+  end
+
   create_table "taxes", force: :cascade do |t|
     t.string "name"
     t.integer "value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
+  end
+
+  create_table "treatment_supplies", force: :cascade do |t|
+    t.bigint "treatment_id", null: false
+    t.integer "supply_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.decimal "foliar_quantity"
+    t.string "foliar_unit"
+    t.decimal "irrigation_quantity"
+    t.string "irrigation_unit"
+    t.index ["supply_id"], name: "index_treatment_supplies_on_supply_id"
+    t.index ["treatment_id"], name: "index_treatment_supplies_on_treatment_id"
+  end
+
+  create_table "treatments", force: :cascade do |t|
+    t.integer "treatable_id"
+    t.string "treatable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "crop_id", null: false
+    t.index ["crop_id"], name: "index_treatments_on_crop_id"
   end
 
   create_table "unit_brands", force: :cascade do |t|
@@ -885,6 +959,14 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "weight_units", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "active_ingredient_supplies", "active_ingredients"
+  add_foreign_key "active_ingredient_supplies", "supplies"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
   add_foreign_key "addresses", "countries"
@@ -916,7 +998,6 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
   add_foreign_key "contracts_products", "contracts"
   add_foreign_key "contracts_products", "currencies"
   add_foreign_key "contracts_products", "products"
-  add_foreign_key "create_appointments", "shipments"
   add_foreign_key "crops_colors", "colors"
   add_foreign_key "crops_colors", "crops"
   add_foreign_key "crops_deseases", "crops"
@@ -953,6 +1034,10 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
   add_foreign_key "pests_damages", "pests"
   add_foreign_key "pests_hosts", "hosts"
   add_foreign_key "pests_hosts", "pests"
+  add_foreign_key "presentation_supplies", "presentations"
+  add_foreign_key "presentation_supplies", "supplies"
+  add_foreign_key "presentations", "weight_units"
+  add_foreign_key "production_units", "weight_units"
   add_foreign_key "products", "client_brands"
   add_foreign_key "products", "colors"
   add_foreign_key "products", "crops"
@@ -982,6 +1067,9 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
   add_foreign_key "shipments_products", "products"
   add_foreign_key "shipments_products", "shipments"
   add_foreign_key "states", "countries"
+  add_foreign_key "supplies", "categories"
+  add_foreign_key "treatment_supplies", "treatments"
+  add_foreign_key "treatments", "crops"
   add_foreign_key "units", "carriers"
   add_foreign_key "units", "unit_brands"
 end
