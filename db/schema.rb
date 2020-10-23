@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_21_024818) do
+ActiveRecord::Schema.define(version: 2020_10_22_034345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,28 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "bills", force: :cascade do |t|
+    t.string "sat_cfdi_usage"
+    t.string "sat_pay_method"
+    t.string "sat_ways_pay"
+    t.bigint "company_id", null: false
+    t.bigint "client_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "currency_id", null: false
+    t.bigint "shipment_id"
+    t.integer "credit_days", default: 0
+    t.integer "status", default: 1
+    t.integer "exchange_rate", default: 0
+    t.text "comments"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_bills_on_client_id"
+    t.index ["company_id"], name: "index_bills_on_company_id"
+    t.index ["currency_id"], name: "index_bills_on_currency_id"
+    t.index ["shipment_id"], name: "index_bills_on_shipment_id"
+    t.index ["user_id"], name: "index_bills_on_user_id"
+  end
+
   create_table "box_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -193,6 +215,7 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
     t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "credit_days"
     t.index ["client_id"], name: "index_client_configs_on_client_id"
     t.index ["currency_id"], name: "index_client_configs_on_currency_id"
   end
@@ -696,6 +719,29 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
     t.index ["state_id"], name: "index_ranches_on_state_id"
   end
 
+  create_table "sat_cfdi_usages", force: :cascade do |t|
+    t.string "description"
+    t.boolean "physical_person"
+    t.boolean "moral_person"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "code"
+  end
+
+  create_table "sat_pay_methods", force: :cascade do |t|
+    t.string "code"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "sat_ways_pays", force: :cascade do |t|
+    t.string "code"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "shipments", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.bigint "client_id", null: false
@@ -893,6 +939,11 @@ ActiveRecord::Schema.define(version: 2020_10_21_024818) do
   add_foreign_key "areas", "ranches"
   add_foreign_key "bank_accounts", "banks"
   add_foreign_key "bank_accounts", "currencies"
+  add_foreign_key "bills", "clients"
+  add_foreign_key "bills", "companies"
+  add_foreign_key "bills", "currencies"
+  add_foreign_key "bills", "shipments"
+  add_foreign_key "bills", "users"
   add_foreign_key "boxes", "box_types"
   add_foreign_key "boxes", "carriers"
   add_foreign_key "carriers", "countries"

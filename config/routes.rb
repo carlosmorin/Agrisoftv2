@@ -99,6 +99,14 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :credit do
+    resources :payment_advances
+  end
+
+  namespace :billing do
+    resources :pre_bills
+  end
+
   namespace :crm do
     root to: "main#index" #CRM dashboard
     resources :report_prices, except: [:index, :show] 

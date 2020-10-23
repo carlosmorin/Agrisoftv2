@@ -5,7 +5,8 @@ section.content-header.pb-0
         = render "shared/breadcrumbs_nav"
     .row.mb-2
       .col-8
-        h5 = "Gestión de embarques".upcase
+        h5 
+          b= "Gestión de embarques".upcase
       .col-md-4.col-sm-6.text-right.pt-1.pr-4
         = link_to new_shipment_path, class: 'btn btn-success btn-sm s-14' do 
           svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 

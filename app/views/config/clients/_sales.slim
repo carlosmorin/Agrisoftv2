@@ -19,6 +19,11 @@
 					= f.label :currency_id, class: "pt-1 mr-2  s-14" 
 				.col-md-4.text-normal
 					= f.input :currency_id, collection: Currency.all.pluck(:code, :id), label: false, input_html: { class: 's-12 form-control form-control-sm', data: { target: "config--clients.currency" } }
+			.row.mt-3
+				.col-md-2.text-right
+					= f.label :credit_days, class: "pt-1 mr-2  s-14" 
+				.col-md-4.text-normal
+					= f.input :credit_days, label: false, input_html: { class: 's-12 form-control form-control-sm' }
 			.row
 				.col-6
 					hr

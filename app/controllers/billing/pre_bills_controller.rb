@@ -1,23 +1,19 @@
-module Chat
-  class RoomsController < ApplicationController
-    before_action :set_room, only: [:show, :edit, :update, :destroy]
+module Billing
+  class PreBillsController < ApplicationController
+    before_action :set_bill, only: [:show, :edit, :update, :destroy]
+    add_breadcrumb "Facturación"
+    add_breadcrumb "Pre facturas"
 
-    # GET /rooms
-    # GET /rooms.json
     def index
-      @rooms = Room.all
+      @pre_bills = Bill.pre_bills
     end
 
-    # GET /rooms/1
-    # GET /rooms/1.json
     def show
-      @rooms = Room.all
-      render 'index'
     end
 
     # GET /rooms/new
     def new
-      @room = Room.new
+      @pre_bill = Bill.new()
     end
 
     # GET /rooms/1/edit
@@ -27,7 +23,7 @@ module Chat
     # POST /rooms
     # POST /rooms.json
     def create
-      @room = Room.new(room_params)
+      @pre_bill = Bill.new(room_params)
 
       respond_to do |format|
         if @room.save

@@ -27,6 +27,10 @@ class Client < ApplicationRecord
 		self.settings.currency
 	end
 
+	def credit_days
+		self.settings.credit_days
+	end
+
 	def settings
 		return unless client_configs.any?
 		self.client_configs.first

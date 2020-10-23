@@ -2552,7 +2552,6 @@ ActiveRecord::Base.connection.execute(municipalities_mx_query_5)
 ActiveRecord::Base.connection.execute(municipalities_mx_query_6)
 ActiveRecord::Base.connection.execute(municipalities_mx_query_7)
 ActiveRecord::Base.connection.execute(municipalities_usa_query)
-=end
 ## Bancos
 Bank.create([
 	{
@@ -3021,4 +3020,58 @@ Bank.create([
 		full_name: "Libertad Servicios Financieros, S.A. De C.V.",
 		key: "670"
 	}
+])
+=end
+Sat::CfdiUsage.create!([ 
+	{ code: 'G01', description: 'Adquisición de mercancias', physical_person: true, moral_person: true },
+	{ code: 'G02', description: 'Devoluciones, descuentos o bonificaciones', physical_person: true, moral_person: true },
+	{ code: 'G03', description: 'Gastos en general', physical_person: true, moral_person: true },
+	{ code: 'I01', description: 'Construcciones', physical_person: true, moral_person: true },
+	{ code: 'I02', description: 'Mobilario y equipo de oficina por inversiones', physical_person: true, moral_person: true },
+	{ code: 'I03', description: 'Equipo de transporte', physical_person: true, moral_person: true },
+	{ code: 'I04', description: 'Equipo de computo y accesorios', physical_person: true, moral_person: true },
+	{ code: 'I05', description: 'Dados, troqueles, moldes, matrices y herramental', physical_person: true, moral_person: true },
+	{ code: 'I06', description: 'Comunicaciones telefónicas', physical_person: true, moral_person: true },
+	{ code: 'I07', description: 'Comunicaciones satelitales', physical_person: true, moral_person: true },
+	{ code: 'I08', description: 'Otra maquinaria y equipo', physical_person: true, moral_person: true },
+	{ code: 'D01', description: 'Honorarios médicos, dentales y gastos hospitalarios', physical_person: true, moral_person: false },
+	{ code: 'D02', description: 'Gastos médicos por incapacidad o discapacidad', physical_person: true, moral_person: false },
+	{ code: 'D03', description: 'Gastos funerales', physical_person: true, moral_person: false },
+	{ code: 'D04', description: 'Donativos', physical_person: true, moral_person: false },
+	{ code: 'D05', description: 'Intereses reales efectivamente pagados por créditos hipotecarios (casa habitación)', physical_person: true, moral_person: false },
+	{ code: 'D06', description: 'Aportaciones voluntarias al SAR', physical_person: true, moral_person: false },
+	{ code: 'D07', description: 'Primas por seguros de gastos médicos', physical_person: true, moral_person: false },
+	{ code: 'D08', description: 'Gastos de transportación escolar obligatoria', physical_person: true, moral_person: false },
+	{ code: 'D09', description: 'Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones', physical_person: true, moral_person: false },
+	{ code: 'D10', description: 'Pagos por servicios educativos (colegiaturas)', physical_person: true, moral_person: false },
+	{ code: 'P01', description: 'Por definir', physical_person: true, moral_person: true }
+]);
+
+Sat::PayMethod.create!([
+	{ code: '01', description: 'Efectivo' },
+	{ code: '02', description: 'Cheque nominativo' },
+	{ code: '03', description: 'Transferencia electrónica de fondos' },
+	{ code: '04', description: 'Tarjeta de crédito' },
+	{ code: '05', description: 'Monedero electrónico' },
+	{ code: '06', description: 'Dinero electrónico'},
+	{ code: '08', description: 'Vales de despensa'},
+	{ code: '12', description: 'Dación en pago'},
+	{ code: '13', description: 'Pago por subrogación'},
+	{ code: '14', description: 'Pago por consignación'},
+	{ code: '15', description: 'Condonación'},
+	{ code: '17', description: 'Compensación'},
+	{ code: '23', description: 'Novación'},
+	{ code: '24', description: 'Confusión'},
+	{ code: '25', description: 'Remisión de deuda'},
+	{ code: '26', description: 'Prescripción o caducidad'},
+	{ code: '27', description: 'A satisfacción del acreedor'},
+	{ code: '28', description: 'Tarjeta de débito'},
+	{ code: '29', description: 'Tarjeta de servicios'},
+	{ code: '30', description: 'Aplicación de anticipos'},
+	{ code: '99', description: 'Por definir'}
+]);
+
+Sat::WaysPay.create!([
+	{ code: 'PUE', description: 'Pago en una sola exhibición' },
+	{ code: 'PPD', description: 'Pago en parcialidades o diferido' }
 ])

@@ -34,7 +34,7 @@ class Shipment < ApplicationRecord
 	before_update :set_order_sale_folio, if: -> { order_sale? && order_sale_folio.nil? }
 
 	belongs_to :company
-	belongs_to :currency
+	belongs_to :currency, optional: true
 	belongs_to :client
 	belongs_to :delivery_address
 	belongs_to :user

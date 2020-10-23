@@ -264,6 +264,7 @@ es:
         pay_freight: Gatos de envio
         client_type: Tipo de cliente
         client_id: Cliente
+        credit_days: Dias de credito
       contract:
         name: Nombre/alias de contrato
         client_id: Cliente

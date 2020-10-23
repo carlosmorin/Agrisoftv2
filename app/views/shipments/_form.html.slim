@@ -1,6 +1,6 @@
 - url = @shipment.new_record? ? shipments_path : shipment_path
 - shipment = @shipment.persisted? ? @shipment.freight : @shipment
-= simple_form_for(shipment, url: url, data: { controller: 'shipments users slim-select'} ) do |form|
+= simple_form_for(shipment, url: url, data: { controller: 'shipments users slim-select'}, html: { novalidate: true }) do |form|
   = form.input :user_id, as: :hidden, input_html: { value: current_user.id }
   input type="hidden" name="type" value="normal"/
   .card
@@ -14,14 +14,14 @@
         .row
           .col-6
             = form.label :carrier_id, class: "pt-1" 
-            = form.input :carrier_id, collection: Carrier.all, required: true, autofocus: true, label: false, input_html: { class: 's-12 ', data: { action: "change->shipments#filter_by_carrier", target: "shipments.carrierId" } }
+            = form.input :carrier_id, collection: Carrier.all, autofocus: true, label: false, input_html: { class: 's-12 ', data: { action: "change->shipments#filter_by_carrier", target: "shipments.carrierId" } }
         .row.mt-4
           .col-4
-            = form.input :driver_id, collection: @drivers, required: true, autofocus: true, input_html: { class: 's-12' }
+            = form.input :driver_id, collection: @drivers, autofocus: true, input_html: { class: 's-12' }
           .col-4
-            = form.input :unit_id, collection: @units, required: true, autofocus: true, input_html: { class: 's-12' }
+            = form.input :unit_id, collection: @units, autofocus: true, input_html: { class: 's-12' }
           .col-4
-            = form.input :box_id, collection: @boxes, required: true, autofocus: true, input_html: { class: 's-12' }
+            = form.input :box_id, collection: @boxes, autofocus: true, input_html: { class: 's-12' }
   .row.mt-4.ml-1
     .col-9
       h5.s-18.mt-2

@@ -1,7 +1,7 @@
 = simple_form_for(@shipment, data: { controller: 'shipments users slim-select'} ) do |f|
   = f.input :user_id, as: :hidden, input_html: { value: current_user.id }
   = f.input :freight_id, as: :hidden
-  = f.input :status, as: :string, label: false, input_html: { value: "shipment", class: "d-none" }
+  = f.input :status, as: :string, label: false, input_html: { value: 'sale', class: "d-none" }
   input type="hidden" name="type" value="consolidate"/
   
   .card.p-3.br-0

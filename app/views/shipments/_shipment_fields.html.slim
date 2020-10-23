@@ -14,11 +14,11 @@
         .col-md-2.text-right
       .row
         .col-md-5
-          = f.input :company_id, required: true, collection: Company.all, input_html: { class: "s-12" }
+          = f.input :company_id, collection: Company.all, input_html: { class: "s-12" }
         .col-md-4
-          = f.input :client_id, required: true, collection: Client.all, input_html: { class: "s-12 client", data: { action: 'change->shipments#getDeliveryAddress', index: 1} }
+          = f.input :client_id, collection: Client.all, input_html: { class: "s-12 client", data: { action: 'change->shipments#getDeliveryAddress', index: 1} }
         .col-md-3.deliveryAddress
-          = f.input :delivery_address_id, required: true, collection: DeliveryAddress.all, input_html: { class: "s-12 delivery_address delivery_address_1", data: { target: 'shipments.deliveryAddress' } }
+          = f.input :delivery_address_id, collection: DeliveryAddress.all, input_html: { class: "s-12 delivery_address delivery_address_1", data: { target: 'shipments.deliveryAddress' } }
       .row
         .col-lg-12.mt-4
           section

@@ -52,6 +52,7 @@ gem 'axlsx_rails'
 gem 'axlsx_styler', '~> 1.0'
 gem 'time_difference'
 gem "mini_magick"
+gem 'spreadsheet', '~> 1.1', '>= 1.1.4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
