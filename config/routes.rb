@@ -10,6 +10,20 @@ Rails.application.routes.draw do
     resources :products, only: [:index]
   end
 
+  scope module: 'config/production', path: 'categories/:id' do
+    get '/get_supplies_codes', to: 'categories#get_supplies_codes'
+  end
+
+  scope module: 'config/production', path: 'crops' do
+    get '/get_crops', to: 'crops#get_crops'
+    get '/:id/get_pests', to: 'crops#get_pests'
+    get '/:id/get_deseases', to: 'crops#get_deseases'
+  end
+
+  scope module: 'config/production', path: 'treatments' do
+    get '/treatment_exist', to: 'treatments#treatment_exist'
+  end
+
   namespace :config do
     resources :taxes
     resources :drivers
@@ -20,11 +34,21 @@ Rails.application.routes.draw do
     resources :currencies
     namespace :production do 
       root to: 'main#index'
+      resources :categories
+      resources :treatments
+      resources :active_ingredients
+      resources :presentations
+      resources :supplies do
+        resources :treatments
+        resources :presentations, only: %i[update edit show]
+        resources :active_ingredients, only: %i[update edit show]
+      end
       resources :ranches do
         resources :areas
         resources :perforations
       end
-      resources :production_units, only: %i[index create destroy]
+      resources :production_units, except: %i[show]
+      resources :weight_units, only: %i[index create destroy]
       resources :irrigation_types, only: %i[index create destroy]
       resources :areas
       resources :activities
@@ -49,12 +73,20 @@ Rails.application.routes.draw do
       resources :hosts
       resources :damages
       resources :pests do
+        resources :treatments
         resources :hosts
         resources :damages
+        member do 
+          patch '/update_pictures', to: 'pests#update_pictures'
+        end
       end
       resources :deseases do
+        resources :treatments
         resources :hosts
         resources :damages
+        member do
+          patch "/update_pictures", to: "deseases#update_pictures"
+        end
       end
     end
     namespace :admin do

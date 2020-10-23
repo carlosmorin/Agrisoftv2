@@ -1,0 +1,39 @@
+= simple_form_for([:config_production, @active_ingredient], html: { autocomplete: 'off' }) do |f|
+  .form-group.mb-1  
+    .row
+      .col-lg-12
+      - if @supply.present?
+        .row.pl-2
+          input type="hidden" name="supply_id" value="#{@supply.id}"
+          .col-lg-6
+            = "Insumo"
+          .col-lg-6
+            .badge.badge-pill.bg-info
+              = @supply.name.upcase
+    .row
+      .col-lg-4.mb-2.mt-3
+        = f.input :name, label: false, required: true, html5: true,  autofocus: true, input_html: { class: 'form-control form-control-sm' }
+      .col-lg-12
+        hr.mb-2
+      - if @supply.present?
+        .col-lg-12.mt-2
+          section.pl-2.card.p-2.pb-3.br-0
+            .row
+              .col-lg-10
+                h6.s-16 Detalles
+            #supplies.ml-2
+              .row.bg-light-gray.mt-1
+                .col-lg-10
+                  b.s-14 
+                .col-lg-2
+              .row.bg-light-gray
+                .col-lg-12
+                  hr.my-0
+              .row.mt-1
+                .col-lg-12
+                  = f.fields_for @active_ingredient_supply do |supply|
+                    = render 'active_ingredient_supply_fields', f: supply
+      .col-lg-2
+        button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
+          i.fas.fa-save.mx-1
+          span Guardar

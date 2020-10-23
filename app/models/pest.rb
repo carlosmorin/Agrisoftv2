@@ -11,6 +11,8 @@ class Pest < ApplicationRecord
   has_many_attached :pictures, dependent: :destroy
   has_rich_text :description
 
+  has_many :treatments, as: :treatable, dependent: :destroy
+
   validates :name, :scientific_name, presence: true
   #validate :pest_pictures
 

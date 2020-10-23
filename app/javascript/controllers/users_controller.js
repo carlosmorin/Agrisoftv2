@@ -34,7 +34,8 @@ export default class extends Controller {
 		$("[data-behavior='delete']").click( function (e) {
    	 	e.preventDefault()
    	 	var column =  $(this).parent().parent().parent();
-   	 	var url = $(this).attr("href");
+      var url = $(this).attr("href");
+      console.log(url);  
    	 	var title = "<h4 class='s-18 bold pb-0 c-blue'>Esta seguro?</h4>";
    	 	var desc = "<p4 class='s-14'>Los cambios no podrán ser revertidos!</p>";
    	 	swal({

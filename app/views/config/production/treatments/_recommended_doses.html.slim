@@ -1,0 +1,31 @@
+
+.nested-fields
+  .row.mt-1
+    .col-md-6
+      input type="hidden" name="treatment[supply_id]" value="#{@supply.id}"
+  .row.mt-2
+    .col-lg-10
+      h6 Dosis recomendada
+      b Foliar
+      .row
+        .col-lg-6
+          .form-group
+            label Cantidad
+            = f.input :foliar_quantity, as: :numeric, label: false, input_html: { class: "form-control form-control-sm s-12 h-25", data: { target: "treatments-form.foliarQuantity" } }
+        .col-lg-6
+          .form-group
+            label Unidad
+            = f.input :foliar_unit, collection: ProductionUnit.all, label: false, input_html: { class: "form-control form-control-sm s-12 h-25", data: { target: "treatments-form.foliarUnit" }}
+      b Riego
+      .row
+        .col-lg-6
+          .form-group
+            label Cantidad
+            = f.input :irrigation_quantity, as: :numeric, label: false, input_html: { class: "form-control form-control-sm s-12 h-25", data: { target: "treatments-form.irrigationQuantity" }}
+        .col-lg-6
+          .form-group
+            label Unidad
+            = f.input :irrigation_unit, collection: ProductionUnit.all, label: false, input_html: { class: "form-control form-control-sm s-12 h-25", data: { target: "treatments-form.irrigationUnit" }}
+  .row
+    .col-lg-12
+      hr

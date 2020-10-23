@@ -49,7 +49,7 @@ section.content
                       td = ranch.state.name
                       td = ranch.manager.name.upcase
                       td = ranch.territory
-                      td = ranch.hydrological_region.upcase
+                      td = ranch.hydrological_region&.upcase
                       td = ranch.aquifer_name
                       td = ranch.municipality.name.upcase
                       td = ranch.georeference ? ranch.georeference.upcase : '--'

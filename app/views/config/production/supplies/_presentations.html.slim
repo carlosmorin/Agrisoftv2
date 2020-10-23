@@ -1,0 +1,40 @@
+section#general.s-12
+  .row
+    .col-12
+      .row
+        .col-12
+          .row.mt-3
+            .col-12
+              table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+                thead
+                  tr.bg-light-gray
+                    th #
+                    th Nombre
+                    th Cantidad
+                    th Precio
+                    th Precio a Credito
+                    th.text-center colspan="2" style=("width: 12%") Acciónes
+                tbody#tbody.s-13
+                  - presentations = @supply.presentation_supplies
+                  - if presentations.empty?
+                    tr
+                      td.text-center colspan="6"
+                        = link_to 'Nuevo registro', "new_config_production_ranch_presentation_path(@supply)", class: "s-12" 
+                  - else
+                    - presentations.each do |presentation|
+                      tr
+                        td = presentation.presentation_id
+                        td = presentation.presentation_name&.upcase
+                        td = presentation.presentation_quantity
+                        td = presentation.price.to_f
+                        td = presentation.price_to_credit.to_f
+                        td.text-center.pt-2
+                          .btn-group
+                            = link_to config_production_supply_presentation_path(id: presentation.presentation_id, supply_id: @supply.id, tab: :supplies), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                              svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                                path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+                                circle cx="12" cy="12" r="3"
+                            = link_to edit_config_production_supply_presentation_path(id: presentation.presentation_id, supply_id: @supply.id), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
+                              svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                                path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+                                path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")

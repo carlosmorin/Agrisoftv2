@@ -259,6 +259,35 @@ es:
         commitment_at: Fecha compromiso
         appointment_number: Numero de cita
         comments: Comentarios / Notas
+      production_unit:
+        name: Nombre
+        weight: Pezo
+        weight_unit_id: Unidad de pezo
+      category:
+        name: Nombre
+      active_ingredient:
+        percentage: Porcentaje(%)
+        name: Nombre
+      presentation:
+        name: Nombre
+        price: Precio
+        price_to_credit: Precio a credito
+        quantity: Cantidad
+        weight_unit_id: Unidad de pezo
+      supply:
+        name: Nombre
+        currency: Moneda
+        iva: IVA(%)
+        ieps: IEPS(%)
+        category_id: Categoria
+        code: Clave
+      treatment:
+        application_instructions: Instrucciones de applicacion
+      presentation_supply:
+        price_to_credit: Precio a credito
+        price: Precio
+      active_ingredient_supply:
+        percentage: Porcentaje(%)
       client_config:
         currency_id: Moneda
         pay_freight: Gatos de envio
