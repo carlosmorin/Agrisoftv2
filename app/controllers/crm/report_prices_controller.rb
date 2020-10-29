@@ -27,8 +27,10 @@ module Crm
 		end
 
     def report_params
-      params.require(:shipments_product).permit( :id, :shipment_id, :product_id, 
-      	:price, :quantity, :measurement_unit, :unit_meassure )
+      params.require(:shipments_product_report).permit( :id, 
+      	:shipments_product_id, :quantity, :price, :report_at, :voucher, 
+      	:currency_id, :_destroy
+      )
     end
 
     private
