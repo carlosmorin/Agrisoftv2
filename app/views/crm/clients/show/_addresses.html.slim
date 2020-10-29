@@ -1,0 +1,35 @@
+.row
+	.col-lg-4.mb-2
+		= link_to new_crm_client_delivery_address_path(@client), class: "btn btn-primary btn-sm" do
+			span Agregar dirección
+.card.card-body.table-responsive.p-0.mt-2 style="max-height: 70vh;"
+	.row
+		.col-12
+			table class="table table-head-fixed table-sm text-nowrap s-12"
+				thead
+					tr.bg-light-gray
+						th.py-2 Nombre
+						th.py-2 Dirección
+						th.py-2 Telefono
+						th.py-2 colspan="2" style=("width: 12%")
+				tbody#tbody.s-12
+					- if @client.delivery_addresses.empty?
+						tr
+							td.text-center colspan="9"
+								= link_to 'Nuevo registro', new_shipment_path, class: "s-12"
+					- else
+						- @client.delivery_addresses.each do |address|
+							tr
+								td = address.name.upcase
+								td = address.full_address.upcase
+								td = address.phone.upcase
+								td.text-center
+									.btn-group
+										= link_to edit_crm_client_delivery_address_path(address.client, address), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: "btn btn-sm btn-link" do
+											svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+												path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 
+												path d=("M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z")
+										= link_to crm_client_delivery_address_path(address.client, address), title: "Visualizar", 'data-toggle' => 'tooltip', 'data-placement' => 'top', class: "btn btn-sm btn-link" do
+											svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+												path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+												circle cx="12" cy="12" r="3"

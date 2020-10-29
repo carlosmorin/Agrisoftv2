@@ -1,0 +1,40 @@
+.row.my-2
+  .col-12
+    button.btn.btn-sm.btn-primary.s-12 data-target="#docsModal" data-toggle="modal" type="button" 
+      b Subir Documentos
+.card
+  .card-body
+    #docsContainer
+      - if sale.documents.any?
+        .row
+	        - sale.documents.each do |doc|
+	          .col-12
+	            = link_to doc.service_url, target: :_blank, class: 'link'
+	              i.fas.fa-file.s-25.mr-2
+	              span.s-14 = doc.filename
+	            hr.my-2
+      - else
+        .row
+          .col-12
+            span.s-12 Sin documentos
+#docsModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" data-controller="crm--sales--manage--files"
+  .modal-dialog role="document" 
+    .modal-content
+      .modal-header
+        h6#exampleModalLabel.modal-title.text-upcase.bold Subir documentos
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  ×
+      .modal-body
+        input type="hidden" name="sale_id" data-target="crm--sales--manage--files.saleId" value=@sale.id /
+        = form_with(url: "", method: "patch", multipart: true, data: { action: 'submit->crm--sales--manage--files#saveDocuments' }) do
+          .row.mt-2
+            .col-12
+              = file_field_tag(:documents, multiple: true, name: 'documents[]', direct_upload: true, class: 'drop-target s-12')
+              br
+          .row
+          	.col-12.text-right
+              hr
+              button.btn.btn-link.btn-sm.s-12.mr-2 data-dismiss="modal" type="button"  Cerrar
+              '
+              = submit_tag("Guardar", class: "btn btn-sm btn-dark-blue s-12")
+

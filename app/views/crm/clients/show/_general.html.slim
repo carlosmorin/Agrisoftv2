@@ -1,4 +1,4 @@
-section#general.s-12
+section.card.card-body
 	.row
 		.col-6	
 			.row
@@ -37,12 +37,11 @@ section#general.s-12
 				.col-lg-8.text-left
 					p.mb-1 = @client.address.upcase
 		
-	- if @client.fiscals.present?
-		hr.my-1
+- if @client.fiscals.present?
+	section.card.card-body.p-3
 		.row
 			.col-12
-				h6.mb-0.mt-2
-					i.fas.fa-file-invoice.mr-2
+				h6.mb-0.mt-0
 					b.pt-2 Datos fiscales
 					- fiscal = @client.fiscals.first
 		.row.mt-2

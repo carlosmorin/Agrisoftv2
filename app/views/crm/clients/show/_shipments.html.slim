@@ -1,0 +1,31 @@
+.card
+  .card-body.table-responsive.p-0 style="height: 70vh;"
+    table class="table table-head-fixed table-sm text-nowrap s-13"
+      thead.bg-light-gray
+        tr
+          th.py-2 Folio de venta
+          th.py-2 Folio cliente
+          th.py-2 N° de bultos
+          th.py-2 Remisionista
+          th.py-2 Fecha de venta
+          th 
+      tbody.s-12
+      - if @client.shipments.empty?
+        tr
+          td.text-center colspan="4"
+            i Sin registros
+      - else
+        - n_products = 0
+        - @client.shipments.sale.each do |shipment|
+          - n_products += shipment.n_products
+          tr
+            td = shipment.folio.upcase
+            td = shipment.client_folio.upcase
+            td = shipment.n_products
+            td = shipment.company.name.upcase
+            td = shipment.created_at.strftime("%m/%d/%Y")
+            td
+              = link_to shipment_path(shipment), title: "Visualizar", 'data-toggle' => 'tooltip', 'data-placement' => 'top', target: :_blank, class: 'btn btn-xs btn-link' do
+                svg.feather.feather-eye fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
+                  path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
+                  circle cx="12" cy="12" r="3"

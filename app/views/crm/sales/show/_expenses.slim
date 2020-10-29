@@ -1,52 +1,36 @@
-.card
-  .card-header
-    .row
-      .col-10
-        h5.s-16.text-dark-blue.my-0 style="color: #293742;"
-          b.text-dark-blue Desglose de gastos y descuentos
-      .col-2.text-right
-  .card-body
-    .row
-      .col-12.text-right
-        button.btn.bg-gradient-primary.btn-xs data-action="click->crm--show-sales#showForm" data-target="crm--show-sales.showForm" type="button"
-          i.fas.fa-edit.mr-1
-          span Editar conceptos
-        button.btn.bg-gradient-info.btn-xs.d-none data-action="click->crm--show-sales#hideForm" data-target="crm--show-sales.hideForm" type="button"
-          i.fas.fa-eye.mr-1
-          span Visualizar conceptos
-    = simple_form_for(@sale, url: '', data: { action: 'submit->crm--show-sales#saveExpenses' }) do |form|
-      #shipments_expenses_view.shipments_expenses_view data-target='crm--show-sales.expensesContainer'
-        table.table.table-sm.table-bordered.mt-2
-          thead
-            th.c-gray.s-13 CONCEPTO
-            th.c-gray.s-13 UNIDAD
-            th.c-gray.s-13 MONTO
-            th.c-gray.s-13 TIPO
-            th.c-gray.s-13 TOTAL
-          tbody
-            = render 'crm/sales/show/collection_expenses', sale: @sale
-      #shipments_expenses.mt-2.d-none data-target='crm--show-sales.formContainer'
-        table.table.table-sm.table-bordered.mt-2
-            thead
-              tr
-                th.c-gray.s-13 CONCEPTO
-                th.c-gray.s-13 UNIDAD
-                th.c-gray.s-13 MONTO
-                th.c-gray.s-13 %
-                th.c-gray.s-13 MONEDA
-                th.c-gray.s-13 TIPO
-                th.c-gray.s-13 
-                  = link_to_add_association form, :shipments_expenses, class: "btn btn-xs btn-primary s-12 d-none", data: { association_insertion_node: '.shipments_expenses', association_insertion_method: :append, target: 'crm--show-sales.addExpenseButton' } do
-                      i.fas.fa-plus-circle.mx-1
-            tbody.shipments_expenses
-              = form.simple_fields_for :shipments_expenses, form.object.shipments_expenses.order(:type_expense) do |expense|
-                = render  'shipments_expense_fields', f: expense
-            tfooter
-              tr
-                th.text-right.pr-2 colspan="7"
-                  button.btn.btn-xs.btn-dark-blue.d-none.s-12.pull-right.pl-2 type='submit' data-target='crm--show-sales.submitButton'
-                    i.fas.fa-save.mr-2.s-12
-                    | Guardar
-                  button.btn.btn-xs.btn-link.mr-2.d-none.pull-right.s-12 data-action="click->crm--show-sales#hideFormProducts" data-target="crm--show-sales.btnCancelProducts" type="button"
-                    i.fas.fa-times.s-12.mr-2
-                    | Cancelar
+h5.mt-4
+  b Información de descuentos
+
+.card.my-0.card-body.p-0
+  table class="table table-head-fixed text-nowrap s-13"
+    thead
+      tr.bg-light-gray
+        th.py-2 CONCEPTO DE DESCUENTO
+        th.py-2 MONTO
+        th.py-2 UNIDAD
+        th.py-2 TIPO
+        th.py-2 TOTAL
+        th.py-2
+    tbody#tbody.s-13
+      - sale.shipments_expenses.order(:type_expense).each do |exp|
+        tr
+          td
+            label.s-13 = exp.expense.name.upcase
+          td
+
+            label.s-13 == to_percentage(exp.amount) if exp.percentage?
+            label.s-13 == currency(exp.amount, sale.currency_code) unless exp.percentage?
+          td
+            label.mb-0.text-upcase.s-13 = units_sales.invert[exp.unit] 
+          td
+            == type_expense(exp)
+          td
+            == currency(exp.get_total, sale.currency_code)
+          td.text-right
+            = link_to 'Ver detalle', build_detail_crm_expenses_path(sale_id: @sale.id, expense_id: exp.id), remote: :true, class: 'btn btn-info btn-xs s-12 mr-3'
+            button#priceReportModal.btn.btn-info.btn-xs.s-12.d-none data-target="#myModal" data-toggle="modal" type="button" 
+    tfooter
+      tr
+        th colspan="4"
+        th colspan="4"
+          span.s-16 == currency(sale.total_expenses, sale.currency_code) 

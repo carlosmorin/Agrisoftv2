@@ -1,0 +1,67 @@
+br
+- unless sale.lumps_for_report.zero?
+  .s-14.alert.alert-info.d-block
+      b = "#{sale.lumps_for_report} bultos pendientes por reportar"
+.card.my-0
+  .card-header.bg-light-gray.p-2.pb-1
+    .row.s-13
+      .col-6
+        span.bold DESCRIPCIÓN DE PRODUCTO
+      .col-1
+        span.bold CANT.
+      .col-2
+        span.bold PRECIO
+      .col-2
+        span.bold TOTAL
+      .col-1
+- sale.shipments_products.each do |sp|
+  .card.my-0.mB-2
+    .card-header.bg-light-gray.p-2.pb-1
+      .row.s-12
+        .col-6
+          h3.card-title.s-12 = sp.product.name.upcase
+        .col-1
+          h3.card-title.s-12 = sp.quantity
+        .col-2
+          h3.card-title.s-12 == currency(sp.sale_price, sale.currency_code)
+        .col-2
+          h3.card-title.s-12 == currency(sp.total, sale.currency_code)
+        .col-1.text-right
+          = link_to edit_crm_product_path(sp.id), remote: true, class: 'btn btn-xs btn-link px-2 mr-2' do
+              i.far.fa-edit.s-12 
+          - if sp.price.nil? || sp.price.zero?
+            = link_to new_crm_report_price_path(shipments_product_id: sp.id, currency_id: sale.current_currency), remote: true, class: 'btn btn-xs btn-success btn-rounded px-2 mr-2' do
+              i.fas.fa-dollar-sign 
+      button#buttonReport.d-none data-target="#reportPriceModal" data-toggle="modal" type="button"
+    - if sp.shipments_product_reports.any?
+      - sp.shipments_product_reports.each do |spr|
+        .card-body.p-0
+          .row.s-14.m-2
+            .col-6
+              span.s-12 = spr.shipments_product.product&.name.upcase
+              span.s-10.d-block.c-gray = "Fecha de pago: #{spr.report_at.strftime("%d/%m/%Y")}"
+            .col-1
+              span.s-12 = spr.quantity
+            .col-2
+              span.s-12 == currency(spr.price, sale.currency_code)
+            .col-2
+              span.s-12 == currency(spr.price * spr.quantity, sale.currency_code)
+            .col-1.text-right
+              .btn-group.mt-1
+                button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon.text-primary.px-2 aria-expanded="false" data-toggle="dropdown" type="button" style="border-radius: 50px !important;"
+                .dropdown-menu.py-0.adjust-dropdown style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-43px, 22px, 0px);") x-placement="top-start" 
+                  = link_to edit_crm_report_price_path(spr), remote: true, class: "dropdown-item s-12 bold" do
+                    i.fas.fa-edit.mr-2
+                    span Editar
+                  = link_to crm_report_price_path(spr), method: :delete, confirm:  "Esta seguro?", title: "Eliminar", remote: true, class: "dropdown-item s-12 text-danger bold" do
+                    i.fas.fa-trash.mr-2
+                    span Eliminar
+.card.mt-2
+  .card-header.bg-light-gray.p-2.pb-1
+    .row.s-13
+      .col-6
+      .col-1
+      .col-2
+      .col-2
+        span.bold.text-primary.s-14 == currency(sale.subtotal, sale.currency_code)
+      .col-1

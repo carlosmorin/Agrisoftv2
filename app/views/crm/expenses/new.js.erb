@@ -1,0 +1,4 @@
+document.getElementById('newExpenseContainer').innerHTML = ""
+document.getElementById('newExpenseContainer').insertAdjacentHTML("beforeend", "<%= j(render(partial: 'form').html_safe)%>");
+var button = document.getElementById('newExpenseModal')
+button.click()

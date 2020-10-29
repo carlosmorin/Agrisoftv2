@@ -447,3 +447,8 @@ label.error{
 	z-index: 5;
 
 }
+
+// NO mover
+.layout-navbar-fixed .wrapper .content-wrapper{
+  margin-top: calc(3.4rem + -5px) !important;
+}

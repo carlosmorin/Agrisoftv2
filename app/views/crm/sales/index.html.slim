@@ -73,7 +73,7 @@ section.content data-controller="slim-select crm--sales"
 									th Seguimiento
 									th.text-center Folio de venta
 									th.text-center Fecha de venta
-									th.text-center style=("width: 15%") Progreso de venta
+									th.text-center style=("width: 15%") Progreso de reporteo
 									th.text-center colspan="2" style=("width: 8%") Acciónes
 							tbody#tbody.s-13
 								- if @sales.empty?
@@ -115,7 +115,7 @@ section.content data-controller="slim-select crm--sales"
 												== progress_bar(sale, 'lg')
 											td.text-center
 												.btn-group
-													= link_to crm_sale_path(sale), title: "Gestionar venta", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+													= link_to crm_sale_manage_path(sale, tab: :summary), title: "Gestionar venta", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
 														i.fas.fa-money-check-alt.s-14
 												.btn-group
 													button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon aria-expanded="false" data-toggle="dropdown" type="button" 

@@ -3,4 +3,7 @@
   $('#reportPriceModal').modal('show')
 <% else %>
   Turbolinks.visit(window.location, { action: 'replace' })
+  setTimeout(function(){
+    toastr.success('Operación realizada con exito!', { timeOut: 2000 })
+  }, 500);
 <% end %>

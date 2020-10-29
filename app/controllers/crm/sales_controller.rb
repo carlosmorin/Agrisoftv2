@@ -2,7 +2,7 @@ module Crm
 	class SalesController < ApplicationController
 		add_breadcrumb "CRM", :crm_root_path
 		before_action :set_object, only: %i[show cancel set_contract update_products 
-      update_expenses update_reports update_documents to_collect]
+      update_expenses update_reports update_documents to_collect manage]
 
 		def index
       add_breadcrumb "Ventas", crm_sales_path(tab: :all)
@@ -40,7 +40,6 @@ module Crm
     	add_breadcrumb "Gestion de venta"
       @report = ShipmentsProductReport.new
     	@sale = @sale
-    	@sale.shipments_products.new unless @sale.shipments_products.any?
       @total_mxn_expenses = 0
 
       if params[:format].present?
@@ -49,6 +48,12 @@ module Crm
           format.xlsx
         end
       end
+    end
+
+    def manage
+      add_breadcrumb "Ventas", crm_sales_path(tab: :all)
+      add_breadcrumb "Gestionar venta"
+      @expense = ShipmentsExpense.new
     end
 
     def update_products
@@ -67,6 +72,10 @@ module Crm
 
     def to_collect
       @sale.update(to_collect_at: Time.zone.now)
+    end
+
+    def get_report_products
+      @product = ShipmentsProduct.find(params[:sp_id])
     end
 
     private

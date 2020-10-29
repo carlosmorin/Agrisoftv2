@@ -1,0 +1,17 @@
+= simple_form_for(@product, url: crm_product_path(@product), remote: true) do |f|
+	= f.input :shipment_id, as: :hidden, required: true, autofocus: true
+	= f.input :product_id, as: :hidden, required: true, autofocus: true
+	.row
+		.col-6
+			= f.input :quantity, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+		.col-6
+			= f.input :price, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+	.row
+		.col-12
+			hr
+	.row
+		.col-12
+	.row.text-right
+		.col-12
+			button.btn.btn-sm.btn-link.s-12.mr-2  data-dismiss="modal" type="button" Cerrar
+			= f.button :submit, 'Guardar', class: "btn btn-sm btn-dark-blue s-12"

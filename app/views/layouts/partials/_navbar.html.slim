@@ -1,7 +1,7 @@
 nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0.pb-1
   ul.navbar-nav
     li.nav-item
-      a.nav-link data-widget="pushmenu" href="#" 
+      a.nav-link.menu-toggle data-widget="pushmenu" href="#" 
         svg.feather.feather-menu fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="18" xmlns="http://www.w3.org/2000/svg" 
           line x1="3" x2="21" y1="12" y2="12" 
           line x1="3" x2="21" y1="6" y2="6" 
@@ -103,10 +103,10 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0.pb-1
     li.nav-item.p-2 
       = link_to profile_index_path do
         - if current_user.avatar.attached?
-          = image_tag(current_user.avatar, class: "rounded", width: 35)
+          = image_tag(current_user.avatar, class: "rounded mt-1", width: 25)
         - else
           - img_url = "http://www.palcopharma.com/uploads/directors/5874c9e878bea81dc265f754b086a8df.png"
-          = image_tag(img_url, class: "rounded", width: 40)
+          = image_tag(img_url, class: "rounded mt-1", width: 25)
     li.nav-item.pl-1
       = link_to admin_root_path, class: 'nav-link pl-0 ', title: 'Sistema', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do 
         svg.feather.feather-users fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg"

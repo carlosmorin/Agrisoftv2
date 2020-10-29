@@ -1,10 +1,5 @@
-.card
-  .card-header.py-2
-    .row
-      .col-8
-        h5.s-16.text-dark-blue style="color: #293742;"
-          b.text-dark-blue Información general
-  .card-body.pt-0
+.card.mt-3
+  .card-body.pt-2
     .row.mt-2
       .col-9
         .row
@@ -32,12 +27,17 @@
         span.mb-1.s-13.c-gray.mr-2 Folio C.
         span.mb-1.s-13 = sale.client_folio.upcase
     .row.mt-2
-      .col-12
+    	.col-12
         h6 
-          b.s-14.text-dark-blue Datos de envio
-
+          b.s-14.text-dark-blue Datos de flete
+    .row.mt-2
+      .col-6
+        b.s-12 Oirgen:
+        br
         i.fas.fa-map-marker-alt.s-16.mr-2.text-success
         span.s-14 Parras de la Fuente, Coahuila, México, Agricola las albardas
+      .col-6
+        b.s-12 Destino:
         br
         i.fas.fa-map-marker-alt.s-16.mr-2.text-danger
         span.s-14 = sale.delivery_address.full_address

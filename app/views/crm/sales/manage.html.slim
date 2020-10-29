@@ -1,0 +1,67 @@
+.row
+	.col-1
+	.col-10
+		section.content-header.pb-0
+			.container-fluid
+				.row
+					.col-12.text-left.pr-2.s-12.mt-2
+						= render "shared/breadcrumbs_nav"
+		section.content
+			.container-fluid.mt-2
+				.row
+					.col-3
+						h4 
+							b Gestionar venta
+						== progress_bar(@sale, 'lg')
+						= render 'crm/sales/manage/tabs'
+					.col-9
+						.row
+							.col-6
+								h4 
+									b = @sale.folio.upcase
+							.col-4.c-gray.pt-2
+								.row
+									.col-6
+										h5.s-18.my-0 
+											span MONEDA:
+											b.ml-1 = @sale.currency_code.upcase
+							.col-2.text-right
+								= link_to crm_sale_path(@sale), target: :_blank, class: 'btn btn-outline-primary btn-sm' do
+						 			span Visualizar
+									i.fas.fa-external-link-alt.ml-2.s-10
+						hr.my-0
+						= render "shared/alerts"
+						= render 'crm/sales/manage/general', sale: @sale if params[:tab] == 'general'
+						= render 'crm/sales/manage/summary', sale: @sale if params[:tab] == 'summary'
+						= render 'crm/sales/manage/products', sale: @sale if params[:tab] == 'products'
+						= render 'crm/sales/manage/discounts', sale: @sale if params[:tab] == 'discounts'
+						= render 'crm/sales/manage/files', sale: @sale if params[:tab] == 'files'
+						= render 'crm/sales/manage/contracts', sale: @sale if params[:tab] == 'contracts'
+= render 'crm/sales/manage/contract_modal'
+#reportPriceModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
+  .modal-dialog role="document" 
+    .modal-content
+      .modal-header
+        h6#exampleModalLabel.modal-title.text-upcase.bold Reportar precio de venta
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  ×
+      .modal-body#reportPriceModalContainer
+
+
+#expensesPerProductModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
+  .modal-dialog.modal-xl role="document" 
+    .modal-content
+      .modal-header
+        h6#exampleModalLabel.modal-title.text-upcase.bold Resumen por bultos
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  ×
+      .modal-body
+
+#newExpense.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
+  .modal-dialog.modal-md role="document" 
+    .modal-content
+      .modal-header
+        h6#exampleModalLabel.modal-title.text-upcase.bold Reportar gasto
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  ×
+      .modal-body#newExpenseContainer

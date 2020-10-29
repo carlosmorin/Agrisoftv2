@@ -1,0 +1,26 @@
+- unless sale.contract.present?
+  .row
+    .col-12.my-2
+      button.btn.btn-primary.btn-sm.s-12 data-target="#acModal" data-toggle="modal" type="button" data-placement='left'
+        b Agregar acuerdo comercial
+.card.card-body.mt-3
+  - if sale.contract.present?
+    .row.hover.pb-1
+      .col-11
+        = link_to crm_client_contract_url(sale.client, sale.contract), target: :_blank, class: "" do
+          b.s-13 = sale.contract.name.upcase 
+      .col-1.text-left
+        button.btn.btn-link.s-12 data-target="#acModal" data-toggle="modal" type="button" data-placement='left'
+          i.far.fa-edit
+    .row
+      .col-2
+        span.s-12.c-gray Moneda: 
+      .col-3.text-left
+        b.s-12 = sale.currency_code.upcase
+    .row
+      - if sale.current_currency.is_usd?
+        .col-2
+          span.s-12.c-gray T. de cambio: 
+        .col-3.text-left
+          b.s-12 == currency(sale.exchange_rate, 'mxn')
+ 

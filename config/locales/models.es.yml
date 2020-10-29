@@ -313,6 +313,11 @@ es:
         total: Total
         amount: Monto
         currency_id: Moneda
+        percentage: Porcentaje
+        type_expense: Tipo de gasto
+      shipments_product:
+        price: Precio unitario
+        quantity: Cantidad
       shipments_product_report:
         quantity: Numero de bultos
         price: Precio untario

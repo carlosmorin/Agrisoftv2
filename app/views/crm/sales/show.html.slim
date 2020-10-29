@@ -1,62 +1,29 @@
 - progress =  get_porcent2(@sale.total_quantity, @sale.total_quantity_reported)
 section.content-header.pb-0 data-controller="crm--show-sales"
-  .container-fluid
+  .container
     .row.mb-2
-      .col-4
-        h5 = "Detalle de venta".upcase
-      .col-8
-        - if @sale.cancel_sale?
-          .alert.alert-danger
-            i.fas.fa-ban.s-16.mr-2
-            b Venta cancelada
+      .col-10
+        h5.mt-4
+          b Detalle de venta
+      .col-2.text-right
+        = link_to crm_sale_manage_path(@sale), class: "btn c-gray btn-xs mt-4" do
+          i.fas.fa-cog.s-14
+          span.ml-2.s-14 Gestionar
+      .col-12
+        == progress_bar(@sale, 'lg')
     .row
-      .col-12.text-left.pr-2.s-12
-        = render "shared/breadcrumbs_nav"
-    .row.mb-2 class="#{@sale.cancel_sale? ? 'content-disabled' : '' }"
-      .col-8
-        h5 = "VENTA: #{@sale.folio.upcase} - #{@sale.updated_at.strftime("%d/%m/%Y")}"
-        small.c-gray Progreso:
-        == progress_bar(@sale, 'md')
-      .col-4.text-right
-        = link_to crm_sale_path(@sale, format: "xlsx"), class: "btn btn-sm btn-success s-12 mr-1" do
-          == xls_icon(color: 'withe', size: 12)
-          b.ml-2 Exportar Excel
-        - if progress == 100
-          - unless @sale.in_collect?
-            button.btn.btn-sm.btn-dark-blue.s-12 data-action="click->crm--show-sales#confirmPassToCollect" data-saleid=@sale.id data-folio=@sale.folio type="button"
-              i.fas.fa-hand-holding-usd.mr-2
-              b Pasar a cobranza
-          - else
-            .callout.callout-warning.mt-2.p-2
-              h5.s-14.my-0.text-left
-                i.fas.fa-hand-holding-usd.mr-2
-                b En proceso de cobranza
-        - unless @sale.contract.present?
-          .alert.alert-warning.s-12 role="alert" 
-            strong.mr-2 Anuncio!
-            | Esta venta no tiene acuerdo comercial relacionado.
-  section class="content  #{@sale.cancel_sale? ? 'content-disabled' : '' }"
-    .container-fluid
-      .row
-        .col-lg-12
-          = render "shared/alerts"
-      .row
-        // .col-8.overflow-auto#infoContainer style="max-height: 85vh; border: 1px solid #d9d9d9; padding-top: 10px;"
-        .col-8.overflow-auto#infoContainer
-          = render 'crm/sales/show/general', sale: @sale
-          = render 'crm/sales/show/products', sale: @sale
-          = render 'crm/sales/show/expenses', sale: @sale
-        .col-4
-          = render 'crm/sales/show/contract', sale: @sale
-          = render 'crm/sales/show/summary', sale: @sale
-          = render 'crm/sales/show/tracing', sale: @sale
-          = render 'crm/sales/show/documents', sale: @sale
-    = render 'crm/sales/show/link_contract_modal'
-  #reportPriceModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
-    .modal-dialog role="document" 
-      .modal-content
-        .modal-header
-          h6#exampleModalLabel.modal-title.text-upcase.bold Reportar precio de venta
-          button.close aria-label="Close" data-dismiss="modal" type="button" 
-            span aria-hidden="true"  ×
-        .modal-body#reportPriceModalContainer
+      .col-12
+        = render 'crm/sales/manage/general', sale: @sale
+        = render 'crm/sales/show/products', sale: @sale
+        = render 'crm/sales/show/expenses', sale: @sale
+br
+br
+#myModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
+  .modal-dialog.modal-xl role="document" 
+    .modal-content
+      .modal-header
+        h6#titleModal.modal-title.bold Reporteo de precios
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          b.s-16 aria-hidden="true"  ×
+      .modal-body#tablePricesReported
+

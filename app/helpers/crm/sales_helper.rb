@@ -3,7 +3,6 @@ module Crm::SalesHelper
 		{ 
 			'Precio de venta': 'price_sale', 
 			'Bulto': 'package', 
-			'Viaje/envio': 'freight', 
 			'Pallet': 'pallet'
 		}
 	end
@@ -17,12 +16,12 @@ module Crm::SalesHelper
 
 	def get_total(unit_sale, price, percentage)
 		return total_by_price_sale(price, percentage) if unit_sale == 'price_sale' 
-		return total_by_package(price, percentage) if unit_sale == 'package' 
+		return total_by_package(price, percentage) if unit_sale == 'package'
 		return total_by_freight(price, percentage) if unit_sale == 'freight'
 	end
 
 	def total_by_price_sale(price, percentage)
-		return get_porcent(@sale.total_mxn, price) if percentage
+		return get_porcent(@sale.total, price) if percentage
 		price
 	end
 
@@ -31,8 +30,9 @@ module Crm::SalesHelper
 	end
 
 	def total_by_freight(price, percentage)
-		price * 1
+		price
 	end
+
 
 	def currency(price, code)
 		price = 0 if price.nil?
@@ -83,7 +83,7 @@ module Crm::SalesHelper
 
 	def progress_bar(sale, size = 'md')
 		porcentage = get_porcent2(sale.total_quantity, sale.total_quantity_reported)
-		color_bar = case porcentage
+			color_bar = case porcentage
 								when 0..30
 									"bg-warning"
 								when 31..60
@@ -113,4 +113,15 @@ module Crm::SalesHelper
 		return "Descuento" if expense.discount_type?
 	end
 
+	def get_cost_expense(sale, quantity, expense_quantity)
+		porcent = (100 / sale.total_quantity.to_d) * quantity
+		(expense_quantity / 100) * porcent
+	end
+
+	def get_cost_expense_2(report_price, sale_total)
+		porcent = 100 / sale_total.to_d * report_price.to_d
+		total = sale_total.to_d / 100 * porcent
+		total_porcent = total / sale_total.to_d
+		@expense.get_total * total_porcent
+	end
 end

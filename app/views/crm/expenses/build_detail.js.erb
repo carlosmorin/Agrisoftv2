@@ -1,0 +1,6 @@
+document.getElementById('titleModal').innerHTML = ""
+document.getElementById('titleModal').innerHTML = "Detalle de descuento"
+document.getElementById('tablePricesReported').innerHTML = ""
+document.getElementById('tablePricesReported').insertAdjacentHTML("beforeend", "<%= j(render(partial: 'crm/expenses/expense_detail').html_safe)%>");
+var button = document.getElementById('priceReportModal')
+button.click()	

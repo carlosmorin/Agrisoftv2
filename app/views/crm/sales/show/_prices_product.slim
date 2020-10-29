@@ -1,0 +1,31 @@
+.row
+  .col-8
+    small.s-10 Producto
+    h5
+      b = "#{@product.product.name.capitalize}"
+  .col-4
+    small.s-10 Cantidad total
+    h5
+      b = "#{@product.quantity} bultos"
+
+table class="table mt-3 table-sm table-hover text-nowrap table-bordered s-14 table-striped"
+  thead
+    tr
+      th style=("width: 50px")  #
+      th FECHA DE PAGO
+      th CANTIDAD REPORTADA
+      th PRECIO
+      th style=("width: 40px") TOTAL
+  tbody
+    - @product.shipments_product_reports.each do |spr|
+      tr
+        td = spr.id
+        td = spr.created_at.strftime("%d/%m/%Y")
+        td = spr.quantity
+        td == currency(spr.price, @product.shipment.currency_code)
+        td.text-bold == currency(spr.price * spr.quantity, @product.shipment.currency_code)
+  tfooter
+    tr
+      td colspan="4"
+      td.text-bold
+        == currency(@product.total, @product.shipment.currency_code)

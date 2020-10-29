@@ -1,69 +1,34 @@
-.card.card-primary.card-outline.card-outline-tabs
-  .card-header.p-0.border-bottom-0
-    ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
-      li.nav-item
-        a#tab-products-tab.nav-link.active.s-14 aria-controls="tab-products" aria-selected="true" data-toggle="pill" href="#tab-products" role="tab"  Productos
-      li.nav-item
-        a#tab-prices.nav-link.s-14 aria-controls="custom-tabs-four-profile" aria-selected="false" data-toggle="pill" href="#custom-tabs-four-profile" role="tab"  Reportes de precios
-  .card-body.p-0
-    #custom-tabs-four-tabContent.tab-content
-      #tab-products.tab-pane.fade.show.active aria-labelledby="custom-tabs-four-home-tab" role="tabpanel" 
-        .row.my-2
-          .col-12.text-right.pr-3
-            button.btn.bg-gradient-primary.btn-xs data-action="click->crm--show-sales#showFormProducts" data-target="crm--show-sales.showProductsForm" type="button"
-              i.fas.fa-edit.mr-1
-              span Editar productos
-            button.btn.bg-gradient-info.btn-xs.d-none data-action="click->crm--show-sales#hideFormProducts" data-target="crm--show-sales.btnHideFormProducts" type="button"
-              i.fas.fa-eye.mr-1
-              span Visualizar datos
-        #productsContainer data-target='crm--show-sales.productsContainer'
-          = render 'crm/sales/show/collection_products', sale: sale
-        .shipments_products.d-none data-target='crm--show-sales.formProductsContainer'
-          = simple_form_for(sale, url: '', data: { action: 'submit->crm--show-sales#saveProducts' }) do |form|
-            table.table.table-sm.table-bordered
-              thead
-                tr
-                  th.c-gray.s-13 DESCRIPCIÓN DE PRODUCTO
-                  th.c-gray.s-13 CANTIDAD
-                  th.c-gray.s-13 PRECIO
-                  th.c-gray.s-13.px-3
-                    = link_to_add_association form, :shipments_products, class: "btn btn-xs btn-primary s-12 d-none px-2", data: { association_insertion_node: '.shipments_products_container', association_insertion_method: :append, target: 'crm--show-sales.addProductButton' } do
-                        i.fas.fa-plus-circle.s-12
-              tbody.shipments_products_container
-                = form.simple_fields_for :shipments_products do |product|
-                  = render 'shipments_product_fields', f: product
-              tfooter
-                tr
-                  th.text-right.pr-2 colspan="4"
-                    button.btn.btn-xs.btn-dark-blue.d-none.s-12.pull-right.pl-2 type='submit' data-target='crm--show-sales.submitProductsButton'
-                      i.fas.fa-save.mr-2.s-12
-                      | Guardar
-                    button.btn.btn-xs.btn-link.mr-2.d-none.pull-right.s-12 data-action="click->crm--show-sales#hideFormProducts" data-target="crm--show-sales.btnCancelProducts" type="button"
-                      i.fas.fa-times.s-12.mr-2
-                      | Cancelar
-      #custom-tabs-four-profile.tab-pane.fade.pt-2  aria-labelledby="tab-prices" role="tabpanel" 
-        .card.my-0
-          .card-header.bg-light-gray.p-2.pb-1
-            .row.s-12.c-gray
-              .col-6
-                span.bold.s-12 DESCRIPCIÓN DE PRODUCTO
-              .col-1
-                span.bold.s-12 CANT.
-              .col-2
-                span.bold.s-12 PRECIO
-              .col-2
-                span.bold.s-12 TOTAL
-              .col-1.text-center
-          #collectionProductsContainerPrices data-target='crm--show-sales.productsContainer'
-            = render 'crm/sales/show/collection_products_prices', sale: sale 
-          hr.my-2
-          .row
-            .col-9
-            .col-3
-              button.btn.btn-sm.btn-dark-blue.pull-right.d-none type='submit' data-target='crm--show-sales.submitProductsButton'
-                i.fas.fa-save.mr-2
-                | Guardar
-              button.btn.btn-sm.btn-link.pull-right.mr-2.d-none data-action="click->crm--show-sales#hideFormProducts" data-target="crm--show-sales.btnCancelProducts" type="button"
-                i.fas.fa-times.s-14.mr-2
-                | Cancelar
+h5.mt-4
+  b Información de productos
+- unless sale.lumps_for_report.zero?
+  .s-14.alert.alert-info.d-block
+      b = "#{sale.lumps_for_report} bultos pendientes por reportar"
+.card.my-0.card-body.p-0
+    table class="table table-head-fixed text-nowrap s-13"
+      thead
+        tr.bg-light-gray
+          th.py-2 DESCRIPCIÓN DE PRODUCTO
+          th.py-2 CANTIDAD
+          th.py-2 PRECIO
+          th.py-2 TOTAL
+          th.py-2
+      tbody
+        - sale.shipments_products.each do |sp|
+          tr
+            td
+              label.s-13 = sp.product.name.upcase
+            td
+              label.s-13 = sp.quantity
+            td
+              label.s-13 == currency(sp.sale_price, sale.currency_code)
+            td
+              label.s-13 == currency(sp.total, sale.currency_code)
+            td 
+              - if sp.price.nil? || sp.price.zero?
+                button#priceReportModal.btn.btn-info.btn-xs.s-12.d-none data-target="#myModal" data-toggle="modal" type="button" 
+                = link_to 'Ver reporteo', crm_sale_get_report_products_path(sale_id: @sale, sp_id: sp.id), remote: :true, class: 'btn btn-info btn-xs s-12'
+      tfooter
+        tr 
+          th colspan="3"
+          th.bold.s-16 == currency(sale.total, sale.currency_code)
 

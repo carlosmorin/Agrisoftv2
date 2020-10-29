@@ -1,0 +1,34 @@
+.row
+	.col-3
+		small.s-10 Concepto
+		h4.mt-0
+			b = "#{@expense.expense.name.capitalize} "
+	.col-3
+		small.s-10 Total
+		h4.mt-0
+			b == currency(@expense.get_total, @sale.currency_code)
+
+table class="table mt-3 table-sm table-hover text-nowrap table-bordered s-14 table-striped"
+  thead
+    tr
+      th DESCRIPCIÓN DE PRODUCTO
+      th CANTIDAD
+      th PRECIO PROMEDIO
+      th style=("width: 40px") COSTO UNTARIO
+      th COSTO TOTAL
+
+  tbody
+    - @sale.shipments_products.each do |sp|
+      - cost = get_cost_expense(@sale, sp.quantity, @expense.get_total)
+      - cost2 = get_cost_expense_2(sp.total, @sale.total)
+      - unit_cost = cost / sp.quantity
+      - unit_cost_2 = cost2 / sp.quantity
+      tr
+        td = sp.product.name.upcase
+        td = sp.quantity
+        td = sp.sale_price
+        td 
+          == currency(unit_cost_2, @sale.currency_code)
+        td 
+          == currency(cost2, @sale.currency_code)
+

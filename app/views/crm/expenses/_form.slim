@@ -1,0 +1,33 @@
+- url = @expense.persisted? ? crm_expense_path(@expense) : crm_expenses_path
+= simple_form_for([:crm, @expense], url: url, remote: true) do |f|
+	= f.input :shipment_id, as: :hidden, required: true, autofocus: true
+	= f.input :currency_id, as: :hidden, required: true, autofocus: true
+	.row
+		.col-1
+		.col-10
+			= f.input :expense_id, collection: Expense.all, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+	.row.mt-2
+		.col-1
+		.col-10
+			= f.input :unit, collection: units_sales, input_html: { class: "form-control form-control-sm"  }
+	.row.mt-2
+		.col-1
+		.col-10
+			= f.input :amount, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+	.row.mt-2
+		.col-1
+		.col-10
+			= f.input :percentage, as: :boolean
+	.row.mt-2
+		.col-1
+		.col-10
+		  = f.input :type_expense, collection: types_expenses, input_html: { value: 'expense_type', class: "s-12 form-control form-control-sm"}
+	.row
+		.col-12
+			hr
+	.row
+		.col-12
+	.row.text-right
+		.col-12
+			button.btn.btn-sm.btn-link.s-12.mr-3 data-dismiss="modal" type="button" Cerrar
+			= f.button :submit, 'Guardar', class: "btn btn-sm btn-dark-blue s-12"

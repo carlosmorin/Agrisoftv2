@@ -1,10 +1,9 @@
-<% if @report.errors.any? %>
-  swal('Error', '<%= @report.errors.full_messages.to_sentence%>', 'error')
+<% if @expense.errors.any? %>
+  $('#newExpenseContainer').html('<%= j(render(partial: 'form').html_safe)%>');
+  $('#newExpenseContainer').modal('show')
 <% else %>
   Turbolinks.visit(window.location, { action: 'replace' })
-
   setTimeout(function(){
     toastr.success('Operación realizada con exito!', { timeOut: 2000 })
   }, 500);
-
 <% end %>

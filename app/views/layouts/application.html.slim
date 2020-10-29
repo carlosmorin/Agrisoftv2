@@ -9,12 +9,22 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' 
     = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' 
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' 
-  body class="#{ !user_signed_in? ? 'login-page' : '' }"
+  body class="#{ !user_signed_in? ? 'login-page' : '' } layout-fixed layout-navbar-fixed #{ cookies[:menuHidde] == '1' ? 'sidebar-collapse' : ''}"
     - if user_signed_in?
       .wrapper
         = render 'layouts/partials/navbar'
         = render 'layouts/partials/sidebar'
         .content-wrapper
+          .loading_spiner
+            .lds-roller
+                div
+                div
+                div
+                div
+                div
+                div
+                div
+                div
           = yield
     - else
       = yield

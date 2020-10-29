@@ -1,0 +1,6 @@
+document.getElementById('exampleModalLabel').innerHTML = ""
+document.getElementById('exampleModalLabel').innerHTML = "Editar producto"
+document.getElementById('reportPriceModalContainer').innerHTML = ""
+document.getElementById('reportPriceModalContainer').insertAdjacentHTML("beforeend", "<%= j(render(partial: 'form').html_safe)%>");
+var button = document.getElementById('buttonReport')
+button.click()

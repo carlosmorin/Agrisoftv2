@@ -103,15 +103,27 @@ class Shipment < ApplicationRecord
 	def total_quantity_reported
 		total = 0
 		shipments_products.each do |sp|
-			total += sp.price.nil? ? sp.quantity_reported : sp.quantity
+			total += sp.price.nil? || sp.price.zero? ? sp.quantity_reported : sp.quantity
 		end
 		total
 	end
 
-	def total_mxn
+	def lumps_for_report
+		total_quantity - total_quantity_reported
+	end
+
+	def total
 		total = 0
 		shipments_products.each do |sp|
-			total += sp.quantity * sp.sale_price
+			total += sp.total
+		end
+		total
+	end
+
+	def total_expenses
+		total = 0
+		shipments_expenses.each do |se|
+			total += se.get_total 
 		end
 		total
 	end
@@ -151,6 +163,14 @@ class Shipment < ApplicationRecord
 
 	def in_collect?
 		to_collect_at != nil
+	end
+
+	def subtotal
+		total = 0
+		shipments_products.each do |shp|
+			total += shp.total
+		end
+		total
 	end
 
 	private
@@ -220,4 +240,5 @@ class Shipment < ApplicationRecord
 			"#{total_shipments.to_i + 1 }"
 		end
 	end
+
 end

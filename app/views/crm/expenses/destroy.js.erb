@@ -1,5 +1,5 @@
-<% if @report.errors.any? %>
-  swal('Error', '<%= @report.errors.full_messages.to_sentence%>', 'error')
+<% if @expense.errors.any? %>
+  swal('Error', '<%= @expense.errors.full_messages.to_sentence%>', 'error')
 <% else %>
   Turbolinks.visit(window.location, { action: 'replace' })
 

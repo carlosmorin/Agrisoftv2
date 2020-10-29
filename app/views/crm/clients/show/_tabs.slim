@@ -1,0 +1,51 @@
+.card
+  .card-body.p-0 style=("display: block;") 
+    ul.nav.nav-pills.flex-column.s-14
+      li.nav-item.active
+        = link_to 'General', crm_client_path(@client, tab: :general), class: "nav-link  #{ params[:tab] == 'general' ? 'active bold' : '' }"
+      li.nav-item
+        = link_to crm_client_path(@client, tab: :sales), class: "nav-link  #{ params[:tab] == 'sales' ? 'active bold' : '' }" do 
+          | Ventas
+          span.badge.bg-warning.float-right
+            = @client.shipments.size
+      li.nav-item
+        = link_to crm_client_path(@client, tab: :contacts), class: "nav-link #{ params[:tab] == 'contacts' ? 'active' : 'c-gray' }"
+          | Contactos
+          span.badge.bg-warning.float-right
+            = @client.contacts.size
+      li.nav-item
+        = link_to crm_client_path(@client, tab: :bank_accounts), class: "nav-link  #{ params[:tab] == 'bank_accounts' ? 'active' : 'c-gray' }"
+          | Cuentas
+          span.badge.bg-warning.float-right
+            = @client.bank_accounts.size
+      li.nav-item
+        = link_to crm_client_path(@client, tab: :addresses), class: "nav-link #{ params[:tab] == 'addresses' ? 'active' : 'c-gray' }"
+          | Direcciónes
+          span.badge.bg-warning.float-right 
+            = @client.delivery_addresses.size
+      li.nav-item
+        = link_to crm_client_path(@client, tab: :contracts), class: "nav-link #{ params[:tab] == 'contracts' ? 'active' : 'c-gray' }"
+          | Acuerdos comerciales
+          span.badge.bg-warning.float-right 
+            = @client.contracts.size
+      li.nav-item
+        = link_to config_client_path(@client, tab: :sales), target: :_blank, class: "nav-link text-primary" do
+          | Conguraciones
+          i.fas.fa-external-link-alt.ml-2.s-10
+.card.bg-light-gray
+  .card-header
+    h6.mb-0
+      b Credito
+      span.badge.bg-info.float-right 
+        | En desarollo 
+  .card-body.p-0.s-14 style=("display: block;") 
+    ul.nav.nav-pills.flex-column
+      li.nav-item.active
+        a.nav-link href="#" 
+          | Estado de cuenta
+      li.nav-item.active
+        a.nav-link href="#" 
+          | Facturas
+      li.nav-item.active
+        a.nav-link href="#" 
+          | Actividad

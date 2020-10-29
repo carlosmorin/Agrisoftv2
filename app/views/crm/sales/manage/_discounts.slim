@@ -1,0 +1,45 @@
+.row
+  .col-12.my-2
+    = link_to new_crm_expense_path(shipment_id: sale.id, currency_id: sale.current_currency.id), remote: true, class: 'btn btn-primary btn-sm s-12' do
+      b Agregar gasto
+    button#newExpenseModal.btn.btn-primary.btn-sm.s-12.d-none data-target="#newExpense" data-toggle="modal" type="button" data-placement='left'
+      b Agregar gasto
+.card.card-body.table-responsive.p-0.mt-2 style="max-height: 70vh;"
+  .row
+    .col-12
+      table class="table table-head-fixed table-sm text-nowrap s-12"
+        thead
+          tr.bg-light-gray
+            th.py-2 Concepto
+            th.py-2 Monto
+            th.py-2 Unidad
+            th.py-2 Tipo
+            th.py-2 Total
+            th.py-2
+        tbody#tbody.s-13
+          - sale.shipments_expenses.order(:type_expense).each do |exp|
+            tr
+              td
+                label.s-13 = exp.expense.name.upcase
+              td
+
+                label.s-13 == to_percentage(exp.amount) if exp.percentage?
+                label.s-13 == currency(exp.amount, sale.currency_code) unless exp.percentage?
+              td
+                label.mb-0.text-upcase.s-13 = units_sales.invert[exp.unit] 
+              td
+              td
+                == currency(exp.get_total, sale.currency_code)
+              td
+                .btn-group.mt-1
+                  button.btn.btn-xs.btn-default.dropdown-toggle.dropdown-icon.text-primary.px-2 aria-expanded="false" data-toggle="dropdown" type="button" style="border-radius: 50px !important;"
+                  .dropdown-menu.py-0.adjust-dropdown style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-43px, 22px, 0px);") x-placement="top-start" 
+                    = link_to edit_crm_expense_path(exp), remote: true, class: "dropdown-item s-12 bold" do
+                      i.fas.fa-edit.mr-2
+                      span Editar
+                    = link_to crm_expense_path(exp), method: :delete, confirm:  "Esta seguro?", title: "Eliminar", remote: true, class: "dropdown-item s-12 text-danger bold" do
+                      i.fas.fa-trash.mr-2
+                      span Eliminar
+
+                  // button.btn.btn-sm.btn-link data-target="#expensesPerProductModal" data-toggle="modal" type="button"
+                    i.fas.fa-ellipsis-h

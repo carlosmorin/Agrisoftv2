@@ -10,12 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_10_22_034345) do
 
-=======
-ActiveRecord::Schema.define(version: 2020_10_17_171514) do
->>>>>>> 9cf4b61667d23dd2a2c2cc9c235112dfe38db357
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -360,13 +356,17 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "crop_damages", force: :cascade do |t|
-    t.integer "crop_damageable_id"
-    t.string "crop_damageable_type"
-    t.integer "crop_id"
+  create_table "create_appointments", force: :cascade do |t|
+    t.string "n_request"
+    t.datetime "startet_at"
+    t.datetime "finished_at"
+    t.datetime "appointment_at"
+    t.datetime "commitment_at"
+    t.string "appointment_number"
+    t.bigint "shipment_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["crop_id"], name: "index_crop_damages_on_crop_id"
+    t.index ["shipment_id"], name: "index_create_appointments_on_shipment_id"
   end
 
   create_table "crops", force: :cascade do |t|
@@ -749,8 +749,8 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
   end
 
   create_table "ranches", force: :cascade do |t|
-    t.bigint "state_id"
-    t.bigint "municipality_id"
+    t.string "state_id"
+    t.string "municipality_id"
     t.bigint "manager_id"
     t.string "territory"
     t.string "hydrological_region"
@@ -1054,6 +1054,7 @@ ActiveRecord::Schema.define(version: 2020_10_17_171514) do
   add_foreign_key "contracts_products", "contracts"
   add_foreign_key "contracts_products", "currencies"
   add_foreign_key "contracts_products", "products"
+  add_foreign_key "create_appointments", "shipments"
   add_foreign_key "crops_colors", "colors"
   add_foreign_key "crops_colors", "crops"
   add_foreign_key "crops_deseases", "crops"
