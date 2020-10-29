@@ -142,7 +142,7 @@ class ShipmentsController < ApplicationController
   def shipment_params
   	params.require(:freight).permit(
       :carrier_id, :driver_id, :unit_id, :box_id, :user_id,
-          shipments_attributes: [:id, :company_id, :client_id, :shipment_at,
+          shipments_attributes: [:id, :company_id, :client_id, :n_pallets, :shipment_at,
             :delivery_address_id, :user_id, :status, :comments, :_destroy, :pay_freight,
           shipments_products_attributes: [:id, :price, :quantity, :shipment_id,
             :product_id, :_destroy]]
@@ -150,7 +150,7 @@ class ShipmentsController < ApplicationController
   end
 
   def consolidate_params
-    params.require(:shipment).permit(:id, :company_id, :client_id, 
+    params.require(:shipment).permit(:id, :company_id, :client_id, :n_pallets,
       :delivery_address_id, :user_id, :freight_id, :status, :comments, :_destroy, :pay_freight,
       shipments_products_attributes: [ :id, :price, :quantity, :shipment_id, 
         :product_id, :_destroy ]

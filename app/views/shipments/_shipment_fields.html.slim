@@ -37,6 +37,9 @@
                 = render 'shipments_product_fields', f: ff
               = link_to_add_association 'Agregar producto', f, :shipments_products, class: "btn btn-sm btn-sm btn-primary s-12 add_products mt-4 pull-right"
       .row.mt-2
+        .col-md-5
+          = f.input :n_pallets, input_html: { class: "form-control form-control-sm s-12" }
+      .row.mt-2
         .col-lg-12
           = f.input :comments, input_html: { class: "form-control s-12", placeholder: "Ej. ", data: { target: "shipments.comments" } }
   hr

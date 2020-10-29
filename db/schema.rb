@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_22_034345) do
+ActiveRecord::Schema.define(version: 2020_10_29_132946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -818,6 +818,7 @@ ActiveRecord::Schema.define(version: 2020_10_22_034345) do
     t.bigint "contract_id"
     t.datetime "to_collect_at"
     t.bigint "currency_id"
+    t.integer "n_pallets", default: 0
     t.index ["client_id"], name: "index_shipments_on_client_id"
     t.index ["company_id"], name: "index_shipments_on_company_id"
     t.index ["contact_id"], name: "index_shipments_on_contact_id"

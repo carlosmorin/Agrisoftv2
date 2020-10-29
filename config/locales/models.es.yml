@@ -153,6 +153,7 @@ es:
         currency: Moneda
         exchange_rate: Tipo de cambio
         description: Comentarios
+        n_pallets: Numero de tarimas
       quality:
         name: Nombre
         short_name: Abreviación
