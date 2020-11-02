@@ -13,7 +13,6 @@ table class="table mt-3 table-sm table-hover text-nowrap table-bordered s-14 tab
     tr
       th DESCRIPCIÓN DE PRODUCTO
       th CANTIDAD
-      th PRECIO PROMEDIO
       th style=("width: 40px") COSTO UNTARIO
       th COSTO TOTAL
 
@@ -23,12 +22,25 @@ table class="table mt-3 table-sm table-hover text-nowrap table-bordered s-14 tab
       - cost2 = get_cost_expense_2(sp.total, @sale.total)
       - unit_cost = cost / sp.quantity
       - unit_cost_2 = cost2 / sp.quantity
+      - unit_cost_2 = @expense.amount if @expense.unit.eql?('package')
       tr
         td = sp.product.name.upcase
         td = sp.quantity
-        td = sp.sale_price
         td 
-          == currency(unit_cost_2, @sale.currency_code)
-        td 
-          == currency(cost2, @sale.currency_code)
+          - if @expense.unit.eql?('pallet')
+            - u_pallet = sp.product.units_per_pallet
+            - unit_price_pallet = @expense.amount.zero? ? 0 : @expense.amount / u_pallet
+            // precio por pallet dividido por la cantidad de bultos por pallet
+            
+            == currency(unit_price_pallet, @sale.currency_code)
+          - else
+            == currency(unit_cost_2, @sale.currency_code)
+        td
+          - if @expense.unit.eql?('package')
+            == currency(unit_cost_2 * sp.quantity, @sale.currency_code)
+          - elsif @expense.unit.eql?('pallet')
+            // precio de pallet por las catidad e pallets
+            == currency(unit_price_pallet * sp.quantity, @sale.currency_code)
+          - else
+            == currency(cost2, @sale.currency_code)
 
