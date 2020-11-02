@@ -1,4 +1,4 @@
-aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
+aside.main-sidebar.sidebar-dark-primary.elevation-4 data-turbolinks-permanent="" style="height:100vh;"
   .sidebar.px-0
     = link_to profile_index_path do
       .pl-2.my-2.pb-1.mb-1.d-flex
@@ -34,17 +34,15 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
             li.nav-item
               = link_to logistic_carriers_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(logistic_carriers_path)}" do
                 == circle_icon(size: 10, color: 'light-gray')
-                
                 p.s-14 Gestionar Transportistas
             li.nav-item
               = link_to logistic_freights_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(logistic_freights_path)}" do
                 == circle_icon(size: 10, color: 'light-gray')
-                
                 p.s-14 Gestionar Fletes
             li.nav-item.has-treeview.pb-2 class="#{current_nav_item?(request.fullpath, 'config_box_types')}"
               a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#" 
-                i.fas.fa-cogs.s-10.mr-2
-                p.s-14.text-normal Configuraciónes
+                == cog_icon(size: 12, color: 'light-gray')
+                p.s-14.text-normal.ml-2 Configuraciónes
                 i.fa.fa-chevron-left.right.pull-right.mt-1 style="font-size: 12px; top: 0.1rem;"
                 ul.nav.nav-treeview
                   li.nav-item
@@ -72,8 +70,8 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 style="height:100vh;"
                 p.s-14.text-normal Gestionar direcciones de ent...
             li.nav-item.has-treeview.pb-2 class="#{current_nav_item?(request.fullpath, 'config_box_types')}"
               a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#" 
-                i.fas.fa-cogs.s-10.mr-2
-                p.s-14.text-normal Configuraciónes
+                == cog_icon(size: 12, color: 'light-gray')
+                p.s-14.text-normal.ml-2 Configuraciónes
                 i.fa.fa-chevron-left.right.pull-right.mt-1 style="font-size: 12px; top: 0.1rem;"
                 ul.nav.nav-treeview
                   li.nav-item
