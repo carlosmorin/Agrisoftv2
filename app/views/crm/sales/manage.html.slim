@@ -19,13 +19,18 @@
 							.col-6
 								h4 
 									b = @sale.folio.upcase
-							.col-4.c-gray.pt-2
+							.col-2.c-gray.pt-2
 								.row
-									.col-6
+									.col-12
 										h5.s-18.my-0 
 											span MONEDA:
 											b.ml-1 = @sale.currency_code.upcase
-							.col-2.text-right
+							.col-4.text-right
+								- if get_porcent2(@sale.total_quantity, @sale.total_quantity_reported).eql?(100)
+									= link_to new_billing_pre_bill_path(sale: @sale.folio), target: :_blank, class: 'btn btn-dark-blue btn-sm' do
+							 			span Facturar
+							 			i.fas.fa-file-invoice-dollar.ml-2.s-14
+									'
 								= link_to crm_sale_path(@sale), target: :_blank, class: 'btn btn-outline-primary btn-sm' do
 						 			span Visualizar
 									i.fas.fa-external-link-alt.ml-2.s-10

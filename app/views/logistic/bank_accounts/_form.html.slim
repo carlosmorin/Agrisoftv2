@@ -1,4 +1,4 @@
-= simple_form_for([:logistic, @bank_account], data: { controller: "masks selectize" }) do |f|
+= simple_form_for([:logistic, @bank_account], data: { controller: "masks selectize" }, html: { novalidate: true }) do |f|
 	= f.input :accountable_type, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @carrier.model_name }
 	= f.input :accountable_id, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @carrier.id }
 	.form-group.mb-2

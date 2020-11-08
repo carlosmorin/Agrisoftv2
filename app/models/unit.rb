@@ -4,7 +4,7 @@ class Unit < ApplicationRecord
   before_create :set_name
   before_update :set_name
   
-  validates :model, :color, :year, :plate_number, :carrier_id, 
+  validates :color, :year, :plate_number, :carrier_id, 
   	:unit_brand_id, presence: true
 	validates_uniqueness_of :plate_number, case_sensitive: false
 	belongs_to :unit_brand

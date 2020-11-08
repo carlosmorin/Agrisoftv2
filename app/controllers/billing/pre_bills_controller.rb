@@ -12,7 +12,8 @@ module Billing
     end
 
     # GET /rooms/new
-    def new
+    def new  
+      build_prebill if params[:sale].present?
       @pre_bill = Bill.new()
     end
 
@@ -69,6 +70,14 @@ module Billing
       # Only allow a list of trusted parameters through.
       def room_params
         params.require(:room).permit(:name)
+      end
+
+      def build_prebill
+        load_sale
+      end
+
+      def load_sale
+        @sale = Shipment.find_by_folio(params[:folio])
       end
   end
 

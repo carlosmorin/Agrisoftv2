@@ -1,4 +1,4 @@
-= simple_form_for([:logistic, @box], data: { controller: 'masks boxes'} ) do |f|
+= simple_form_for([:logistic, @box], data: { controller: 'masks boxes'}, html: { novalidate: true }) do |f|
 	= f.input :carrier_id, as: :hidden, input_html: { value: params[:carrier_id] }
 	.form-group.mb-1  
 		.row

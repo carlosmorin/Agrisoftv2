@@ -28,6 +28,7 @@
               td
                 label.mb-0.text-upcase.s-13 = units_sales.invert[exp.unit] 
               td
+                == type_expense(exp)
               td
                 == currency(exp.get_total, sale.currency_code)
               td

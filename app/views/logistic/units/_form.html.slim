@@ -1,4 +1,4 @@
-= simple_form_for([:logistic, @unit], data: { controller: 'units' } ) do |f|
+= simple_form_for([:logistic, @unit], data: { controller: 'units' },  html: { novalidate: true }) do |f|
 	= f.input :carrier_id, as: :hidden, label: false, input_html: { value: params[:carrier_id] }
 	.form-group.mb-1  
 		.row
@@ -9,27 +9,28 @@
 	.form-group.mb-1  
 		.row
 			.col-lg-3
-				= f.label :model, class: "pt-1" 
+				= f.label :year, class: "pt-1" 
 			.col-lg-9
-				= f.input :model, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
+				= f.input :year, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }	
 	.form-group.mb-1  
 		.row
 			.col-lg-3
 				= f.label :color, class: "pt-1" 
 			.col-lg-9
 				= f.input :color, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
-	.form-group.mb-1  
-		.row
-			.col-lg-3
-				= f.label :year, class: "pt-1" 
-			.col-lg-9
-				= f.input :year, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
+
 	.form-group.mb-1
 		.row
 			.col-lg-3
 				= f.label :plate_number, class: "pt-1" 
 			.col-lg-9
 				= f.input :plate_number, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
+	.form-group.mb-1  
+		.row
+			.col-lg-3
+				= f.label :model, class: "pt-1" 
+			.col-lg-9
+				= f.input :model, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
 	.form-group.mb-1
 		.row
 			.col-lg-3

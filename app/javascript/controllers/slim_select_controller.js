@@ -8,5 +8,9 @@ export default class extends Controller {
     for (var i=0, max=ids.length; i < max; i++) {
       new SlimSelect({select: `#${ids[i]}`})
     }
+    new SlimSelect({
+      select: document.querySelector('.slim-select')
+    })
+
   }
 }

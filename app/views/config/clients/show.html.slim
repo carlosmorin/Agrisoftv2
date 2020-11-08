@@ -14,5 +14,6 @@
         = render 'tabs'
       .col-9.col-sm-10
         #vert-tabs-tabContent.tab-content
-        	= render "shared/alerts"
-        	= render 'sales' if params[:tab] == 'sales'
+          = render "shared/alerts"
+          = render 'sales' if params[:tab] == 'sales'
+          = render 'billing' if params[:tab] == 'billing'

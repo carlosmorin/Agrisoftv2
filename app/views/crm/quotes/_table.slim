@@ -13,7 +13,6 @@ table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped d
       th.text-left Neto
       th.text-left Descuento
       th.text-left Subtotal
-      th.text-left IVA
       th.text-left Total
       th.text-left colspan="2" style=("width: 12%") Acciónes
   tbody#tbody.s-13
@@ -55,21 +54,18 @@ table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped d
               p.text-d-none.s-12.mb-0 = "#{distance_of_time_in_words(Time.zone.now, quote.expirated_at)} para expirar" if quote.valid
               p.text-d-none.s-12.mb-0
                 b = "Cotizacion vencida" unless quote.valid
-          td.text-left
+          td.text-left.bold
             - sub_total = quote.subtotal
             - discount = quote.discount 
-            span.bold = "$ #{quote.subtotal}"
+            == currency(quote.subtotal, quote.currency_code)
           td.text-left
             - discount = ((sub_total.to_d / 100) * discount)
             span.text-danger.bold = " #{quote.discount}% - $#{discount}"
           td.text-left.bold
             - sub_total = (sub_total.to_d - discount)  
-            = "$#{sub_total}"
-          td.text-left
-            - iva = ((quote.subtotal.to_d - discount) / 100) * quote.iva
-            span.bold = "%#{quote.iva} - $#{iva.round(2)}"
+            == currency(sub_total, quote.currency_code)
           td.text-left.bold
-            = "$#{sub_total + iva}"
+            == currency(sub_total, quote.currency_code)
           td.text-left
             .btn-group
               = link_to crm_quote_path(quote), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do

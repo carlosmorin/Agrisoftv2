@@ -1,5 +1,5 @@
 section.content-header.pb-0
-  .container-fluid
+  .container
     .row
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
@@ -7,8 +7,9 @@ section.content-header.pb-0
       .col-12
         h5 = "Nuevo producto ".upcase
 section.content
-  .container-fluid
+  .container
     .card
       .card-body
         .row
+          .col-8
             = render 'form'

@@ -8,32 +8,37 @@
         .col-12
           h5.s-16.mb-3
             b GENERAL
-        .col-12
-        	hr.my-0
       .form-group.mb-1.mt-3
         .row
-          .col-2
-            = form.label :company_id, class: "pt-1 s-13" 
-          .col-6
-            = form.input :company_id, collection: Company.all, autofocus: true, label: false, input_html: { class: 's-12' }
-        .row.mt-2
-          .col-2
-            = form.label :client_id, class: "pt-1 s-13" 
-          .col-6
-            = form.input :client_id, collection: Client.all, autofocus: true, label: false, input_html: { class: 's-12' }
-        .row.mt-2
-          .col-2
-            = form.label :currency_id, class: "pt-1 s-13" 
-          .col-3
-            = form.input :currency_id, collection: Currency.all.pluck(:code, :id), autofocus: true, label: false, input_html: { class: 's-12 text-upcase' }
-          .col-3
-            = form.input :exchange_rate, autofocus: true, label: false, input_html: { class: 's-12 form-control form-control-sm', placeholder: 'Tipo de cambio' }
-            i.s-12 Tipo de cambio
+          .col-12
+            = form.input :company_id, collection: Company.all, autofocus: true, input_html: { class: 's-12' }
         .row.mt-4
-          .col-2
-            = form.label :sat_cfdi_usage, class: "pt-1 s-13" 
-          .col-6
-            = form.input :sat_cfdi_usage, collection: Sat::CfdiUsage.all.pluck(:description, :code), autofocus: true, label: false, input_html: { class: 's-12' }
+          .col-12
+            = form.input :client_id, collection: Client.all, autofocus: true, input_html: { class: 's-12' }
+        .row.mt-3
+          .col-4
+            input.form-control.form-control-sm placeholder="RFC" type='text' 
+          .col-8
+            input.form-control.form-control-sm placeholder="RAZÓN SOCIAL" type='text'
+        .row.mt-3
+          .col-4
+            = form.input :sat_cfdi_usage, collection: Sat::CfdiUsage.all.pluck(:description, :code), autofocus: true, input_html: { class: 's-12' }
+          .col-4
+            = form.input :currency_id, collection: Currency.all.pluck(:code, :id), autofocus: true, input_html: { class: 's-12 text-upcase' }
+  
+          .col-4
+            input.form-control.form-control-sm placeholder="FORMA DE PAGO" type='text'
+        .row.mt-3
+          .col-4
+          .col-4
+            = form.input :exchange_rate, autofocus: true, input_html: { class: 's-12 form-control form-control-sm', placeholder: 'Tipo de cambio' }
+          .col-4
+            input.form-control.form-control-sm placeholder="METODO DE PAGO" type='text'
+        .row.mt-2
+          .col-3
+            = form.input :exchange_rate, autofocus: true,  input_html: { class: 's-12 form-control form-control-sm', placeholder: 'Tipo de cambio' }
+            i.s-12 Tipo de cambio
+
         .row.mt-2
           .col-2
             = form.label :sat_pay_method, class: "pt-1 s-13" 

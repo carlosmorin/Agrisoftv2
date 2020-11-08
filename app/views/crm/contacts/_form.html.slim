@@ -1,4 +1,4 @@
-= simple_form_for([:crm, @contact], data: { controller: "masks" }) do |f|
+= simple_form_for([:crm, @contact], data: { controller: "masks" }, html: { novalidate: true }) do |f|
 	= f.input :contactable_type, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @client.model_name }
 	= f.input :contactable_id, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @client.id }
 	.form-group.mb-1  

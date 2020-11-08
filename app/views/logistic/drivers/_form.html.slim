@@ -1,5 +1,5 @@
 - model_name =  @driver.model_name
-= simple_form_for([:logistic, @driver], data: { controller: "masks" }) do |f|
+= simple_form_for([:logistic, @driver], data: { controller: "masks" }, html: { novalidate: true }) do |f|
   = f.input :carrier_id, as: :hidden, input_html: { value: @carrier.id }
   .form-group.mb-1
     .row

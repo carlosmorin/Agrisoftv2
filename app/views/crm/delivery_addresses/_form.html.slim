@@ -1,4 +1,4 @@
-= simple_form_for([:crm, @address], data: { controller: "address masks slim-select" }) do |f|
+= simple_form_for([:crm, @address], data: { controller: "address masks slim-select" }, html: { novalidate: true }) do |f|
 	- client_id = params[:client_id].present? ? params[:client_id] :  @address.client_id 
 	= f.input :client_id, as: :hidden, input_html: { value: client_id }
 	.row

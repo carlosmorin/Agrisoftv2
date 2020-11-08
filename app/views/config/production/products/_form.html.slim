@@ -1,22 +1,22 @@
 .callout.callout-danger.pb-2.pt-2.bg-light-red.c-red.d-none
-= simple_form_for([:config_production, @product], data: { controller: "products" }) do |f|
+= simple_form_for([:config_production, @product], data: { controller: "products" }, html: { novalidate: true }) do |f|
 	.form-group.mb-1
 		.row.mb-1
 			.col-md-12
-				= f.input :client_brand_id, collection: ClientBrand.all, input_html: { class: 's-12' }
+				= f.input :client_brand_id, collection: ClientBrand.all, input_html: { class: 's-12 text-upcase' }
 		.row.mt-2
 			.col-md-12
-				= f.input :crop_id, collection: Crop.all, input_html: { class: 's-12', data: { action: 'change->products#filterColorsByCropId', target: 'products.cropId' } }
+				= f.input :crop_id, collection: Crop.all, input_html: { class: 's-12 text-upcase', data: { action: 'change->products#filterColorsByCropId', target: 'products.cropId' } }
 		.row.mt-2
 			.col-md-12
-				= f.input :color_id, collection: Color.all, input_html: { class: 's-12' }
+				= f.input :color_id, collection: Color.all, input_html: { class: 's-12 text-upcase' }
 			.col-md-12
-				= f.input :quality_id, collection: Quality.all, input_html: { class: 's-12' }
+				= f.input :quality_id, collection: Quality.all, input_html: { class: 's-12 text-upcase' }
 		.row.mt-2
 			.col-md-12
-				= f.input :size_id, collection: Size.all, input_html: { class: 's-12' }
+				= f.input :size_id, collection: Size.all, input_html: { class: 's-12 text-upcase' }
 			.col-md-12
-				= f.input :package_id, collection: Package.all, input_html: { class: 's-12' }
+				= f.input :package_id, collection: Package.all, input_html: { class: 's-12 text-upcase' }
 		.row.mt-2
 			.col-md-4
 				= f.input :weight, input_html: { class: 's-12 form-control form-control-sm' }
@@ -25,18 +25,19 @@
 			.col-md-4
 				= f.input :units_per_pallet, input_html: { class: 's-12 form-control form-control-sm' }
 	hr
-	.form-actions.text-center
+	.form-actions.text-right
+		= link_to config_production_products_path, class: 'btn btn-link btn-sm pl-1 mr-2' do
+			svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+				rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
+				line x1="9" x2="15" y1="9" y2="15" 
+				line x1="15" x2="9" y1="9" y2="15" 
+			span Cancelar
 		button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
 			svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
 			  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
 			  polyline points=("17 21 17 13 7 13 7 21") 
 			  polyline points=("7 3 7 8 15 8") 
 			span Guardar
-		= link_to config_production_products_path, class: 'btn btn-default btn-sm pl-1' do
-			svg.feather.feather-x-square fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
-				rect height="18" rx="2" ry="2" width="18" x="3" y="3" 
-				line x1="9" x2="15" y1="9" y2="15" 
-				line x1="15" x2="9" y1="9" y2="15" 
-			span Cancelar
+
 			 
 			

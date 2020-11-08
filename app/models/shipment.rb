@@ -120,9 +120,17 @@ class Shipment < ApplicationRecord
 		total
 	end
 
+  def total_discounts
+    total = 0
+    shipments_expenses.discount_type.each do |se|
+      total += se.get_total
+    end
+    total
+  end
+
 	def total_expenses
 		total = 0
-		shipments_expenses.each do |se|
+    shipments_expenses.expense_type.each do |se|
 			total += se.get_total 
 		end
 		total

@@ -1,4 +1,8 @@
 #vert-tabs-tab.nav.flex-column.nav-tabs.h-100 aria-orientation="vertical" role="tablist"
 	= link_to config_client_path(@client, tab: :sales), class: "nav-link #{params[:tab] == 'sales' ? 'active' : ''}"
-		i.fas.fa-dollar-sign.mr-2.s-14
+		i.fas.fa-dollar-sign.mr-3.s-14
 		span Ventas 
+	= link_to config_client_path(@client, tab: :billing), class: "nav-link #{params[:tab] == 'billing' ? 'active' : ''}"
+		i.fas.fa-file-invoice-dollar.mr-2.s-14
+		span Facturación
+

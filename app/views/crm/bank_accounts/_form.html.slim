@@ -1,7 +1,7 @@
-= simple_form_for([:crm, @bank_account], data: { controller: "masks selectize" }) do |f|
+= simple_form_for([:crm, @bank_account], data: { controller: "masks selectize" }, html: { novalidate: true }) do |f|
 	= f.input :accountable_type, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @client.model_name }
 	= f.input :accountable_id, as: :hidden, input_html: { class: 's-12 form-control form-control-sm', value: @client.id }
-	input type="skip_price" value="true"/
+	input type="hidden" name="skip_price" value="true"/
 	.form-group.mb-2
 		.row
 			.col-lg-3
