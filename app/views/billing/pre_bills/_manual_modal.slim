@@ -1,0 +1,36 @@
+#manualStampedModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
+  .modal-dialog role="document" 
+    .modal-content.modal-md
+      .modal-header
+        h6.modal-title.text-upcase.bold Timbrado Manual
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  ×
+      .modal-body data-controller="masks"
+        = simple_form_for(@bill, url: billing_pre_bill_manual_stamp_path(@bill)) do |form|
+          = form.input :id, as: :hidden, input_html: { value: @bill.id }
+          = form.input :status, as: :hidden, input_html: { value: 'billed' }
+          .row.mt-2
+            .col-2
+            .col-8.text-center
+              = form.label :external_folio
+              = form.input :external_folio, required: true, label: false, input_html: { class: "form-control text-center s-16", maxlength: "6" }
+              small.text-gray Ultimos 6 digitos
+          hr
+          .row
+            .col-12.text-center
+              = form.label :external_xml
+              br
+              = form.file_field :external_xml, required: true, label: false, class: "s-14"
+          hr
+          .row
+            .col-12.text-center
+              = form.label :external_pdf
+              br
+              = form.file_field :external_pdf, required: true, label: false, class: "s-14"
+          hr
+          .row
+            .col-12.text-center
+                button.btn.btn-link.s-13.mr-2  data-dismiss="modal" type="button"
+                  b CANCELAR
+                button.btn.btn-dark-blue.s-13 type="submit"  
+                  b TIMBRAR

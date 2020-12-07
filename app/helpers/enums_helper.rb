@@ -6,4 +6,8 @@ module EnumsHelper
   def pay_freights_es
   	{"CLIENTE"=>'client', "REMISIONISTA"=>'company', "NINGUNO"=>'no_one'}
   end
+
+  def date_due_es
+  	{"VENTA"=>'sale', "FACTURA"=>'bill'}
+  end
 end

@@ -18,6 +18,11 @@
           | Cuentas
           span.badge.bg-warning.float-right
             = @client.bank_accounts.size
+      li.nav-item class="#{@client.fiscal? ? nil : 'd-none' }"
+        = link_to crm_client_path(@client, tab: :fiscal_names), class: "nav-link  #{ params[:tab] == 'fiscal_names' ? 'active' : 'c-gray' }"
+          | Razones sociales
+          span.badge.bg-warning.float-right
+            = @client.fiscals.size
       li.nav-item
         = link_to crm_client_path(@client, tab: :addresses), class: "nav-link #{ params[:tab] == 'addresses' ? 'active' : 'c-gray' }"
           | Direcciónes

@@ -1,24 +1,29 @@
 module Crm::SalesHelper
 	def units_sales
-		{ 
-			'Precio de venta': 'price_sale', 
-			'Bulto': 'package', 
+		{
+			'Precio de venta': 'price_sale',
+			'Bulto': 'package',
 			'Pallet': 'pallet'
 		}
 	end
 
 	def types_expenses
-		{ 
-			'Gasto': 'expense_type', 
+		{
+			'Gasto': 'expense_type',
 			'Descuento': 'discount_type'
 		}
 	end
 
 	def get_total(unit_sale, price, percentage)
-		return total_by_price_sale(price, percentage) if unit_sale == 'price_sale' 
+		return total_by_price_sale(price, percentage) if unit_sale == 'price_sale'
+    return total_by_price_freight(price, percentage) if unit_sale == 'freight'
 		return total_by_package(price, percentage) if unit_sale == 'package'
 		return total_by_freight(price, percentage) if unit_sale == 'freight'
 	end
+
+  def total_by_freight(price, percentage)
+    return get_porcent()
+  end
 
 	def total_by_price_sale(price, percentage)
 		return get_porcent(@sale.total, price) if percentage
@@ -26,17 +31,16 @@ module Crm::SalesHelper
 	end
 
 	def total_by_package(price, percentage)
-		@sale.n_products * price 
+		@sale.n_products * price
 	end
 
 	def total_by_freight(price, percentage)
 		price
 	end
 
-
-	def currency(price, code)
+	def currency(price, code = nil)
 		price = 0 if price.nil?
-		"$ #{number_to_currency(price, unit: '')}<small>#{code&.upcase}</small>"
+		"$ #{number_to_currency(price, unit: '')}"
 	end
 
 	def to_percentage(percentage)

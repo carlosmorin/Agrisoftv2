@@ -1,12 +1,13 @@
 section.content-header.pb-0
-  .container-fluid
+  .container
     .row
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
-    .row.mb-2
+    .row.my-3
       .col-12
-        h5 = "Nuevo de cliente".upcase 
+        h4
+          b = "Nuevo de cliente".upcase 
 section.content
-  .container-fluid
+  .container
     = render "shared/form_info"
     = render 'form', states: [], municipalities: []

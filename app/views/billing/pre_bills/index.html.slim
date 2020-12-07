@@ -8,10 +8,30 @@ section.content-header.pb-0
         h5 
         	b = "Gestión de prefacturas".upcase
       .col-4.text-right
-        = link_to new_billing_pre_bill_path, class: 'btn btn-success btn-sm s-14' do 
-          svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-            path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-          span.pl-2 Nueva prefactura
+    .row
+      .col-12 data-controller="slim-select datepickers"
+        = form_tag(billing_pre_bills_path, method: "GET") do
+          .form-row.align-items-center
+            .col-2
+              label.s-12.mb-0 Buscar por:
+              = text_field_tag(:serie, @serie, class: 'form-control form-control-sm', placeholder: 'Serie')
+            .col-2
+              label.s-12.mb-0 Cliente
+              = select_tag :client, options_for_select(Client.all.pluck(:name, :id), selected: @client), include_blank: 'Todos', class: 's-12 text-upcase'
+            .col-2
+              label.s-12.mb-0 Status
+              = select_tag :status, options_for_select(pre_bill_statuses, selected: @status), include_blank: 'Todos', class: 's-12 text-upcase'
+            .col-2
+              label.s-12.mb-0 Fecha Inicio:
+              = text_field_tag('dates[from_date]', @from_date, class: 'form-control form-control-sm date-picker', placeholder: 'Fecha inicio')
+            .col-2
+              label.s-12.mb-0 Fecha fin:
+              = text_field_tag('dates[to_date]', @to_date, class: 'form-control form-control-sm date-picker', placeholder: 'Fecha fin')
+            .col-2
+              button.btn.btn-sm.btn-flat.btn-dark-blue.bold.mt-4 type="submit"  
+                span.mr-2.s-13 Buscar
+                i.fas.fa-search
+br
 section.content
   .container-fluid
     .col-md-12
@@ -20,13 +40,14 @@ section.content
           table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
             thead
               tr.bg-light-gray
-                th Folio
-                th Cliente
-                th Emisor
-                th Fecha de emision
-                th Teléfono
-                th Correo
-                th.text-center colspan="2" style=("width: 12%") Acciónes
+                th width="150" SERIE
+                th width="150" TOTAL
+                th width="150" MONEDA
+                th CLIENTE
+                th EMISOR
+                th F. EMISION
+                th F. VENCIMIENTO
+                th.text-center STATUS
             tbody#tbody.s-13
               - if @pre_bills.empty?
                 tr
@@ -35,5 +56,35 @@ section.content
               - else
                 - @pre_bills.each do |bill|
                   tr
-                    td
-                      span = bill.folio
+                    td.py-2
+                      = link_to bill.serie, billing_pre_bill_path(bill), class: 's-13 bold'
+                    td.py-2
+                      span = currency(bill.total, bill.currency.code)
+                    td.py-2
+                      span = bill.currency.code.upcase
+                    td.py-2
+                      span = bill.client.name.upcase
+                    td.py-2
+                      span = bill.user.name.upcase
+                    td.py-2
+                      span = bill.created_at.strftime("%d/%m/%Y")
+                    td.py-2
+                      span = bill&.due_at&.strftime("%d/%m/%Y")
+                    td.py-2.text-center
+                      - if bill.canceled?
+                        span.bg-danger.label_rounded
+                          i.fas.fa-times-circle.mr-2 
+                          b Cancelada
+                      - elsif bill.billed?
+                        span.bg-success.label_rounded
+                          i.fas.fa-check.mr-2 
+                          b = "FOLIO: #{bill.external_folio.upcase}"
+                      - else
+                        span.bg-warning.label_rounded
+                          i.fas.fa-times-circle.mr-2 
+                          b Sin timbrar
+        .card-footer.p-2.pb-1.bg-light-gray
+          .row
+            .col-lg-12.d-flex.justify-content-center
+              .digg_pagination.mt-2.s-14
+                = will_paginate @pre_bills, :container => false, :page_links => true

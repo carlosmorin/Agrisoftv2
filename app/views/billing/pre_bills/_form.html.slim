@@ -1,51 +1,86 @@
 - url = @pre_bill.persisted? ? billing_pre_bill_path(@pre_bill) : billing_pre_bills_path
-= simple_form_for(@pre_bill, url: url) do |form|
-  = form.input :user_id, as: :hidden, input_html: { value: current_user.id }
+= simple_form_for(@pre_bill, url: url, html: { 'data-controller': 'datepickers billing--prebill', novalidate: true}) do |form|
+  = form.input :user_id, as: :hidden, input_html: { value: current_user.id}
+  = form.input :shipment_id, as: :hidden, input_html: { value: @sale.id}
   input type="hidden" name="type" value="normal"
   .card data-controller="slim-select"
     .card-body.p-3
-      .row
-        .col-12
-          h5.s-16.mb-3
-            b GENERAL
-      .form-group.mb-1.mt-3
+      .form-group.mb-1
         .row
           .col-12
-            = form.input :company_id, collection: Company.all, autofocus: true, input_html: { class: 's-12' }
-        .row.mt-4
+            = form.input :company_id, collection: Company.all, autofocus: true, input_html: { class: 's-14 text-upcase' }
+        .row.mt-2
           .col-12
-            = form.input :client_id, collection: Client.all, autofocus: true, input_html: { class: 's-12' }
-        .row.mt-3
-          .col-4
-            input.form-control.form-control-sm placeholder="RFC" type='text' 
-          .col-8
-            input.form-control.form-control-sm placeholder="RAZÓN SOCIAL" type='text'
-        .row.mt-3
-          .col-4
-            = form.input :sat_cfdi_usage, collection: Sat::CfdiUsage.all.pluck(:description, :code), autofocus: true, input_html: { class: 's-12' }
-          .col-4
-            = form.input :currency_id, collection: Currency.all.pluck(:code, :id), autofocus: true, input_html: { class: 's-12 text-upcase' }
-  
-          .col-4
-            input.form-control.form-control-sm placeholder="FORMA DE PAGO" type='text'
-        .row.mt-3
-          .col-4
-          .col-4
-            = form.input :exchange_rate, autofocus: true, input_html: { class: 's-12 form-control form-control-sm', placeholder: 'Tipo de cambio' }
-          .col-4
-            input.form-control.form-control-sm placeholder="METODO DE PAGO" type='text'
+            = form.input :client_id, collection: Client.all, autofocus: true, input_html: { class: 's-14 text-upcase', readonly: true }
         .row.mt-2
-          .col-3
-            = form.input :exchange_rate, autofocus: true,  input_html: { class: 's-12 form-control form-control-sm', placeholder: 'Tipo de cambio' }
-            i.s-12 Tipo de cambio
+          .col-12
+            - fiscals = form.object.client.fiscals.pluck(:bussiness_name, :id)
+            = form.input :fiscal_id, collection: fiscals, autofocus: true, input_html: { class: 's-12 text-upcase' }
+        .row.mt-2
+          .col-4
+            = form.input :currency_id, collection: Currency.all.pluck(:code, :id), autofocus: true, input_html: { class: 's-12 text-upcase', readonly: true }
+          .col-4
+            - exchange_rate = form.object.currency.is_mxn? ? 1 : form.object.exchange_rate
+            = form.input :exchange_rate, autofocus: true, input_html: { class: 's-12 form-control form-control-sm', placeholder: 'Tipo de cambio', value: exchange_rate, readonly: true }
+          .col-4
+            = form.input :pre_billed_at, as: :string,  autofocus: true, input_html: { class: 's-12 form-control form-control-sm date-picker', placeholder: 'Fecha de factura', value: Time.zone.now.strftime("%d-%m-%Y") }
+  .row.d-none
+    .col-12.my-4
+      button.btn.btn-sm.btn-dark-blue data-target="#discountsModal" data-toggle="modal" type="button" 
+        b.mr-2 Gestionar descuentos
+        i.fas.fa-tasks.s-14
+  .card
+    .card-header.p-3
+      .row
+        .col-8
+          h5.my-0 
+            b Conceptos
+        .col-4.text-right
+          = link_to_add_association form, :bill_concepts, class: "btn btn-sm btn-primary s-14", data: { association_insertion_node: '.bill_concepts', association_insertion_method: :append } do
+            i.fas.fa-plus-circle.mx-1.s-14
+            span.pl-2 Agregar concepto
 
-        .row.mt-2
+    .card-body.p-3
+      #bill_concepts.bill_concepts.mt-2
+        .row
+          .col-4
+            b.s-14 Descripción
           .col-2
-            = form.label :sat_pay_method, class: "pt-1 s-13" 
-          .col-6
-            = form.input :sat_pay_method, collection: Sat::CfdiUsage.all.pluck(:description, :code), autofocus: true, label: false, input_html: { class: 's-12' }
-        .row.mt-2
+            b.s-14 Cantidad
           .col-2
-            = form.label :sat_ways_pay, class: "pt-1 s-13" 
-          .col-6
-            = form.input :sat_ways_pay, collection: Sat::CfdiUsage.all.pluck(:description, :code), autofocus: true, label: false, input_html: { class: 's-12' }
+            b.s-14 Precio U.
+          .col-2.d-none
+            b.s-14 Descuento U.
+          .col-2
+            b.s-14 Importe
+        .row
+          .col-12
+            hr.my-1
+        = form.simple_fields_for :bill_concepts do |concept|
+          = render 'bill_concept_fields', f: concept
+  .card
+    .card-body.p-3
+      .row.mt-4
+        .col-6
+        .col-2.text-right
+          = form.label :subtotal
+        .col-4
+          = form.input :subtotal, label: false, input_html: { class: 's-12 form-control form-control-sm', data: { target: 'billing--prebill.subTotal' },  readonly: true }
+      .row.mt-3
+        .col-6
+        .col-2.text-right
+          = form.label :discount
+        .col-4
+          = form.input :discount, label: false, input_html: { class: 's-12 form-control form-control-sm', data: {action: 'change->billing--prebill#calculateTotal' } }
+      .row.mt-3
+        .col-6
+        .col-2.text-right
+          = form.label :total
+        .col-4
+          = form.input :total, label: false, input_html: { class: 's-12 form-control form-control-sm', data: { target: 'billing--prebill.total' }, readonly: true }
+  .row
+    .col-12
+      button.btn.btn-dark-blue.btn-sm.pl-1 type="submit"
+        span.fas.fa-save.s-12.mx-2
+        span Guardar
+= render 'discounts_modal'

@@ -2,7 +2,7 @@ class ShipmentsExpense < ApplicationRecord
   belongs_to :shipment
   belongs_to :expense
   belongs_to :currency
-  validates :unit, :amount, presence: true
+  validates :amount, presence: true
   before_save :get_total
 
   enum type_expense: { expense_type: 0, discount_type: 1 }
@@ -12,11 +12,10 @@ class ShipmentsExpense < ApplicationRecord
   end
 
   def calculate_total
-    return amount if unit.nil?
     return total_by_package if unit == 'package' 
     return total_by_price_sale if unit == 'price_sale' 
     return total_by_pallet if unit == 'pallet' 
-    0
+    amount
   end
 
   def total_by_package
@@ -45,6 +44,10 @@ class ShipmentsExpense < ApplicationRecord
 
   def exchange_rate
     shipment.exchange_rate
+  end
+  
+  def freight_price
+    binding.pry
   end
 
   private

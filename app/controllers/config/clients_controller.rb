@@ -32,7 +32,7 @@ module Config
 
     def client_config_params
       params.require(:client_config).permit(:id, :currency_id, :pay_freight, 
-         :client_type, :client_id, :credit_days)
+         :client_type, :client_id, :credit_days, :date_due)
     end
 
     private

@@ -94,11 +94,7 @@ module Crm
 
   	def client_params
       params.require(:client).permit(:name, :rfc, :code, :phone, :country_id, :state_id, 
-        :municipality_id, :cp, :address, :email, :conact_name, 
-        fiscals_attributes: [:id, :bussiness_name, :rfc, :_destroy,
-          addresses_attributes: [:id, :name, :street, :outdoor_number, :interior_number,
-            :cp, :references, :neighborhood, :phone, :country_id, :state_id, 
-            :fiscalcrosses, :locality, :fiscal, :crosses, :_destroy]]
+        :municipality_id, :cp, :address, :email, :fiscal, :conact_name, :fiscal
       )
     end
 

@@ -1,0 +1,27 @@
+= simple_form_for([:crm, @fiscal], data: { controller: "masks address slim-select" }	) do |f|
+  = f.input :fiscalable_type, as: :hidden, label: false, input_html: { value:  'Client'}
+  = f.input :fiscalable_id, as: :hidden, label: false, input_html: { value:  params[:client_id]}
+  .form-group.mb-1  
+    .row
+      .col-lg-3
+        = f.label :bussiness_name, class: "pt-1" 
+      .col-lg-9
+        = f.input :bussiness_name, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+    .row.mt-2
+      .col-lg-3
+        = f.label :rfc, class: "pt-1" 
+      .col-lg-9
+        = f.input :rfc, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+  #addresses.mt-2
+  	- f.object.addresses.new unless @fiscal.persisted?
+    = f.simple_fields_for :addresses do |address|
+      = render 'address_fields', f: address
+	hr
+	.form-actions.text-right
+		button.btn.btn-dark-blue.btn-sm.pl-1 type="submit"
+			svg.feather.feather-save fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+			  path d=("M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z") 
+			  polyline points=("17 21 17 13 7 13 7 21") 
+			  polyline points=("7 3 7 8 15 8") 
+			span Guardar
+

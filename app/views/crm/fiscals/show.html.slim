@@ -1,0 +1,86 @@
+section.content-header.pb-0
+  .container
+    .row.mb-2
+      .col-sm-6
+        h5 Detalle de Razón social
+section.content
+	.container
+		.card
+			.card-header.p-2.pb-1
+				.row
+					.col-md-12
+						= link_to crm_client_path(@fiscal.fiscalable, tab: :fiscal_names), class: 'btn btn-sm btn-link s-12 pl-0' do
+							svg.feather.feather-arrow-left fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="24" xmlns="http://www.w3.org/2000/svg" 
+							  line x1="19" x2="5" y1="12" y2="12" 
+							  polyline points=("12 19 5 12 12 5") 
+							span Atras
+			.card-body.s-14.p-3
+				.row
+					.col-lg-2
+						label.mb-1 Razón social:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.bussiness_name.upcase
+				.row
+					.col-lg-2
+						label.mb-1 RFC:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.rfc.upcase
+				.row.mt-2
+					.col-12
+						h6 
+							b Dirección
+				.row
+					.col-lg-2
+						label.mb-1 País:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.fiscalable.country.name.upcase
+				.row
+					.col-lg-2
+						label.mb-1 Estado:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.fiscalable.state.name.upcase
+				.row
+					.col-lg-2
+						label.mb-1 Localidad/ciudad:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.locality.upcase
+				.row
+					.col-lg-2
+						label.mb-1 Codigo Postal:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.address.cp.upcase
+				.row
+					.col-lg-2
+						label.mb-1 Codigo Postal:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.address.cp.upcase
+				.row
+					.col-lg-2
+						label.mb-1 Codigo Postal:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.address.cp.upcase
+				.row
+					.col-lg-2
+						label.mb-1 Colonia:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.address.neighborhood.upcase
+				.row
+					.col-lg-2
+						label.mb-1 Calle:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.address.street.upcase
+				.row
+					.col-lg-2
+						label.mb-1 N° ext:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.address.outdoor_number.upcase
+				.row
+					.col-lg-2
+						label.mb-1 N° int:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.address.interior_number.upcase
+				.row
+					.col-lg-2
+						label.mb-1 Curzamientos:
+					.col-lg-7.text-left
+						p.mb-1 = @fiscal.address.crosses.upcase

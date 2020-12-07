@@ -53,6 +53,8 @@ class Shipment < ApplicationRecord
 	has_many :products, through: :shipments_products, dependent: :destroy
 	has_many :appointments, inverse_of: :shipment, dependent: :destroy
 	has_many :shipments_expenses, inverse_of: :shipment, dependent: :destroy
+	has_many :bills, inverse_of: :shipment
+  has_many :expenses, through: :shipments_expenses 
   has_many_attached :documents
 
 	accepts_nested_attributes_for :shipments_products, allow_destroy: true
@@ -131,7 +133,7 @@ class Shipment < ApplicationRecord
 	def total_expenses
 		total = 0
     shipments_expenses.expense_type.each do |se|
-			total += se.get_total 
+			total += se.get_total
 		end
 		total
 	end
@@ -164,11 +166,6 @@ class Shipment < ApplicationRecord
 		Time.zone.now < self.expirated_at
 	end
 
-	## Expenses
-	def expenses
-		self.contract.contracts_expenses
-	end
-
 	def in_collect?
 		to_collect_at != nil
 	end
@@ -181,6 +178,12 @@ class Shipment < ApplicationRecord
 		total
 	end
 
+	def n_products
+		sum = 0
+		shipments_products.each { |a| sum+=a.quantity }
+		sum
+	end
+
 	private
 
 	def set_products
@@ -188,6 +191,8 @@ class Shipment < ApplicationRecord
 		shipments_products.each { |a| sum+=a.quantity }
 		self.n_products = sum
 	end
+
+
 	
 	def set_folio
 		return if folio.present?

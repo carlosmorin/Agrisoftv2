@@ -33,4 +33,4 @@ h5.mt-4
       tr
         th colspan="4"
         th colspan="4"
-          span.s-16 == currency(sale.total_expenses, sale.currency_code) 
+          span.s-16 == currency(sale.total_expenses + sale.total_discounts, sale.currency_code) 

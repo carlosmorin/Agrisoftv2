@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_09_004328) do
+ActiveRecord::Schema.define(version: 2020_12_04_061541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,6 +150,20 @@ ActiveRecord::Schema.define(version: 2020_11_09_004328) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "bill_concepts", force: :cascade do |t|
+    t.string "description"
+    t.integer "quantity"
+    t.decimal "unit_price"
+    t.decimal "import"
+    t.bigint "bill_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.float "discount"
+    t.bigint "product_id", null: false
+    t.index ["bill_id"], name: "index_bill_concepts_on_bill_id"
+    t.index ["product_id"], name: "index_bill_concepts_on_product_id"
+  end
+
   create_table "bills", force: :cascade do |t|
     t.string "sat_cfdi_usage"
     t.string "sat_pay_method"
@@ -165,9 +179,21 @@ ActiveRecord::Schema.define(version: 2020_11_09_004328) do
     t.text "comments"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "pre_billed_at"
+    t.string "external_folio"
+    t.integer "iva", default: 0
+    t.decimal "subtotal", default: "0.0"
+    t.decimal "total", default: "0.0"
+    t.float "discount"
+    t.float "expenses"
+    t.bigint "fiscal_id"
+    t.string "serie"
+    t.boolean "billed"
+    t.datetime "due_at"
     t.index ["client_id"], name: "index_bills_on_client_id"
     t.index ["company_id"], name: "index_bills_on_company_id"
     t.index ["currency_id"], name: "index_bills_on_currency_id"
+    t.index ["fiscal_id"], name: "index_bills_on_fiscal_id"
     t.index ["shipment_id"], name: "index_bills_on_shipment_id"
     t.index ["user_id"], name: "index_bills_on_user_id"
   end
@@ -238,6 +264,7 @@ ActiveRecord::Schema.define(version: 2020_11_09_004328) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "credit_days"
+    t.integer "date_due"
     t.index ["client_id"], name: "index_client_configs_on_client_id"
     t.index ["currency_id"], name: "index_client_configs_on_currency_id"
   end
@@ -258,6 +285,7 @@ ActiveRecord::Schema.define(version: 2020_11_09_004328) do
     t.string "contact_name"
     t.string "code"
     t.string "shipments"
+    t.boolean "fiscal"
     t.index ["country_id"], name: "index_clients_on_country_id"
     t.index ["municipality_id"], name: "index_clients_on_municipality_id"
     t.index ["state_id"], name: "index_clients_on_state_id"
@@ -840,6 +868,7 @@ ActiveRecord::Schema.define(version: 2020_11_09_004328) do
     t.integer "type_expense"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "prebill_expense"
     t.index ["currency_id"], name: "index_shipments_expenses_on_currency_id"
     t.index ["expense_id"], name: "index_shipments_expenses_on_expense_id"
     t.index ["shipment_id"], name: "index_shipments_expenses_on_shipment_id"
@@ -1027,9 +1056,12 @@ ActiveRecord::Schema.define(version: 2020_11_09_004328) do
   add_foreign_key "areas", "ranches"
   add_foreign_key "bank_accounts", "banks"
   add_foreign_key "bank_accounts", "currencies"
+  add_foreign_key "bill_concepts", "bills"
+  add_foreign_key "bill_concepts", "products"
   add_foreign_key "bills", "clients"
   add_foreign_key "bills", "companies"
   add_foreign_key "bills", "currencies"
+  add_foreign_key "bills", "fiscals"
   add_foreign_key "bills", "shipments"
   add_foreign_key "bills", "users"
   add_foreign_key "boxes", "box_types"

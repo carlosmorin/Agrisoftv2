@@ -16,24 +16,25 @@
 						= render 'crm/sales/manage/tabs'
 					.col-9
 						.row
-							.col-6
+							.col-3
 								h4 
 									b = @sale.folio.upcase
 							.col-2.c-gray.pt-2
-								.row
-									.col-12
-										h5.s-18.my-0 
-											span MONEDA:
-											b.ml-1 = @sale.currency_code.upcase
+								h5.s-18.my-0.pull-left
+									span MONEDA:
+									b.ml-1 = @sale.currency_code.upcase
+							.col-3.c-gray.pt-2
+								- if @sale.current_currency.is_usd?
+									h5.s-18.my-0.pull-left
+										span TC:
+										b.ml-1 = @sale.exchange_rate
+								button.btn.btn-xs.btn-link.s-12.ml-2.pull-right data-target="#currencyModal" data-toggle="modal" type="button" data-placement='left'
+									i.far.fa-edit
 							.col-4.text-right
-								- if get_porcent2(@sale.total_quantity, @sale.total_quantity_reported).eql?(100)
-									= link_to new_billing_pre_bill_path(sale: @sale.folio), target: :_blank, class: 'btn btn-dark-blue btn-sm' do
-							 			span Facturar
-							 			i.fas.fa-file-invoice-dollar.ml-2.s-14
-									'
+
 								= link_to crm_sale_path(@sale), target: :_blank, class: 'btn btn-outline-primary btn-sm' do
-						 			span Visualizar
-									i.fas.fa-external-link-alt.ml-2.s-10
+									span Visualizar
+									i.fas.fa-external-link-alt.ml-2.s-12
 						hr.my-0
 						= render "shared/alerts"
 						= render 'crm/sales/manage/general', sale: @sale if params[:tab] == 'general'
@@ -42,13 +43,15 @@
 						= render 'crm/sales/manage/discounts', sale: @sale if params[:tab] == 'discounts'
 						= render 'crm/sales/manage/files', sale: @sale if params[:tab] == 'files'
 						= render 'crm/sales/manage/contracts', sale: @sale if params[:tab] == 'contracts'
+						= render 'crm/sales/manage/bills', sale: @sale if params[:tab] == 'bills'
 = render 'crm/sales/manage/contract_modal'
+= render 'crm/sales/manage/currency_modal'
 #reportPriceModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
   .modal-dialog role="document" 
     .modal-content
       .modal-header
         h6#exampleModalLabel.modal-title.text-upcase.bold Reportar precio de venta
-        button.close aria-label="Close" data-dismiss="modal" type="button" 
+        button.close aria-label="Close" data-dismiss="modal" type="button"
           span aria-hidden="true"  ×
       .modal-body#reportPriceModalContainer
 

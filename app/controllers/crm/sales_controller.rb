@@ -1,7 +1,7 @@
 module Crm
 	class SalesController < ApplicationController
 		add_breadcrumb "CRM", :crm_root_path
-		before_action :set_object, only: %i[show cancel set_contract update_products 
+		before_action :set_object, only: %i[show cancel set_contract update_currency update_products 
       update_expenses update_reports update_documents to_collect manage]
 
 		def index
@@ -28,11 +28,16 @@ module Crm
 
     def set_contract
     	contract_id = params[:contract_id]
-    	echange = params[:echange]
 
-    	@sale.update(contract_id: contract_id, exchange_rate: echange)
+    	@sale.update(contract_id: contract_id)
       remove_expenses
       build_expenses(contract_id)
+    end
+
+    def update_currency
+      currency_id = params[:currency_id]
+      exchange_rate = params[:exchange_rate]
+      @sale.update(currency_id: currency_id, exchange_rate: exchange_rate)
     end
 
     def show
@@ -54,6 +59,7 @@ module Crm
       add_breadcrumb "Ventas", crm_sales_path(tab: :all)
       add_breadcrumb "Gestionar venta"
       @expense = ShipmentsExpense.new
+      @bills = @sale.bills.order(:created_at)
     end
 
     def update_products
@@ -102,7 +108,6 @@ module Crm
 			q = Regexp.escape(params[:q])
 
 			@sales = @sales.where("folio ~* ? OR client_folio ~* ? OR freight_folio ~* ? ", q, q, q)
-
 	  end
 
 	  def search_by_crop

@@ -1,0 +1,44 @@
+.row.mt-3.mb-3
+  .col-12
+    = link_to new_billing_pre_bill_path(sale: @sale.folio), class: 'btn btn-sm btn-dark-blue s-14' do
+      span Facturar
+      i.fas.fa-file-invoice-dollar.ml-2.s-12
+    '
+    - if @sale.client.international?
+    = link_to new_billing_pre_bill_path(sale: @sale.folio, initial_bill: true), class: 'btn btn-sm btn-dark-blue s-14' do
+      span Facturar de pase
+      i.fas.fa-file-invoice-dollar.ml-2.s-12
+.card.card-body.table-responsive.p-0.mt-2 style="max-height: 70vh;"
+  .row
+    .col-12
+      table class="table table-head-fixed table-sm text-nowrap s-12"
+        thead
+          tr.bg-light-gray
+            th.py-2 SERIE
+            th.py-2 CLIENTE
+            th.py-2 FECHA
+            th.py-2 MONEDA
+            th.py-2 TOTAL
+            th.py-2 STATUS
+        tbody#tbody.s-13
+          - @bills.each do |bill|
+            tr
+              th.text-primary
+                = link_to bill.serie, billing_pre_bill_path(bill), class: 's-13 bold'
+              th = bill.client.name.upcase
+              th = bill.created_at.strftime("%d/%m/%Y")
+              th = bill.currency.code.upcase
+              th = currency(bill.total, bill.currency.code)
+              th
+                - if bill.canceled?
+                  span.bg-danger.label_rounded.sm
+                    i.fas.fa-times-circle.mr-2 
+                    b Cancelada
+                - elsif bill.billed?
+                  span.bg-success.label_rounded.sm
+                    i.fas.fa-times-circle.mr-2 
+                    b bill.folio
+                - else
+                  span.bg-warning.label_rounded.sm
+                    i.fas.fa-times-circle.mr-2 
+                    b Sin timbrar

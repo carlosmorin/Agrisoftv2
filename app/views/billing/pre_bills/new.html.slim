@@ -1,18 +1,17 @@
 section.content-header.pb-0
   .container
     .row
-      .col-1
-      .col-11.text-left.pr-2.s-12
-        = render "shared/breadcrumbs_nav"
+      .col-12.text-left.s-12
+        = link_to crm_sale_manage_path(sale_id: @sale.id, tab: :summary), class: 'btn btn-link pl-0 s-13' do
+          i.fas.fa-arrow-left
+          span.ml-2 ATRAS
     .row.mb-2
-      .col-1
-      .col-8
-        h3
+      .col-12
+        h4
           b = "Nueva prefactura".upcase
 section.content
   .container
     .row
-      .col-md-1
-      .col-md-10
+      .col-md-12
         = render "shared/form_info"
         = render 'form'

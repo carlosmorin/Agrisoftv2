@@ -1,0 +1,20 @@
+.nested-fields.row
+  - quantity = f.object.quantity.nil? ? 0 : f.object.quantity  
+  - unit_price = f.object.unit_price.nil? ? 0 : f.object.unit_price 
+  - import = quantity * unit_price
+  .col-4
+     = f.input :description, required: true, label: false, input_html: { class: 's-14 form-control form-control-sm' }
+     = f.input :product_id, as: :hidden
+  .col-2
+    = f.input :quantity, required: true, label: false, input_html: { class: 's-14 form-control form-control-sm quantity', data:{ action: 'change->billing--prebill#calculateRow', target: 'billing--prebill.quantityInput', index: f.options[:child_index] }  }
+  .col-2
+    = f.input :unit_price, required: true, label: false, input_html: { class: 's-14 form-control form-control-sm unit_price', data:{ action: 'change->billing--prebill#calculateRow', target: 'billing--prebill.priceInput', index: f.options[:child_index] }  }
+  .col-2.d-none
+    = f.input :discount, required: true, label: false, input_html: { class: 's-14 form-control form-control-sm discount' }
+  .col-2
+    = f.input :import, required: true, label: false, input_html: { class: 's-14 form-control form-control-sm import', readonly: true, value: import, data:{ target: 'billing--prebill.importInput'} }
+  .col-1
+  	= link_to_remove_association f, class: "btn btn-danger btn-sm s-12" do
+  		i.fas.fa-trash
+  .col-12
+  	hr.my-1

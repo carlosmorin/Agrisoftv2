@@ -12,16 +12,25 @@ class Client < ApplicationRecord
 	has_many :freights, as: :debtable, inverse_of: :client
 	has_many :contracts, inverse_of: :client
 	has_many :client_configs, inverse_of: :client
+	has_many :bills, inverse_of: :client
 
 	validates_uniqueness_of :phone, :code, case_sensitive: false
 	has_many :contacts, as: :contactable
-	has_many :fiscals, as: :fiscalable
+	has_many :fiscals, as: :fiscalable, validate: -> { binding.pry }
 	has_many :bank_accounts, as: :accountable
 	accepts_nested_attributes_for :fiscals, allow_destroy: true
 
 	def full_address
 		"#{address}, #{municipality.name}, #{state.name}, #{country.name}"
 	end
+
+  def origin_state
+    "#{state.name}".upcase
+  end
+
+  def short_address
+    "#{municipality.name}, #{state.name}, #{address}"
+  end
 
 	def currency
 		self.settings.currency
@@ -41,10 +50,22 @@ class Client < ApplicationRecord
 	end
 
 	def international?
-		self.settings.client_type == "national"
+		self.settings.client_type == "international"
+	end
+
+	def start_date
+		self.settings.date_due
 	end
 
 	def contract
 		self.contracts.frst
+	end
+
+	def rfc
+		self.fiscals.first.rfc
+	end
+
+	def fiscal_name
+		self.fiscals.first.bussiness_name
 	end
 end

@@ -136,7 +136,11 @@ Rails.application.routes.draw do
   end
 
   namespace :billing do
-    resources :pre_bills
+    resources :pre_bills do
+      patch :update_discounts
+      patch :manual_stamp
+      patch :cancel
+    end
   end
 
   namespace :crm do
@@ -156,6 +160,7 @@ Rails.application.routes.draw do
       resources :delivery_addresses, except: [:index]
       resources :contracts, only: [:new, :edit, :show]
       resources :bank_accounts, except: [:index]
+      resources :fiscals, except: [:index]
 
       get '/get_delivery_address', to: 'clients#get_delivery_address'
       get '/get_contacts', to: 'clients#get_contacts'
@@ -166,6 +171,7 @@ Rails.application.routes.draw do
       patch '/reports', to: 'sales#update_reports'
       patch '/cancel', to: 'sales#cancel'
       patch '/set_contract', to: 'sales#set_contract'
+      patch '/update_currency', to: 'sales#update_currency'
       patch '/documents', to: 'sales#update_documents'
       get '/to_collect', to: 'sales#to_collect'
       get '/manage', to: 'sales#manage'
@@ -180,6 +186,7 @@ Rails.application.routes.draw do
       end
     end
     resources :contacts, except: [:index]
+    resources :fiscals, except: [:index]
     resources :quotes do
       get '/print', to: 'quotes#print'
       patch '/update_status', to: 'quotes#update_status'
