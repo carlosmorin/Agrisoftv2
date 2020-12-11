@@ -27,9 +27,9 @@ module Crm
     end
 
     def set_contract
-    	contract_id = params[:contract_id]
+      contract_id = params[:contract_id]
 
-    	@sale.update(contract_id: contract_id)
+      @sale.update(contract_id: contract_id)
       remove_expenses
       build_expenses(contract_id)
     end
@@ -137,7 +137,9 @@ module Crm
     end
 
     def remove_expenses
-      @sale.shipments_expenses.expense_type.destroy_all
+      return unless @sale.shipments_expenses.any?
+
+      @sale.shipments_expenses.destroy_all
     end
 
     def build_expenses(contact_id)

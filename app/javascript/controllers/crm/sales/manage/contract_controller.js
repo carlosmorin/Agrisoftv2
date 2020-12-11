@@ -13,7 +13,7 @@ export default class extends Controller {
   	var sale_id = this.saleIdTarget.value
   	var contract_id = this.contractIdTarget.value
 		var url = `/crm/sales/${sale_id}/set_contract`
-		
+
 		axios({
 			method: 'patch',
 		  url: url,
