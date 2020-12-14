@@ -44,7 +44,7 @@ section.content data-controller="reference"
 			.row
 				.col-12
 					h6.bold.mb-0 = "CLIENTE: #{@order_sale.client.name.upcase}"
-					- client_rfc = @order_sale.client.rfc.nil? ? @order_sale.client.fiscals.first.rfc : @order_sale.client.rfc
+					- client_rfc = @order_sale.client&.rfc
 					h6.bold.mb-0 = "RFC: #{client_rfc}".upcase
 					p.mb-0.mt-2 = raw "<b>Telefono: </b> #{@order_sale.client.phone}"
 					p.mb-0 = raw "<b>Direccion: </b> #{@order_sale.client.address}"

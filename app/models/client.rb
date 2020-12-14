@@ -62,10 +62,12 @@ class Client < ApplicationRecord
 	end
 
 	def rfc
+		return '--' unless self.fiscals.any?
 		self.fiscals.first.rfc
 	end
 
 	def fiscal_name
+		return '--' unless self.fiscals.any?
 		self.fiscals.first.bussiness_name
 	end
 end
