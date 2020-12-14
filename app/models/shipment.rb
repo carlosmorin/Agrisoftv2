@@ -184,6 +184,10 @@ class Shipment < ApplicationRecord
 		sum
 	end
 
+	def carrier_name
+		freight.carrier.name
+	end
+
 	private
 
 	def set_products

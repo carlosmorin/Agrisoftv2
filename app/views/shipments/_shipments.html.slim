@@ -19,11 +19,17 @@
           label.s-12.mb-0 Empaque
           = select_tag :package_id, options_for_select(Package.all.pluck(:name, :id), selected: params[:package_id]), include_blank: 'Todos', class: 's-12 text-upcase'
         .col-2.my-1
+
           button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"
-            span.mr-2.s-12 Buscar
             i.fas.fa-search
-          = link_to shipments_path, class: "btn btn-sm btn-flat  btn-default mt-4 ml-2" do
+            '
+            span Filtrar
+          '
+          = link_to shipments_path, class: "btn btn-sm btn-flat btn-default mt-4" do
             i.fas.fa-eraser
+          '
+          button.btn.btn-sm.btn-flat.btn-success.bold.mt-4 type="submit" name="format" value="xls"
+            i.fas.fa-file-excel
     table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped.text-left.mb-0.mt-2 data-controller="drop-down-table"
       thead
         tr.bg-light-gray
