@@ -92,10 +92,6 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light.py-0.pb-1 data-tu
             li
               = link_to 'Municipios', addresses_municipalities_path, class: 'dropdown-item s-12 pl-2' 
   ul.navbar-nav.ml-auto
-
-    li.nav-item.p-2.c-gray data-controller="weather"
-      b.s-12 = "Fecha: #{Time.zone.now().strftime("%d-%m-%Y").upcase}"
-      span.ml-2 | 
     li.nav-item.p-2 data-controller="weather"
       span.s-12 = "#{Time.now().strftime("%-d %b %Y").upcase} - "
       span#output.mt-1.mr-2.s-14 

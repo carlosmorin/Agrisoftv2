@@ -13,6 +13,13 @@
         = link_to 'Productos', crm_sale_manage_path(@sale, tab: :products), class: "nav-link  #{ params[:tab] == 'products' ? 'active bold' : '' }"
       li.nav-item
         = link_to 'Descuentos', crm_sale_manage_path(@sale, tab: :discounts), class: "nav-link  #{ params[:tab] == 'discounts' ? 'active bold' : '' }"
+- if get_porcent2(@sale.total_quantity, @sale.total_quantity_reported).eql?(100)
+  .card
+    .card-body.p-0 style=("display: block;")
+      ul.nav.nav-pills.flex-column.s-14
+        li.nav-item
+          = link_to 'Facturas', crm_sale_manage_path(@sale, tab: :bills), class: "nav-link  #{ params[:tab] == 'bills' ? 'active bold' : '' }"
+
 .card
   .card-body.p-0 style=("display: block;")
     ul.nav.nav-pills.flex-column.s-14

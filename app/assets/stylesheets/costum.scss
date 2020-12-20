@@ -452,3 +452,19 @@ label.error{
 .layout-navbar-fixed .wrapper .content-wrapper{
   margin-top: calc(3.4rem + -5px) !important;
 }
+.ss-option {
+	font-size: 13px !important;
+	text-transform: uppercase;
+}
+
+.label_rounded{
+	padding: 5px 10px;
+  border-radius: 22px;
+  font-size: 12px;
+}
+
+.label_rounded.sm{
+	padding: 3px 6px;
+  border-radius: 22px;
+  font-size: 12px;
+}

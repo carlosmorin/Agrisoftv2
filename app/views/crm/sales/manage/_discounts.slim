@@ -26,7 +26,7 @@
                 label.s-13 == to_percentage(exp.amount) if exp.percentage?
                 label.s-13 == currency(exp.amount, sale.currency_code) unless exp.percentage?
               td
-                label.mb-0.text-upcase.s-13 = units_sales.invert[exp.unit] 
+                label.mb-0.text-upcase.s-13 == exp.unit.empty? ? '--' : units_sales.invert[exp.unit] 
               td
                 == type_expense(exp)
               td

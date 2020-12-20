@@ -24,6 +24,11 @@
 					= f.label :credit_days, class: "pt-1 mr-2  s-14" 
 				.col-md-4.text-normal
 					= f.input :credit_days, label: false, input_html: { class: 's-12 form-control form-control-sm' }
+			.row.mt-3
+				.col-md-2.text-right
+					= f.label :date_due, class: "pt-1 mr-2  s-14" 
+				.col-md-4.costum_radios
+					= f.input :date_due, as: :radio_buttons, collection: date_due_es, label: false
 			.row
 				.col-6
 					hr

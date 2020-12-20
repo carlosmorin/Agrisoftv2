@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 class ShipmentsExpense < ApplicationRecord
   belongs_to :shipment
   belongs_to :expense
   belongs_to :currency
-  validates :unit, :amount, presence: true
+  validates :amount, presence: true
   before_save :get_total
 
   enum type_expense: { expense_type: 0, discount_type: 1 }
@@ -14,12 +12,10 @@ class ShipmentsExpense < ApplicationRecord
   end
 
   def calculate_total
-    return amount if unit.nil?
-    return total_by_package if unit == 'package'
-    return total_by_price_sale if unit == 'price_sale'
-    return total_by_pallet if unit == 'pallet'
-
-    0
+    return total_by_package if unit == 'package' 
+    return total_by_price_sale if unit == 'price_sale' 
+    return total_by_pallet if unit == 'pallet' 
+    amount
   end
 
   def total_by_package
@@ -28,30 +24,30 @@ class ShipmentsExpense < ApplicationRecord
 
   def total_by_pallet
     return 0 unless shipment.n_pallets.present?
-
     shipment.n_pallets * amount
   end
 
   def total_by_price_sale
     return get_porcent(shipment.total.to_d, amount) if percentage
-
     amount
   end
 
   def total_mxn
     return total if currency.is_mxn?
-
     total / exchange_rate
   end
 
   def total_usd
     return total if currency.is_usd?
-
-    total * exchange_rate
+    return total * exchange_rate
   end
 
   def exchange_rate
     shipment.exchange_rate
+  end
+  
+  def freight_price
+    binding.pry
   end
 
   private

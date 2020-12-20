@@ -45,10 +45,6 @@
                     span.badge.bg-danger.s-12 Vencido
                 td.text-center.pt-2
                   .btn-group
-                    = link_to crm_client_contract_path(client_id: contract.client_id, id: contract.id), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-sm btn-link' do
-                      svg.feather.feather-eye fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
-                        path d=("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z") 
-                        circle cx="12" cy="12" r="3"
                     = link_to edit_crm_client_contract_path(client_id: contract.client_id, id: contract.id), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-sm btn-link" do
                       svg.feather.feather-edit fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24") width="16" xmlns="http://www.w3.org/2000/svg" 
                         path d=("M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7") 

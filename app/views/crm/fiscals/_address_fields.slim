@@ -1,0 +1,49 @@
+.nested-fields.mt-4
+  .row.mt-2
+    .col-md-3
+      = f.label :country_id
+    .col-md-9
+      = f.input :country_id, label: false, collection: Country.all, input_html: { class: 's-12', data: { action: "change->address#filter_by_country", target: "address.countrySelect fiscal.countrySelectFiscal", container: "fiscal_address" }}
+  .row.mt-2.fiscal_address
+    - states = f.object.country.present? ? f.object.country.states : []
+    .col-md-3
+      = f.label :state_id
+    .col-md-9
+      = f.input :state_id, label: false, collection: states, input_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId fiscal.stateSelectFiscal" } }
+  .row.mt-2
+    .col-md-3
+      = f.label :locality
+    .col-md-9
+      = f.input :locality, label: false, required: true, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+  .row.mt-2
+    .col-md-3
+      = f.label :cp
+    .col-md-9
+      = f.input :cp, label: false, required: true, autofocus: true, input_html: { class: 's-12 form-control form-control-sm', data: { target: "fiscal.cpInputFiscal" } }
+  .row.mt-2
+    .col-md-3
+      = f.label :neighborhood
+    .col-md-9
+      = f.input :neighborhood, label: false, required: true, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+  .row.mt-2
+    .col-md-3
+      = f.label :street
+    .col-md-9
+      = f.input :street, label: false, required: true, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+  .row.mt-2
+    .col-md-3
+      = f.label :outdoor_number
+    .col-md-9
+      = f.input :outdoor_number, label: false, required: true, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+  .row.mt-2
+    .col-md-3
+      = f.label :interior_number
+    .col-md-9
+      = f.input :interior_number, label: false, required: true, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+  .row.mt-2
+    .col-md-3
+      = f.label :crosses
+    .col-md-9
+      = f.input :crosses, label: false, required: true, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+      = f.input :fiscal, as: :hidden, input_html: { value: true }
+

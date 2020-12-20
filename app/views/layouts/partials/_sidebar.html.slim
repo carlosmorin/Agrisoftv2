@@ -125,23 +125,14 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 data-turbolinks-permanent=""
                 p.s-14
                   span Gestionar Ventas
                   span.badge.badge-info.right.s-10 = Shipment.sale.active_sales.size
-        
-
-
-        li class="nav-item has-treeview  #{current_nav_item?(request.fullpath, 'crm')} " 
-          a.nav-link.py-1.pl-2.mb-1  href="#" 
-            == invoice_icon(color: 'light-gray')
-            p.s-14.ml-2 FACTURACIÓN 
-            span.right
-              == circle_down_icon(size: 12, color: 'light-gray')
-          ul.nav.nav-treeview
+            li.nav-item
+              hr.my-0
             li.nav-item
               = link_to billing_pre_bills_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(billing_pre_bills_path)}" do
                 == circle_icon(size: 10, color: 'light-gray')
                 p.s-14.text-normal
                   span Gestionar prefacturas
-                  span.badge.badge-info.right.s-10 0
-        
+                  span.badge.badge-info.right.s-10 = Bill.all.size
         li class="nav-item has-treeview " 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
             == hand_holding_icon(color: 'light-gray')

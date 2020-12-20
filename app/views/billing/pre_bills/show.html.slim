@@ -1,0 +1,134 @@
+section.content-header.pb-0 data-controller='billing--show'
+  .container
+    .row.my-2
+      .col-8
+        h4
+          b = "Detalle de factura".upcase
+    .row
+      .col-lg-12
+        = render "shared/alerts"
+    .row
+      .col-6.text-left.pr-2.s-12
+        = link_to billing_pre_bills_path, class: 'btn btn-sm btn-link s-20' do
+          i.fa.fa-arrow-left.mr-2
+          span ATRAS
+      .col-6.text-right.pr-2.s-12
+        - unless @bill.canceled? || @bill.billed?
+          = button_tag 'CANCELAR', type: 'button', class: 'btn btn-flat btn-sm btn-danger s-13', data: { action: 'click->billing--show#cancel', folio: @bill.serie, id: @bill.id }
+          '
+          button.btn.btn-sm.btn-primary.s-13 data-target="#manualStampedModal" data-toggle="modal" type="button" 
+            | TIMBRADO MANUAL
+  .container.mt-4
+    - if @bill.canceled?
+      .alert.alert-danger.py-3.mt-2
+        b Factura cancelada
+    - if @bill.billed?
+      .alert.alert-success.py-3.mt-2
+        b Factura Timbrada
+    .card
+      .card-header.s-14.p-3.bg-light-gray
+        .row
+          .col-6.pt-2.pl-4
+            h4.s-18 = @bill.company.name.upcase
+            span.s-14.text-gray = @bill.company.short_address
+            br
+            span.s-14.text-gray = @bill.company.country.name
+          .col-6.text-right.pr-4
+            h3 FACTURA
+        .row.mt-4
+          .col-8.pt-2.pl-4
+            h6.bold CLIENTE
+            span.s-16 = @bill.client.name.upcase
+            br
+            span.text-gray = @bill.client.short_address.capitalize
+            br
+            span.text-gray = @bill.client.country.name
+            br
+            span.text-gray
+              i.fas.fa-phone.mr-2.text-primary
+              = @bill.client.phone
+          .col-4
+            .row
+              .col-7
+                b SERIE N°
+              .col-5
+                span.text-gray.s-14 = @bill.serie.upcase
+            .row.mt-1
+              .col-7
+                b F. FACTURA
+              .col-5
+                span.text-gray.s-14 = @bill.created_at.strftime("%B %-d, %Y")
+            .row.mt-1
+              .col-7
+                b F. VENCIMIENTO
+              .col-5
+                span.text-gray.s-14 = @bill.created_at.strftime("%B %-d, %Y")
+            - if @bill.billed?
+              hr
+              .row.mt-2
+                .col-12
+                  h6 
+                    b FACTURA EXTERNA
+              .row.py-2
+                .col-7
+                  b FOLIO
+                .col-5
+                  b.s-14.text-primary.pl-2 = @bill.external_folio.upcase
+              hr.my-0
+              .row
+                .col-7
+                  b FACTURA XML
+                .col-5
+                  span.btn
+                    i.fas.fa-file-code.s-20
+                  = link_to @bill.external_xml.service_url, target: :_blank, class: 'btn btn-xs btn-primary' do
+                    i.fas.fa-download.s-10
+              hr.my-0
+              .row.mt-1
+                .col-7
+                  b FACTURA PDF
+                .col-5
+                  span.btn
+
+                    i.fas.fa-file-pdf.s-20.text-danger
+                  = link_to @bill.external_pdf.service_url, target: :_blank, class: 'btn btn-xs btn-primary' do
+                    i.fas.fa-download.s-10
+      .card-body.s-14.p-3.mt-3
+        table.table
+          thead
+            tr
+              th CONCEPTO
+              th CANTIDAD
+              th PRECIO U
+              th DESCUENTO U
+              th MONTO
+          tbody
+            - @bill.bill_concepts.each do |concept|
+              tr
+                td = concept.description.upcase
+                td = concept.quantity
+                td = currency(concept.unit_price)
+                td = currency(concept&.discount)
+                td = currency(concept.import)
+          tfooter
+            tr
+              td.text-right colspan="3"
+              	span.s-13 SUBTOTAL
+              td.text-right colspan="2"
+              	= currency(@bill.total)
+            tr
+              td.text-right colspan="3"
+              	span.s-13 IVA
+              td.text-right colspan="2"
+              	= currency(0)
+            tr
+              td.text-right colspan="3"
+              	span.s-13 DESCUENTO
+              td.text-right colspan="2"
+              	= currency(@bill.discount)
+            tr
+              td.text-right colspan="3"
+              	b.s-14 TOTAL
+              td.text-right colspan="2"
+              	b.s-16.text-primary = currency(@bill.total - @bill.discount)
+= render 'manual_modal'

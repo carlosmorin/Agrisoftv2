@@ -28,7 +28,28 @@ es:
       shipments_expense:
         one: Descuento
         other: Descuentos
+      bill:
+        one: Factura
+        other: Facturas
     attributes:
+      bill:
+        company_id: Emisor
+        client_id: Cliente
+        user_id: Autor
+        currency_id: Moneda
+        shipment_id: Venta
+        credit_days: Dias de credito
+        status: Status
+        exchange_rate: Tipo de cambio
+        comments: Comentarios
+        folio: Folio factura externa
+        pre_billed_at: Fecha de pre factura
+        discount: Descuentos
+        expenses: Gastos
+        fiscal_id: Razón social
+        external_folio: Folio de factura
+        external_xml: Factura en XML
+        external_pdf: Factura en PDF
       user: 
         name: Nombre
         last_name: Apellidos
@@ -52,6 +73,7 @@ es:
         conact_name: Persona de contacto
         email: Correo electronico
         code: Codigo
+        fiscal: Cliente fiscal
       unit_brand:
         name: Nombre
         short_name: Abreviación
@@ -295,6 +317,7 @@ es:
         client_type: Tipo de cliente
         client_id: Cliente
         credit_days: Dias de credito
+        date_due: Fecha de inicio
       contract:
         name: Nombre/alias de contrato
         client_id: Cliente

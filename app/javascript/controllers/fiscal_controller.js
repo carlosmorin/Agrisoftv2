@@ -4,10 +4,12 @@ import SlimSelect from 'slim-select'
 export default class extends Controller {
   static targets = ["nameInput", "fiscalNameInput", "setAsFiscalAddress", 
   	"countrySelect", "stateSelect", "countrySelectFiscal", "stateSelectFiscal", 
-  	"cpInputFiscal", "cpInput"]
+  	"cpInputFiscal", "cpInput", 'fiscalData']
 
   connect() {
   	console.log("Init")
+    console.log("sup bitch")
+
   }
 
   setFiscalName(){
@@ -27,5 +29,13 @@ export default class extends Controller {
     }else{
   		console.log("Not checked")
   	}
+  }
+
+  toggleFiscalContainer(e){
+    if (e.currentTarget.checked) {
+      this.fiscalDataTarget.classList.remove('d-none')
+    }else{
+      this.fiscalDataTarget.classList.add('d-none')
+    }
   }
 }

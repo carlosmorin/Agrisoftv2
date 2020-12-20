@@ -1,0 +1,23 @@
+ #currencyModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" data-controller="crm--sales--manage--currency"
+  .modal-dialog role="document" 
+    .modal-content
+      .modal-header
+        h6#exampleModalLabel.modal-title.text-upcase.bold Cambiar moneda
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          i aria-hidden="true"  ×
+      = form_tag({ action: 'create'}, { data: { action: 'submit->crm--sales--manage--currency#updateCurrency'}}) do
+        input type="hidden" data-target='crm--sales--manage--currency.saleId' value=@sale.id
+        .modal-body
+          - if @sale.client.settings.international? 
+            .alert.alert-info.s-13
+              i.fas.fa-info-circle.mr-2
+              span Tipo de cambio obligatorio para clientes Internacionales
+          label Moneda: 
+          = select_tag 'currency_id', options_for_select(Currency.pluck(:name, :id), selected: @sale.currency_id), class: 'form-control form-control-sm', include_blank: true, required: true, 'data-target': 'crm--sales--manage--currency.currencyId', 'data-action': 'change->crm--sales--manage--currency#setExchangeRate'
+          label.mt-4 Tipo de cambio:
+          input#exchange_rate.form-control.form-control-sm type="decimal" required=@sale.client.settings.international? data-target='crm--sales--manage--currency.exchangeRate' value=@sale.exchange_rate / 
+        .modal-footer.mt-4
+          button.btn.btn-sm.btn-link.s-12.mr-2  data-dismiss="modal" type="button"
+            b Cerrar
+          button.btn.btn-sm.btn-dark-blue.s-12 type="submit"  
+            b Guardar
