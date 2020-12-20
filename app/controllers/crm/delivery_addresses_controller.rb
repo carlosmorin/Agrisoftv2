@@ -1,25 +1,26 @@
+# frozen_string_literal: true
+
 module Crm
-	class DeliveryAddressesController < ApplicationController
+  class DeliveryAddressesController < ApplicationController
     include DeliveryAddressesBreadcrumbs
 
     before_action :set_object, only: %i[edit update destroy show]
     before_action :set_client, :set_breadcrumb, only: %i[new edit]
 
-  	def index
-  		@delivery_addresses = DeliveryAddress.paginate(page: params[:page], per_page: 16)
+    def index
+      @delivery_addresses = DeliveryAddress.paginate(page: params[:page], per_page: 16)
       search if params[:q].present?
       search_by_client if params[:c].present?
-  	end
+     end
 
-		def new
-			@address = DeliveryAddress.new(client_id: params[:client_id])
-		end
+    def new
+      @address = DeliveryAddress.new(client_id: params[:client_id])
+     end
 
-    def edit
-    end
+    def edit; end
 
     def show
-      add_breadcrumb "Detalle"
+      add_breadcrumb 'Detalle'
     end
 
     def create
@@ -51,6 +52,7 @@ module Crm
 
     def update_prices
       return if params[:id].empty?
+
       ids = params[:id]
       prices = params[:price]
       currencies = params[:currency]
@@ -61,23 +63,24 @@ module Crm
     end
 
     private
-    
+
     def search
       q = Regexp.escape(params[:q])
-      
+
       @delivery_addresses = @delivery_addresses.where("concat(name, ' ', phone, ' ', contact_name) ~* ?", q)
     end
 
     def search_by_client
       client_id = Regexp.escape(params[:c])
-      
+
       @delivery_addresses = @delivery_addresses.where(client_id: client_id)
     end
 
     def address_params
       params.require(:delivery_address).permit(
-        :client_id, :country_id, :state_id, :municipality_id, :address, 
-        :comments, :phone, :name, :contact_name, :email, :external)
+        :client_id, :country_id, :state_id, :municipality_id, :address,
+        :comments, :phone, :name, :contact_name, :email, :external
+      )
     end
 
     def set_object

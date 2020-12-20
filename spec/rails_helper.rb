@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 
@@ -5,11 +7,12 @@ require 'devise'
 require_relative 'support/controller_macros'
 require 'support/factory_bot'
 
-
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+if Rails.env.production?
+  abort('The Rails environment is running in production mode!')
+end
 require 'rspec/rails'
 require 'support/database_cleaner'
 
@@ -71,10 +74,10 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.include FactoryBot::Syntax::Methods
   # Devise and FactoryBot config
-  config.include Devise::Test::ControllerHelpers, :type => :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include FactoryBot::Syntax::Methods
   config.include Capybara::DSL
-  config.extend ControllerMacros, :type => :controller
+  config.extend ControllerMacros, type: :controller
 end
 
 Shoulda::Matchers.configure do |config|

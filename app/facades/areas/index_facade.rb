@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Areas
   class IndexFacade
     attr_reader :areas

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Hosts
   class IndexFacade
     attr_reader :hosts
@@ -16,7 +18,7 @@ module Hosts
 
     def search
       q = Regexp.escape(@params[:q])
-      @hosts = @hosts.where("concat(name) ~* ?", q)
+      @hosts = @hosts.where('concat(name) ~* ?', q)
     end
   end
 end

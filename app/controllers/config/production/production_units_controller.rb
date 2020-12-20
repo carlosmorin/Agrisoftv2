@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 module Config
   module Production
     class ProductionUnitsController < ApplicationController
       before_action :find_production_unit, only: %i[destroy edit update]
       before_action :initialize_facade, only: %i[create index]
-    
-      add_breadcrumb "Produccion", :config_production_root_path
-      add_breadcrumb "Unidades de Produccion", :config_production_production_units_path
-      
+
+      add_breadcrumb 'Produccion', :config_production_root_path
+      add_breadcrumb 'Unidades de Produccion', :config_production_production_units_path
+
       def index
         @production_unit = ProductionUnit.new
       end
 
       def edit
-        add_breadcrumb "Editar"
+        add_breadcrumb 'Editar'
       end
 
       def update

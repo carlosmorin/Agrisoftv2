@@ -1,25 +1,27 @@
+# frozen_string_literal: true
+
 class Config::Production::ColorsController < ApplicationController
   before_action :set_object, only: %i[show edit update destroy]
 
-  add_breadcrumb "Produccion", :config_production_root_path
-  add_breadcrumb "Colores", :config_production_colors_path
+  add_breadcrumb 'Produccion', :config_production_root_path
+  add_breadcrumb 'Colores', :config_production_colors_path
 
   def index
-  	@colors = Color.paginate(page: params[:page], per_page: 16)
+    @colors = Color.paginate(page: params[:page], per_page: 16)
     search if params[:q].present?
   end
 
   def new
-    add_breadcrumb "Nuevo"
+    add_breadcrumb 'Nuevo'
     @color = Color.new
   end
 
   def edit
-    add_breadcrumb "Editar"
+    add_breadcrumb 'Editar'
   end
 
   def show
-    add_breadcrumb "Detalle"
+    add_breadcrumb 'Detalle'
   end
 
   def create
@@ -46,15 +48,15 @@ class Config::Production::ColorsController < ApplicationController
     @color.destroy
   end
 
-	private
+  private
 
   def search
     q = Regexp.escape(params[:q])
 
-    @colors = @colors.where("name ~* ?", q)
+    @colors = @colors.where('name ~* ?', q)
   end
 
-	def color_params
+  def color_params
     params.require(:color).permit(:name)
   end
 

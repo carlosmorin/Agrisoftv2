@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module Config
   module Production
     class SubStagesController < ApplicationController
       before_action :find_sub_stage, only: %i[show edit update destroy]
-    
-      add_breadcrumb "Produccion", :config_production_root_path
-      add_breadcrumb "Sub Etapas", :config_production_sub_stages_path
-      
+
+      add_breadcrumb 'Produccion', :config_production_root_path
+      add_breadcrumb 'Sub Etapas', :config_production_sub_stages_path
+
       def index
         @index_facade = SubStages::IndexFacade.new(params)
         @sub_stage = SubStage.new
@@ -23,12 +25,12 @@ module Config
       end
 
       def edit
-        add_breadcrumb "Editar"
+        add_breadcrumb 'Editar'
       end
 
       def update
         if @sub_stage.update(sub_stage_params)
-          flash[:notice] = "La Sub Etapa fue actualizada correctamente."
+          flash[:notice] = 'La Sub Etapa fue actualizada correctamente.'
           redirect_to config_production_sub_stages_path
         else
           render :edit

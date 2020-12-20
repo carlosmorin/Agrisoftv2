@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ProductionUnits
   class IndexFacade
     attr_reader :production_units
@@ -16,7 +18,7 @@ module ProductionUnits
 
     def search
       q = Regexp.escape(@params[:q])
-      @production_units = @production_units.where("concat(name) ~* ?", q)
+      @production_units = @production_units.where('concat(name) ~* ?', q)
     end
   end
 end

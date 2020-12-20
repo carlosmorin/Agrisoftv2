@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 module Config
   module Production
     class RanchesController < ApplicationController
       before_action :find_ranch, only: %i[show edit update destroy]
       before_action :set_catalogs, only: %i[edit update]
-      
-      add_breadcrumb "Produccion", :config_production_root_path
-      add_breadcrumb "Ranchos", :config_production_ranches_path
-      
+
+      add_breadcrumb 'Produccion', :config_production_root_path
+      add_breadcrumb 'Ranchos', :config_production_ranches_path
+
       def index
         @index_facade = Ranches::IndexFacade.new(params)
       end
 
       def new
-        add_breadcrumb "Nuevo"
+        add_breadcrumb 'Nuevo'
         @ranch = Ranch.new
       end
 
@@ -27,16 +29,16 @@ module Config
       end
 
       def edit
-        add_breadcrumb "Editar"
+        add_breadcrumb 'Editar'
       end
 
       def show
-        add_breadcrumb "Detalle del Rancho"
+        add_breadcrumb 'Detalle del Rancho'
       end
 
       def update
         if @ranch.update(ranch_params)
-          flash[:notice] = "El rancho fue actualizado correctamente."
+          flash[:notice] = 'El rancho fue actualizado correctamente.'
           redirect_to config_production_ranch_url(@ranch)
         else
           render :edit
@@ -50,9 +52,9 @@ module Config
       private
 
       def ranch_params
-        params.require(:ranch).permit(:state_id, :name, :municipality_id, :parcel_certificate, 
-        :manager_id, :territory, :hydrological_region,
-        :aquifer_name, :georeference, :document)
+        params.require(:ranch).permit(:state_id, :name, :municipality_id, :parcel_certificate,
+                                      :manager_id, :territory, :hydrological_region,
+                                      :aquifer_name, :georeference, :document)
       end
 
       def find_ranch
@@ -61,7 +63,7 @@ module Config
 
       def set_catalogs
         state = State.find(@ranch.state_id)
-  
+
         @states = Country.find(1).states
         @municipalities = state.municipalities
       end

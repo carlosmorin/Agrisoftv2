@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Freight < ApplicationRecord
   default_scope { order(:created_at) }
-  scope :link_shipments, -> { where("folio IS NOT NULL") }
-  #before_create :set_folio if shipments.first.order_sale_folio.nil?
+  scope :link_shipments, -> { where('folio IS NOT NULL') }
+  # before_create :set_folio if shipments.first.order_sale_folio.nil?
   before_create :set_folio, if: -> { shipments.any? }
   before_update :set_folio, if: -> { folio.nil? }
   validates :carrier_id, :driver_id, :unit_id, :box_id, presence: true
@@ -19,30 +21,29 @@ class Freight < ApplicationRecord
   belongs_to :debtable, polymorphic: true, optional: true
 
   private
-  
+
   def set_folio
     year = Time.now.year
     total_freight = get_total_freight(year.to_s)
     year = year.to_s[2, 2]
     self.folio = "FF-#{year}-#{total_freight}"
   end
-  
+
   def get_total_freight(year)
     total_freight = Freight.link_shipments.where('extract(year from created_at) = ?', year).size
     case total_freight.to_s.size
     when 1
-      "000#{total_freight.to_i + 1 }"
+      "000#{total_freight.to_i + 1}"
     when 2
-     "00#{total_freight.to_i + 1 }"
+      "00#{total_freight.to_i + 1}"
     when 3
-      "0#{total_freight.to_i + 1 }"
+      "0#{total_freight.to_i + 1}"
     when 4
-      "#{total_freight.to_i + 1 }"
+      (total_freight.to_i + 1).to_s
     end
   end
 
   def box_type
-    self.box.box_type.name.upcase
+    box.box_type.name.upcase
   end
-
 end

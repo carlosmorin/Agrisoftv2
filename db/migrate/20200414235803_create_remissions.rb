@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateRemissions < ActiveRecord::Migration[6.0]
   def change
     create_table :remissions do |t|
@@ -10,7 +12,7 @@ class CreateRemissions < ActiveRecord::Migration[6.0]
       t.references :user
       t.boolean :pay_freight
       t.text :comments
-      
+
       t.datetime :deleted_at
       t.timestamps
     end

@@ -1,4 +1,6 @@
-class Treatments::IndexFacade 
+# frozen_string_literal: true
+
+class Treatments::IndexFacade
   attr_accessor :treatments
 
   def initialize(params)
@@ -15,6 +17,6 @@ class Treatments::IndexFacade
 
   def search
     q = Regexp.escape(@params[:q])
-    @treatments = @treatments.where("concat(supplies_names), ~* ?", q)
+    @treatments = @treatments.where('concat(supplies_names), ~* ?', q)
   end
 end

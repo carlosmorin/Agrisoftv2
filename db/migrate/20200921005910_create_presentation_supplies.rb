@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePresentationSupplies < ActiveRecord::Migration[6.0]
   def change
     create_table :presentation_supplies do |t|

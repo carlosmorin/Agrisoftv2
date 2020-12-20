@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class UsersController < ApplicationController
     layout 'admin'
@@ -5,11 +7,11 @@ module Admin
     before_action :index, only: %i[update]
 
     def index
-    	@users = User.paginate(page: params[:page], per_page: 15)
+      @users = User.paginate(page: params[:page], per_page: 15)
       search if params[:q].present?
     end
 
-  	def new
+    def new
       @user = User.new
       respond_to do |format|
         format.html
@@ -17,12 +19,13 @@ module Admin
       end
     end
 
-	  def show; end
-	  def edit; end
+    def show; end
 
-	  def create
-	    @user = User.new(object_params)
-      
+    def edit; end
+
+    def create
+      @user = User.new(object_params)
+
       respond_to do |format|
         if @user.save
           format.js
@@ -31,7 +34,7 @@ module Admin
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       end
-	  end
+    end
 
     def update
       respond_to do |format|
@@ -52,16 +55,16 @@ module Admin
 
     def search
       q = Regexp.escape(params[:q])
-    
+
       @users = @users.where("concat(name, ' ', last_name, ' ', email) ~* ?", q)
     end
-   	
-   	def set_object
-    	@user = User.find(params[:id])
-  	end
+
+    def set_object
+      @user = User.find(params[:id])
+   end
 
     def object_params
-    	params.require(:user).permit( :name, :last_name, :email, :password, :password_confirmation)
-  	end
+      params.require(:user).permit(:name, :last_name, :email, :password, :password_confirmation)
+    end
   end
 end

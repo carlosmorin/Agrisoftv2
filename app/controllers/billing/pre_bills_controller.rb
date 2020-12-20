@@ -1,25 +1,25 @@
+# frozen_string_literal: true
+
 module Billing
   class PreBillsController < ApplicationController
-    before_action :set_bill, only: [:show, :edit, :update, :destroy]
-    add_breadcrumb "Facturación"
-    add_breadcrumb "Pre facturas"
+    before_action :set_bill, only: %i[show edit update destroy]
+    add_breadcrumb 'Facturación'
+    add_breadcrumb 'Pre facturas'
 
     def index
       @pre_bills = Bill.pre_bills
     end
 
-    def show
-    end
+    def show; end
 
     # GET /rooms/new
-    def new  
+    def new
       build_prebill if params[:sale].present?
-      @pre_bill = Bill.new()
+      @pre_bill = Bill.new
     end
 
     # GET /rooms/1/edit
-    def edit
-    end
+    def edit; end
 
     # POST /rooms
     # POST /rooms.json
@@ -62,23 +62,23 @@ module Billing
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_room
-        @room = Room.find(params[:id])
-      end
 
-      # Only allow a list of trusted parameters through.
-      def room_params
-        params.require(:room).permit(:name)
-      end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_room
+      @room = Room.find(params[:id])
+    end
 
-      def build_prebill
-        load_sale
-      end
+    # Only allow a list of trusted parameters through.
+    def room_params
+      params.require(:room).permit(:name)
+    end
 
-      def load_sale
-        @sale = Shipment.find_by_folio(params[:folio])
-      end
+    def build_prebill
+      load_sale
+    end
+
+    def load_sale
+      @sale = Shipment.find_by_folio(params[:folio])
+    end
   end
-
 end

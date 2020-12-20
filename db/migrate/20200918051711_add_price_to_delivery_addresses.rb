@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddPriceToDeliveryAddresses < ActiveRecord::Migration[6.0]
   def change
     add_column :delivery_addresses, :estimated_price, :decimal

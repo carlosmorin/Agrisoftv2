@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class TreatmentSupply < ApplicationRecord
   # attr_accessor :supply_id
-  # jsonb_accessor :recommended_dose, 
+  # jsonb_accessor :recommended_dose,
   #   irrigation_quantity: :string,
   #   irrigation_unit: :string,
   #   foliar_quantity: :string,
@@ -8,7 +10,7 @@ class TreatmentSupply < ApplicationRecord
   belongs_to :treatment
   belongs_to :supply
 
-  delegate :name, to: :supply, prefix: "supply", allow_nil: true
+  delegate :name, to: :supply, prefix: 'supply', allow_nil: true
 
   def self.supplies_count
     where(supply_id: Supply.all.ids).size

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Size < ApplicationRecord
-	acts_as_paranoid
+  acts_as_paranoid
   default_scope { order(:created_at) }
   validates :name, presence: true
 

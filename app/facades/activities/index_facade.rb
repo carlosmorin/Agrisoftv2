@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Activities
   class IndexFacade
     attr_reader :activities
@@ -16,7 +18,7 @@ module Activities
 
     def search
       q = Regexp.escape(@params[:q])
-      @activities = @activities.where("concat(action) ~* ?", q)
+      @activities = @activities.where('concat(action) ~* ?', q)
     end
   end
 end

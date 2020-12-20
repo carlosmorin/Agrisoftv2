@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace :admin do
-  	root to: "main#index"
-  	resources :users
-	end
+    root to: 'main#index'
+    resources :users
+  end
 
   namespace :reports do
     resources :lumps, only: [:index]
@@ -32,7 +34,7 @@ Rails.application.routes.draw do
     resources :delivery_addresses
     resources :client_brands
     resources :currencies
-    namespace :production do 
+    namespace :production do
       root to: 'main#index'
       resources :categories
       resources :treatments
@@ -76,7 +78,7 @@ Rails.application.routes.draw do
         resources :treatments
         resources :hosts
         resources :damages
-        member do 
+        member do
           patch '/update_pictures', to: 'pests#update_pictures'
         end
       end
@@ -85,7 +87,7 @@ Rails.application.routes.draw do
         resources :hosts
         resources :damages
         member do
-          patch "/update_pictures", to: "deseases#update_pictures"
+          patch '/update_pictures', to: 'deseases#update_pictures'
         end
       end
     end
@@ -96,7 +98,7 @@ Rails.application.routes.draw do
   end
 
   namespace :logistic do
-    root to: "main#index"
+    root to: 'main#index'
     resources :freights
     resources :carriers do
       resources :drivers
@@ -112,19 +114,19 @@ Rails.application.routes.draw do
     resources :drivers
     resources :boxes
     namespace :config do
-      root to: "main#index"
+      root to: 'main#index'
       resources :box_types
       resources :unit_brands
     end
   end
-  
+
   namespace :commercial do
-    root to: "main#index" #Comercial dashboard
+    root to: 'main#index' # Comercial dashboard
     resources :providers do
       resources :addresses
     end
     namespace :config do
-      root to: "main#index"
+      root to: 'main#index'
       resources :provider_categories do
         get '/get_subcategories', to: 'provider_categories#get_subcategories'
       end
@@ -140,21 +142,21 @@ Rails.application.routes.draw do
   end
 
   namespace :crm do
-    root to: "main#index" #CRM dashboard
-    resources :report_prices, except: [:index, :show]
-    resources :products, only: [:edit, :update]
-    resources :expenses, except: [:index, :show] do
-      collection  do
+    root to: 'main#index' # CRM dashboard
+    resources :report_prices, except: %i[index show]
+    resources :products, only: %i[edit update]
+    resources :expenses, except: %i[index show] do
+      collection do
         get 'build_detail'
       end
     end
     resources :clients do
-      collection  do
+      collection do
         get 'delivery_addresses'
       end
       resources :contacts, except: [:index]
       resources :delivery_addresses, except: [:index]
-      resources :contracts, only: [:new, :edit, :show]
+      resources :contracts, only: %i[new edit show]
       resources :bank_accounts, except: [:index]
 
       get '/get_delivery_address', to: 'clients#get_delivery_address'
@@ -171,7 +173,7 @@ Rails.application.routes.draw do
       get '/manage', to: 'sales#manage'
       get '/get_report_products', to: 'sales#get_report_products'
     end
-    resources :contracts, only: [:create, :update]
+    resources :contracts, only: %i[create update]
     resources :bank_accounts, except: [:index]
 
     resources :delivery_addresses, except: [:index] do
@@ -193,13 +195,13 @@ Rails.application.routes.draw do
       patch '/cancel', to: 'sales_orders#cancel'
       get '/print_aditional_data', to: 'sales_orders#print_aditional_data'
     end
-    
+
     namespace :config do
-      root to: "main#index"
+      root to: 'main#index'
       resources :expenses
     end
   end
-  
+
   namespace :directories do
     resources :carriers do
       resources :drivers
@@ -211,12 +213,12 @@ Rails.application.routes.draw do
     resources :countries
     resources :states
     resources :municipalities
-    ##End points to addres
+    # #End points to addres
     get '/addresses/states', to: 'addresses#states'
     get '/addresses/municipalities', to: 'addresses#municipalities'
     get '/addresses/locations', to: 'addresses#locations'
   end
-  
+
   resources :carriers do
     get '/get_drivers', to: 'carriers#get_drivers'
     get '/get_units', to: 'carriers#get_units'
@@ -234,7 +236,7 @@ Rails.application.routes.draw do
     get '/avatar', to: 'profile#avatar'
     get '/change_password', to: 'profile#change_password'
   end
-	
-	devise_for :users
-  root to: "dashboard#index"
+
+  devise_for :users
+  root to: 'dashboard#index'
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddNProductsFolioClientFolioToShipments < ActiveRecord::Migration[6.0]
   def change
     add_column :shipments, :n_products, :integer

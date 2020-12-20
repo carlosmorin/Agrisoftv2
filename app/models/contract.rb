@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Contract < ApplicationRecord
   belongs_to :client
   belongs_to :delivery_address
@@ -13,21 +15,22 @@ class Contract < ApplicationRecord
   validates_presence_of :started_at, :finished_at, unless: :undefined
 
   scope :current, -> { where("CURRENT_TIMESTAMP < finished_at OR undefined_products::text = 'true'") }
-  scope :overdue, -> { where("CURRENT_TIMESTAMP > finished_at") }
+  scope :overdue, -> { where('CURRENT_TIMESTAMP > finished_at') }
 
   def validate!
-    errors.add(:name, :blank, message: "cannot be nil") if name.nil?
+    errors.add(:name, :blank, message: 'cannot be nil') if name.nil?
   end
 
   def active?
-    return true if self.undefined?
+    return true if undefined?
 
-    Time.now <= self.finished_at
+    Time.now <= finished_at
   end
 
   def currency
     national = Currency.national.first
-    return national if self.contracts_products.empty?
-    self.contracts_products.first.currency
+    return national if contracts_products.empty?
+
+    contracts_products.first.currency
   end
 end

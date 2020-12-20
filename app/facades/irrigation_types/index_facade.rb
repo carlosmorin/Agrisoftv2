@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module IrrigationTypes
   class IndexFacade
     attr_reader :irrigation_types
@@ -16,7 +18,7 @@ module IrrigationTypes
 
     def search
       q = Regexp.escape(@params[:q])
-      @irrigation_types = @irrigation_types.where("concat(name) ~* ?", q)
+      @irrigation_types = @irrigation_types.where('concat(name) ~* ?', q)
     end
   end
 end

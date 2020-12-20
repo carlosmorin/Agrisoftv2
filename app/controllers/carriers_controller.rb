@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class CarriersController < ApplicationController
   before_action :set_object, only: %i[get_drivers get_units get_boxes]
-  
+
   def get_drivers
     drivers = @carrier.drivers
     render json: drivers
@@ -15,9 +17,9 @@ class CarriersController < ApplicationController
     boxes = @carrier.boxes
     render json: boxes
   end
-	
+
   def set_object
-    id = params[:id].present? ? params[:id] : params[:carrier_id] 
+    id = params[:id].present? ? params[:id] : params[:carrier_id]
     @carrier = Carrier.find(id)
   end
 end

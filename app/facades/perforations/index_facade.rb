@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Perforations
   class IndexFacade
     attr_reader :perforations

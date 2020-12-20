@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 module Config
   module Production
     class ActivitiesController < ApplicationController
       before_action :find_activity, only: %i[show edit update destroy]
-    
-      add_breadcrumb "Produccion", :config_production_root_path
-      add_breadcrumb "Actividades", :config_production_activities_path
-      
+
+      add_breadcrumb 'Produccion', :config_production_root_path
+      add_breadcrumb 'Actividades', :config_production_activities_path
+
       def index
         @index_facade = Activities::IndexFacade.new(params)
         @activity = Activity.new
       end
 
       def new
-        add_breadcrumb "Nuevo"
+        add_breadcrumb 'Nuevo'
         @activity = Activity.new
       end
 
@@ -28,16 +30,16 @@ module Config
       end
 
       def edit
-        add_breadcrumb "Editar"
+        add_breadcrumb 'Editar'
       end
 
       def show
-        add_breadcrumb "Detalle de Aactividad"
+        add_breadcrumb 'Detalle de Aactividad'
       end
 
       def update
         if @activity.update(activity_params)
-          flash[:notice] = "La Aactividad fue actualizada correctamente."
+          flash[:notice] = 'La Aactividad fue actualizada correctamente.'
           redirect_to config_production_activities_path
         else
           render :edit

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateUnitMeasures < ActiveRecord::Migration[6.0]
   def change
     create_table :unit_measures do |t|

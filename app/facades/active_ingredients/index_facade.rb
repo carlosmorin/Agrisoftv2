@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveIngredients
   class IndexFacade
     attr_reader :active_ingredients
@@ -16,7 +18,7 @@ module ActiveIngredients
 
     def search
       q = Regexp.escape(@params[:q])
-      @active_ingredients = @active_ingredients.where("concat(name) ~* ?", q)
+      @active_ingredients = @active_ingredients.where('concat(name) ~* ?', q)
     end
   end
 end

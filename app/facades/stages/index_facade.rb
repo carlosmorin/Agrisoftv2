@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Stages
   class IndexFacade
     attr_reader :stages, :stage

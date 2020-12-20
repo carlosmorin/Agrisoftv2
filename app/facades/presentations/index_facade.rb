@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Presentations
   class IndexFacade
     attr_reader :presentations

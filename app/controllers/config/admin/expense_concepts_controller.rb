@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 module Config
   module Admin
     class ExpenseConceptsController < ApplicationController
       before_action :set_object, only: %i[destroy]
-    
-      add_breadcrumb "Config", :config_production_root_path
-      add_breadcrumb "Admin"
-      add_breadcrumb "Coneptos de gastos", :config_admin_expense_concepts_path
-      
+
+      add_breadcrumb 'Config', :config_production_root_path
+      add_breadcrumb 'Admin'
+      add_breadcrumb 'Coneptos de gastos', :config_admin_expense_concepts_path
+
       def index
         @concepts = ExpenseConcept.paginate(page: params[:page], per_page: 25)
-        @concept = ExpenseConcept.new()
+        @concept = ExpenseConcept.new
 
         filter_by_query if params[:query].present?
       end
@@ -33,8 +35,8 @@ module Config
 
       def filter_by_query
         query = Regexp.escape(params[:query])
-        
-        @concepts = @concepts.where("name ~* ?", query)
+
+        @concepts = @concepts.where('name ~* ?', query)
       end
 
       def conept_params

@@ -1,39 +1,41 @@
+# frozen_string_literal: true
+
 module Breadcrumbs::Logistic
-	module BankAccounts
-		extend ActiveSupport::Concern
+  module BankAccounts
+    extend ActiveSupport::Concern
 
-		included do
-	    add_breadcrumb "Logistica", :logistic_root_path
-	    add_breadcrumb "Transportistas", :logistic_carriers_path
-		end
+    included do
+      add_breadcrumb 'Logistica', :logistic_root_path
+      add_breadcrumb 'Transportistas', :logistic_carriers_path
+    end
 
-		def build(action_name)
-			case action_name	
-			when "new", "create"
-				breadrcumbs_new
-			when "edit", "update"
-				breadrcumbs_edit
-			when "show"
-				breadrcumbs_show
-			end
-		end
+    def build(action_name)
+      case action_name
+      when 'new', 'create'
+        breadrcumbs_new
+      when 'edit', 'update'
+        breadrcumbs_edit
+      when 'show'
+        breadrcumbs_show
+      end
+    end
 
     def breadrcumbs_new
       add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :bank_accounts)
-      add_breadcrumb "Cuentas", logistic_carrier_path(@carrier, tab: :bank_accounts)
-      add_breadcrumb "Nueva"
+      add_breadcrumb 'Cuentas', logistic_carrier_path(@carrier, tab: :bank_accounts)
+      add_breadcrumb 'Nueva'
     end
 
     def breadrcumbs_edit
       add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :bank_accounts)
-      add_breadcrumb "Cuentas", logistic_carrier_path(@carrier, tab: :bank_accounts)
-      add_breadcrumb "Editar"
+      add_breadcrumb 'Cuentas', logistic_carrier_path(@carrier, tab: :bank_accounts)
+      add_breadcrumb 'Editar'
     end
 
     def breadrcumbs_show
       add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :bank_accounts)
-      add_breadcrumb "Cuentas", logistic_carrier_path(@carrier, tab: :bank_accounts)
-      add_breadcrumb "Detalle"
+      add_breadcrumb 'Cuentas', logistic_carrier_path(@carrier, tab: :bank_accounts)
+      add_breadcrumb 'Detalle'
     end
 
     def set_carrier

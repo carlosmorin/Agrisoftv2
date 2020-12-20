@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module Config
   module Production
     class ActiveIngredientsController < ApplicationController
       before_action :find_active_ingredient, only: %i[destroy edit update show]
-    
-      add_breadcrumb "Produccion", :config_production_root_path
-      add_breadcrumb "Ingredientes Activos", :config_production_active_ingredients_path
-      
+
+      add_breadcrumb 'Produccion', :config_production_root_path
+      add_breadcrumb 'Ingredientes Activos', :config_production_active_ingredients_path
+
       def index
         @index_facade = ActiveIngredients::IndexFacade.new(params)
         @active_ingredient = ActiveIngredient.new
@@ -23,18 +25,18 @@ module Config
       end
 
       def edit
-        add_breadcrumb "Editar"
+        add_breadcrumb 'Editar'
       end
 
       def show
-        add_breadcrumb "Detalle"   
+        add_breadcrumb 'Detalle'
       end
 
       def update
         if params[:supply_id].present?
-          @active_ingredient.update!(active_ingredients_params)          
-          @active_ingredient_supply.update!(active_ingredient_supply_params)          
-          flash[:notice] = "El Ingrediente activo fue actualizado correctamente."
+          @active_ingredient.update!(active_ingredients_params)
+          @active_ingredient_supply.update!(active_ingredient_supply_params)
+          flash[:notice] = 'El Ingrediente activo fue actualizado correctamente.'
           return redirect_to config_production_supply_url(@supply.id, tab: :active_ingredients)
         end
         @active_ingredient.update!(active_ingredients_params)
@@ -52,7 +54,7 @@ module Config
 
       def active_ingredients_params
         params.require(:active_ingredient).permit(:name,
-        active_ingredient_supplies_attributes: [:id, :supply_id, :active_ingredient_id, :_destroy])
+                                                  active_ingredient_supplies_attributes: %i[id supply_id active_ingredient_id _destroy])
       end
 
       def active_ingredient_supply_params
@@ -61,7 +63,7 @@ module Config
 
       def find_active_ingredient
         if params[:supply_id].present?
-          @supply = Supply.find(params[:supply_id]) 
+          @supply = Supply.find(params[:supply_id])
           @active_ingredient_supply = ActiveIngredientSupply.where(supply_id: params[:supply_id], active_ingredient_id: params[:id]).first
         end
         @active_ingredient = ActiveIngredient.find(params[:id])

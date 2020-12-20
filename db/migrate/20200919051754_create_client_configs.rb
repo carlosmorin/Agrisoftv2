@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateClientConfigs < ActiveRecord::Migration[6.0]
   def change
     create_table :client_configs do |t|

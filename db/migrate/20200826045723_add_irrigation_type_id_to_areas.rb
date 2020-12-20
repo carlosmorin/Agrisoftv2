@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddIrrigationTypeIdToAreas < ActiveRecord::Migration[6.0]
   def change
     add_column :areas, :irrigation_type_id, :bigint, foreign_key: true

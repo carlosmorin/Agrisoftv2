@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Bill < ApplicationRecord
   belongs_to :company
-  scope :pre_bills, -> { where("status = 1") }
+  scope :pre_bills, -> { where('status = 1') }
 
   def folio
-  	"000#{id}"
+    "000#{id}"
   end
 end

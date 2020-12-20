@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDetailsToTreatmentSupplies < ActiveRecord::Migration[6.0]
   def change
     remove_column :treatment_supplies, :recommended_dose, :jsonb

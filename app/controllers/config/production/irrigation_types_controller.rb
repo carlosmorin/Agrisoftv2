@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module Config
   module Production
     class IrrigationTypesController < ApplicationController
       before_action :find_irrigation_type, only: %i[destroy]
-    
-      add_breadcrumb "Produccion", :config_production_root_path
-      add_breadcrumb "Tipos de Irrigacion", :config_production_irrigation_types_path
-      
+
+      add_breadcrumb 'Produccion', :config_production_root_path
+      add_breadcrumb 'Tipos de Irrigacion', :config_production_irrigation_types_path
+
       def index
         @index_facade = IrrigationTypes::IndexFacade.new(params)
         @irrigation_type = IrrigationType.new

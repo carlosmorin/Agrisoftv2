@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Fiscal < ApplicationRecord
   belongs_to :fiscalable, polymorphic: true
   has_many :addresses, as: :addressable

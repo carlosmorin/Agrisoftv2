@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # WickedPDF Global Configuration
 #
 # Use this to set up shared configuration options for your entire application.
@@ -7,7 +9,7 @@
 # To learn more, check out the README:
 #
 # https://github.com/mileszs/wicked_pdf/blob/master/README.md
-Mime::Type.register "application/pdf", :pdf
+Mime::Type.register 'application/pdf', :pdf
 
 WickedPdf.config = {
 }

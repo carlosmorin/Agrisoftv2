@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module Config
   module Production
     class WeightUnitsController < ApplicationController
       before_action :find_weight_unit, only: %i[destroy]
-    
-      add_breadcrumb "Produccion", :config_production_root_path
-      add_breadcrumb "Unidades de Pezo", :config_production_weight_units_path
-      
+
+      add_breadcrumb 'Produccion', :config_production_root_path
+      add_breadcrumb 'Unidades de Pezo', :config_production_weight_units_path
+
       def index
         @index_facade = WeightUnits::IndexFacade.new(params)
         @weight_unit = WeightUnit.new

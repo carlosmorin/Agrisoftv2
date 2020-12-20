@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Pest < ApplicationRecord
   has_many :crops_pests, dependent: :destroy
   has_many :crops, through: :crops_pests
@@ -14,9 +16,9 @@ class Pest < ApplicationRecord
   has_many :treatments, as: :treatable, dependent: :destroy
 
   validates :name, :scientific_name, presence: true
-  #validate :pest_pictures
+  # validate :pest_pictures
 
-  delegate :name, to: :crops_pests, prefix: "crop", allow_nil: :true
+  delegate :name, to: :crops_pests, prefix: 'crop', allow_nil: :true
   delegate :get_crop_names, to: :crops, prefix: false
   delegate :get_host_names, to: :hosts, prefix: false
 
@@ -32,7 +34,7 @@ class Pest < ApplicationRecord
 
   # def pest_pictures
   #   if pictures.attached? == false
-  #     errors.add(:pictures, "are missing!") 
+  #     errors.add(:pictures, "are missing!")
   #   end
   #   pictures.each do |pic|
   #     if !pic.content_type.in?(%('image/jpeg image/png'))
