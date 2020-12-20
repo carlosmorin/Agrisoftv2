@@ -8,10 +8,10 @@ class Fiscal < ApplicationRecord
   validates :bussiness_name, :rfc, presence: true
 
   def address
-  	addresses.first
+    addresses.first
   end
 
   def locality
-  	address.locality
+    address.locality
   end
 end

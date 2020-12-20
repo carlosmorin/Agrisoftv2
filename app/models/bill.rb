@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Bill < ApplicationRecord
   belongs_to :client, inverse_of: :bills
   belongs_to :company, inverse_of: :bills
@@ -5,24 +7,24 @@ class Bill < ApplicationRecord
   belongs_to :fiscal, inverse_of: :bills
   belongs_to :user, inverse_of: :bills
   belongs_to :shipment, inverse_of: :bills
-  scope :pre_bills, -> { where("status = 1") }
+  scope :pre_bills, -> { where('status = 1') }
   has_many :bill_concepts, inverse_of: :bill, dependent: :destroy
   accepts_nested_attributes_for :bill_concepts, allow_destroy: true
-  
+
   has_one_attached :external_xml
   has_one_attached :external_pdf
 
   validates :fiscal_id, presence: true, if: -> { client&.fiscal? }
 
-  validates :external_xml, :external_pdf, :external_folio, presence: true, if: -> { self.billed? }
-  
+  validates :external_xml, :external_pdf, :external_folio, presence: true, if: -> { billed? }
+
   after_create :set_folio
   before_create :set_due_date
 
   enum status: { not_billed: 1, canceled: 2, billed: 3 }
 
   def set_folio
-    self.update(serie: get_serie('FAC-', id))
+    update(serie: get_serie('FAC-', id))
   end
 
   def total_products
@@ -42,7 +44,7 @@ class Bill < ApplicationRecord
       "#{prefix}000#{id}"
     when 2
       "#{prefix}00#{id}"
-    when 3  
+    when 3
       "0#{id}"
     when 4
       "#{prefix}#{id}"

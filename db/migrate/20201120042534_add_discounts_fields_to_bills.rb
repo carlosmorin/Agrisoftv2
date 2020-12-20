@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDiscountsFieldsToBills < ActiveRecord::Migration[6.0]
   def change
     add_column :bills, :discount, :float
