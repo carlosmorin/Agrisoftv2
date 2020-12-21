@@ -15,7 +15,7 @@ class Bill < ApplicationRecord
   has_one_attached :external_pdf
 
   validates :fiscal_id, presence: true, if: -> { client&.fiscal? }
-
+  validates :uuid, uniqueness: true, unless: proc { |i| i.uuid.nil? }
   validates :external_xml, :external_pdf, :external_folio, presence: true, if: -> { billed? }
 
   after_create :set_folio
@@ -29,6 +29,12 @@ class Bill < ApplicationRecord
 
   def total_products
     shipment.n_products
+  end
+
+  def assign_cfdi_attributes(attrs = {})
+    return unless attrs
+
+    update_attributes(attrs)
   end
 
   private

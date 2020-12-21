@@ -32,13 +32,14 @@ module Cfdi
 
     def cdfi_fields
       {
-        folio: @cdfi_node.attr('Folio'), serie: @cfdi_node.attr('Serie'),
-        seal: @cfdi_node.attr('Sello'),
+        sat_folio: @cdfi_node.attr('Folio'), sat_serie: @cfdi_node.attr('Serie'),
+        certificate: @cfdi_node.attr('Certificado'),
+        seal: @cfdi_node.attr('Sello'), total: @cfdi_node.attr('Total'),
         certificate_number: @cfdi_node.attr('NoCertificado'),
-        payment_mean: @cfdi_node.attr('FormaPago'),
-        payment_method: @cfdi_node.attr('MetodoPago'),
-        currency: @cfdi_node.attr('Moneda'),
-        currency_exchange_rate: @cfdi_node.attr('TipoCambio')
+        sat_payment_mean: @cfdi_node.attr('FormaPago'),
+        sat_payment_method: @cfdi_node.attr('MetodoPago'),
+        sat_currency: @cfdi_node.attr('Moneda'),
+        sat_currency_exchange_rate: @cfdi_node.attr('TipoCambio')
       }
     end
 
