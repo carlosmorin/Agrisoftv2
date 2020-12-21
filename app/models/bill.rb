@@ -34,6 +34,7 @@ class Bill < ApplicationRecord
   def assign_cfdi_attributes(attrs = {})
     return unless attrs
 
+    ## pending to review
     update_attributes(attrs)
   end
 
