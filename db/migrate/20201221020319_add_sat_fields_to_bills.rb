@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddSatFieldsToBills < ActiveRecord::Migration[6.0]
   def change
     add_column :bills, :stamped_at, :datetime
