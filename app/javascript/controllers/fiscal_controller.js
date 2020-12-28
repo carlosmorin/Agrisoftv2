@@ -2,14 +2,19 @@ import { Controller } from "stimulus"
 import SlimSelect from 'slim-select'
 
 export default class extends Controller {
-  static targets = ["nameInput", "fiscalNameInput", "setAsFiscalAddress", 
-  	"countrySelect", "stateSelect", "countrySelectFiscal", "stateSelectFiscal", 
+  static targets = ["nameInput", "fiscalNameInput", "setAsFiscalAddress",
+  	"countrySelect", "stateSelect", "countrySelectFiscal", "stateSelectFiscal",
   	"cpInputFiscal", "cpInput", 'fiscalData']
 
   connect() {
   	console.log("Init")
-    console.log("sup bitch")
-
+    if(this.hasFiscalDataTarget) {
+      if (this.fiscalDataTarget.checked) {
+        this.fiscalDataTarget.classList.remove('d-none')
+      }else{
+        this.fiscalDataTarget.classList.add('d-none')
+      }
+    }
   }
 
   setFiscalName(){
@@ -21,7 +26,7 @@ export default class extends Controller {
   	let country = this.countrySelectTarget.value
   	let state = this.stateSelectTarget.value
   	let cp = this.cpInputTarget.value
-  	
+
     let country_select_id = this.countrySelectFiscalTarget.id
 
     if (this.setAsFiscalAddressTarget.checked) {

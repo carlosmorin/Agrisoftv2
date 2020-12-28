@@ -5,6 +5,9 @@ module Crm
     before_action :set_object, only: %i[edit update destroy show]
     before_action :set_client, only: %i[new edit]
 
+    ADDRESS_PARAMS = %i[id name street outdoor_number interior_number cp
+                        references neighborhood phone country_id state_id
+                        fiscalcrosses locality fiscal crosses _destroy].freeze
     def new
       @fiscal = Fiscal.new
     end
@@ -35,11 +38,11 @@ module Crm
     private
 
     def fiscal_params
-      params.require(:fiscal).permit(:bussiness_name, :rfc, :fiscalable_type, :fiscalable_id,
-                                     addresses_attributes: %i[id name street outdoor_number
-                                                              interior_number cp references neighborhood phone
-                                                              country_id state_id fiscalcrosses locality fiscal
-                                                              crosses _destroy])
+      params.require(:fiscal).permit(
+        :bussiness_name, :rfc, :fiscalable_type, :fiscalable_id,
+        :cfdi_usage, :payment_mean, :payment_method, :external_vat,
+        addresses_attributes: ADDRESS_PARAMS
+      )
     end
 
     def set_object

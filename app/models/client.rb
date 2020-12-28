@@ -18,7 +18,7 @@ class Client < ApplicationRecord
 
   validates_uniqueness_of :phone, :code, case_sensitive: false
   has_many :contacts, as: :contactable
-  has_many :fiscals, as: :fiscalable, validate: -> { binding.pry }
+  has_many :fiscals, as: :fiscalable
   has_many :bank_accounts, as: :accountable
   accepts_nested_attributes_for :fiscals, allow_destroy: true
 

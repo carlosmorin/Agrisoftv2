@@ -95,8 +95,10 @@ module Crm
     end
 
     def client_params
-      params.require(:client).permit(:name, :rfc, :code, :phone, :country_id, :state_id,
-                                     :municipality_id, :cp, :address, :email, :fiscal, :conact_name, :fiscal)
+      params.require(:client).permit(
+        :name, :rfc, :code, :phone, :country_id, :state_id,
+        :municipality_id, :cp, :address, :email, :fiscal, :conact_name, :fiscal
+      )
     end
 
     def set_object

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_26_213301) do
+ActiveRecord::Schema.define(version: 2020_12_28_030421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -293,7 +293,7 @@ ActiveRecord::Schema.define(version: 2020_12_26_213301) do
     t.boolean "fiscal"
     t.string "fiscal_name"
     t.string "cfdi_usage"
-    t.string "paymenth_method"
+    t.string "payment_method"
     t.string "payment_mean"
     t.string "external_vat"
     t.index ["country_id"], name: "index_clients_on_country_id"
@@ -557,6 +557,10 @@ ActiveRecord::Schema.define(version: 2020_12_26_213301) do
     t.bigint "fiscalable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "cfdi_usage"
+    t.string "payment_method"
+    t.string "payment_mean"
+    t.string "external_vat"
     t.index ["fiscalable_type", "fiscalable_id"], name: "index_fiscals_on_fiscalable_type_and_fiscalable_id"
   end
 
@@ -795,26 +799,27 @@ ActiveRecord::Schema.define(version: 2020_12_26_213301) do
   end
 
   create_table "sat_cfdi_usages", force: :cascade do |t|
+    t.string "code"
     t.string "description"
     t.boolean "physical_person"
     t.boolean "moral_person"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "code"
   end
 
-  create_table "sat_pay_methods", force: :cascade do |t|
+  create_table "sat_fiscal_regimes", force: :cascade do |t|
     t.string "code"
     t.string "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "physical_person"
+    t.boolean "moral_person"
   end
 
-  create_table "sat_ways_pays", force: :cascade do |t|
+  create_table "sat_payment_means", force: :cascade do |t|
     t.string "code"
     t.string "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "sat_payment_methods", force: :cascade do |t|
+    t.string "code"
+    t.string "description"
   end
 
   create_table "shipments", force: :cascade do |t|
