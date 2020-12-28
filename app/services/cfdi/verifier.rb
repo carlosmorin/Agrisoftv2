@@ -7,7 +7,7 @@ module Cfdi
 
     attr_reader :source_xml
     def a_xml?
-      ext = source_xml['source_xml'].content_type.split('/')
+      ext = source_xml['xml'].content_type.split('/')
       %w[xml].include?(ext[1])
     end
 
@@ -16,7 +16,7 @@ module Cfdi
     end
 
     def read_xml
-      Nokogiri::XML(File.open(source_xml['source_xml'].tempfile).read)
+      Nokogiri::XML(File.open(source_xml['xml'].tempfile).read)
     end
 
     def obtain_receiver

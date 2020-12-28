@@ -7,6 +7,8 @@ module Billing
     add_breadcrumb 'Facturación'
     add_breadcrumb 'Pre facturas'
 
+    CONCEPT_PARAMS = %i[id description quantity discount unit_price import
+                        bill product_id _destroy].freeze
     def index
       @pre_bills = Bill.all.order('created_at ASC').paginate(page: params[:page], per_page: 25)
 
@@ -43,13 +45,15 @@ module Billing
     # PATCH/PUT /rooms/1
     # PATCH/PUT /rooms/1.json
     def manual_stamp
-      if @bill.update(bill_params)
-        flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Factura timbrada correctamente"
-        redirect_to billing_pre_bill_path(@bill)
-      else
-        flash[:alert] = "<i class='fa fa-check-circle mr-1 s-18'></i> Error al timbrar"
-        redirect_to billing_pre_bill_path(@bill)
-      end
+      process_xml
+
+      # if @bill.update(bill_params)
+      #   flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Factura timbrada correctamente"
+      #   redirect_to billing_pre_bill_path(@bill)
+      # else
+      #   flash[:alert] = "<i class='fa fa-check-circle mr-1 s-18'></i> Error al timbrar"
+      #   redirect_to billing_pre_bill_path(@bill)
+      # end
     end
 
     # DELETE /rooms/1
@@ -66,9 +70,14 @@ module Billing
       params.require(:bill).permit(
         :company_id, :client_id, :user_id, :currency_id, :shipment_id,
         :credit_days, :id, :external_folio, :status, :exchange_rate, :comments,
-        :pre_billed_at, :fiscal_id, :subtotal, :discount, :expenses, :total, :external_xml,
-        :external_pdf, bill_concepts_attributes: %i[id description quantity
-                                                    discount unit_price import bill product_id _destroy]
+        :pre_billed_at, :fiscal_id, :subtotal, :discount, :expenses, :total,
+        :external_xml, :external_pdf, bill_concepts_attributes: CONCEPT_PARAMS
+      )
+    end
+
+    def external_bill_params
+      params.require(:external_bill).permit(
+        :xml, :external_pdf, :status
       )
     end
 
@@ -93,6 +102,11 @@ module Billing
     end
 
     private
+
+    def process_xml
+      binding.pry
+      Cfdi::Importer.call(external_bill_params)
+    end
 
     def load_response
       load_sale_by_id(params[:pre_bill_id])

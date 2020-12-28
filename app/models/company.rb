@@ -4,7 +4,7 @@ class Company < ApplicationRecord
   acts_as_paranoid
   default_scope { order(:created_at) }
   validates :name, :rfc, :country_id, :state_id, :municipality_id,
-            :cp, :address, :phone, presence: true
+            :cp, :address, :phone, :fiscal_regime, presence: true
   belongs_to :country
   belongs_to :state
   belongs_to :municipality

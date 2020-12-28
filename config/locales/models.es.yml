@@ -156,6 +156,7 @@ es:
         address: Dirección
         email: Correo electronico
         contact_name: Persona de contacto
+        fiscal_regime: Régimen Fiscal
       crop:
         name: Nombre
       size:
@@ -289,8 +290,8 @@ es:
         comments: Comentarios / Notas
       production_unit:
         name: Nombre
-        weight: Pezo
-        weight_unit_id: Unidad de pezo
+        weight: peso
+        weight_unit_id: Unidad de peso
       category:
         name: Nombre
       active_ingredient:
@@ -301,7 +302,7 @@ es:
         price: Precio
         price_to_credit: Precio a credito
         quantity: Cantidad
-        weight_unit_id: Unidad de pezo
+        weight_unit_id: Unidad de peso
       supply:
         name: Nombre
         currency: Moneda

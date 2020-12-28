@@ -56,8 +56,10 @@ class CompaniesController < ApplicationController
   end
 
   def company_params
-    params.require(:company).permit(:name, :rfc, :phone, :country_id,
-                                    :state_id, :cp, :municipality_id, :address, :email, :contact_name)
+    params.require(:company).permit(
+      :name, :rfc, :phone, :country_id, :state_id, :cp, :municipality_id,
+      :address, :email, :contact_name, :fiscal_regime
+    )
   end
 
   def set_object

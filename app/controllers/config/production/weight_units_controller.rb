@@ -6,7 +6,7 @@ module Config
       before_action :find_weight_unit, only: %i[destroy]
 
       add_breadcrumb 'Produccion', :config_production_root_path
-      add_breadcrumb 'Unidades de Pezo', :config_production_weight_units_path
+      add_breadcrumb 'Unidades de peso', :config_production_weight_units_path
 
       def index
         @index_facade = WeightUnits::IndexFacade.new(params)
@@ -16,7 +16,7 @@ module Config
       def create
         @weight_unit = WeightUnit.new(weight_units_params)
         if @weight_unit.save
-          flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Unidad de pezo creada correctamente"
+          flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Unidad de peso creada correctamente"
           redirect_to config_production_weight_units_path
         else
           @index_facade = WeightUnit::IndexFacade.new(params)
