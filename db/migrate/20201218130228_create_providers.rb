@@ -1,5 +1,6 @@
 class CreateProviders < ActiveRecord::Migration[6.0]
   def change
+    drop_table :providers
     create_table :providers do |t|
       t.string :code
       t.string :name

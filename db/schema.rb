@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_23_144034) do
+ActiveRecord::Schema.define(version: 2020_12_28_030421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,21 @@ ActiveRecord::Schema.define(version: 2020_12_23_144034) do
     t.string "serie"
     t.boolean "billed"
     t.datetime "due_at"
+    t.datetime "stamped_at"
+    t.text "stamped_invoice"
+    t.string "uuid"
+    t.string "sat_folio"
+    t.string "sat_serie"
+    t.string "seal"
+    t.string "certificate"
+    t.string "certificate_number"
+    t.string "sat_payment_method"
+    t.string "sat_payment_mean"
+    t.string "sat_currency"
+    t.decimal "sat_currency_exchange_rate", precision: 12, scale: 6
+    t.string "sat_seal"
+    t.string "sat_certificate_number"
+    t.text "original_string"
     t.index ["client_id"], name: "index_bills_on_client_id"
     t.index ["company_id"], name: "index_bills_on_company_id"
     t.index ["currency_id"], name: "index_bills_on_currency_id"
@@ -312,6 +327,11 @@ ActiveRecord::Schema.define(version: 2020_12_23_144034) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "email"
     t.string "contact_name"
+    t.string "fiscal_regime"
+    t.binary "key"
+    t.binary "certificate"
+    t.string "password"
+    t.string "certificate_number"
     t.index ["country_id"], name: "index_companies_on_country_id"
     t.index ["municipality_id"], name: "index_companies_on_municipality_id"
     t.index ["state_id"], name: "index_companies_on_state_id"
@@ -562,6 +582,10 @@ ActiveRecord::Schema.define(version: 2020_12_23_144034) do
     t.bigint "fiscalable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "cfdi_usage"
+    t.string "payment_method"
+    t.string "payment_mean"
+    t.string "external_vat"
     t.index ["fiscalable_type", "fiscalable_id"], name: "index_fiscals_on_fiscalable_type_and_fiscalable_id"
   end
 
@@ -804,26 +828,27 @@ ActiveRecord::Schema.define(version: 2020_12_23_144034) do
   end
 
   create_table "sat_cfdi_usages", force: :cascade do |t|
+    t.string "code"
     t.string "description"
     t.boolean "physical_person"
     t.boolean "moral_person"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "code"
   end
 
-  create_table "sat_pay_methods", force: :cascade do |t|
+  create_table "sat_fiscal_regimes", force: :cascade do |t|
     t.string "code"
     t.string "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "physical_person"
+    t.boolean "moral_person"
   end
 
-  create_table "sat_ways_pays", force: :cascade do |t|
+  create_table "sat_payment_means", force: :cascade do |t|
     t.string "code"
     t.string "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "sat_payment_methods", force: :cascade do |t|
+    t.string "code"
+    t.string "description"
   end
 
   create_table "shipments", force: :cascade do |t|
