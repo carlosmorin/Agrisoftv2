@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Provider < ApplicationRecord
-  acts_as_paranoid
   default_scope { order(:created_at) }
   validates :name, :phone, :provider_category_id, :subcategory_id, :status, presence: true
 
