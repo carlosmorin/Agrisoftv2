@@ -1,0 +1,53 @@
+br
+section
+	h5
+		i.fas.fa-map-marker-alt.mr-2
+		b Sucursales
+- @provider.addresses.each do |address|
+	.card.card-body.mt-2
+		.row
+			.col-5
+				small.text-gray Nombre:
+				br
+				b.mb-1 = address.name.capitalize
+			.col-2
+				small.text-gray País:
+				br
+				span.s-14 = address.country.name.upcase 
+			.col-2
+				small.text-gray Estado:
+				br
+				span.s-14 = address.state.name.upcase 
+			.col-2
+				small.text-gray Ciudad:
+				br
+				span.s-14 = address.locality.upcase
+			.col-1
+				small.text-gray CP:
+				br
+				span.s-14 = address&.cp
+		.row.mt-4
+			.col-2
+				small.text-gray Colonia:
+				br
+				span.s-14 = address&.neighborhood&.upcase
+			.col-3
+				small.text-gray Calle:
+				br
+				span.s-14 = address&.street&.upcase
+			.col-2
+				small.text-gray Telefono:
+				br
+				span.s-14 = address&.phone
+			.col-1
+				small.text-gray N° Int:
+				br
+				span.s-14 = address&.interior_number
+			.col-1
+				small.text-gray N° Ext:
+				br
+				span.s-14 = address&.outdoor_number
+			.col-3
+				small.text-gray Cruzamientos:
+				br
+				span.s-14 = address&.crosses

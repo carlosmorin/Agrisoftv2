@@ -16,7 +16,7 @@ section.content-header.pb-0 data-controller='billing--show'
         - unless @bill.canceled? || @bill.billed?
           = button_tag 'CANCELAR', type: 'button', class: 'btn btn-flat btn-sm btn-danger s-13', data: { action: 'click->billing--show#cancel', folio: @bill.serie, id: @bill.id }
           '
-          button.btn.btn-sm.btn-primary.s-13 data-target="#manualStampedModal" data-toggle="modal" type="button"
+          button.btn.btn-sm.btn-primary.s-13 data-target="#manualStampedModal" data-toggle="modal" type="button" 
             | TIMBRADO MANUAL
   .container.mt-4
     - if @bill.canceled?
@@ -67,13 +67,13 @@ section.content-header.pb-0 data-controller='billing--show'
               hr
               .row.mt-2
                 .col-12
-                  h6
+                  h6 
                     b FACTURA EXTERNA
               .row.py-2
                 .col-7
                   b FOLIO
                 .col-5
-                  b.s-14.text-primary.pl-2 = @bill.uuid
+                  b.s-14.text-primary.pl-2 = @bill.external_folio.upcase
               hr.my-0
               .row
                 .col-7
@@ -130,5 +130,5 @@ section.content-header.pb-0 data-controller='billing--show'
               td.text-right colspan="3"
               	b.s-14 TOTAL
               td.text-right colspan="2"
-              	b.s-16.text-primary = currency(@bill.total - (@bill.discount || 0))
+              	b.s-16.text-primary = currency(@bill.total - @bill.discount)
 = render 'manual_modal'
