@@ -1,0 +1,23 @@
+.card
+	- if @delivery_type.new_record?
+		.card-header.py-2
+			h6 
+				b AGREGAR TIPO DE ENTREGA
+	.card-body.py-2
+	  = simple_form_for([:commercial, :config, @delivery_type]) do |f|
+	    .row data-controller="commercial-providers"
+	      .col-6
+	        .form-group  
+	          .row
+	            .col-lg-12
+	              = f.input :name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+	              hr
+	            .col-lg-6.text-left
+	              - if @delivery_type.persisted?
+	                = link_to commercial_config_delivery_types_path, class: 'btn btn-sm btn-default' do
+	                  i.fas.fa-chevron-left.s-12
+	                  '
+	                  span Atras 
+	            .col-lg-6.text-right
+	              = f.button :submit, 'Guardar tipo de entrega', class: 'btn btn-sm btn-dark-blue'
+

@@ -1,0 +1,32 @@
+.nested-fields data-controller="address"
+  .row
+    .col-6
+      = f.input :bussiness_name, label: 'Razón Social:', input_html: { class: 's-12 form-control form-control-sm'}
+    .col-6
+      = f.input :rfc, label: 'RFC:', input_html: { class: 's-12 form-control form-control-sm'}
+  - f.object.addresses.new unless f.object.addresses.any?
+  = f.simple_fields_for :addresses do |address|
+    .row.mt-2
+      .col-md-3
+        = address.input :country_id, collection: Country.all, label: 'País:', input_html: { class: 's-12 text-upcase mt-2', data: { action: "change->address#filter_by_country", target: "address.countrySelect fiscal.countrySelectFiscal", container: "fiscal_address" }}
+      .col-md-3.fiscal_address
+        - states = address.object&.country&.present? ? address.object.country.states : []
+        = address.input :state_id, collection: states, label: 'Estado:', input_html: { class: 's-12 text-upcase mt-2', data: { action: "change->address#filter_by_state", target: "address.stateId fiscal.stateSelectFiscal" } }
+      .col-md-3
+        = address.input :locality, label: 'Localidad:', autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+      .col-md-3
+        = address.input :neighborhood, autofocus: true, label: 'Colonia:', input_html: { class: 's-12 form-control form-control-sm', data: { target: "fiscal.cpInputFiscal" } }
+    .row.mt-2
+	    .col-md-2
+	      = address.input :cp, label: 'CP:', autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+	    .col-md-3
+	      = address.input :street, label: 'Calle:', autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+	    .col-md-3
+	      .row
+	        .col-6
+	          = address.input :outdoor_number, label: 'N° exterior:', autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+	        .col-6
+	          = address.input :interior_number, label: 'N° interior:', autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+	    .col-md-4
+	      = address.input :crosses, label: 'Cruzamientos:', autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+	      = address.input :status, as: :hidden, input_html: { value: :fiscal }

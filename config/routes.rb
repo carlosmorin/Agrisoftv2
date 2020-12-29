@@ -127,6 +127,7 @@ Rails.application.routes.draw do
     end
     namespace :config do
       root to: 'main#index'
+      resources :delivery_types, except: [:show, :new]
       resources :provider_categories do
         get '/get_subcategories', to: 'provider_categories#get_subcategories'
       end

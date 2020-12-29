@@ -12,8 +12,9 @@ class ProvidersController < ApplicationController
   end
 
   def new
-    add_breadcrumb 'Nuevo proveedor'
-    @provider = Provider.new
+    add_breadcrumb "Nuevo proveedor"
+  	@provider = Provider.new
+    @provider.contacts.new
   end
 
   def edit
@@ -55,12 +56,15 @@ class ProvidersController < ApplicationController
     @providers = @providers.where('name ~* ?', q)
   end
 
-  def provider_params
-    params.require(:provider).permit(:name, :business_name, :rfc, :email,
-                                     :phone, :status, :comments, :logo,
-                                     addresses_attributes: %i[id name street outdoor_number
-                                                              interior_number cp references locality neighborhood
-                                                              country_id state_id comments type _destroy])
+	def provider_params
+    params.require(:provider).permit(:name, :business_name, :rfc, :email, 
+      :phone, :status, :comments, :logo, 
+        addresses_attributes: [:id, :name, :street, :outdoor_number, 
+          :interior_number, :cp, :references, :locality, :neighborhood, 
+          :country_id, :state_id, :comments, :type, :_destroy],
+        contacts_attributes: [:name, :last_name, :email, :phone, :mobile_phone, 
+          :position, :alias]
+    )
   end
 
   def set_object

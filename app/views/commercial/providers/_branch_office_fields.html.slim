@@ -1,0 +1,32 @@
+.nested-fields
+  .row
+    .col-2.pt-4.text-left
+      = image_tag(f.object.avatar, width: 100, class: "rounded img-thumbnail mb-2") if f.object.avatar.attached?
+      = image_tag("https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg", width: 100, class: "rounded img-thumbnail mb-2") unless f.object.avatar.attached?
+      = f.file_field :avatar, class: "s-10"
+    .col-10
+      .row
+        .col-2
+          = f.input :alias, collection: [:ing, :lic, :sr, :sra], input_html: { class: 'mt-2 form-control form-control-sm' }
+        .col-5
+          = f.input :name, input_html: { class: 'form-control form-control-sm' }
+        .col-4
+          = f.input :last_name, input_html: { class: 'form-control form-control-sm' }
+        .col-1.text-right
+          = link_to_remove_association f, class: "btn btn-danger rounded-remove s-14 mt-4" do
+            i.fas.fa-trash.s-12
+      .row.mt-1
+        .col-2
+          = f.input :position, input_html: { class: 'form-control form-control-sm' }
+        .col-4
+          = f.input :email, input_html: { class: 'form-control form-control-sm' }
+        .col-3
+          = f.input :phone, input_html: { class: 'form-control form-control-sm' }
+        .col-2
+          = f.input :mobile_phone, input_html: { class: 'form-control form-control-sm' }
+      .row.mt-3
+        .col-1
+        .col-10.text-right.s-12
+          = f.input :main_contact
+    .col-12
+    	hr

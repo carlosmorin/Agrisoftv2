@@ -1,0 +1,53 @@
+section.content-header.pb-0
+  .container
+    .row
+      .col-12.text-left.pr-2.s-12
+        = render "shared/breadcrumbs_nav"
+    .row.mb-2
+      .col-12
+        h4 = "Catalogo de tipos de entrega".upcase 
+section.content
+  .container
+    .row
+      .col-lg-12
+        = render "form"
+      .col-lg-12
+        = render "shared/alerts"
+      .col-md-12
+        .card
+          .card-header.p-2.pb-1.bg-light-gray
+            .row
+              .col-md-6.col-sm-12
+                = form_tag(commercial_config_delivery_types_path, method: "GET") do
+                  .form-row.align-items-center
+                    .col-8
+                      = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por nombre...')
+                    .col-2.my-1
+                      button.btn.btn-sm.btn-flat.btn-default.bold.s-12 type="submit"
+                        i.fas.fa-search.mr-1
+                        span Buscar
+              .col-lg-6.text-right
+          .card-body.table-responsive.p-0
+            table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+              thead
+                tr.bg-light-gray
+                  th Nombre
+                  th.text-center colspan="2" style=("width: 12%") Acciones
+              tbody#tbody
+                - if @delivery_types.empty?
+                  tr
+                    td.text-center colspan="6"
+	              			i Sin registros
+                - else
+                  - @delivery_types.each do |dt|
+                    tr
+                      td = dt.name.upcase
+                      td.text-center
+                        .btn-group
+                          = link_to edit_commercial_config_delivery_type_path(dt), class: "btn btn-xs btn-default" do
+                              i.fas.fa-edit
+          .card-footer.p-2.pb-1.bg-light-gray
+            .row
+              .col-lg-12.d-flex.justify-content-center
+                .digg_pagination.mt-2.s-14
+                  // = will_paginate @delivery_types, :container => false, :page_links => true

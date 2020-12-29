@@ -1,9 +1,0 @@
-ul#custom-tabs-four-tab.nav.nav-tabs role="tablist" 
-	li.nav-item
-		= link_to 'Datos de fiscales', commercial_provider_path(@provider, tab: :fiscal_data), class: "nav-link py-05 bold s-14 #{ params[:tab] == "fiscal_data" ? 'active disabled' : ''}"
-	li.nav-item
-		= link_to 'Direcciones / sucursales', commercial_provider_path(@provider, tab: :addresses), class: "nav-link py-05 bold s-14  #{ params[:tab] == "addresses" ? 'active' : ''}"
-	li.nav-item
-		= link_to 'Contactos', "/", class: "nav-link py-05 bold s-14  #{ params[:tab] == "contacts" ? 'active' : ''}"
-	li.nav-item
-		= link_to 'Notas', "/", class: "nav-link py-05 bold s-14  #{ params[:tab] == "notes" ? 'active' : ''}"

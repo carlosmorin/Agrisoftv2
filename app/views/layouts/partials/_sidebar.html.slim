@@ -21,9 +21,8 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 data-turbolinks-permanent=""
           ul.nav.nav-treeview
             li.nav-item
               = link_to shipments_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(shipments_path)}" do
-                == circle_icon(size: 10, color: 'light-gray')
+                == circle_icon(size: 10, color: 'light-gray')                
                 
-                p.s-14.text-normal Gestionar Embarques
         li class=" nav-item has-treeview  #{current_nav_item?(request.fullpath, 'logistic')} " 
           a.nav-link.py-1.pl-2.mb-1 href="#" 
             == short_truck_icon(color: 'light-gray')
@@ -77,26 +76,6 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 data-turbolinks-permanent=""
                   li.nav-item
                     = link_to commercial_config_provider_categories_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(commercial_config_provider_categories_path)}" do
                       p.s-12.pl-3 Categorias de proveedores
-        li class="nav-item has-treeview d-none  #{current_nav_item?(request.fullpath, 'commercial')} " 
-          a.nav-link.py-1.pl-2.mb-1  href="#" 
-            i.fas.fa-shopping-bag.s-15.mr-2.ml-1
-            p.s-14.ml-1 COMPRAS
-            span.right
-              == circle_down_icon(size: 12, color: 'light-gray')
-          ul.nav.nav-treeview
-            li.nav-item
-              = link_to crm_quotes_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(commercial_providers_path)}" do
-                == circle_icon(size: 10, color: 'light-gray')
-                p.s-14.text-normal Gestionar cotizaciónes span
-            li.nav-item.has-treeview.pb-2 class="#{current_nav_item?(request.fullpath, 'config_box_types')}"
-              a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#" 
-                i.fas.fa-cogs.s-10.mr-2
-                p.s-14.text-normal Configuraciónes
-                i.fa.fa-chevron-left.right.pull-right.mt-1 style="font-size: 12px; top: 0.1rem;"
-                ul.nav.nav-treeview
-                  li.nav-item
-                    = link_to commercial_config_provider_categories_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(commercial_config_provider_categories_path)}" do
-                      p.s-12.pl-3 Categorias
         li class="nav-item has-treeview  #{current_nav_item?(request.fullpath, 'crm')} " 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
             == shop_bag_icon(color: 'light-gray')
@@ -155,6 +134,29 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 data-turbolinks-permanent=""
                 == circle_icon(size: 10, color: 'light-gray')
                 p.s-14.text-normal 
                   span Pagos
+        li.nav-header.pt-2.pb-1.s-12.pl-2.mt-1 COMERCIAL
+        li class="nav-item has-treeview #{current_nav_item?(request.fullpath, 'commercial')} " 
+          a.nav-link.py-1.pl-1.mb-1  href="#" 
+            i.fas.fa-shopping-bag.s-15.mr-2.ml-1
+            p.s-14.ml-1 COMPRAS
+            span.right == circle_down_icon(size: 12, color: 'light-gray')
+          ul.nav.nav-treeview
+            li.nav-item
+              = link_to commercial_providers_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(commercial_providers_path)}" do
+                == circle_icon(size: 10, color: 'light-gray')
+                p.s-14.text-normal Gestionar proveedores
+            li.nav-item.has-treeview.pb-2 class="#{current_nav_item?(request.fullpath, 'config_box_types')}"
+              a.nav-link.pt-0.pl-3.mb-0.pb-0 href="#" 
+                i.fas.fa-list.s-10.mr-2
+                p.s-14.text-normal Catalogos
+                i.fa.fa-chevron-left.right.pull-right.mt-1 style="font-size: 12px; top: 0.1rem;"
+                ul.nav.nav-treeview
+                  li.nav-item
+                    = link_to commercial_config_provider_categories_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(commercial_config_provider_categories_path)}" do
+                      p.s-12.pl-3 Categorias y subcategorias
+                  li.nav-item
+                    = link_to commercial_config_delivery_types_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(commercial_config_delivery_types_path)}" do
+                      p.s-12.pl-3 Tipos de entrega
         li class="nav-item has-treeview" 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
             == cog_icon(color: 'light-gray')

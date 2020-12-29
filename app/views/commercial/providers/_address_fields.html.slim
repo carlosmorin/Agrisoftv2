@@ -1,38 +1,36 @@
+.nested-fields
+  .row
+    .col-md-11
+      = f.input :name, label: false, as: :string, required: true, autofocus: true, input_html: { class: 's-12 form-control', placeholder: "NOMBRE DE LA SUCURSAL" }
+    .col-md-1.text-right
+      = link_to_remove_association f, class: "btn btn-danger rounded-remove s-14" do
+        i.fas.fa-trash.s-12
+  .row.mt-2
+    .col-md-2
+      = f.input :country_id, collection: Country.all, input_html: { class: 's-12 text-upcase mt-2', data: { action: "change->address#filter_by_country", target: "address.countrySelect fiscal.countrySelectFiscal", container: "branch_address" }}
+    .col-md-3.branch_address
+      - states = f.object&.country&.present? ? f.object.country.states : []
+      = f.input :state_id, collection: states, input_html: { class: 's-12 text-upcase mt-2', data: { action: "change->address#filter_by_state", target: "address.stateId fiscal.stateSelectFiscal" } }
+    .col-md-3
+      = f.input :locality, required: true, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+    .col-md-3
+      = f.input :neighborhood, autofocus: true, input_html: { class: 's-12 form-control form-control-sm', data: { target: "fiscal.cpInputFiscal" } }
 
-		= f.input :name, as: :string, autofocus: true, label: false, input_html: { value: :fiscal, class: "d-none" }
-		= f.input :status, as: :string, autofocus: true, label: false, input_html: { value: :fiscal, class: "d-none" }
-		.row class="#{f.object.fiscal? ? 'd-none' : '' }"
-			.col-4
-				.form-group  
-					.row
-						.col-11
-							= f.input :country_id, collection: Country.all, autofocus: true, input_html: { class: 'form-control form-control-sm', data: { action: "change->address#filter_by_country", target: "address.countryId" } }
-					.row.mt-2
-						.col-11
-								- states = f.object.country.present? ? f.object.country.states : []
-								= f.input :state_id, collection: states, autofocus: true, iinput_html: { class: 'form-control form-control-sm', data: { action: "change->address#filter_by_state", target: "address.stateId" } }
-					.row.mt-2
-						.col-11
-							= f.input :neighborhood, as: :string, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
-					
-			.col-4
-				.form-group  
-					.row.mt-2
-						.col-11
-							= f.input :cp, as: :string, autofocus: true, input_html: { class: 'form-control form-control-sm ' }					
-					.row
-						.col-11
-							= f.input :street, autofocus: true, input_html: { class: 'form-control form-control-sm' }
-					.row.mt-2
-						.col-5
-							= f.input :outdoor_number, autofocus: true, input_html: { class: 'form-control form-control-sm' }
-						.col-5
-							= f.input :interior_number, autofocus: true, input_html: { class: 'form-control form-control-sm' }
-			.col-4
-				.form-group
-					.row.mt-2
-						.col-11
-							= f.input :references, autofocus: true, input_html: { class: 'form-control form-control-sm' }
-					.row.mt-2
-						.col-11
-							= f.input :comments, autofocus: true, input_html: { class: 'form-control' }
+
+  .row.mt-2
+    .col-md-2
+      = f.input :cp, required: true, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+    .col-md-2
+      = f.input :street, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+    .col-md-3
+      .row
+        .col-6
+          = f.input :outdoor_number, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+        .col-6
+          = f.input :interior_number, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+    .col-md-4
+      = f.input :crosses, autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
+      = f.input :status, as: :hidden, input_html: { value: :sucursal }
+  .row
+  	.col-12
+  		hr
