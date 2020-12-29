@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_04_061541) do
+ActiveRecord::Schema.define(version: 2020_12_23_144034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -329,6 +329,7 @@ ActiveRecord::Schema.define(version: 2020_12_04_061541) do
     t.bigint "contactable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "main_contact"
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
   end
 
@@ -494,6 +495,12 @@ ActiveRecord::Schema.define(version: 2020_12_04_061541) do
     t.index ["currency_id"], name: "index_delivery_addresses_on_currency_id"
     t.index ["municipality_id"], name: "index_delivery_addresses_on_municipality_id"
     t.index ["state_id"], name: "index_delivery_addresses_on_state_id"
+  end
+
+  create_table "delivery_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "deseases", force: :cascade do |t|
@@ -732,17 +739,21 @@ ActiveRecord::Schema.define(version: 2020_12_04_061541) do
   end
 
   create_table "providers", force: :cascade do |t|
+    t.string "code"
     t.string "name"
-    t.string "business_name"
-    t.string "rfc"
-    t.string "email"
-    t.string "phone"
-    t.integer "status"
-    t.datetime "deleted_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.string "provider_type"
+    t.decimal "credit_limit"
+    t.integer "credit_limit_days"
+    t.integer "delivery_days"
+    t.bigint "currency_id", null: false
     t.bigint "provider_category_id", null: false
     t.bigint "subcategory_id", null: false
+    t.bigint "delivery_type_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "fiscal"
+    t.index ["currency_id"], name: "index_providers_on_currency_id"
+    t.index ["delivery_type_id"], name: "index_providers_on_delivery_type_id"
     t.index ["provider_category_id"], name: "index_providers_on_provider_category_id"
     t.index ["subcategory_id"], name: "index_providers_on_subcategory_id"
   end
@@ -1134,6 +1145,8 @@ ActiveRecord::Schema.define(version: 2020_12_04_061541) do
   add_foreign_key "products", "packages"
   add_foreign_key "products", "qualities"
   add_foreign_key "products", "sizes"
+  add_foreign_key "providers", "currencies"
+  add_foreign_key "providers", "delivery_types"
   add_foreign_key "providers", "provider_categories"
   add_foreign_key "providers", "subcategories"
   add_foreign_key "quotes", "clients"

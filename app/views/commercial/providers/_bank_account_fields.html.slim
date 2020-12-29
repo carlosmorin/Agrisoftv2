@@ -1,0 +1,25 @@
+.nested-fields
+  .row
+    .col-11
+      = f.input :name, label: false, input_html: { class: 's-12 form-control', placeholder: 'NOMBRE / ALIAS DE LA CUENTA' }
+    .col-md-1.text-right
+      = link_to_remove_association f, class: "btn btn-danger rounded-remove s-14" do
+        i.fas.fa-trash.s-12
+  .row.mt-1
+    .col-4
+      = f.input :titular, input_html: { class: 's-12 form-control form-control-sm' }
+    .col-3
+      = f.input :branch, input_html: { class: 's-12 form-control form-control-sm' }
+    .col-2
+      = f.input :bank_id, collection: Bank.all.pluck(:name, :id), input_html: { class: 's-12 form-control form-control-sm' }
+    .col-2
+      = f.input :currency_id, collection: Currency.all.pluck(:code, :id), input_html: { class: 's-12 form-control form-control-sm' }
+  .row.mt-1
+    .col-md-4
+      = f.input :bank_key, input_html: { class: 's-12 form-control form-control-sm' }
+    .col-md-4
+      = f.input :card_number, input_html: { class: 's-12 form-control form-control-sm' }
+    .col-md-3
+      = f.input :account_number, input_html: { class: 's-12 form-control form-control-sm' }
+
+  hr

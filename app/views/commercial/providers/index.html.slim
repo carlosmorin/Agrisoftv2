@@ -35,9 +35,11 @@ section.content
                 tr.bg-light-gray
                   th style=("width: 5%")  #
                   th Nombre
-                  th RFC
-                  th Telefono
-                  th Mail
+                  th Categoria
+                  th Dias de credito
+                  th Limite de credito
+                  th Tipo de entrega
+                  th Dias de entrega
                   th.text-center colspan="2" style=("width: 12%") Acciones
               tbody#tbody
                 - if @providers.empty?
@@ -47,11 +49,13 @@ section.content
                 - else
                   - @providers.each do |provider|
                     tr
-                      td = provider.id
+                      td = provider.code.upcase
                       td = provider.name.upcase
-                      td = provider.rfc.upcase
-                      td = provider.phone.upcase
-                      td = provider.email.upcase
+                      td = provider.provider_category.name
+                      td = provider.credit_limit_days
+                      td = currency provider.credit_limit
+                      td = provider.delivery_type.name.upcase
+                      td = provider.delivery_days
                       td.text-center
                         .btn-group
                           = link_to commercial_provider_path(provider, tab: :fiscal_data), title: "Gestionar proveedor", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do

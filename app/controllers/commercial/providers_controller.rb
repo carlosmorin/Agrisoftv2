@@ -30,18 +30,18 @@ module Commercial
       if @provider.save
         msg = "Proveedor creado correctamente <i class='fas fa-check-circle ml-2'></i>"
         flash[:notice] = msg
-        redirect_to edit_commercial_provider_path(@provider, tab: params[:next_tab])
+        redirect_to commercial_provider_path(@provider)
       else
         add_breadcrumb "Nuevo proveedor"
         render :new
       end
     end
 
-     def update
+    def update
       if @provider.update(provider_params)
         msg = "Proveedor actualizado correctamente <i class='fas fa-check-circle ml-2'></i>"
         flash[:notice] = msg
-        redirect_to edit_commercial_provider_path(@provider, tab: params[:next_tab])
+        redirect_to commercial_provider_path(@provider)
       else
         render :edit
       end
@@ -60,15 +60,38 @@ module Commercial
     end
 
   	def provider_params
-      params.require(:provider).permit(:id, :name, :business_name, :rfc, :email, 
-        :phone, :status, :comments, :logo, :provider_category_id, :subcategory_id,
-        addresses_attributes: [:id, :name, :street, :outdoor_number, 
-          :interior_number, :cp, :references, :neighborhood, :phone,
-          :country_id, :state_id, :comments, :status, :_destroy] )
+      params.require(:provider).permit(:id, :code, :name, :provider_type, 
+        :credit_limit, :credit_limit_days, :delivery_days, :currency_id, 
+        :provider_category_id, :subcategory_id, :delivery_type_id, :logo,
+        contacts_attributes: [
+          :id, :name, :last_name, :email, :phone, :mobile_phone, :position, 
+          :alias, :contactable_type, :contactable_id, :avatar, :main_contact, 
+          :_destroy
+        ],
+        addresses_attributes: addresses_attributes,
+        bank_accounts_attributes: [
+          :id, :bank_id, :currency_id, :name, :titular, :bank_key, 
+          :account_number, :card_number, :branch, :accountable_type, 
+          :accountable_id, :_destroy
+        ],
+        fiscals_attributes: [
+           :id, :bussiness_name, :rfc, :_destroy,
+           addresses_attributes: addresses_attributes
+        ]
+      )
     end
 
     def set_object
       @provider = Provider.find(params[:id])
+    end
+
+    private
+
+    def addresses_attributes
+      [ :id, :name, :street, :outdoor_number, :interior_number, :cp,
+        :references, :neighborhood, :phone, :country_id, :state_id, :comments, 
+        :status, :addressable_type, :addressable_id, :locality, :crosses, 
+        :_destroy ]
     end
   end
 end

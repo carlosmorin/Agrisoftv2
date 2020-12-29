@@ -200,6 +200,7 @@ es:
         mobile_phone: Telefono celular
         phone: Telefono fijo
         email: Correo
+        main_contact: Contacto principal
       quote:
         user_id: Remitente
         company_id: Empresa
@@ -342,7 +343,22 @@ es:
       shipments_product:
         price: Precio unitario
         quantity: Cantidad
+      delivery_type:
+        name: Nombre
       shipments_product_report:
         quantity: Numero de bultos
         price: Precio untario
         report_at: Fecha
+      provider:
+        code: Codigo 
+        name: Nombre comercial
+        provider_type: Tipo de proveedor
+        credit_limit: Limite de credito
+        credit_limit_days: Dias de credito 
+        delivery_days: Dias de entrega
+        currency_id: Moneda
+        provider_category_id: Categoria de proveedor
+        subcategory_id: Subcategoria
+        delivery_type_id: Metodo de entrega
+        fiscal: Proveedor fiscal
+

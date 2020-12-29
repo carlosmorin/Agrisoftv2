@@ -1,0 +1,58 @@
+- fiscal = @provider.fiscals.first
+br
+section
+	h5
+		i.fas.fa-file-invoice.mr-2
+		b Datos fiscales
+div class="card card-body py-2 mt-1"
+	.row
+		.col-8
+			small.mb-1.text-gray Razón Social:
+			br
+			span.mb-1.s-14 = fiscal.bussiness_name.upcase
+		.col-4
+			small.mb-1.text-gray RFC:
+			br
+			span.mb-1.s-14 = fiscal.rfc.upcase
+	.row.mt-2
+		.col-2
+			small.text-gray País:
+			br
+			span.s-14 = fiscal.address.country.name.upcase 
+		.col-2
+			small.text-gray Estado:
+			br
+			span.s-14 = fiscal.address.state.name.upcase 
+		.col-2
+			small.text-gray Ciudad:
+			br
+			span.s-14 = fiscal.address.locality.upcase
+		.col-1
+			small.text-gray CP:
+			br
+			span.s-14 = fiscal.address&.cp
+	.row.mt-4
+		.col-2
+			small.text-gray Colonia:
+			br
+			span.s-14 = fiscal.address&.neighborhood&.upcase
+		.col-3
+			small.text-gray Calle:
+			br
+			span.s-14 = fiscal.address&.street&.upcase
+		.col-2
+			small.text-gray Telefono:
+			br
+			span.s-14 = fiscal.address&.phone
+		.col-1
+			small.text-gray N° Int:
+			br
+			span.s-14 = fiscal.address&.interior_number
+		.col-1
+			small.text-gray N° Ext:
+			br
+			span.s-14 = fiscal.address&.outdoor_number
+		.col-3
+			small.text-gray Cruzamientos:
+			br
+			span.s-14 = fiscal.address&.crosses

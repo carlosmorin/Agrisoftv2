@@ -1,0 +1,38 @@
+br
+section
+	h5
+		i.fas.fa-money-check.mr-2
+		b Datos bancaríos
+- @provider.bank_accounts.each do |ba|
+	.card.card-body.mt-2
+		.row
+			.col-5
+				small.text-gray Nombre:
+				br
+				b.mb-0.s-16.d-block = ba.name.capitalize
+				small.s-10 = "Titular: #{ba.titular.capitalize}"
+			.col-3
+				small.text-gray Banco:
+				br
+				span.mb-1 = ba.bank.name.capitalize
+			.col-2
+				small.text-gray Moneda:
+				br
+				span.mb-1 = ba.currency.code.upcase
+			.col-2
+				small.text-gray Sucursal:
+				br
+				span.mb-1 = ba.branch.capitalize
+		.row
+			.col-4
+				small.text-gray Clave interbancaria:
+				br
+				span.mb-1 = ba.bank_key.upcase
+			.col-4	
+				small.text-gray Numero de tarjeta:
+				br
+				span.mb-1 = ba.card_number.upcase
+			.col-4
+				small.text-gray Numero de cuenta:
+				br
+				span.mb-1 = ba.account_number.upcase

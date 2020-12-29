@@ -12,6 +12,7 @@ class ProvidersController < ApplicationController
   def new
     add_breadcrumb "Nuevo proveedor"
   	@provider = Provider.new
+    @provider.contacts.new
   end
 
   def edit
@@ -58,7 +59,9 @@ class ProvidersController < ApplicationController
       :phone, :status, :comments, :logo, 
         addresses_attributes: [:id, :name, :street, :outdoor_number, 
           :interior_number, :cp, :references, :locality, :neighborhood, 
-          :country_id, :state_id, :comments, :type, :_destroy]
+          :country_id, :state_id, :comments, :type, :_destroy],
+        contacts_attributes: [:name, :last_name, :email, :phone, :mobile_phone, 
+          :position, :alias]
     )
   end
 
