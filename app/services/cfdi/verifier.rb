@@ -7,7 +7,7 @@ module Cfdi
 
     attr_reader :source_xml
     def a_xml?
-      ext = source_xml['xml'].content_type.split('/')
+      ext = source_xml['external_xml'].content_type.split('/')
       %w[xml].include?(ext[1])
     end
 
@@ -16,18 +16,19 @@ module Cfdi
     end
 
     def read_xml
-      Nokogiri::XML(File.open(source_xml['xml'].tempfile).read)
+      Nokogiri::XML(File.open(source_xml['external_xml'].tempfile).read)
     end
 
     def obtain_receiver
       cfdi_receiver = @cfdi_node.xpath('//cfdi:Receptor')
-      rfc = cfdi_receiver.attr('Rfc')
-      Client.find_by(rfc: rfc)
+      rfc = value(cfdi_receiver.attr('Rfc'))
+      name = value(cfdi_receiver.attr('Nombre'))
+      Fiscal.find_by(rfc: rfc, bussiness_name: name).fiscalable
     end
 
     def obtain_business
       cfdi_business = @cfdi_node.xpath('//cfdi:Emisor')
-      rfc = cfdi_business.attr('Rfc')
+      rfc = value(cfdi_business.attr('Rfc'))
       Company.find_by(rfc: rfc)
     end
 
@@ -89,7 +90,11 @@ module Cfdi
       cfdi_node
       @receiver = obtain_receiver
       @business = obtain_business
-      @model = model(@cfdi_node.attr('TipoDeComprobante'))
+      # @model = model(@cfdi_node.attr('TipoDeComprobante'))
+    end
+
+    def value(attr)
+      attr.try(:value) || attr
     end
 
     #  Uncomment when stamp functionality is allready done

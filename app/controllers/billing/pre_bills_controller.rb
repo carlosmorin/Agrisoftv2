@@ -45,15 +45,17 @@ module Billing
     # PATCH/PUT /rooms/1
     # PATCH/PUT /rooms/1.json
     def manual_stamp
-      process_xml
+      @xml = process_xml
+      cfdi_params
 
-      # if @bill.update(bill_params)
-      #   flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Factura timbrada correctamente"
-      #   redirect_to billing_pre_bill_path(@bill)
-      # else
-      #   flash[:alert] = "<i class='fa fa-check-circle mr-1 s-18'></i> Error al timbrar"
-      #   redirect_to billing_pre_bill_path(@bill)
-      # end
+      if @xml['errors'].present?
+        flash[:alert] = build_error_response
+      elsif update_cfdi_bill_params
+        flash[:notice] = build_response('Factura timbrada correctamente')
+      else
+        flash[:alert] = build_error_response
+      end
+      redirect_to billing_pre_bill_path(@bill)
     end
 
     # DELETE /rooms/1
@@ -77,7 +79,7 @@ module Billing
 
     def external_bill_params
       params.require(:external_bill).permit(
-        :xml, :external_pdf, :status
+        :external_xml, :external_pdf, :status
       )
     end
 
@@ -104,8 +106,32 @@ module Billing
     private
 
     def process_xml
-      binding.pry
       Cfdi::Importer.call(external_bill_params)
+    end
+
+    def build_response(msg)
+      "<i class='fa fa-check-circle mr-1 s-18'></i> #{msg}"
+    end
+
+    def build_error_response
+      msg = if @xml['errors'].nil? && @bill.errors.any?
+              @bill.errors.full_messages.to_sentence
+            elsif @cfdi_params[:total]&.to_f != @bill.total&.to_f
+              'Totales no concuerdan'
+            else
+              @xml['errors']
+            end
+      "<i class='fa fa-times-circle mr-1 s-18'></i> #{msg}"
+    end
+
+    def update_cfdi_bill_params
+      return unless @cfdi_params[:total]&.to_f.eql?(@bill.total&.to_f)
+
+      @bill.update(@cfdi_params.except(:total))
+    end
+
+    def cfdi_params
+      @cfdi_params ||= @xml['invoice'].merge(external_bill_params)
     end
 
     def load_response

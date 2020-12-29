@@ -30,28 +30,35 @@ module Cfdi
       { 'invoice' => invoice_fields, 'errors' => error }
     end
 
-    def cdfi_fields
+    def cfdi_fields
       {
-        sat_folio: @cdfi_node.attr('Folio'), sat_serie: @cfdi_node.attr('Serie'),
-        certificate: @cfdi_node.attr('Certificado'),
-        seal: @cfdi_node.attr('Sello'), total: @cfdi_node.attr('Total'),
-        certificate_number: @cfdi_node.attr('NoCertificado'),
-        sat_payment_mean: @cfdi_node.attr('FormaPago'),
-        sat_payment_method: @cfdi_node.attr('MetodoPago'),
-        sat_currency: @cfdi_node.attr('Moneda'),
-        sat_currency_exchange_rate: @cfdi_node.attr('TipoCambio')
+        sat_folio: value(@cfdi_node.attr('Folio')),
+        sat_serie: value(@cfdi_node.attr('Serie')),
+        certificate: value(@cfdi_node.attr('Certificado')),
+        seal: value(@cfdi_node.attr('Sello')),
+        certificate_number: value(@cfdi_node.attr('NoCertificado'))
       }
     end
 
     def sat_fields
       {
-        stamped_at: @sat_seal_node.attr('FechaTimbrado'),
-        uuid: @sat_seal_node.attr('UUID'),
-        sat_seal: @sat_seal_node.attr('SelloSAT'),
-        sat_certificate_number: @sat_seal_node.attr('NoCertificadoSAT'),
+        stamped_at: value(@sat_seal_node.attr('FechaTimbrado')),
+        uuid: value(@sat_seal_node.attr('UUID')),
+        sat_seal: value(@sat_seal_node.attr('SelloSAT')),
+        sat_certificate_number: value(@sat_seal_node.attr('NoCertificadoSAT')),
         stamped_invoice: @xml.to_xml,
         original_string:
-          Cfdi::Original.sat_xslt.transform(@xml, %w[key value]).to_str
+          Cfdi::OriginalString.sat_xslt.transform(@xml, %w[key value]).to_str
+      }
+    end
+
+    def payment_fields
+      {
+        total: value(@cfdi_node.attr('Total')),
+        sat_payment_mean: value(@cfdi_node.attr('FormaPago')),
+        sat_payment_method: value(@cfdi_node.attr('MetodoPago')),
+        sat_currency: value(@cfdi_node.attr('Moneda')),
+        sat_currency_exchange_rate: value(@cfdi_node.attr('TipoCambio'))
       }
     end
 
@@ -60,7 +67,7 @@ module Cfdi
 
       return if @cfdi_node.nil? || @sat_seal_node.nil?
 
-      cfdi_fields.merge(sat_fields)
+      cfdi_fields.merge(payment_fields.merge(sat_fields))
     end
   end
 end
