@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProviderCategory < ApplicationRecord
   validates :name, presence: true
   has_many :providers, inverse_of: :provider_category

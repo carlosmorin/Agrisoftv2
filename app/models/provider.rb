@@ -1,4 +1,14 @@
+# frozen_string_literal: true
+
 class Provider < ApplicationRecord
+  acts_as_paranoid
+  default_scope { order(:created_at) }
+  validates :name, :phone, :provider_category_id, :subcategory_id, :status, presence: true
+
+  has_rich_text :comments
+
+  enum status: %i[active inactive]
+
   belongs_to :currency
   belongs_to :provider_category
   belongs_to :subcategory
@@ -15,5 +25,4 @@ class Provider < ApplicationRecord
 	accepts_nested_attributes_for :addresses, :allow_destroy => true
 	accepts_nested_attributes_for :bank_accounts, :allow_destroy => true
 	accepts_nested_attributes_for :fiscals, :allow_destroy => true
-
 end
