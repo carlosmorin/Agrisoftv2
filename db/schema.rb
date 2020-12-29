@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_28_030421) do
+ActiveRecord::Schema.define(version: 2020_12_29_184928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
 
   create_table "active_ingredient_supplies", force: :cascade do |t|
     t.bigint "supply_id", null: false
@@ -291,11 +301,6 @@ ActiveRecord::Schema.define(version: 2020_12_28_030421) do
     t.string "code"
     t.string "shipments"
     t.boolean "fiscal"
-    t.string "fiscal_name"
-    t.string "cfdi_usage"
-    t.string "payment_method"
-    t.string "payment_mean"
-    t.string "external_vat"
     t.index ["country_id"], name: "index_clients_on_country_id"
     t.index ["municipality_id"], name: "index_clients_on_municipality_id"
     t.index ["state_id"], name: "index_clients_on_state_id"
@@ -398,6 +403,19 @@ ActiveRecord::Schema.define(version: 2020_12_28_030421) do
     t.string "short_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "create_appointments", force: :cascade do |t|
+    t.string "n_request"
+    t.datetime "startet_at"
+    t.datetime "finished_at"
+    t.datetime "appointment_at"
+    t.datetime "commitment_at"
+    t.string "appointment_number"
+    t.bigint "shipment_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shipment_id"], name: "index_create_appointments_on_shipment_id"
   end
 
   create_table "crops", force: :cascade do |t|
@@ -758,6 +776,7 @@ ActiveRecord::Schema.define(version: 2020_12_28_030421) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "fiscal"
+    t.datetime "deleted_at"
     t.index ["currency_id"], name: "index_providers_on_currency_id"
     t.index ["delivery_type_id"], name: "index_providers_on_delivery_type_id"
     t.index ["provider_category_id"], name: "index_providers_on_provider_category_id"
@@ -1105,6 +1124,7 @@ ActiveRecord::Schema.define(version: 2020_12_28_030421) do
   add_foreign_key "contracts_products", "contracts"
   add_foreign_key "contracts_products", "currencies"
   add_foreign_key "contracts_products", "products"
+  add_foreign_key "create_appointments", "shipments"
   add_foreign_key "crops_colors", "colors"
   add_foreign_key "crops_colors", "crops"
   add_foreign_key "crops_deseases", "crops"
