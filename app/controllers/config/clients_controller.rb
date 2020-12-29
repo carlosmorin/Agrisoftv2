@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Config
   class ClientsController < ApplicationController
-    add_breadcrumb "Configuración"
+    add_breadcrumb 'Configuración'
 
     def index
-      add_breadcrumb "Clientes"
+      add_breadcrumb 'Clientes'
       @clients = Client.all
 
       filter_by_query if params[:query].present?
@@ -18,7 +20,7 @@ module Config
       @client_config = ClientConfig.new(client_config_params)
       if @client_config.save
         flash[:notice] = "<i class='fa fa-check-circle mr-1 s-16'></i>  Configuración guardada correctamente"
-        redirect_to config_client_url(@client_config.client_id, tab: :sales) 
+        redirect_to config_client_url(@client_config.client_id, tab: :sales)
       end
     end
 
@@ -26,20 +28,20 @@ module Config
       @client_config = Client.find(params[:id]).settings
       if @client_config.update(client_config_params)
         flash[:notice] = "<i class='fa fa-check-circle mr-1 s-16'></i>  Configuración guardada correctamente"
-        redirect_to config_client_url(@client_config.client_id, tab: :sales) 
+        redirect_to config_client_url(@client_config.client_id, tab: :sales)
       end
     end
 
     def client_config_params
-      params.require(:client_config).permit(:id, :currency_id, :pay_freight, 
-         :client_type, :client_id, :credit_days, :date_due)
+      params.require(:client_config).permit(:id, :currency_id, :pay_freight,
+                                            :client_type, :client_id, :credit_days, :date_due)
     end
 
     private
 
     def filter_by_query
       query = Regexp.escape(params[:query])
-      @clients = @clients.where("name ~* ?", query)
+      @clients = @clients.where('name ~* ?', query)
     end
   end
 end

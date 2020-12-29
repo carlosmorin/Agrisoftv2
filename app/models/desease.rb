@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Desease < ApplicationRecord
   has_many :crops_deseases, dependent: :destroy
   has_many :crops, through: :crops_deseases
-  
+
   has_many :deseases_hosts, dependent: :destroy
   has_many :hosts, through: :deseases_hosts
-  
+
   has_many :deseases_damages, dependent: :destroy
   has_many :damages, through: :deseases_damages
 

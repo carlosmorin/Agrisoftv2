@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddPayClientPayCompanyToFreights < ActiveRecord::Migration[6.0]
   def change
     add_column :freights, :pay_client, :boolean

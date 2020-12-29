@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :supply do
-    name { "MyString" }
+    name { 'MyString' }
     currency { 1 }
-    iva { "9.99" }
-    ieps { "9.99" }
+    iva { '9.99' }
+    ieps { '9.99' }
     category { nil }
-    code { "MyString" }
+    code { 'MyString' }
   end
 end

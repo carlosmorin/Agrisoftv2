@@ -1,3 +1,4 @@
-class HostDecorator < BaseDecorator
+# frozen_string_literal: true
 
+class HostDecorator < BaseDecorator
 end

@@ -5,52 +5,58 @@
         h5.s-16
           i.fas.fa-info-circle.mx-1
           span = "Información General".upcase
-    .form-group.mb-1 
+    .form-group.mb-1
       .row
         .col-lg-3
-          = f.label :name, class: "pt-1" 
+          = f.label :name, class: "pt-1"
         .col-lg-8
           = f.input :name, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm ' }
-    .form-group.mb-1  
+    .form-group.mb-1
       .row
         .col-lg-3
-          = f.label :rfc, class: "pt-1" 
+          = f.label :rfc, class: "pt-1"
         .col-lg-8
           = f.input :rfc, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm', maxlength: "13", placeholder: "XAXX010101000" }
+    .form-group.mb-1
+      .row
+        .col-lg-3
+          = f.label :fiscal_regime, class: "pt-1"
+        .col-lg-8
+          = f.input :fiscal_regime, collection: Sat::FiscalRegime.all, value_method: :code, label_method: :description, required: true, autofocus: true, label: false, input_html: {  class: 's-12' }
   .card.card-body.p-3
     .row.mt-2
       .col-lg-12
         h5.s-16
           i.fas.fa-map-marked-alt.mx-1
           span = "Dirección".upcase
-    .form-group.mb-1  
+    .form-group.mb-1
       .row
         .col-lg-3
-          = f.label :country_id, class: "pt-1" 
+          = f.label :country_id, class: "pt-1"
         .col-lg-8
-          = f.input :country_id, collection: Country.all, required: true, label: false, input_html: { class: 's-12', data: { action: "change->address#filter_by_country", target: "address.countryId" } }
-    .form-group.mb-1  
-      .row
+          = f.input :country_id, collection: Country.all, required: true, label: false, input_html: { class: 's-12', data: { action: "change->address#filter_by_country", target: "address.countrySelect", container: "general_address" } }
+    .form-group.mb-1
+      .row.general_address
         .col-lg-3
-          = f.label :state_id, class: "pt-1" 
+          = f.label :state_id, class: "pt-1"
         .col-lg-8
-          = f.input :state_id, collection: states, required: true, autofocus: true, label: false, input_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId" } }
+          = f.input :state_id, collection: states, required: true, autofocus: true, label: false, input_html: { class: 's-12', data: { action: "change->address#filter_by_state", target: "address.stateId", container: "general_address" } }
     .form-group
-      .row
+      .row.general_address
         .col-lg-3
-          = f.label :municipality_id, class: "pt-1" 
+          = f.label :municipality_id, class: "pt-1"
         .col-lg-8
           = f.input :municipality_id, collection: municipalities, required: true, autofocus: true, label: false, input_html: {  class: 's-12' }
     .form-group.mb-1
       .row
         .col-lg-3
-          = f.label :address, class: "pt-1" 
+          = f.label :address, class: "pt-1"
         .col-lg-8
           = f.input :address, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
-    .form-group.mb-1  
+    .form-group.mb-1
       .row
         .col-lg-3
-          = f.label :cp, class: "pt-1" 
+          = f.label :cp, class: "pt-1"
         .col-lg-8
           = f.input :cp, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm cp_mask' }
   .card.card-body.p-3
@@ -62,19 +68,19 @@
     .form-group.mb-1
       .row
         .col-lg-3
-          = f.label :phone, class: "pt-1" 
+          = f.label :phone, class: "pt-1"
         .col-lg-8
           = f.input :phone, required: true, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm phone_mask' }
     .form-group.mb-1
       .row
         .col-lg-3
-          = f.label :email, class: "pt-1" 
+          = f.label :email, class: "pt-1"
         .col-lg-8
           = f.input :email, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm' }
     .form-group.mb-1
       .row
         .col-lg-3
-          = f.label :contact_name, class: "pt-1" 
+          = f.label :contact_name, class: "pt-1"
         .col-lg-8
           = f.input :contact_name, autofocus: true, label: false, input_html: { class: 'form-control form-control-sm', placeholder: "Ej. Lic. Arturo Lopez" }
   .form-actions.text-right
@@ -84,4 +90,3 @@
     button.btn.btn-dark-blue.btn-sm.mr-2.pl-1 type="submit"
       i.fas.fa-save.mx-1
       span Guardar
-    

@@ -1,26 +1,28 @@
+# frozen_string_literal: true
+
 axlsx = Axlsx::Package.new
 
 wb = xlsx_package.workbook
 
-wb.add_worksheet(name: "Listado de embarques") do |sheet|
-  header_style = wb.styles.add_style({ :sz => 12, :b => true ,:alignment => { :horizontal => :center }})
-  row_style = wb.styles.add_style({ :sz => 10, :alignment => { :horizontal => :center }})
+wb.add_worksheet(name: 'Listado de embarques') do |sheet|
+  header_style = wb.styles.add_style(sz: 12, b: true, alignment: { horizontal: :center })
+  row_style = wb.styles.add_style(sz: 10, alignment: { horizontal: :center })
   sheet.add_row
-  sheet.add_row ["LISTADO DE EMBARQUES"], style: header_style
+  sheet.add_row ['LISTADO DE EMBARQUES'], style: header_style
   sheet.add_row
-  sheet.add_row ["FECHA", "FOLIO FLETE", "FOLIO EMBARQUE", "FOLIO DE CLIENTE", "EMPRESA", "CLIENTE", "TRASPORTISTA", "N° BULTOS"], style: header_style
+  sheet.add_row ['FECHA', 'FOLIO FLETE', 'FOLIO EMBARQUE', 'FOLIO DE CLIENTE', 'EMPRESA', 'CLIENTE', 'TRASPORTISTA', 'N° BULTOS'], style: header_style
   @shipments.each do |shipment|
     sheet.add_row [
-    	shipment.shipment_at.strftime("%m/%d/%Y  %I:%M %p"), 
-    	shipment.freight.folio.upcase,
-    	shipment.folio.upcase,
-    	shipment.client_folio.upcase,
-    	shipment.company.name.upcase, 
-    	shipment.client.name.upcase,
-    	shipment.carrier_name,
-    	shipment.n_products], style: row_style
- 	end
-
+      shipment.shipment_at.strftime('%m/%d/%Y  %I:%M %p'),
+      shipment.freight.folio.upcase,
+      shipment.folio.upcase,
+      shipment.client_folio.upcase,
+      shipment.company.name.upcase,
+      shipment.client.name.upcase,
+      shipment.carrier_name,
+      shipment.n_products
+    ], style: row_style
+  end
 end
 
 axlsx.serialize 'Embarques.xlsx'

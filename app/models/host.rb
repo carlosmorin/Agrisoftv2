@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Host < ApplicationRecord
   validates :name, presence: true
 
   has_many :pests_hosts, dependent: :destroy
   has_many :pests, through: :pests_hosts
-  
+
   has_many :deseases_hosts, dependent: :destroy
   has_many :deseases, through: :deseases_hosts
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WeightUnits
   class IndexFacade
     attr_reader :weight_units
@@ -16,7 +18,7 @@ module WeightUnits
 
     def search
       q = Regexp.escape(@params[:q])
-      @weight_units = @weight_units.where("concat(name) ~* ?", q)
+      @weight_units = @weight_units.where('concat(name) ~* ?', q)
     end
   end
 end

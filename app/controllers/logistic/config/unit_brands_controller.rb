@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Logistic
   module Config
     class UnitBrandsController < ApplicationController
       before_action :set_object, only: %i[edit update destroy]
-      add_breadcrumb "Logistica", :logistic_root_path
-      add_breadcrumb "Configuración", :logistic_config_root_path
-      add_breadcrumb "Marcas de unidades", :logistic_config_unit_brands_path
+      add_breadcrumb 'Logistica', :logistic_root_path
+      add_breadcrumb 'Configuración', :logistic_config_root_path
+      add_breadcrumb 'Marcas de unidades', :logistic_config_unit_brands_path
 
       def index
         @brands = UnitBrand.paginate(page: params[:page], per_page: 16)
@@ -13,12 +15,12 @@ module Logistic
       end
 
       def new
-        add_breadcrumb "Nueva"
+        add_breadcrumb 'Nueva'
         @brand = UnitBrand.new
       end
 
       def edit
-        add_breadcrumb "Editar"
+        add_breadcrumb 'Editar'
       end
 
       def create
@@ -26,7 +28,7 @@ module Logistic
         if @brand.save
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Marca creada correctamente"
           redirect_to logistic_config_unit_brands_path
-          
+
         else
           render :new
         end

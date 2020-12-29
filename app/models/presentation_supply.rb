@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PresentationSupply < ApplicationRecord
   belongs_to :supply
   belongs_to :presentation

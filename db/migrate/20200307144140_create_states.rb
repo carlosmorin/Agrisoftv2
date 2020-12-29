@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateStates < ActiveRecord::Migration[6.0]
   def change
     create_table :states do |t|
@@ -5,7 +7,7 @@ class CreateStates < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :short_name
       t.boolean :active
-      
+
       t.timestamps
     end
   end

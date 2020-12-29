@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddCancelFiedlsToShipments < ActiveRecord::Migration[6.0]
   def change
     add_column :shipments, :cancel_quote, :boolean, default: false

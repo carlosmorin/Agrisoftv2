@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ranches
   class IndexFacade
     attr_reader :ranches

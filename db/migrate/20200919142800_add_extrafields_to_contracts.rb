@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddExtrafieldsToContracts < ActiveRecord::Migration[6.0]
   def change
     add_column :contracts, :undefined_products, :boolean

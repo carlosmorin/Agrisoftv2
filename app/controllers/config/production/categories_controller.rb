@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module Config
   module Production
     class CategoriesController < ApplicationController
       before_action :find_category, only: %i[destroy edit update]
-    
-      add_breadcrumb "Produccion", :config_production_root_path
-      add_breadcrumb "Categorias", :config_production_categories_path
-      
+
+      add_breadcrumb 'Produccion', :config_production_root_path
+      add_breadcrumb 'Categorias', :config_production_categories_path
+
       def index
         @index_facade = Categories::IndexFacade.new(params)
         @category = Category.new
@@ -23,7 +25,7 @@ module Config
       end
 
       def edit
-        add_breadcrumb "Editar"
+        add_breadcrumb 'Editar'
       end
 
       def update
@@ -32,7 +34,7 @@ module Config
           redirect_to config_production_categories_path
         else
           render :edit
-        end 
+        end
       end
 
       def destroy

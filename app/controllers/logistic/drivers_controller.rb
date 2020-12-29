@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Logistic
   class DriversController < ApplicationController
     before_action :set_object, only: %i[show edit update destroy]
@@ -11,29 +13,43 @@ module Logistic
     end
 
     def new
-      add_breadcrumb "Logistica", :logistic_root_path if params[:carrier_id].present?
-      add_breadcrumb "Transportistas", :logistic_carriers_path if params[:carrier_id].present?
-      add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :operators) if params[:carrier_id].present?
-      add_breadcrumb "Nuevo Conductor"
+      if params[:carrier_id].present?
+        add_breadcrumb 'Logistica', :logistic_root_path
+      end
+      if params[:carrier_id].present?
+        add_breadcrumb 'Transportistas', :logistic_carriers_path
+      end
+      if params[:carrier_id].present?
+        add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :operators)
+      end
+      add_breadcrumb 'Nuevo Conductor'
       @driver = Driver.new(carrier_id: params[:carrier_id])
     end
 
     def show
       carrier = @driver.carrier
-      add_breadcrumb "Logistica", :logistic_root_path
-      add_breadcrumb "Transportistas", :logistic_carriers_path
+      add_breadcrumb 'Logistica', :logistic_root_path
+      add_breadcrumb 'Transportistas', :logistic_carriers_path
       add_breadcrumb carrier.name.upcase, logistic_carrier_path(carrier)
-      add_breadcrumb "Operadores", logistic_carrier_path(carrier, tab: :operators)
+      add_breadcrumb 'Operadores', logistic_carrier_path(carrier, tab: :operators)
       add_breadcrumb @driver.full_name.upcase
     end
 
     def edit
-      add_breadcrumb "Logistica", :logistic_root_path if params[:carrier_id].present?
-      add_breadcrumb "Transportistas", :logistic_carriers_path if params[:carrier_id].present?
-      add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :operators) if params[:carrier_id].present?
-      add_breadcrumb "Operadores", logistic_carrier_path(@carrier, tab: :operators) if params[:carrier_id].present?
+      if params[:carrier_id].present?
+        add_breadcrumb 'Logistica', :logistic_root_path
+      end
+      if params[:carrier_id].present?
+        add_breadcrumb 'Transportistas', :logistic_carriers_path
+      end
+      if params[:carrier_id].present?
+        add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :operators)
+      end
+      if params[:carrier_id].present?
+        add_breadcrumb 'Operadores', logistic_carrier_path(@carrier, tab: :operators)
+      end
       add_breadcrumb @driver.name.upcase, logistic_carrier_driver_path(@carrier, @driver)
-      add_breadcrumb "Editar"
+      add_breadcrumb 'Editar'
     end
 
     def create
@@ -43,10 +59,10 @@ module Logistic
         redirect_to logistic_carrier_url(@driver.carrier_id, tab: :operators)
       else
         @carrier = @driver.carrier
-        add_breadcrumb "Logistica", :logistic_root_path
-        add_breadcrumb "Transportistas", :logistic_carriers_path
+        add_breadcrumb 'Logistica', :logistic_root_path
+        add_breadcrumb 'Transportistas', :logistic_carriers_path
         add_breadcrumb @carrier.name.upcase, logistic_carrier_path(@carrier, tab: :operators)
-        add_breadcrumb "Nuevo Conductor"
+        add_breadcrumb 'Nuevo Conductor'
         render template: 'logistic/drivers/new'
       end
     end
@@ -54,7 +70,7 @@ module Logistic
     def update
       if @driver.update(driver_params)
         flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i> Conductor actualizado correctamente"
-        redirect_to  logistic_carrier_driver_path(@driver.carrier, @driver) 
+        redirect_to logistic_carrier_driver_path(@driver.carrier, @driver)
       else
         render template: 'logistic/drivers/new'
       end
@@ -69,7 +85,8 @@ module Logistic
     def search
       q = Regexp.escape(params[:q])
       @drivers = @drivers.where(
-        "concat(name, ' ', last_name, ' ', licence) ~* ?", q)
+        "concat(name, ' ', last_name, ' ', licence) ~* ?", q
+      )
     end
 
     def search_by_carrier
@@ -79,20 +96,21 @@ module Logistic
 
     def driver_params
       params.require(:driver).permit(
-        :name, :last_name, :phone, :licence, :carrier_id, :licence_img)
+        :name, :last_name, :phone, :licence, :carrier_id, :licence_img
+      )
     end
 
-	  def set_object
-    	@driver = Driver.find(params[:id])
-  	end
+    def set_object
+      @driver = Driver.find(params[:id])
+    end
 
-  	def set_carriers
-  		@carriers = Carrier.all.pluck(:name, :id)
-  	end 
-    
+    def set_carriers
+      @carriers = Carrier.all.pluck(:name, :id)
+    end
+
     def set_carrier
       @carrier = params[:carrier_id].present? ?
         Carrier.find(params[:carrier_id]) : @driver.carrier
-    end    
+    end
   end
  end

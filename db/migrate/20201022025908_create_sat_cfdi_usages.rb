@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSatCfdiUsages < ActiveRecord::Migration[6.0]
   def change
     create_table :sat_cfdi_usages do |t|

@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class Supply < ApplicationRecord
   belongs_to :category
 
   validates :category_id, :name, :code, :currency, :iva, :ieps, presence: true
   validates :code, uniqueness: :true
-  enum currency: [:mxn, :usd]
+  enum currency: %i[mxn usd]
 
-  delegate :name, to: :category, prefix: "category", allow_nil: :true
+  delegate :name, to: :category, prefix: 'category', allow_nil: :true
 
   has_many :active_ingredient_supplies, dependent: :destroy
   has_many :active_ingredients, through: :active_ingredient_supplies

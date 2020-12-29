@@ -1,61 +1,63 @@
+# frozen_string_literal: true
+
 module Config
-	class CurrenciesController < ApplicationController
-		before_action :set_object, only: %i[edit update destroy]
-		add_breadcrumb "Monedas", :config_currencies_path
+  class CurrenciesController < ApplicationController
+    before_action :set_object, only: %i[edit update destroy]
+    add_breadcrumb 'Monedas', :config_currencies_path
 
-		def index
-			@currencies = Currency.paginate(page: params[:page], per_page: 25)
-			@currency = Currency.new
-      
+    def index
+      @currencies = Currency.paginate(page: params[:page], per_page: 25)
+      @currency = Currency.new
+
       search if params[:q].present?
-		end
+    end
 
-		def edit
-			add_breadcrumb "Editar"
-		end
+    def edit
+      add_breadcrumb 'Editar'
+    end
 
-		def show
-			add_breadcrumb "Detalle"
-		end
+    def show
+      add_breadcrumb 'Detalle'
+    end
 
+    def create
+      @currency = Currency.new(currency_params)
+      if @currency.save
+        flash[:notice] = "<i class='fa fa-check-circle mr-2'></i> Nueva moneda creada"
+        if params[:c].present?
+          return redirect_to config_currencies_path(params[:c])
+         end
 
-		def create
-			@currency = Currency.new(currency_params)
-			if @currency.save
-				flash[:notice] = "<i class='fa fa-check-circle mr-2'></i> Nueva moneda creada"
-				return redirect_to config_currencies_path(params[:c]) if params[:c].present?
-				redirect_to config_currencies_path
-			else
+        redirect_to config_currencies_path
+      end
+    end
 
-			end
-		end
-  	
-		def update
-			if @currency.update(currency_params)
-				flash[:notice] = " <i class='fa fa-check-circle mr-2'></i> Moneda actualizada"
-				redirect_to config_currencies_path
-			else
-				render :edit
-			end
-		end
-		
-		def destroy
-			@currency.destroy
-		end
+    def update
+      if @currency.update(currency_params)
+        flash[:notice] = " <i class='fa fa-check-circle mr-2'></i> Moneda actualizada"
+        redirect_to config_currencies_path
+      else
+        render :edit
+      end
+    end
 
-		private
+    def destroy
+      @currency.destroy
+    end
 
-		def search
-			q = Regexp.escape(params[:q])
-			@currencies = @currencies.where("name ~* ?", q)
-		end
+    private
 
-		def currency_params
-			params.require(:currency).permit(:name, :code, :national)
-		end
+    def search
+      q = Regexp.escape(params[:q])
+      @currencies = @currencies.where('name ~* ?', q)
+    end
 
-		def set_object
-			@currency = Currency.find(params[:id])
-		end
-	end
+    def currency_params
+      params.require(:currency).permit(:name, :code, :national)
+    end
+
+    def set_object
+      @currency = Currency.find(params[:id])
+    end
+  end
 end

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Damage < ApplicationRecord
   validates :name, presence: true
-  
+
   has_many :pests_damages, dependent: :destroy
   has_many :pests, through: :pests_damages
-  
+
   has_many :deseases_damages, dependent: :destroy
   has_many :deseases, through: :deseases_damages
 

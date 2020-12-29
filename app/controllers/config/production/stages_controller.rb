@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module Config
   module Production
     class StagesController < ApplicationController
       before_action :find_stage, only: %i[edit update destroy]
-    
-      add_breadcrumb "Produccion", :config_production_root_path
-      add_breadcrumb "Etapas", :config_production_stages_path
-      
+
+      add_breadcrumb 'Produccion', :config_production_root_path
+      add_breadcrumb 'Etapas', :config_production_stages_path
+
       def index
         @index_facade = Stages::IndexFacade.new(params)
         @stage = Stage.new
@@ -23,12 +25,12 @@ module Config
       end
 
       def edit
-        add_breadcrumb "Editar"
+        add_breadcrumb 'Editar'
       end
 
       def update
         if @stage.update(stage_params)
-          flash[:notice] = "La Etapa fue actualizada correctamente."
+          flash[:notice] = 'La Etapa fue actualizada correctamente.'
           redirect_to config_production_stages_path
         else
           render :edit

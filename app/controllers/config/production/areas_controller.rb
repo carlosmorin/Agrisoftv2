@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 module Config
   module Production
     class AreasController < ApplicationController
       before_action :find_area, only: %i[show edit update destroy]
       before_action :set_ranch, only: %i[new update]
-    
-      add_breadcrumb "Produccion", :config_production_root_path
-      add_breadcrumb "Areas", :config_production_areas_path
-      
+
+      add_breadcrumb 'Produccion', :config_production_root_path
+      add_breadcrumb 'Areas', :config_production_areas_path
+
       def index
         @index_facade = Areas::IndexFacade.new(params)
       end
 
       def new
-        add_breadcrumb "Nuevo"
+        add_breadcrumb 'Nuevo'
         @area = Area.new
       end
 
@@ -28,16 +30,16 @@ module Config
       end
 
       def edit
-        add_breadcrumb "Editar"
+        add_breadcrumb 'Editar'
       end
 
       def show
-        add_breadcrumb "Detalle de Area"
+        add_breadcrumb 'Detalle de Area'
       end
 
       def update
         if @area.update(area_params)
-          flash[:notice] = "La Area fue actualizada correctamente."
+          flash[:notice] = 'La Area fue actualizada correctamente.'
           redirect_to config_production_area_url(@area)
         else
           render :edit

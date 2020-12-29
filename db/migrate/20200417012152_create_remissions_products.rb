@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateRemissionsProducts < ActiveRecord::Migration[6.0]
   def change
     create_table :remissions_products do |t|

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Company < ApplicationRecord
   acts_as_paranoid
   default_scope { order(:created_at) }
   validates :name, :rfc, :country_id, :state_id, :municipality_id,
-		:cp, :address, :phone, presence: true
+            :cp, :address, :phone, :fiscal_regime, presence: true
   belongs_to :country
   belongs_to :state
   belongs_to :municipality
@@ -11,7 +13,7 @@ class Company < ApplicationRecord
   has_many :freights, as: :debtable, inverse_of: :company
 
   def origin_state
-    "#{state.name}".upcase
+    state.name.to_s.upcase
   end
 
   def short_address
@@ -19,6 +21,6 @@ class Company < ApplicationRecord
   end
 
   def full_address
-		"#{municipality.name}, #{state.name}, #{address}, #{country.name}"
-	end
+    "#{municipality.name}, #{state.name}, #{address}, #{country.name}"
+  end
 end

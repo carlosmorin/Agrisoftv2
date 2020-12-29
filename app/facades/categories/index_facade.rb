@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Categories
   class IndexFacade
     attr_reader :categories
@@ -16,7 +18,7 @@ module Categories
 
     def search
       q = Regexp.escape(@params[:q])
-      @categories = @categories.where("concat(name) ~* ?", q)
+      @categories = @categories.where('concat(name) ~* ?', q)
     end
   end
 end

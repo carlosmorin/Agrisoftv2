@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 module Config
   module Production
     class PerforationsController < ApplicationController
       before_action :find_perforation, only: %i[show edit update destroy]
       before_action :set_ranch, only: %i[new update]
-    
-      add_breadcrumb "Produccion", :config_production_root_path
-      add_breadcrumb "Perforacions", :config_production_perforations_path
-      
+
+      add_breadcrumb 'Produccion', :config_production_root_path
+      add_breadcrumb 'Perforacions', :config_production_perforations_path
+
       def index
         @index_facade = Perforations::IndexFacade.new(params)
       end
 
       def new
-        add_breadcrumb "Nuevo"
+        add_breadcrumb 'Nuevo'
         @perforation = Perforation.new
       end
 
@@ -28,16 +30,16 @@ module Config
       end
 
       def edit
-        add_breadcrumb "Editar"
+        add_breadcrumb 'Editar'
       end
 
       def show
-        add_breadcrumb "Detalle de la Perforacion"
+        add_breadcrumb 'Detalle de la Perforacion'
       end
 
       def update
         if @perforation.update(perforation_params)
-          flash[:notice] = "La perforacion fue actualizada correctamente."
+          flash[:notice] = 'La perforacion fue actualizada correctamente.'
           redirect_to config_production_perforation_url(@perforation)
         else
           render :edit
@@ -51,8 +53,8 @@ module Config
       private
 
       def perforation_params
-        params.require(:perforation).permit(:name, :coordinates, :registry_number, :volume, 
-          :validity, :expenditure, :ranch_id, :perforation_structure, :document)
+        params.require(:perforation).permit(:name, :coordinates, :registry_number, :volume,
+                                            :validity, :expenditure, :ranch_id, :perforation_structure, :document)
       end
 
       def find_perforation

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Damages
   class IndexFacade
     attr_reader :damages
@@ -16,7 +18,7 @@ module Damages
 
     def search
       q = Regexp.escape(@params[:q])
-      @damages = @damages.where("concat(name) ~* ?", q)
+      @damages = @damages.where('concat(name) ~* ?', q)
     end
   end
 end

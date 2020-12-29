@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCropsPackages < ActiveRecord::Migration[6.0]
   def change
     create_table :crops_packages do |t|

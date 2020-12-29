@@ -1,24 +1,28 @@
+# frozen_string_literal: true
+
 class FreightsController < ApplicationController
-	before_action :set_object, only: %i[show edit update destroy]
+  before_action :set_object, only: %i[show edit update destroy]
   before_action :set_catalogs, only: %i[edit update]
 
-  add_breadcrumb "Embarques", :clients_path
+  add_breadcrumb 'Embarques', :clients_path
 
   def index
-  	@freights = Freight.paginate(page: params[:page], per_page: 25)
+    @freights = Freight.paginate(page: params[:page], per_page: 25)
   end
 
   def new
-    add_breadcrumb "Nuevo"
-  	@client = Client.new
+    add_breadcrumb 'Nuevo'
+    @client = Client.new
   end
 
   def create
-  	@client = Client.new(client_params)
+    @client = Client.new(client_params)
     respond_to do |format|
       if @client.save
-        format.html { redirect_to client_url(@client), 
-          notice: 'El cliente fue registrado exitosamente.' }
+        format.html do
+          redirect_to client_url(@client),
+                      notice: 'El cliente fue registrado exitosamente.'
+        end
       else
         format.html { render :new }
       end
@@ -26,16 +30,16 @@ class FreightsController < ApplicationController
   end
 
   def edit
-    add_breadcrumb "Editar"
+    add_breadcrumb 'Editar'
   end
 
   def show
-    add_breadcrumb "Detalle"
+    add_breadcrumb 'Detalle'
   end
 
   def update
     if @client.update(client_params)
-      flash[:notice] = "El cliente fue actualizado exitosamente"
+      flash[:notice] = 'El cliente fue actualizado exitosamente'
       redirect_to client_url(@client)
     else
       render :edit
@@ -52,26 +56,26 @@ class FreightsController < ApplicationController
     render json: da
   end
 
-	private
+  private
 
   def search
     q = Regexp.escape(params[:q])
-    
+
     @clients = @clients.where("concat(name, ' ', rfc, ' ', phone) ~* ?", q)
   end
 
   def freight_params
     params.require(:freight).permit(
       :carrier_id, :driver_id, :unit_id, :box_id, :user_id,
-          shipments_attributes: [:id, :company_id, :client_id,
-            :delivery_address_id, :user_id, :status, :comments, :_destroy, :pay_freight,
-          shipments_products_attributes: [:id, :price, :quantity, :shipment_id,
-            :product_id, :_destroy]]
+      shipments_attributes: [:id, :company_id, :client_id,
+                             :delivery_address_id, :user_id, :status, :comments, :_destroy, :pay_freight,
+                             shipments_products_attributes: %i[id price quantity shipment_id
+                                                               product_id _destroy]]
     )
   end
 
   def set_object
-    id = params[:id].present? ? params[:id] : params[:client_id] 
+    id = params[:id].present? ? params[:id] : params[:client_id]
     @client = Client.find(id)
   end
 

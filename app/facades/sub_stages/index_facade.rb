@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SubStages
   class IndexFacade
     attr_reader :sub_stages, :sub_stage

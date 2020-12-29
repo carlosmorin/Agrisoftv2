@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :address do
-    name { "MyText" }
-    street { "MyString" }
-    outdoor_number { "MyString" }
-    interior_number { "MyString" }
-    cp { "MyString" }
-    references { "MyString" }
+    name { 'MyText' }
+    street { 'MyString' }
+    outdoor_number { 'MyString' }
+    interior_number { 'MyString' }
+    cp { 'MyString' }
+    references { 'MyString' }
     country { nil }
     state { nil }
     locality { nil }
-    comments { "MyText" }
+    comments { 'MyText' }
     type { 1 }
     type { 1 }
     addressable { nil }

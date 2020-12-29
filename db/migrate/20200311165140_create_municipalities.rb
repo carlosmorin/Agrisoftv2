@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMunicipalities < ActiveRecord::Migration[6.0]
   def change
     create_table :municipalities do |t|
@@ -5,7 +7,7 @@ class CreateMunicipalities < ActiveRecord::Migration[6.0]
       t.string :key
       t.string :name
       t.boolean :active
-      
+
       t.timestamps
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddCategoriesRelationsToProviders < ActiveRecord::Migration[6.0]
   def change
     add_reference :providers, :provider_category, null: false, foreign_key: true

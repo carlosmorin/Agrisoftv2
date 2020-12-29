@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :set_object, only: %i[show edit update destroy]
 
@@ -11,8 +13,7 @@ class UsersController < ApplicationController
     render :new
   end
 
-  def edit
-  end
+  def edit; end
 
   def change_password
     @object = User.find(params[:user_id])
@@ -35,7 +36,7 @@ class UsersController < ApplicationController
   def update
     if @object.update_attributes(object_params)
       flash[:notice] = 'User updated'
-      redirect_to :action => "show", :id => @object.id
+      redirect_to action: 'show', id: @object.id
     else
       flash[:error] = 'Ocurrió un error.'
       render :new
@@ -53,7 +54,7 @@ class UsersController < ApplicationController
   private
 
   def set_object
-    if params[:id] = "sign_out"
+    if params[:id] = 'sign_out'
       sign_out current_user
       redirect_to root_path
     else
@@ -63,14 +64,13 @@ class UsersController < ApplicationController
 
   def search
     s = Regexp.escape(params[:search])
-    
+
     @object_collection = @object_collection.where("concat(name, ' ', last_name, ' ', email) ~* ?", s)
   end
 
   def object_params
     params.require(:user).permit(
-      :email,:name, :last_name, :phone
+      :email, :name, :last_name, :phone
     )
   end
-
 end

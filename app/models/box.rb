@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Box < ApplicationRecord
   acts_as_paranoid
   default_scope { order(:id) }
-  
+
   before_create :set_name
   before_update :set_name
-	
+
   validates :plate_number, :carrier_id, :box_type_id, presence: true
   validates_uniqueness_of :plate_number, case_sensitive: false
   has_many :freights, inverse_of: :box

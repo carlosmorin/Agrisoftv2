@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCropsColors < ActiveRecord::Migration[6.0]
   def change
     create_table :crops_colors do |t|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddWeigthUnitReferenceAndWeigthToProductionUnits < ActiveRecord::Migration[6.0]
   def change
     add_reference :production_units, :weight_unit, foreign_key: true

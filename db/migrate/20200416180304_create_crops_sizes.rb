@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCropsSizes < ActiveRecord::Migration[6.0]
   def change
     create_table :crops_sizes do |t|

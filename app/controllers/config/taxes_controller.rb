@@ -1,21 +1,23 @@
+# frozen_string_literal: true
+
 module Config
   class TaxesController < ApplicationController
-  	before_action :set_object, only: %i[edit update destroy]
-    add_breadcrumb "Config"
-    add_breadcrumb "Impuestos", :config_taxes_path
+    before_action :set_object, only: %i[edit update destroy]
+    add_breadcrumb 'Config'
+    add_breadcrumb 'Impuestos', :config_taxes_path
 
-  	def index
-  		@taxes = Tax.paginate(page: params[:page], per_page: 16)
+    def index
+      @taxes = Tax.paginate(page: params[:page], per_page: 16)
       search if params[:q].present?
-  	end
+    end
 
-  	def new
-      add_breadcrumb "Nuevo"
+    def new
+      add_breadcrumb 'Nuevo'
       @tax = Tax.new
-  	end
+    end
 
     def edit
-      add_breadcrumb "Editar"
+      add_breadcrumb 'Editar'
     end
 
     def create
@@ -33,7 +35,7 @@ module Config
 
     def update
       if @tax.update(tax_params)
-        flash[:notice] = "Impuesto actualizado"
+        flash[:notice] = 'Impuesto actualizado'
         redirect_to config_taxes_url
       else
         render :edit
@@ -43,15 +45,15 @@ module Config
     def destroy
       @tax.destroy
     end
-  	
+
     private
-    
+
     def search
       q = Regexp.escape(params[:q])
-    
+
       @taxes = @taxes.where("concat(name, ' ', value) ~* ?", q)
     end
-  	
+
     def tax_params
       params.require(:tax).permit(:name, :value)
     end

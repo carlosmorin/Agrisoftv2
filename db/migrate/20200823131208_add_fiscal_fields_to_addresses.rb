@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddFiscalFieldsToAddresses < ActiveRecord::Migration[6.0]
   def change
     add_column :addresses, :fiscal, :boolean

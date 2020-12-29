@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDeseasesDamages < ActiveRecord::Migration[6.0]
   def change
     create_table :deseases_damages do |t|
