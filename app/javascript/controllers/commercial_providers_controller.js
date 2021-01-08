@@ -3,7 +3,7 @@ import SlimSelect from 'slim-select'
 const Axios = require('axios');
 
 export default class extends Controller {
-  static targets = [ "categorySelect" ]
+  static targets = [ "categorySelect", 'fiscalDataContainer' ]
 
 
   initialize() {
@@ -34,6 +34,14 @@ export default class extends Controller {
       }
       subcategoriesSelect.append(options);
     });
+  }
+
+  toggleFiscalData(e){
+    if (e.currentTarget.checked) {
+      this.fiscalDataContainerTarget.classList.remove("d-none")
+    }else{
+      this.fiscalDataContainerTarget.classList.add("d-none")
+    }
   }
 
 }

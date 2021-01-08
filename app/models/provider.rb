@@ -2,7 +2,7 @@
 
 class Provider < ApplicationRecord
   default_scope { order(:created_at) }
-  validates :name, :phone, :provider_category_id, :subcategory_id, :status, presence: true
+  validates :name, :provider_category_id, :subcategory_id, presence: true
 
   has_rich_text :comments
 
@@ -19,9 +19,18 @@ class Provider < ApplicationRecord
 	has_many :addresses, as: :addressable
 	has_many :fiscals, as: :fiscalable
 	has_many :bank_accounts, as: :accountable
+  has_many :providers_supplies, dependent: :destroy
 	
 	accepts_nested_attributes_for :contacts, :allow_destroy => true
 	accepts_nested_attributes_for :addresses, :allow_destroy => true
 	accepts_nested_attributes_for :bank_accounts, :allow_destroy => true
 	accepts_nested_attributes_for :fiscals, :allow_destroy => true
+
+  validate :validate_fiscals
+
+	private
+  
+  def validate_fiscals
+    return errors.add :base, "Must have at least one Team" unless self.fiscal?
+  end 
 end

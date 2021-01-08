@@ -2,13 +2,13 @@
 
 module Commercial
   class ProvidersController < ApplicationController
-    before_action :set_object, only: %i[show edit update destroy]
+    before_action :set_object, only: %i[show edit update destroy update_status supplies]
 
     add_breadcrumb 'Comercial', :commercial_root_path
     add_breadcrumb 'Proveedores', :commercial_providers_path
 
     def index
-      @providers = Provider.paginate(page: params[:page], per_page: 16)
+      @providers = Provider.all.paginate(page: params[:page], per_page: 16)
 
       search if params[:q].present?
     end
@@ -24,6 +24,14 @@ module Commercial
 
     def show
       add_breadcrumb 'Gestionar proveedor'
+    end
+
+    def supplies
+      @supplies = Supply.where.not(id: @provider.providers_supplies.pluck(:supply_id))
+      @supplies_collection = @provider.providers_supplies
+
+      filter_by_query if params[:query].present?
+      filter_by_category if params[:category].present?
     end
 
     def create
@@ -47,10 +55,22 @@ module Commercial
       else
         render :edit
       end
-   end
+    end
+
+    def add_supplies
+      return if params[:supplies].empty?
+      params[:supplies].each do |supply|
+        ProvidersSupply.new(provider_id: params[:provider_id], supply_id: supply).save!
+      end
+    end 
 
     def destroy
       @provider.destroy
+    end
+
+    def update_status
+      status = params[:status]
+      @provider.update(status: params[:status])
     end
 
     private
@@ -65,7 +85,8 @@ module Commercial
   	def provider_params
       params.require(:provider).permit(:id, :code, :name, :provider_type, 
         :credit_limit, :credit_limit_days, :delivery_days, :currency_id, 
-        :provider_category_id, :subcategory_id, :delivery_type_id, :logo,
+        :provider_category_id, :subcategory_id, :delivery_type_id, :fiscal,
+        :logo, 
         contacts_attributes: [
           :id, :name, :last_name, :email, :phone, :mobile_phone, :position, 
           :alias, :contactable_type, :contactable_id, :avatar, :main_contact, 
@@ -78,14 +99,16 @@ module Commercial
           :accountable_id, :_destroy
         ],
         fiscals_attributes: [
-           :id, :bussiness_name, :rfc, :_destroy,
-           addresses_attributes: addresses_attributes
+          :id, :bussiness_name, :rfc, :cfdi_usage, :payment_mean, 
+          :payment_method, :_destroy,
+          addresses_attributes: addresses_attributes
         ]
       )
     end
 
     def set_object
-      @provider = Provider.find(params[:id])
+      id = params[:id].present? ? params[:id] : params[:provider_id]
+      @provider = Provider.find(id)
     end
 
     private
@@ -95,6 +118,17 @@ module Commercial
         :references, :neighborhood, :phone, :country_id, :state_id, :comments, 
         :status, :addressable_type, :addressable_id, :locality, :crosses, 
         :_destroy ]
+    end
+
+    def filter_by_query
+      query = params[:query]
+      @supplies_collection = @supplies_collection.joins(:supply).where("concat(supplies.name, ' ', supplies.code) ~* ?", query)
+    end
+
+    def filter_by_category
+      category = params[:category]
+
+      @supplies_collection = @supplies_collection.joins(:supply).where("supplies.category_id": category)
     end
   end
 end

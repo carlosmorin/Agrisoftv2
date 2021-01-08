@@ -14,12 +14,25 @@ div class="card card-body py-2 mt-1"
 			small.mb-1.text-gray RFC:
 			br
 			span.mb-1.s-14 = fiscal.rfc.upcase
-	.row.mt-2
-		.col-2
+	.row.mt-3
+		.col-4
+			small.mb-1.text-gray Uso de CFDI:
+			br
+			span.mb-1.s-14 = cfdi_usage(fiscal.cfdi_usage)
+		.col-4
+			small.mb-1.text-gray Metodo de pago:
+			br
+			span.mb-1.s-14 = payment_method(fiscal.payment_method)
+		.col-4
+			small.mb-1.text-gray Medio de pago:
+			br
+			span.mb-1.s-14 = payment_mean(fiscal.payment_mean)
+	.row.mt-3
+		.col-3
 			small.text-gray País:
 			br
 			span.s-14 = fiscal.address.country.name.upcase 
-		.col-2
+		.col-3
 			small.text-gray Estado:
 			br
 			span.s-14 = fiscal.address.state.name.upcase 
@@ -27,23 +40,19 @@ div class="card card-body py-2 mt-1"
 			small.text-gray Ciudad:
 			br
 			span.s-14 = fiscal.address.locality.upcase
-		.col-1
+		.col-2
 			small.text-gray CP:
 			br
 			span.s-14 = fiscal.address&.cp
-	.row.mt-4
 		.col-2
 			small.text-gray Colonia:
 			br
 			span.s-14 = fiscal.address&.neighborhood&.upcase
+	.row.mt-4
 		.col-3
 			small.text-gray Calle:
 			br
 			span.s-14 = fiscal.address&.street&.upcase
-		.col-2
-			small.text-gray Telefono:
-			br
-			span.s-14 = fiscal.address&.phone
 		.col-1
 			small.text-gray N° Int:
 			br
@@ -56,3 +65,7 @@ div class="card card-body py-2 mt-1"
 			small.text-gray Cruzamientos:
 			br
 			span.s-14 = fiscal.address&.crosses
+		.col-3
+			small.text-gray Telefono:
+			br
+			span.s-14 = fiscal.address&.phone

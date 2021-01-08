@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_184928) do
+ActiveRecord::Schema.define(version: 2021_01_08_140540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -777,10 +777,20 @@ ActiveRecord::Schema.define(version: 2020_12_29_184928) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "fiscal"
     t.datetime "deleted_at"
+    t.integer "status", default: 0
     t.index ["currency_id"], name: "index_providers_on_currency_id"
     t.index ["delivery_type_id"], name: "index_providers_on_delivery_type_id"
     t.index ["provider_category_id"], name: "index_providers_on_provider_category_id"
     t.index ["subcategory_id"], name: "index_providers_on_subcategory_id"
+  end
+
+  create_table "providers_supplies", force: :cascade do |t|
+    t.bigint "provider_id", null: false
+    t.bigint "supply_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["provider_id"], name: "index_providers_supplies_on_provider_id"
+    t.index ["supply_id"], name: "index_providers_supplies_on_supply_id"
   end
 
   create_table "qualities", force: :cascade do |t|
@@ -1175,6 +1185,8 @@ ActiveRecord::Schema.define(version: 2020_12_29_184928) do
   add_foreign_key "providers", "delivery_types"
   add_foreign_key "providers", "provider_categories"
   add_foreign_key "providers", "subcategories"
+  add_foreign_key "providers_supplies", "providers"
+  add_foreign_key "providers_supplies", "supplies"
   add_foreign_key "quotes", "clients"
   add_foreign_key "quotes", "companies"
   add_foreign_key "quotes", "contacts"

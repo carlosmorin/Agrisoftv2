@@ -1,4 +1,5 @@
-= simple_form_for([:commercial, @provider]) do |f|
+= simple_form_for([:commercial, @provider], html: { novalidate: true }) do |f|
+  = f.input :status, as: :hidden, input_html: { value: '0' }
   input type="hidden" name="next_tab" value="fiscal_address"/
   .row data-controller="commercial-providers slim-select"
     .col-12
@@ -46,9 +47,9 @@
 	                .col-lg-6
 	                  = f.input :delivery_days, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
 	                .col-12.s-14.mt-2.text-bold
-	                  = f.input :fiscal
+	                  = f.input :fiscal, input_html: { data: { action: 'change->commercial-providers#toggleFiscalData' } }
     .col-12.mt-4
-      .card
+      div class="card #{f.object.fiscal? ? '' : 'd-none'}" data-target="commercial-providers.fiscalDataContainer"
         .card-header.bg-light-gray
           .row
             .col-10
@@ -75,7 +76,6 @@
                 span.pl-2 Agregar
         .card-body
           #contacts.contacts.mt-2
-          	- f.object.contacts.new unless f.object.contacts.any?
             = f.simple_fields_for :contacts do |contact|
               = render 'contact_fields', f: contact
     .col-12.mt-4
@@ -92,7 +92,6 @@
                 span.pl-2 Agregar
         .card-body
           #addresses.addresses data-controller="address"
-          	- f.object.addresses.new unless f.object.addresses.any?
             = f.simple_fields_for :addresses do |bo|
               = render 'address_fields', f: bo
     .col-12.mt-4

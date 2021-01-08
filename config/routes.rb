@@ -123,7 +123,10 @@ Rails.application.routes.draw do
   namespace :commercial do
     root to: 'main#index' # Comercial dashboard
     resources :providers do
+      patch :update_status
       resources :addresses
+      get :supplies
+      patch :add_supplies
     end
     namespace :config do
       root to: 'main#index'

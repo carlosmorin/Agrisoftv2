@@ -21,7 +21,11 @@
       .col-lg-12
         = f.input :ieps, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
         hr.my-2
-                                    
+      .col-12
+        label Proveedores
+        - supplies = f.object.providers_supplies.any? ? f.object.providers_supplies.pluck(:provider_id) : []
+        = select_tag 'providers[]', options_for_select(Provider.all.pluck(:name, :id), selected: supplies),  multiple: true, include_blank: 'Todos', class: 's-12 text-upcase multiple-select'
+        hr
     section.pl-2.card.p-2.pb-3.br-0
       .row
         .col-lg-10
@@ -85,5 +89,3 @@
         polyline points=("17 21 17 13 7 13 7 21") 
         polyline points=("7 3 7 8 15 8") 
       span Guardar
-/ = render 'treatments_form'
-

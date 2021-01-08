@@ -29,6 +29,7 @@ class Config::Production::SuppliesController < ApplicationController
     @supply = Supply.new(supply_params)
     if @supply.save
       flash[:notice] = "Insumo #{@supply.name} actualizado correctamente"
+      set_provider_relation
       if params[:create_treatment]
         return redirect_to new_config_production_supply_treatment_url(@supply.id, create: true), create: true
        end
@@ -42,6 +43,7 @@ class Config::Production::SuppliesController < ApplicationController
   def update
     if @supply.update(supply_params)
       flash[:notice] = "Insumo #{@supply.name} actualizado correctamente"
+      set_provider_relation
       if params[:create_treatment]
         return redirect_to new_config_production_supply_treatment_url(@supply.id, create: true), create: true
       end
@@ -57,6 +59,14 @@ class Config::Production::SuppliesController < ApplicationController
   end
 
   private
+
+  def set_provider_relation
+    @supply.providers_supplies.destroy_all if @supply.providers_supplies.any?
+
+    params[:providers].each do |provider|
+      ProvidersSupply.new(provider_id: provider, supply_id: @supply.id).save!
+    end
+  end
 
   def search
     q = Regexp.escape(params[:q])

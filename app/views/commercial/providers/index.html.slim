@@ -36,10 +36,12 @@ section.content
                   th style=("width: 5%")  #
                   th Nombre
                   th Categoria
+                  th Sub Categoria
                   th Dias de credito
                   th Limite de credito
                   th Tipo de entrega
                   th Dias de entrega
+                  th Status
                   th.text-center colspan="2" style=("width: 12%") Acciones
               tbody#tbody
                 - if @providers.empty?
@@ -51,15 +53,21 @@ section.content
                     tr
                       td = provider.code.upcase
                       td = provider.name.upcase
-                      td = provider.provider_category.name
+                      td = provider.provider_category.name.upcase
+                      td = provider.subcategory.name.upcase
                       td = provider.credit_limit_days
                       td = currency provider.credit_limit
                       td = provider.delivery_type.name.upcase
                       td = provider.delivery_days
+                      td 
+                        - if provider.active?
+                          span.badge.badge-success.btn.btn-sm Activo
+                        - else
+                          span.badge.badge-danger.btn.btn-sm Inactivo
                       td.text-center
                         .btn-group
-                          = link_to commercial_provider_path(provider, tab: :fiscal_data), title: "Gestionar proveedor", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-xs btn-default" do
-                              i.fas.fa-user-cog
+                          = link_to commercial_provider_path(provider, tab: :general), title: "Gestionar proveedor", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: "btn btn-sm py-0 btn-link s-16" do
+                              i.fas.fa-arrow-right
           .card-footer.p-2.pb-1.bg-light-gray
             .row
               .col-lg-12.d-flex.justify-content-center

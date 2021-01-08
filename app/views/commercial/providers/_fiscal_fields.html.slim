@@ -4,9 +4,17 @@
       = f.input :bussiness_name, label: 'Razón Social:', input_html: { class: 's-12 form-control form-control-sm'}
     .col-6
       = f.input :rfc, label: 'RFC:', input_html: { class: 's-12 form-control form-control-sm'}
+  .row.mt-3
+    .col-4
+      = f.input :cfdi_usage, collection: Sat::CfdiUsage.all.pluck(:description, :code), label: 'Uso CFDI:', input_html: { class: 's-12'}
+    .col-4
+      = f.input :payment_method, collection: Sat::PaymentMethod.all.pluck(:description, :code), label: 'Método de pago:', input_html: { class: 's-12'}
+    .col-4
+      = f.input :payment_mean, collection: Sat::PaymentMean.all.pluck(:description, :code), label: 'Medio de pago:', input_html: { class: 's-12'}
+
   - f.object.addresses.new unless f.object.addresses.any?
   = f.simple_fields_for :addresses do |address|
-    .row.mt-2
+    .row.mt-3
       .col-md-3
         = address.input :country_id, collection: Country.all, label: 'País:', input_html: { class: 's-12 text-upcase mt-2', data: { action: "change->address#filter_by_country", target: "address.countrySelect fiscal.countrySelectFiscal", container: "fiscal_address" }}
       .col-md-3.fiscal_address
@@ -16,7 +24,7 @@
         = address.input :locality, label: 'Localidad:', autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
       .col-md-3
         = address.input :neighborhood, autofocus: true, label: 'Colonia:', input_html: { class: 's-12 form-control form-control-sm', data: { target: "fiscal.cpInputFiscal" } }
-    .row.mt-2
+    .row.mt-3
 	    .col-md-2
 	      = address.input :cp, label: 'CP:', autofocus: true, input_html: { class: 's-12 form-control form-control-sm' }
 	    .col-md-3

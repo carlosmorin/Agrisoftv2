@@ -11,6 +11,7 @@ require("@rails/activestorage").start()
 require("channels")
 require("admin-lte")
 require("bootstrap");
+require("datatable");
 require('jquery')
 const toastr = require('toastr');
 
@@ -29,6 +30,7 @@ import '@fortawesome/fontawesome-free/js/regular'
 document.addEventListener("turbolinks:load", () => {
 	$('[data-toggle="tooltip"]').tooltip()
 	$('[data-toggle="popover"]').popover()
+
 
   $("a.menu-toggle").click(function () {
     //document.cookie = "menuHidde=true";

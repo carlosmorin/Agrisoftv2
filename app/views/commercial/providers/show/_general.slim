@@ -7,14 +7,18 @@ section.card.card-body
 			= image_tag("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2-gPOCLe1jEzEVF82ZsCTqWvhVC87_i5UjQ&usqp=CAU", width: 180, class: "rounded img-thumbnail mb-2") unless @provider.logo.attached?
 		.col-lg-9.s-14
 			.row.mt-2
-				.col-9
+				.col-8
 					small.mb-1.text-gray Nombre:
 					br
 					span.mb-1.s-14 = @provider.name.upcase
-				.col-3
+				.col-2
 					small.mb-1.text-gray Codigo:
 					br
 					span.mb-1.s-14 = @provider.code.upcase
+				.col-2
+					small.mb-1.text-gray Fiscal:
+					br
+					span.mb-1.s-14 = @provider.fiscal? ? 'SI' : 'NO'
 			.row.mt-4
 				.col-4
 					small.mb-1.text-gray Categoria de proveedor:
@@ -34,14 +38,18 @@ section.card.card-body
 					h6 
 						b Datos de credito
 				.col-4
-					small.mb-1.text-gray Limite de credito:
+					small.mb-1.text-gray Limite de credit
 					br
 					span.mb-1.s-14 = currency @provider.credit_limit
 				.col-4
 					small.mb-1.text-gray Dias de credito:
 					br
 					span.mb-1.s-14 = @provider.credit_limit_days
-
+			.row
+				.col-4
+					small.mb-1.text-gray Tipo de entrega:
+					br
+					span.mb-1.s-14 = @provider.delivery_type.name.upcase
 			.row.mt-4
 				.col-12
 					h6 
@@ -54,3 +62,4 @@ section.card.card-body
 					small.mb-1.text-gray Dias de entrega:
 					br
 					span.mb-1.s-14 = @provider.delivery_days
+= render "commercial/providers/show/fiscal" if @provider.fiscal?

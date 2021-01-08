@@ -1,0 +1,110 @@
+section.content-header.pb-0.pt-2
+  .container-fluid.bb-gray2
+    .row
+      .col-1.text-left.pr-2.s-12.bb-gray2 data-turbolinks-permanent=""
+        = link_to commercial_provider_path(@provider, tab: :general), title: "Volver", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: "btn s-18 mr-4 c-gray text-primary" do
+          i.fas.fa-arrow-left
+      .col-10.text-center
+        h5.mt-2
+          b = @provider.name.upcase
+      .col-2
+    .row
+      .col-12
+        hr.my-1
+  .row.mb-2.mt-2
+    .col-10.px-4.py-2
+      h5 = "Catalogo de productos".upcase
+    .col-2.text-right
+      button.btn.btn-sm.btn-dark-blue.mr-4 data-target="#supplyModal" data-toggle="modal" type="button" 
+        | Agregar insumos
+        i.fas.fa-plus-circle.ml-2
+    .col-12.px-4
+      .card
+        .card-header.bg-light-gray.pt-0.px-0
+          = form_tag("", method: "GET") do
+            - value = params[:query].present? ? params[:query] : ''
+            - category = params[:category].present? ? params[:category] : ''
+            .form-row.align-items-center.row.pl-2
+              .col-4
+                label.s-12.mb-0 Buscar por:
+                = text_field_tag(:query, value, class: 'form-control form-control-sm', placeholder: 'Nombre de insumo, codigo')
+              .col-4
+                label.s-12.mb-0 Categoria:
+                = select_tag(:category, options_for_select(Category.all.pluck(:name, :id), selected: category), class: 'form-control form-control-sm')
+              .col-2.pt-4
+                button.btn.btn-sm.btn-primary type="submit"  
+                  | Buscar
+                  i.fas.fa-search.ml-2
+              .col-2.pt-4.text-right
+                button.btn.btn-sm.btn-success.mr-2 type="submit" name="xls" 
+                  | Exportar
+                  i.fas.fa-file-excel.ml-2
+        .card-body.p-0
+          table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14.table-striped.text-left.mb-0
+            thead
+              tr.bg-light-gray
+                th #
+                th Nombre
+                th Categoria
+                th Moneda
+                th IVA
+                th IEPS
+                th.text-center colspan="2" style=("width: 12%") Acciónes
+            tbody#tbody.s-13
+              - if @supplies_collection.empty?
+                tr
+                  td.text-center colspan="9"
+                    i Sin productos
+              - else
+                - @supplies_collection.each do |ps|
+                  tr
+                    td = ps.supply.code.upcase
+                    td = ps.supply.name.upcase
+                    td = ps.supply.category.name.upcase
+                    td = ps.supply.currency.upcase
+                    td = ps.supply.iva
+                    td = ps.supply.ieps
+                    td
+#supplyModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
+  .modal-dialog.modal-xl role="document" 
+    .modal-content
+      = form_tag(commercial_provider_add_supplies_path(@provider.id), method: "patch", remote: true) do
+        .modal-header.row
+            .col-sm-8
+              h5#supplyModalLabel.modal-title Agregar insumos
+            .col-sm-4.text-right
+              button.close aria-label="Close" data-dismiss="modal" type="button" 
+                span aria-hidden="true"  ×
+        .modal-body
+          table.table.table-sm.data-table.table-hover.text-nowrap.table-bordered.s-14.table-striped.text-left.mb-0
+            thead
+              tr.bg-light-gray
+                th width="100" #
+                th Nombre
+                th Categoria
+                th Moneda
+                th IVA
+                th IEPS
+                th.text-center Agregar
+            tbody#tbody.s-13
+              - if @supplies.empty?
+                tr
+                  td.text-center colspan="9"
+                    i Sin productos
+              - else
+                - @supplies.each do |supply|
+                  tr
+                    td = supply.code.upcase
+                    td = supply.name.upcase 
+                    td = supply.category.name.upcase 
+                    td = supply.currency.upcase
+                    td = supply.iva
+                    td = supply.ieps
+                    td.text-center
+                      input type="checkbox" value=supply.id name="supplies[]"
+        .modal-footer
+          button.btn.btn-sm.btn-secondary data-dismiss="modal" type="button"  Cancelar
+          button.btn.btn-sm.btn-primary type="submit"  
+            i.fas.fa-save.mr-2
+            | Guardar
+

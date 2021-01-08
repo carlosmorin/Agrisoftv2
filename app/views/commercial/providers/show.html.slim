@@ -1,28 +1,39 @@
-section.content-header.pb-0
-  .container
+section.content-header.pt-2 data-controller="providers"
+  .container-fluid.bb-gray2
     .row
-      .col-12.text-left.pr-2.s-12
-        h4 Detalle de proveedor
-section.content.mt-2
-  .container.mt-2
+      .col-12.text-left.pr-2.s-12 data-turbolinks-permanent=""
+        = link_to commercial_providers_path, title: "Volver al listado", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: "btn s-18 mr-4 c-gray" do
+          i.fas.fa-arrow-left
+        = link_to edit_commercial_provider_path(@provider), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: "btn s-18 c-gray" do
+          i.fas.fa-edit
+        - if @provider.active?
+          = link_to commercial_provider_update_status_path(@provider, status: :inactive), title: "Desactivar", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', data: { action: 'click->providers#confirm' }, class: "btn s-20 c-gray c-red", style: "font-size: 1.3rem" do
+            i.fas.fa-toggle-off
+        - else
+          = link_to commercial_provider_update_status_path(@provider, status: :active), title: "Activar", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', data: { action: 'click->providers#confirm' }, class: "btn s-20 c-gray text-success", style: "font-size: 1.3rem" do
+            i.fas.fa-toggle-on
+      .col-12
+        hr.my-1
+section.content
+  .container-fluid
     .row
       .col-12
         .row
           .col-8
-            h4 
-              b = @provider.name.upcase
-          .col-4.text-right
-            = link_to commercial_providers_path, class: "btn btn-sm btn-default s-12 mr-2 c-gray" do
-              i.fas.fa-chevron-left
-              span.ml-2 Atras
-            = link_to edit_commercial_provider_path(@provider), class: "btn btn-sm btn-success s-12 mr-2 c-gray" do
-              i.fas.fa-edit
-              span.ml-2 Editar
+            h4 = @provider.name.capitalize
+          .col-4.text-left
+            - if @provider.inactive?
+              .alert.alert-danger
+                i.fas.fa-info-circle.mr-2
+                b Porveedor inactivo
         = render "shared/alerts"
-        .row.mt-3
-          .col-12
-            = render "commercial/providers/show/general"
-            = render "commercial/providers/show/fiscal"
-            = render "commercial/providers/show/contacts"
-            = render "commercial/providers/show/addresses"
-            = render "commercial/providers/show/bank_accounts"
+        .row.mt-2
+          .col-3
+            = render "commercial/providers/show/tabs"
+          .col-9
+            = render "commercial/providers/show/general" if params[:tab] == 'general'
+            = render "commercial/providers/show/contacts" if params[:tab] == 'contacts'
+            = render "commercial/providers/show/addresses" if params[:tab] == 'addresses'
+            = render "commercial/providers/show/bank_accounts" if params[:tab] == 'banks'
+
+ 

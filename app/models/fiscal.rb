@@ -18,9 +18,13 @@ class Fiscal < ApplicationRecord
     address.locality
   end
 
+  def country
+    address.country
+  end
+
   private
 
   def country_valid?
-    (fiscalable.try(:fiscal?) && fiscalable&.country&.short_name.eql?('USA'))
+    (fiscalable.try(:fiscal?) && fiscalable.try(:country)&.short_name.eql?('USA'))
   end
 end

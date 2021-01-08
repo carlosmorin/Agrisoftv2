@@ -1,8 +1,7 @@
-br
 section
 	h5
 		i.fas.fa-address-book.mr-2
-		b Contactos
+		span Listado de Contactos
 - @provider.contacts.order(main_contact: :desc).each do |contact|
 	div class="card card-body py-2 mt-1 #{contact.main_contact? ? 'main_contact' : nil}"
 		.row
