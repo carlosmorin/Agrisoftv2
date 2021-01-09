@@ -10,7 +10,9 @@ module Commercial
     def index
       @providers = Provider.all.paginate(page: params[:page], per_page: 16)
 
-      search if params[:q].present?
+      search if params[:query].present?
+      filter_providers_by_category if params[:category].present?
+      filter_providers_by_subcategory if params[:provider_subcategory_id].present?
     end
 
     def new
@@ -32,6 +34,7 @@ module Commercial
 
       filter_by_query if params[:query].present?
       filter_by_category if params[:category].present?
+      xls_export if params[:format].present?
     end
 
     def create
@@ -73,14 +76,29 @@ module Commercial
       @provider.update(status: params[:status])
     end
 
+    def delete_supply
+      ps = ProvidersSupply.find(params[:ps])
+      ps.destroy!
+    end
+
     private
 
     def search
-      q = Regexp.escape(params[:q])
+      query = Regexp.escape(params[:query])
 
-      @providers = @providers.where('name ~* ?', q)
+      @providers = @providers.where("CONCAT(name, '', code) ~* ?", query)
     end
 
+    def filter_providers_by_category
+      category = params[:category]
+      @providers = @providers.where(provider_category_id: category)
+    end
+
+    def filter_providers_by_subcategory
+      subcategory = params[:provider_subcategory_id]
+
+      @providers = @providers.where(subcategory_id: subcategory)
+    end
 
   	def provider_params
       params.require(:provider).permit(:id, :code, :name, :provider_type, 
@@ -111,8 +129,6 @@ module Commercial
       @provider = Provider.find(id)
     end
 
-    private
-
     def addresses_attributes
       [ :id, :name, :street, :outdoor_number, :interior_number, :cp,
         :references, :neighborhood, :phone, :country_id, :state_id, :comments, 
@@ -129,6 +145,10 @@ module Commercial
       category = params[:category]
 
       @supplies_collection = @supplies_collection.joins(:supply).where("supplies.category_id": category)
+    end
+
+    def xls_export
+      render xlsx: 'Catalogo de productos', template: 'commercial/providers/products.xlsx.axlsx'
     end
   end
 end

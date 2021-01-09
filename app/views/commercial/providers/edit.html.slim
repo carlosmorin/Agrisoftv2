@@ -1,11 +1,13 @@
-.container
-  section.content-header.pb-0
-    .row
-      .col-12.text-left.pr-2.s-12
-        = render "shared/breadcrumbs_nav"
-    .row.mb-2
-      .col-12
-        h3 = "Editar proveedor".upcase 
+.container-fluid.bb-gray2
+  section.content-header.pb-0.pt-2
+    .row.pt-1
+      .col-2.text-left.pr-2.s-12
+        = link_to commercial_providers_path(params[:provider_id]), title: "Volver al listado", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: "btn s-18 mr-4 c-gray btn-link" do
+          i.fas.fa-arrow-left
+      .col-8.text-center.pr-2.s-12
+        h4.mt-1
+          b = "Editar proveedor".upcase 
+.container.mt-4
   section.content
     = render "shared/form_info"
     - categories = ProviderCategory.all

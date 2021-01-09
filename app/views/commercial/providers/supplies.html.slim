@@ -1,4 +1,4 @@
-section.content-header.pb-0.pt-2
+section.content-header.pb-0.pt-2 data-controller="providers-supplies"
   .container-fluid.bb-gray2
     .row
       .col-1.text-left.pr-2.s-12.bb-gray2 data-turbolinks-permanent=""
@@ -36,7 +36,7 @@ section.content-header.pb-0.pt-2
                   | Buscar
                   i.fas.fa-search.ml-2
               .col-2.pt-4.text-right
-                button.btn.btn-sm.btn-success.mr-2 type="submit" name="xls" 
+                button.btn.btn-sm.btn-success.mr-2 type="submit" name="format" value="xls"
                   | Exportar
                   i.fas.fa-file-excel.ml-2
         .card-body.p-0
@@ -64,7 +64,11 @@ section.content-header.pb-0.pt-2
                     td = ps.supply.currency.upcase
                     td = ps.supply.iva
                     td = ps.supply.ieps
-                    td
+                    td.text-center
+                      = link_to commercial_provider_delete_supply_path(@provider, ps: ps.id ), title: "Eliminar", data: { toggle: 'tooltip', placement: 'bottom', action: 'click->providers-supplies#confirmDeleteItem' }, class: "btn btn-sm text-danger" do
+                        i.fas.fa-trash
+                      = link_to config_production_supply_path(ps.supply.id, tab: :presentations), target: :_blank, title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: "btn btn-sm text-primary" do
+                        i.fas.fa-arrow-right
 #supplyModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" 
   .modal-dialog.modal-xl role="document" 
     .modal-content
@@ -76,7 +80,7 @@ section.content-header.pb-0.pt-2
               button.close aria-label="Close" data-dismiss="modal" type="button" 
                 span aria-hidden="true"  ×
         .modal-body
-          table.table.table-sm.data-table.table-hover.text-nowrap.table-bordered.s-14.table-striped.text-left.mb-0
+          table#example.table.table-sm.data-table.table-hover.text-nowrap.table-bordered.s-14.table-striped.text-left.mb-4
             thead
               tr.bg-light-gray
                 th width="100" #
@@ -108,3 +112,7 @@ section.content-header.pb-0.pt-2
             i.fas.fa-save.mr-2
             | Guardar
 
+javascript:
+  $(document).ready(function() {
+    $('#example').DataTable();
+  });

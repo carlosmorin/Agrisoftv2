@@ -491,3 +491,12 @@ label.error{
   padding: 5px;
   border-top: 1px solid #dee2e6;
 }
+
+
+// Datatable adjust
+.dataTables_filter > label{
+	width: 100%; 
+}
+.dataTables_info, .paging_simple_numbers{
+	font-size: 12px !important;
+}

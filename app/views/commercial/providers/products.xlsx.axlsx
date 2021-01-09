@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+axlsx = Axlsx::Package.new
+
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: 'Catalogo de productos') do |sheet|
+  title_style = wb.styles.add_style(sz: 15, b: true, alignment: { horizontal: :left })
+  header_style = wb.styles.add_style(sz: 12, b: true, alignment: { horizontal: :left })
+  row_style = wb.styles.add_style(sz: 10, alignment: { horizontal: :left })
+  sheet.add_row
+  sheet.add_row ['Porveedor:', @provider.name.upcase, '', '', '', ''], style: title_style
+  sheet.add_row ['Catalogo de productos', '', '', '', '', ''], style: title_style
+  sheet.add_row
+  sheet.add_row ['Codigo', 'Nombre', 'Categoria', 'Moneda', 'IVA', 'IEPS'], style: header_style
+  @provider.providers_supplies.each do |ps|
+  	sheet.add_row [ ps.supply.code.upcase, ps.supply.name.upcase, ps.supply.category.name, ps.supply.currency, ps.supply.iva, ps.supply.ieps], style: row_style
+  end
+end
+
+axlsx.serialize 'Catalogo de productos.xlsx'

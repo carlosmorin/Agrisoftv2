@@ -127,6 +127,7 @@ Rails.application.routes.draw do
       resources :addresses
       get :supplies
       patch :add_supplies
+      patch :delete_supply
     end
     namespace :config do
       root to: 'main#index'
