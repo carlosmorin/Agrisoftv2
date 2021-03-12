@@ -1,0 +1,10 @@
+.nested-fields
+  .row
+    .col-md-8.px-3.py-1.px-4
+      = f.input :supply_id, required: true, collection: Supply.all.pluck(:name, :id), label: false, input_html: { class: 's-12' }
+    .col-md-2.px-3.py-1
+      = f.input :quantity, required: true, label: false, input_html: { class: 's-14 form-control form-control-sm'  }
+    .col-md-1.px-3.py-1
+    .col-md-1.pt-1.text-center
+      = link_to_remove_association f, class: "btn btn-sm text-danger s-16", title: "Eliminar" do
+        i.fas.fa-trash

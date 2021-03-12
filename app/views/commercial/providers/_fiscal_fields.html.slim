@@ -4,6 +4,8 @@
       = f.input :bussiness_name, label: 'Razón Social:', input_html: { class: 's-12 form-control form-control-sm'}
     .col-6
       = f.input :rfc, label: 'RFC:', input_html: { class: 's-12 form-control form-control-sm'}
+      = link_to_remove_association f, class: "btn btn-danger rounded-remove s-14 mt-4 remove_fiscal d-none" do
+            i.fas.fa-trash.s-12
   .row.mt-3
     .col-4
       = f.input :cfdi_usage, collection: Sat::CfdiUsage.all.pluck(:description, :code), label: 'Uso CFDI:', input_html: { class: 's-12'}

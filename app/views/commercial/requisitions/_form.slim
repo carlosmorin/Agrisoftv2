@@ -1,0 +1,54 @@
+= simple_form_for([:commercial, @requisition], html: { novalidate: true } ) do |f|
+  .row
+    .col-12
+      .card
+        .card-header.bg-light-gray
+          h5.mb-0 
+            b Generales
+        .card-body data-controller="datepickers commercial--new-requisitions"
+          .form-group
+            .row
+              .col-9
+                h6.bold Datos de solicitud
+              .col-3.text-right
+                small.mr-2 Fecha de solicitud:
+                b = Time.zone.now().strftime("%d/%m/%Y")
+            .row.mt-4
+              .col-sm-1
+                = f.label :user_id, 'Solicitante:'
+              .col-sm-6.pr-4
+                = f.input :user_id, collection: User.all, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+              .col-sm-1
+                = f.label :limit_at, 'Fecha de requermiento:'
+              .col-sm-4
+                 = f.input :limit_at, as: :string, label: false ,required: true, autofocus: true, input_html: { class: 'form-control form-control-sm date-picker' }
+            .row.mt-3
+              .col-sm-1
+                = f.label :department, 'Departamento:'
+              .col-sm-6.pr-4
+	              = f.input :department, label: false, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+              .col-sm-1
+                = f.label :priority, 'Nivel de prioridad:'
+              .col-sm-4
+	              = f.input :priority, collection: Requisition::PRIORITIES.invert, label: false ,required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+          .row.mt-4
+            .col-12.table.table-sm.mt-4
+              .row.bold.bg-light-gray.p-1.mb-2
+                .col-lg-5
+                  span.s-14 DESCRIPCIÓN DE INSUMO  
+                .col-lg-2
+                  span.s-14 CANTIDAD
+                .col-lg-3
+                  span.s-14 UNIDAD DE MEDIDA
+                .col-lg-1
+              .row
+                .col-12
+                  #supplies.supplies
+                    = f.simple_fields_for :requisitions_supplies do |rs|
+                      = render 'requisitions_supply_fields', f: rs
+              .row.mt-2
+                .col-12.text-center
+                  = link_to_add_association f, :requisitions_supplies, class: "btn btn-sm btn-primary s-12", data: { association_insertion_node: '#supplies', association_insertion_method: :append } do
+                      svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+                        path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
+                      span.pl-2 Agregar insumo

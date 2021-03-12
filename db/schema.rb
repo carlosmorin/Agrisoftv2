@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_08_140540) do
+ActiveRecord::Schema.define(version: 2021_01_10_141516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "action_text_rich_texts", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "body"
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
-  end
 
   create_table "active_ingredient_supplies", force: :cascade do |t|
     t.bigint "supply_id", null: false
@@ -403,19 +393,6 @@ ActiveRecord::Schema.define(version: 2021_01_08_140540) do
     t.string "short_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "create_appointments", force: :cascade do |t|
-    t.string "n_request"
-    t.datetime "startet_at"
-    t.datetime "finished_at"
-    t.datetime "appointment_at"
-    t.datetime "commitment_at"
-    t.string "appointment_number"
-    t.bigint "shipment_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["shipment_id"], name: "index_create_appointments_on_shipment_id"
   end
 
   create_table "crops", force: :cascade do |t|
@@ -838,6 +815,33 @@ ActiveRecord::Schema.define(version: 2021_01_08_140540) do
     t.index ["state_id"], name: "index_ranches_on_state_id"
   end
 
+  create_table "requisitions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "department"
+    t.string "folio"
+    t.text "comments"
+    t.datetime "limit_at"
+    t.integer "priority", default: 0
+    t.integer "status", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_requisitions_on_user_id"
+  end
+
+  create_table "requisitions_supplies", force: :cascade do |t|
+    t.bigint "requisition_id", null: false
+    t.bigint "supply_id", null: false
+    t.bigint "unit_measure_id", null: false
+    t.string "supply"
+    t.integer "status"
+    t.decimal "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["requisition_id"], name: "index_requisitions_supplies_on_requisition_id"
+    t.index ["supply_id"], name: "index_requisitions_supplies_on_supply_id"
+    t.index ["unit_measure_id"], name: "index_requisitions_supplies_on_unit_measure_id"
+  end
+
   create_table "sat_cfdi_usages", force: :cascade do |t|
     t.string "code"
     t.string "description"
@@ -1134,7 +1138,6 @@ ActiveRecord::Schema.define(version: 2021_01_08_140540) do
   add_foreign_key "contracts_products", "contracts"
   add_foreign_key "contracts_products", "currencies"
   add_foreign_key "contracts_products", "products"
-  add_foreign_key "create_appointments", "shipments"
   add_foreign_key "crops_colors", "colors"
   add_foreign_key "crops_colors", "crops"
   add_foreign_key "crops_deseases", "crops"
@@ -1192,6 +1195,10 @@ ActiveRecord::Schema.define(version: 2021_01_08_140540) do
   add_foreign_key "quotes", "contacts"
   add_foreign_key "quotes", "delivery_addresses"
   add_foreign_key "quotes", "users"
+  add_foreign_key "requisitions", "users"
+  add_foreign_key "requisitions_supplies", "requisitions"
+  add_foreign_key "requisitions_supplies", "supplies"
+  add_foreign_key "requisitions_supplies", "unit_measures"
   add_foreign_key "shipments", "clients"
   add_foreign_key "shipments", "companies"
   add_foreign_key "shipments", "contacts"

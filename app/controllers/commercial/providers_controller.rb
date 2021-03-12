@@ -43,7 +43,7 @@ module Commercial
       if @provider.save
         msg = "Proveedor creado correctamente <i class='fas fa-check-circle ml-2'></i>"
         flash[:notice] = msg
-        redirect_to commercial_provider_path(@provider)
+        redirect_to commercial_provider_path(@provider, tab: :general)
       else
         add_breadcrumb 'Nuevo proveedor'
         render :new
@@ -54,7 +54,7 @@ module Commercial
       if @provider.update(provider_params)
         msg = "Proveedor actualizado correctamente <i class='fas fa-check-circle ml-2'></i>"
         flash[:notice] = msg
-        redirect_to commercial_provider_path(@provider)
+        redirect_to commercial_provider_path(@provider, tab: :general)
       else
         render :edit
       end

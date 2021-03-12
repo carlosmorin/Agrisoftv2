@@ -25,12 +25,4 @@ class Provider < ApplicationRecord
 	accepts_nested_attributes_for :addresses, :allow_destroy => true
 	accepts_nested_attributes_for :bank_accounts, :allow_destroy => true
 	accepts_nested_attributes_for :fiscals, :allow_destroy => true
-
-  validate :validate_fiscals
-
-	private
-  
-  def validate_fiscals
-    return errors.add :base, "Must have at least one Team" unless self.fiscal?
-  end 
 end
