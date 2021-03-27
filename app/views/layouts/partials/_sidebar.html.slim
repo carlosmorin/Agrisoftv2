@@ -142,6 +142,10 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 data-turbolinks-permanent=""
             span.right == circle_down_icon(size: 12, color: 'light-gray')
           ul.nav.nav-treeview
             li.nav-item
+              = link_to commercial_requisitions_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(commercial_requisitions_path)}" do
+                == circle_icon(size: 10, color: 'light-gray')
+                p.s-14.text-normal Gestionar requisiciónes
+            li.nav-item
               = link_to commercial_providers_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(commercial_providers_path)}" do
                 == circle_icon(size: 10, color: 'light-gray')
                 p.s-14.text-normal Gestionar proveedores

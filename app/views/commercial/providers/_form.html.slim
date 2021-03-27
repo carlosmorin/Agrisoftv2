@@ -1,3 +1,4 @@
+= render 'shared/errors', object: @provider
 = simple_form_for([:commercial, @provider], html: { novalidate: true }) do |f|
   = f.input :status, as: :hidden, input_html: { value: '0' }
   input type="hidden" name="next_tab" value="fiscal_address"/
@@ -57,9 +58,11 @@
               	i.fas.fa-file-invoice.mr-2
                 b Datos fiscales
             .col-2.text-right
+              = link_to_add_association f, :fiscals, class: "btn btn-sm btn-primary s-12 add_fiscal d-none", data: { association_insertion_node: '.fiscals', association_insertion_method: :append } do
+                i.fas.fa-plus-circle.mx-1.s-12
+                span.pl-2 Agregar
         .card-body
           #fiscals.fiscals
-          	- f.object.fiscals.new unless f.object.fiscals.any?
             = f.simple_fields_for :fiscals do |fiscal|
               = render 'fiscal_fields', f: fiscal
     .col-12.mt-4
@@ -113,11 +116,11 @@
               = render 'bank_account_fields', f: ba
     
   .row
-		.col-6.text-left
-			= link_to commercial_providers_path, class: 'btn btn-sm btn-default' do
-				i.fas.fa-chevron-left.s-12.mx-2
-				span Atrás
-		.col-6.text-right
-		  = f.button :submit, "Crear proveedor", class: "btn btn-sm btn-dark-blue"
-
+    .col-6.text-left
+      = link_to commercial_providers_path, class: 'btn btn-sm btn-default' do
+        i.fas.fa-chevron-left.s-12.mx-2
+        span Atrás
+    .col-6.text-right
+      - label = f.object.persisted? ? 'Actualizar proveedor' : 'Crear proveedor'
+      = f.button :submit, label, class: "btn btn-sm btn-dark-blue"
 br

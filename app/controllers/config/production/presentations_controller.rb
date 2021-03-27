@@ -23,7 +23,7 @@ module Config
         # @presentation.supply_id = params[:supply_id] if params[:supply_id].present?
         if @presentation.save
           flash[:notice] = "<i class='fa fa-check-circle mr-1 s-18'></i>  Presentacion creada correctamente"
-          redirect_to new_config_production_presentation_path
+          redirect_to config_production_presentations_path
         else
           render :new
         end
