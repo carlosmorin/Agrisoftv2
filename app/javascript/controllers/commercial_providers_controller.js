@@ -15,6 +15,15 @@ export default class extends Controller {
           new SlimSelect({select: `#${$(selects[i]).attr("id")}`})
         }
       })
+
+    $("#fiscals")
+      .on('cocoon:after-insert', function(e, insertedItem, originalEvent) {
+        console.log("after-insert")
+        let selects = $(insertedItem).find("select")
+        for (var i = 0, max=selects.length; i < max; i++) {
+          new SlimSelect({select: `#${$(selects[i]).attr("id")}`})
+        }
+      })
   }
 
   getSubcategories(e){
@@ -39,8 +48,10 @@ export default class extends Controller {
   toggleFiscalData(e){
     if (e.currentTarget.checked) {
       this.fiscalDataContainerTarget.classList.remove("d-none")
+      $(".add_fiscal").trigger('click')
     }else{
       this.fiscalDataContainerTarget.classList.add("d-none")
+      $(".remove_fiscal").trigger('click')
     }
   }
 
