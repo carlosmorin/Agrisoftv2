@@ -54,7 +54,7 @@ class ShipmentsExpense < ApplicationRecord
   end
 
   def freight_price
-    binding.pry
+    0
   end
 
   private

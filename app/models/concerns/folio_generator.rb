@@ -40,4 +40,17 @@ module FolioGenerator
       "OV-#{order_sale_number}"
     end
   end
+
+  def get_serie(id)
+    case id.to_s.size
+    when 1
+      "000#{id}"
+    when 2
+      "00#{id}"
+    when 3
+      "0#{id}"
+    when 4
+      "#{id}"
+    end
+  end
 end

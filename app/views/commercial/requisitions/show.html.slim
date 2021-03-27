@@ -1,0 +1,85 @@
+.container-fluid.bb-gray2
+  section.content-header.pb-0.pt-2
+    .row.pt-1
+      .col-2.text-left.pr-2.s-12
+      .col-8.text-center.pr-2.s-12
+        h4
+          b = "Detalle de Requisición".upcase
+      .col-2.text-right.pr-2
+    .row
+      .col-12
+        hr.my-0
+.container data-controller="commercial--show"
+  .row.mt-4
+    .col-1
+    .col-10
+      .row
+        .col-sm-2
+          = link_to commercial_requisitions_path, title: "Volver", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', class: "btn s-16 mr-4 c-gray btn-link" do
+            i.fas.fa-arrow-left
+        .col-sm-10.text-right
+          - unless @requisition.authorized?
+            - unless @requisition.canceled?
+              = link_to commercial_requisition_update_status_path(@requisition, status: :canceled), class: 'btn btn-danger text-center pr-2 s-12', data: { action: 'click->commercial--show#confirm' } do
+                i.fas.fa-ban.s-12.mr-1
+                span Cancelar
+              '
+              = link_to commercial_requisition_update_status_path(@requisition, status: :authorized), class: 'btn btn-success text-center pr-2 s-12 ', data: { action: 'click->commercial--show#confirm' } do
+                i.fas.fa-check.s-12.mr-1
+                span Autorizar
+              '
+              = link_to edit_commercial_requisition_path(@requisition), class: 'btn btn-secondary text-center pr-2 s-12 ' do
+                i.fas.fa-edit.s-12.mr-1
+                span Editar
+            '
+          = link_to commercial_requisition_print_path(@requisition, format: :pdf), target: '_blank', class: "btn btn-danger text-center pr-2 s-12" do
+            i.fas.fa-file-pdf.mr-1
+            span PDF
+      .row
+        .col-lg-12
+          = render "shared/alerts"
+      .card.card-body.mt-2
+        .row
+          .col-sm-6.text-left
+          	h5 
+          		b.mr-2 = @requisition.folio
+          .col-sm-6.text-right
+          	h5 == status @requisition
+        .row.mt-2
+          .col-sm-6.text-left
+            label.mr-2 Departamento:
+            b.s-14 = @requisition.department.upcase
+            br
+            label.mr-2 Solicitante:
+            b.s-14 = @requisition.user.full_name
+            br
+            label.mr-2 Prioridad:
+            == priority @requisition.priority
+          .col-sm-6.text-right
+            label.mr-2 Fecha de solicitud:
+            b = @requisition.created_at.strftime("%d/%m/%Y")
+            br
+            label.mr-2 Fecha limite:
+            b = @requisition.limit_at.strftime("%d/%m/%Y")
+      .card.card-body.p-0
+        table.table.table-sm.table-bordered.table-striped.text-left.mb-0.mt-0
+          thead.s-15
+            tr.bg-light-gray
+              th DESCRIPCIÓN DE INSUMO
+              th CANTIDAD
+              th UNIDAD DE MEDIDA
+          tbody.s-13
+            - @requisition.requisitions_supplies.order(:id).each do |rs| 
+              tr
+                td = rs.supply.name
+                td = rs.quantity
+                td = rs.unit_measure.name.upcase
+          tfoot.s-13
+          	tr
+          		td
+          		td 
+          			b = @requisition.supplies_total
+          		td
+      .card.card-body
+      	small Comentarios adicionales
+      	p.text-gray = @requisition.comments

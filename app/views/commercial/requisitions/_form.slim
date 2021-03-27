@@ -1,15 +1,11 @@
-= simple_form_for([:commercial, @requisition], html: { novalidate: true } ) do |f|
+= simple_form_for([:commercial, @requisition], html: { novalidate: true, data: { controller: "datepickers requisitions" } } ) do |f|
   .row
     .col-12
-      .card
-        .card-header.bg-light-gray
-          h5.mb-0 
-            b Generales
-        .card-body data-controller="datepickers commercial--new-requisitions"
+      .card 
+        .card-body 
           .form-group
             .row
               .col-9
-                h6.bold Datos de solicitud
               .col-3.text-right
                 small.mr-2 Fecha de solicitud:
                 b = Time.zone.now().strftime("%d/%m/%Y")
@@ -30,9 +26,13 @@
               .col-sm-1
                 = f.label :priority, 'Nivel de prioridad:'
               .col-sm-4
-	              = f.input :priority, collection: Requisition::PRIORITIES.invert, label: false ,required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+                = f.input :priority, collection: Requisition::PRIORITIES.invert, label: false ,required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+  .row
+    .col-12
+      .card 
+        .card-body.pt-0
           .row.mt-4
-            .col-12.table.table-sm.mt-4
+            .col-12.table.table-sm
               .row.bold.bg-light-gray.p-1.mb-2
                 .col-lg-5
                   span.s-14 DESCRIPCIÓN DE INSUMO  
@@ -52,3 +52,18 @@
                       svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
                         path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
                       span.pl-2 Agregar insumo
+  .row
+    .col-12
+      .card 
+        .card-body
+          .row
+            .col-12
+              = f.input :comments, label: 'Comentarios adicionales', autofocus: true, input_html: { class: 'form-control' }
+  .row
+    .col-12.text-right
+      = link_to 'Atras', commercial_requisitions_path, class: 'btn btn-sm btn-link'
+      '
+      - button_text = f.object.persisted? ? 'Actualizar' : 'Crear' 
+      = f.button :submit, "#{button_text} REQUISICIÓN".capitalize, class: 'btn btn-sm btn-dark-blue s-16'
+br
+  

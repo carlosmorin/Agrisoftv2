@@ -2,6 +2,12 @@
 
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  namespace :api do
+    namespace :services do
+      resources :supplies, only: %i[index]
+    end
+  end
+
   namespace :admin do
     root to: 'main#index'
     resources :users
@@ -122,6 +128,10 @@ Rails.application.routes.draw do
 
   namespace :commercial do
     root to: 'main#index' # Comercial dashboard
+    resources :requisitions do
+      get '/print', to: 'requisitions#print'
+      patch '/update_status', to: 'requisitions#update_status'
+    end
     resources :providers do
       patch :update_status
       resources :addresses

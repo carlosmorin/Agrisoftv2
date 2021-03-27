@@ -13,6 +13,7 @@ require('datatables.net-bs4')
 require("admin-lte")
 require("bootstrap");
 require('jquery')
+require('daterangepicker')
 const toastr = require('toastr');
 
 import "bootstrap"
