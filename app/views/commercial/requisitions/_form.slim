@@ -35,7 +35,12 @@
             .col-12.table.table-sm
               .row.bold.bg-light-gray.p-1.mb-2
                 .col-lg-5
-                  span.s-14 DESCRIPCIÓN DE INSUMO  
+                  .row
+                    .col-lg-8
+                      span.s-14 DESCRIPCIÓN DE INSUMO  
+                    .col-lg-4.text-right
+                      = link_to new_config_production_supply_path, class: 'btn btn-xs btn-primary s-10', target: '_blank', title: "Agregar insumo", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom' do
+                        i.fas.fa-plus
                 .col-lg-2
                   span.s-14 CANTIDAD
                 .col-lg-3

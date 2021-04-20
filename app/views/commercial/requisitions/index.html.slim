@@ -32,6 +32,7 @@ section.content
                   = select_tag :priority, options_for_select(Requisition::PRIORITIES.invert, selected: params[:priority]), include_blank: 'Todos', class: 's-12 text-upcase form-control form-control-sm'
                 .col-3
                   label.s-12.mb-0 Fecha limite:
+                  - dates = params[:dates].present? ? params[:dates] : "#{1.month.ago.strftime("%d/%m/%Y")} - #{Time.zone.now.strftime("%d/%m/%Y")} "
                   = text_field_tag(:dates, params[:dates], class: 'form-control form-control-sm', placeholder: '')
                 .col-2
                   button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"  
@@ -65,8 +66,8 @@ section.content
                       td = req.department.upcase
                       td = req.user.full_name
                       td = req.comments
-                      td == priority req.priority
-                      td == status req
+                      td == priority(req.priority)
+                      td == status(req)
                       td = req.created_at.strftime("%d/%m/%Y")
                       td = req.limit_at.strftime("%d/%m/%Y")
                       td.text-center
