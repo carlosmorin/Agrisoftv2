@@ -1,0 +1,69 @@
+.container-fluid
+  section.content-header.pb-0
+    .row
+      .col-12
+        h5.mb-0
+          b = "GESTIÓN DE AREAS".upcase
+    .row
+      .col-lg-12
+        hr
+  section.content
+    .container-fluid
+      .row
+        .col-lg-12
+          = render "shared/alerts"
+        .col-md-12
+          .card
+            .card-header.p-2.pb-1.bg-light-gray
+              .row
+                .col-10
+                  = form_tag(traceability_areas_path, method: "GET") do
+                    - query = params[:query].present? ? params[:query] : ''
+                    .form-row.align-items-center.row.pl-2
+                      .col-4
+                        label.s-12.mb-0 Buscar por:
+                        = text_field_tag(:query, query, class: 'form-control form-control-sm', placeholder: 'Nombre')
+                      .col-3.my-1
+                        button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"
+                          i.fas.fa-search
+                          '
+                          span Buscar
+            .card-body.table-responsive.p-0
+              table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+                thead
+                  tr.bg-light-gray
+                    th style=("width: 5%")  #
+                    th Nombre
+                    th Valvula
+                    th Fecha de inicio
+                    th Fecha Fin
+                    th Status
+                    th Ciclo
+                    th Inventario
+                    th.text-center colspan="2" style=("width: 12%") Acciones
+                tbody#tbody
+                  - if @areas.empty?
+                    tr
+                      td.text-center colspan="6"
+                        i Sin registros 
+                  - else
+                    - @areas.each do |ca|
+                      tr 
+                        td = ca.id
+                        td = ca.name.upcase
+                        td = ca.area.name.upcase 
+                        td = ca.started_at.strftime("%d/%m/%Y")
+                        td = ca.finished_at.strftime("%d/%m/%Y")
+                        td == cicle_area_status ca.status
+                        td = link_to ca.cicle.name, traceability_area_path(ca.cicle)
+                        td = ca.cicle_area_log&.name
+                        td.text-center
+                          .btn-group
+                            = link_to traceability_area_path(ca), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                                i.fas.fa-arrow-right
+                         
+            .card-footer.p-2.pb-1.bg-light-gray
+              .row
+                .col-lg-12.d-flex.justify-content-center
+                  .digg_pagination.mt-2.s-14
+                    = will_paginate @areas, :container => false, :page_links => true

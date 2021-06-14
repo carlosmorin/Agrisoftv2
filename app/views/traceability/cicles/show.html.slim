@@ -1,0 +1,68 @@
+.container-fluid
+  section.content-header.pb-0
+    .row
+      .col-2
+      .col-4
+        h5.mb-0
+          = link_to traceability_cicles_path, class: 'btn-link pl-0 mb-2 mr-4' do
+            i.fas.fa-arrow-left
+          b = @cicle.name.upcase
+      .col-4.text-right
+        - if @cicle.inactive?
+          = link_to edit_traceability_cicle_path, class: 's-16 pl-2' do
+            i.fas.fa-edit
+          '
+          span |
+          = link_to traceability_cicle_update_status_path(@cicle), method: :patch, class: 'btn btn-sm text-success' do
+            i.fas.fa-toggle-on
+            '
+            b Activar
+    .row
+      .col-12
+        hr
+  section.content-body
+    .row
+      .offset-md-2.col-8
+        = render "shared/alerts"
+        .row
+          .col-12
+            h3 == cicle_status @cicle.status
+        .card
+          .card-body
+            .row
+              .col-6
+                label.mb-0 Rancho:
+                br
+                span = @cicle.ranch_name
+              .col-6
+                label.mb-0 Cultivo:
+                br
+                span = @cicle.crop_name
+            .row
+              .col-6
+                label.mb-0 Fecha de creación:
+                br
+                span = @cicle.created_at.strftime("%d/%m/%Y")
+    .row.mt-2
+      .offset-md-2.col-8
+        .card
+          .card-header.bg-light-gray
+            h6.mb-0.bold Areas
+          .card-body
+            table.table.table-sm
+              thead
+                tr
+                  th scope="col"  Nombre
+                  th scope="col"  Valvula
+                  th scope="col"  Fecha de inicio
+                  th scope="col"  Fecha Fin
+                  th scope="col"  Status
+              tbody
+                - @cicle.cicles_areas.each do |ca|
+                  tr.s-13
+                    th scope="row" 
+                      = link_to ca.name.upcase, traceability_area_path(ca), target: :_blank
+                    td = ca.area.name
+                    td = ca.started_at.strftime("%d/%m/%Y")
+                    td = ca.finished_at.strftime("%d/%m/%Y")
+                    td == cicle_area_status ca.status

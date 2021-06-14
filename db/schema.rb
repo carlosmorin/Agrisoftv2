@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_27_154133) do
+ActiveRecord::Schema.define(version: 2021_06_13_184156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -263,6 +263,40 @@ ActiveRecord::Schema.define(version: 2021_03_27_154133) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "cicles", force: :cascade do |t|
+    t.string "name"
+    t.bigint "crop_id", null: false
+    t.bigint "ranch_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "status", default: 0
+    t.index ["crop_id"], name: "index_cicles_on_crop_id"
+    t.index ["ranch_id"], name: "index_cicles_on_ranch_id"
+  end
+
+  create_table "cicles_areas", force: :cascade do |t|
+    t.bigint "cicle_id", null: false
+    t.bigint "area_id", null: false
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.integer "status", default: 0
+    t.string "name"
+    t.float "busy_porcent"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["area_id"], name: "index_cicles_areas_on_area_id"
+    t.index ["cicle_id"], name: "index_cicles_areas_on_cicle_id"
+  end
+
+  create_table "cicles_areas_logs", force: :cascade do |t|
+    t.bigint "cicles_area_id", null: false
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cicles_area_id"], name: "index_cicles_areas_logs_on_cicles_area_id"
+  end
+
   create_table "client_brands", force: :cascade do |t|
     t.string "name"
     t.integer "client_id"
@@ -403,6 +437,30 @@ ActiveRecord::Schema.define(version: 2021_03_27_154133) do
     t.string "short_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "create_cicles_areas", force: :cascade do |t|
+    t.string "ciciles_areas"
+    t.bigint "cicle_id", null: false
+    t.bigint "area_id", null: false
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.integer "status"
+    t.string "name"
+    t.float "busy_porcent"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["area_id"], name: "index_create_cicles_areas_on_area_id"
+    t.index ["cicle_id"], name: "index_create_cicles_areas_on_cicle_id"
+  end
+
+  create_table "create_cicles_areas_logs", force: :cascade do |t|
+    t.bigint "cicles_areas_id", null: false
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cicles_areas_id"], name: "index_create_cicles_areas_logs_on_cicles_areas_id"
   end
 
   create_table "crops", force: :cascade do |t|
@@ -624,6 +682,32 @@ ActiveRecord::Schema.define(version: 2021_03_27_154133) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_general_information_on_user_id"
+  end
+
+  create_table "harvest_logs", force: :cascade do |t|
+    t.bigint "crop_id", null: false
+    t.bigint "area_id", null: false
+    t.bigint "production_unit_id", null: false
+    t.integer "n_items"
+    t.bigint "harvest_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["area_id"], name: "index_harvest_logs_on_area_id"
+    t.index ["crop_id"], name: "index_harvest_logs_on_crop_id"
+    t.index ["harvest_id"], name: "index_harvest_logs_on_harvest_id"
+    t.index ["production_unit_id"], name: "index_harvest_logs_on_production_unit_id"
+  end
+
+  create_table "harvests", force: :cascade do |t|
+    t.datetime "harvest_at"
+    t.string "responsable"
+    t.string "tractor_identifier"
+    t.string "tractor_driver"
+    t.integer "status", default: 0
+    t.string "folio"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.text "comments"
   end
 
   create_table "hosts", force: :cascade do |t|
@@ -1134,6 +1218,11 @@ ActiveRecord::Schema.define(version: 2021_03_27_154133) do
   add_foreign_key "carriers", "countries"
   add_foreign_key "carriers", "municipalities"
   add_foreign_key "carriers", "states"
+  add_foreign_key "cicles", "crops"
+  add_foreign_key "cicles", "ranches"
+  add_foreign_key "cicles_areas", "areas"
+  add_foreign_key "cicles_areas", "cicles"
+  add_foreign_key "cicles_areas_logs", "cicles_areas"
   add_foreign_key "client_brands", "clients"
   add_foreign_key "client_configs", "clients"
   add_foreign_key "client_configs", "currencies"
@@ -1152,6 +1241,9 @@ ActiveRecord::Schema.define(version: 2021_03_27_154133) do
   add_foreign_key "contracts_products", "contracts"
   add_foreign_key "contracts_products", "currencies"
   add_foreign_key "contracts_products", "products"
+  add_foreign_key "create_cicles_areas", "areas"
+  add_foreign_key "create_cicles_areas", "cicles"
+  add_foreign_key "create_cicles_areas_logs", "cicles_areas", column: "cicles_areas_id"
   add_foreign_key "crops_colors", "colors"
   add_foreign_key "crops_colors", "crops"
   add_foreign_key "crops_deseases", "crops"
@@ -1182,6 +1274,10 @@ ActiveRecord::Schema.define(version: 2021_03_27_154133) do
   add_foreign_key "freights_taxes", "freights"
   add_foreign_key "freights_taxes", "taxes"
   add_foreign_key "general_information", "users"
+  add_foreign_key "harvest_logs", "areas"
+  add_foreign_key "harvest_logs", "crops"
+  add_foreign_key "harvest_logs", "harvests"
+  add_foreign_key "harvest_logs", "production_units"
   add_foreign_key "municipalities", "states"
   add_foreign_key "perforations", "ranches"
   add_foreign_key "pests_damages", "damages"

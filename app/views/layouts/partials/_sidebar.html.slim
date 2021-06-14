@@ -196,8 +196,28 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 data-turbolinks-permanent=""
                       p.s-12.pl-3 Unidades de peso
                   li.nav-item
                     = link_to config_production_categories_path, class: "nav-link py-0 pl-3 mb-0 #{current_link?(config_production_categories_path)}" do
-                      p.s-12.pl-3 Categorias         
-
+                      p.s-12.pl-3 Categorias
+        li.nav-header.pt-2.pb-1.s-12.pl-2.mt-1 PRODUCCIÓN
+        li class="nav-item has-treeview" 
+          a.nav-link.py-1.pl-1.mb-1  href="#" 
+            i.fas.fa-shopping-bag.s-15.mr-2.ml-1
+            p.s-14.ml-1 CICLOS
+            span.right == circle_down_icon(size: 12, color: 'light-gray')
+          ul.nav.nav-treeview
+            li.nav-item
+              = link_to traceability_cicles_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(traceability_cicles_path)}" do
+                == circle_icon(size: 10, color: 'light-gray')
+                p.s-14.text-normal Gestionar ciclos
+            li.nav-item
+              = link_to traceability_areas_path, class: "nav-link py-1 pl-3 mb-0 #{current_link?(traceability_areas_path)}" do
+                == circle_icon(size: 10, color: 'light-gray')
+                p.s-14.text-normal Gestionar areas
+        li class="nav-item has-treeview"
+          = link_to traceability_harvests_path, class: 'nav-link py-1 pl-1 mb-1' do
+            i.fas.fa-clipboard.s-15.mr-2.ml-1
+            p.s-14.ml-1 BITACORA DE COSECHAS
+        li.line-divider 
+          hr.my-0
         li class="nav-item has-treeview" 
           a.nav-link.py-1.pl-2.mb-1  href="#" 
             == cog_icon(color: 'light-gray')

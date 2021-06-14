@@ -241,6 +241,18 @@ Rails.application.routes.draw do
     get '/addresses/locations', to: 'addresses#locations'
   end
 
+  namespace :traceability do
+    resources :cicles do
+      patch '/update_status', to: 'cicles#update_status'
+    end
+    resources :areas, only: [:index, :show]
+    resources :harvests do
+      collection do
+        get '/get_crop', to: 'harvests#get_crop'
+      end
+    end
+  end
+
   resources :carriers do
     get '/get_drivers', to: 'carriers#get_drivers'
     get '/get_units', to: 'carriers#get_units'

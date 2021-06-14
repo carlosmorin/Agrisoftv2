@@ -1,0 +1,70 @@
+.container-fluid
+  section.content-header.pb-0
+    .row
+      .col-2
+      .col-4
+        h5.mb-0
+          = link_to traceability_harvests_path, class: 'btn-link pl-0 mb-2 mr-4' do
+            i.fas.fa-arrow-left
+          b = "BOLETA ##{@harvest.folio}"
+      .col-4.text-right
+        = link_to edit_traceability_harvest_path(@harvest), class: 's-16 pl-2' do
+          i.fas.fa-edit
+    .row
+      .col-12
+        hr
+  section.content-body
+    .row
+      .offset-md-2.col-8
+        = render "shared/alerts"
+         .row
+          .col-12
+            h3 == cicle_status @harvest.status
+        .card
+          .card-body
+            .row
+              .col-8
+                label.mb-0 Responable:
+                br
+                span = @harvest.responsable.upcase
+              .col-4
+                label.mb-0 Fecha de cosecha:
+                br
+                span = @harvest.harvest_at.strftime("%d/%m/%Y")
+            .row.mt-4
+              .col-8
+                label.mb-0 Chofer de tractor:
+                br
+                span = @harvest.tractor_driver.upcase
+              .col-4
+                label.mb-0 Numero de tractor:
+                br
+                span = @harvest.tractor_identifier.upcase
+    .row.mt-2
+      .offset-md-2.col-8
+        .card
+          .card-header.bg-light-gray
+            h6.mb-0.bold Cosechas
+          .card-body
+            table.table.table-sm
+              thead
+                tr
+                  th scope="col"  Valvula
+                  th scope="col"  Cultivo
+                  th scope="col"  U. producción
+                  th scope="col"  N° de cajas
+              tbody
+                - @harvest.harvest_logs.each do |hl|
+                  tr
+                    td = hl.area.name
+                    td = hl.crop.name
+                    td = hl.production_unit.name
+                    td = hl.n_items
+    .row.mt-2
+      .offset-md-2.col-8
+        .card.card-body
+          .row
+            .col-12
+              label.mb-0 Comentarios:
+              br
+              span = @harvest.comments.upcase

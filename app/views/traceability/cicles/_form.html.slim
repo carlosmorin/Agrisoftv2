@@ -1,0 +1,58 @@
+= render "shared/form_info"
+
+= simple_form_for([:traceability, @cicle], html: { novalidate: true, data: { controller: "traceability--cicles" }}) do |f|
+  .row
+    .col-12
+      .card
+        .card-header.bg-light-gray
+          h5.mb-0 
+            b Generales
+        .card-body
+          .form-group
+            .row
+              .col-lg-12
+                = f.input :name, required: true, autofocus: true, input_html: { class: 'form-control ' }
+            .row.mt-2
+              .col-lg-6
+                = f.input :ranch_id, collection: Ranch.all.pluck(:name, :id), required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+              .col-lg-6
+                = f.input :crop_id, collection: Crop.all.pluck(:name, :id), required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+      .card
+        .card-header.bg-light-gray
+          h5.mb-0 
+            b Areas
+        .card-body
+          .row
+            .col-3.text-left
+              b Nombre
+            .col-2.text-left
+              b Valvula
+            .col-3.text-left
+              b Fecha Inicio
+            .col-3.text-left
+              b Fecha Fin
+            .col-1
+          .row
+            .col-12
+              hr
+          .row
+            .col-12
+              #cicles_areas.cicles_areas
+                - @cicle.cicles_areas.new if  @cicle.cicles_areas.empty?
+                = f.simple_fields_for :cicles_areas do |ca|
+                  = render 'cicles_area_fields', f: ca
+          .row.mt-2
+            .col-12.text-center
+              = link_to_add_association f, :cicles_areas, class: "btn btn-sm btn-primary s-12", data: {association_insertion_node: '#cicles_areas', association_insertion_method: :append } do
+                svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14.mr-2 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+                  path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor"
+                span.pl-2 Nuevo area
+
+      .row
+        .col-6.text-left
+          = link_to traceability_cicles_path, class: 'btn btn-sm btn-link' do
+            i.fas.fa-chevron-left.s-12.mx-2
+            span Volver
+        .col-6.text-right
+          - label = f.object.persisted? ? 'Actualizar ciclo' : 'Crear ciclo'
+          = f.button :submit, label, class: "btn btn-sm btn-dark-blue"

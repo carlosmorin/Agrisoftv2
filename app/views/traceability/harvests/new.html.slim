@@ -1,0 +1,17 @@
+.container-fluid
+  section.content-header.pb-0
+    .row
+      .col-2
+      .col-10
+        h5.mb-0
+          = link_to traceability_harvests_path, class: 'btn-link pl-0 mb-2 mr-4' do
+            i.fas.fa-arrow-left
+          b = "Nueva boleta de cosecha".upcase
+    .row
+      .col-lg-12
+        hr
+  section.content-body.pb-0
+    .row
+      .col-2
+      .col-8
+        = render 'form'

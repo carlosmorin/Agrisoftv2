@@ -22,4 +22,8 @@ class User < ApplicationRecord
   def full_name
     "#{name} #{last_name}".upcase
   end
+
+  def time_zone
+    'UTC'
+  end
 end

@@ -1,0 +1,64 @@
+.container-fluid
+  section.content-header.pb-0
+    .row
+      .col-12
+        h5.mb-0
+          b = "GESTIÓN DE BITACORA DE COSECHAS".upcase
+    .row
+      .col-lg-12
+        hr
+  section.content
+    .container-fluid
+      .row
+        .col-lg-12
+          = render "shared/alerts"
+        .col-md-12
+          .card
+            .card-header.p-2.pb-1.bg-light-gray
+              .row
+                .col-10
+                  = form_tag(traceability_harvests_path, method: "GET") do
+                    - query = params[:query].present? ? params[:query] : ''
+                    .form-row.align-items-center.row.pl-2
+                      .col-4
+                        label.s-12.mb-0 Buscar por:
+                        = text_field_tag(:query, query, class: 'form-control form-control-sm', placeholder: 'Folio..')
+                      .col-3.my-1
+                        button.btn.btn-sm.btn-flat.btn-default.bold.mt-4 type="submit"
+                          i.fas.fa-search
+                          '
+                          span Buscar
+                        '
+                        = link_to 'Borrar filtros', traceability_harvests_path, class: 'btn btn-sm btn-link mt-4'
+                .col-lg-2.text-right
+                  = link_to new_traceability_harvest_path, class: 'btn btn-success btn-sm s-12 mt-4' do 
+                    svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+                      path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+                    span.pl-2 Nuevo cosecha
+            .card-body.table-responsive.p-0
+              table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+                thead
+                  tr.bg-light-gray
+                    th style=("width: 5%")  Folio
+                    th Responable
+                    th Fecha de cosecha
+                    th Status
+                    th.text-center colspan="2" style=("width: 12%") Acciones
+                tbody#tbody
+                  - if @harvests.empty?
+                    tr
+                      td.text-center colspan="8"
+                        i Sin registros
+                  - else
+                    - @harvests.each do |hl|
+                      tr
+                        td.s-14 = link_to hl.folio, traceability_harvest_path(hl)
+                        td.s-14 = hl.responsable.upcase
+                        td.s-14 = hl.harvest_at.strftime("%d/%m/%Y")
+                        td.s-14 = hl.status
+                        td.text-center
+                          .btn-group
+                            = link_to edit_traceability_harvest_path(hl), title: "Editar", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                              i.fas.fa-edit
+                            = link_to traceability_harvest_path(hl), title: "Ver detalle", 'data-toggle' => 'tooltip', 'data-placement' => 'left', class: 'btn btn-xs btn-default' do
+                              i.fas.fa-arrow-right

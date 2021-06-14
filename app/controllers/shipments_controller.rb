@@ -118,7 +118,6 @@ class ShipmentsController < ApplicationController
   end
 
   def search
-    q = Regexp.escape(params[:q])
     query = Regexp.escape(params[:q])
 
     @shipments = @shipments.where("concat(folio, ' ', client_folio, ' ',

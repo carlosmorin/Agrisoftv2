@@ -3,6 +3,7 @@
 class Area < ApplicationRecord
   belongs_to :ranch
   belongs_to :irrigation_type
+  has_many :cicles_areas, inverse_of: :area, dependent: :destroy
   validates :name, :territory, presence: true
   validate :name_in_use?
 

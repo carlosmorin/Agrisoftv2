@@ -1,0 +1,45 @@
+.container-fluid
+  section.content-header.pb-0
+    .row
+      .col-2
+      .col-4
+        h5.mb-0
+          = link_to traceability_areas_path, class: 'btn-link pl-0 mb-2 mr-4' do
+            i.fas.fa-arrow-left
+          b = @area.name.upcase
+    .row
+      .col-12
+        hr
+  section.content-body
+    .row
+      .offset-md-2.col-8
+        = render "shared/alerts"
+        .row
+          .col-12
+            h3 == cicle_area_status @area.status
+        .card
+          .card-body
+            .row
+              .col-6
+                label.mb-0 Valvula:
+                br
+                b = @area.area.name
+              .col-3
+                label.mb-0 Fecha de inicio:
+                br
+                b = @area.started_at.strftime("%d/%m/%Y")
+              .col-3
+                label.mb-0 Fecha de fin:
+                br
+                b = @area.finished_at.strftime("%d/%m/%Y")
+        .card
+          .card-header.bg-light-gray
+            h6.mb-0.bold = @area.cicle_area_log&.name
+          .card-body
+            table.table.table-sm
+              thead
+                tr
+                  th scope="col"  Description
+              tbody
+                tr 
+                  td

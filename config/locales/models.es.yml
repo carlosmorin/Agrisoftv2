@@ -31,7 +31,14 @@ es:
       bill:
         one: Factura
         other: Facturas
+      cicle:
+        one: Ciclo
+        other: Ciclos
     attributes:
+      cicle:
+        name: Nombre
+        ranch_id: Rancho
+        crop_id: Cultivo
       bill:
         company_id: Emisor
         client_id: Cliente
@@ -367,4 +374,9 @@ es:
         subcategory_id: Subcategoria
         delivery_type_id: Metodo de entrega
         fiscal: Proveedor fiscal
-
+      harvest:
+        harvest_at: Fecha de cosecha
+        responsable: Nombre de responsable
+        tractor_identifier: Numero de tractor
+        tractor_driver: Nombre de chofer de tractor
+        comments: Comentarios
