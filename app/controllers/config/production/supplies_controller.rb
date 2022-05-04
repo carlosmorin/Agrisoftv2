@@ -7,7 +7,9 @@ class Config::Production::SuppliesController < ApplicationController
   add_breadcrumb 'Insumos', :config_production_supplies_path
 
   def index
-    @supplies = Supply.paginate(page: params[:page], per_page: 16)
+    @supplies = Supply.order(:id).paginate(page: params[:page], per_page: 16)
+
+    filter_by_stock if params[:stock].present?
     search if params[:q].present?
   end
 
@@ -74,8 +76,12 @@ class Config::Production::SuppliesController < ApplicationController
     @supplies = @supplies.where('name ~* ?', q)
   end
 
+  def filter_by_stock
+    @supplies = @supplies.stock 
+  end
+
   def supply_params
-    params.require(:supply).permit(:name, :currency, :iva, :ieps, :code, :category_id,
+    params.require(:supply).permit(:name, :currency, :iva, :ieps, :code, :category_id, :stockable,
                                    presentation_supplies_attributes: %i[id supply_id presentation_id price price_to_credit _destroy],
                                    active_ingredient_supplies_attributes: %i[id supply_id active_ingredient_id percentage _destroy])
   end

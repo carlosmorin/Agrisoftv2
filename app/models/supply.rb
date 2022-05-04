@@ -6,6 +6,7 @@ class Supply < ApplicationRecord
   validates :category_id, :name, :code, :currency, :iva, :ieps, presence: true
   validates :code, uniqueness: :true
   enum currency: %i[mxn usd]
+  scope :stock, -> { where(stockable: true) }
 
   delegate :name, to: :category, prefix: 'category', allow_nil: :true
 

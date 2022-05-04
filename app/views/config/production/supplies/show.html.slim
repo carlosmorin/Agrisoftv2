@@ -56,7 +56,15 @@ section.content
                     .col-md-4
                       label.mb-1.s-14 Categoria:
                     .col-md-8
-                      span = @supply.category_name.upcase                      
+                      span = @supply.category_name.upcase
+                  .row
+                    .col-md-4
+                      label.mb-1.s-14 Inventariable:
+                    .col-md-8
+                      - if @supply.stockable
+                        == check_icon
+                      - else
+                        == x_icon
     .row
       .col-lg-12
         .btn-group

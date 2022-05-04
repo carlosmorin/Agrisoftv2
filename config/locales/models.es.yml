@@ -318,6 +318,7 @@ es:
         ieps: IEPS(%)
         category_id: Categoria
         code: Clave
+        stockable: Inventariable
       treatment:
         application_instructions: Instrucciones de applicacion
       presentation_supply:

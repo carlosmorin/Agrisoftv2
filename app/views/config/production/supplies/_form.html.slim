@@ -20,6 +20,8 @@
         = f.input :iva, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
       .col-lg-12
         = f.input :ieps, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+      .col-lg-12.mt-2.bold
+        = f.input :stockable, as: :boolean
         hr.my-2
       .col-12
         label Proveedores
