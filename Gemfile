@@ -18,6 +18,8 @@ gem 'webpacker', '~> 4.0'
 gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'mini_magick'
+gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
+
 
 gem 'active_storage_validations'
 gem 'axlsx'
@@ -43,6 +45,7 @@ gem 'time_difference'
 gem 'wicked_pdf'
 gem 'will_paginate', '~> 3.2', '>= 3.2.1'
 gem 'wkhtmltopdf-binary'
+gem 'roo', '~> 2.8'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'

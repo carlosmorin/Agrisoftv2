@@ -1,75 +1,111 @@
 = simple_form_for([:config_production, @supply], data: { controller: 'supplies-form' }, remote: true) do |f|
-  .form-group
-    .row
-      .col-lg-12
-        h5
-          i.fas.fa-boxes.mr-2
-          span Informacion General del Insumo
-    .row
-      .col-lg-12
-        = f.input :category_id, collection: Category.all, required: true, autofocus: true, input_html: { class: "form-control form-control-sm s-12 h-25", data: { action: 'change->supplies-form#generateCode',target: "supplies-form.categoryId"} }
-      .col-lg-12
-        = f.input :code, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ', data: { target: 'supplies-form.code'} }
-      .col-lg-12
+  .card
+    .card-header.bg-light-gray Información general
+    .card-body
+      .form-group
         .row
-          .col-lg-8
-            = f.input :name, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+          .col-lg-12
+            = f.input :name, required: true, autofocus: true, input_html: { class: 'form-control ' }
+        .row.mt-3
+          .col-lg-4
+            = f.input :category_id, collection: Category.all, required: true, autofocus: true, input_html: { class: "form-control form-control-sm s-12 h-25", data: { action: 'change->supplies-form#generateCode',target: "supplies-form.categoryId"} }
+          .col-lg-4
+            = f.input :code, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ', data: { target: 'supplies-form.code'} }
           .col-lg-4
             = f.input :currency, collection: ["usd", "mxn"], required: true, autofocus: true, input_html: { class: "form-control form-control-sm s-12 h-25" }
-      .col-lg-12
-        = f.input :iva, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
-      .col-lg-12
-        = f.input :ieps, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
-      .col-lg-12.mt-2.bold
-        = f.input :stockable, as: :boolean
-        hr.my-2
-      .col-12
-        label Proveedores
-        - supplies = f.object.providers_supplies.any? ? f.object.providers_supplies.pluck(:provider_id) : []
-        = select_tag 'providers[]', options_for_select(Provider.all.pluck(:name, :id), selected: supplies),  multiple: true, include_blank: 'Todos', class: 's-12 text-upcase multiple-select'
-        hr
-    section.pl-2.card.p-2.pb-3.br-0
+        .row.mt-3
+          .col-lg-4
+            = f.input :iva, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+          .col-lg-4
+            = f.input :ieps, required: true, autofocus: true, input_html: { class: 'form-control form-control-sm ' }
+          .col-lg-4.mt-4.bold
+            = f.input :stockable, as: :boolean
+        .row.mt-3
+          .col-lg-6
+            - sat_product = f.object.sat_product.present? ? sat_product_collection(f.object.sat_product) : nil
+            = f.input :sat_product, collection: sat_product || [], selected: f.object.sat_product, required: true, autofocus: true, input_html: { class: 'sat_products_select s-13' }
+          .col-lg-6
+            - sat_unit = f.object.sat_unit.present? ? sat_unit_collection(f.object.sat_unit) : []
+            = f.input :sat_unit, collection: sat_unit || [], selected: f.object.sat_unit, required: true, autofocus: true, input_html: { class: 'sat_units_select s-13' }
+  // Providers section
+  .card#providers
+    .card-header.bg-light-gray Proveedores
+    .card-body
       .row
-        .col-lg-10
-          h6.s-16 Presentaciones
-        .col-lg-2.text-right
-          = link_to_add_association f, :presentation_supplies, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#presentations', association_insertion_method: :append } do
-            svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-              path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-            span.ml-2 Agregar
-      #presentations.ml-2
-        .row.bg-light-gray.mt-1
-          .col-lg-10
+        .col-12
+          - supplies = f.object.providers_supplies.any? ? f.object.providers_supplies.pluck(:provider_id) : []
+          = select_tag 'providers[]', options_for_select(Provider.all.pluck(:name, :id), selected: supplies),  multiple: true, include_blank: 'Todos', class: 's-12 text-upcase multiple-select'
+
+  // Images section
+  .card
+    .card-header.bg-light-gray 
+      .row
+        .col-8
+          | Imagenes
+    .card-body.s-12#images
+      = f.file_field :pictures, multiple: true, autofocus: true, input_html: { class: 'form-control form-control-sm' }
+      - if f.object.pictures.any?
+        .row
+          .col-12
+            hr
+        .row.mt-2
+          - f.object.pictures.each do |picture|
+            .col-4
+              div.img_container_gallery style='background-image: url("#{picture.service_url}")'
+                a.open_img href=picture.service_url target="_blank" 
+                  == external_link_icon
+                = link_to delete_image_config_production_supply_path(image_id: picture.id), method: :delete, data: { confirm:"Estas seguro?" },  class: 'delete_img' do
+                  == x_icon(color: "white")
+
+  // Presentation section
+  .card
+    .card-header.bg-light-gray
+      .row
+        .col-8
+          | Presentaciones del insumo
+        .col-4.text-right
+          = link_to_add_association f, :presentation_supplies, class: "btn btn-xs btn-success text-center px-2", data: { association_insertion_node: '#presentations', association_insertion_method: :append } do
+                svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+                  path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+                span.ml-2 Agregar
+    .card-body#presentations.ml-2
+        .row.bg-light-gray.mt-1.p-1
+          .col-lg-4
             b.s-14 Nombre
-          .col-lg-2
+          .col-lg-3
+            b.s-14 Precio
+          .col-lg-3
+            b.s-14 Precio a credito
         .row.bg-light-gray
           .col-lg-12
             hr.my-0
-        .row.mt-1
-          .col-lg-12
+        .row
+          .col-12
             = f.fields_for :presentation_supplies do |presentation|
               = render 'presentation_supply_fields', f: presentation
-    section.pl-2.card.p-2.pb-3.br-0
+  .card
+    .card-header.bg-light-gray 
       .row
-        .col-lg-10
-          h6.s-16 Ingredientes Activos
-        .col-lg-2.text-right
-          = link_to_add_association f, :active_ingredient_supplies, class: "btn btn-xs btn-default text-center px-2", data: { association_insertion_node: '#active_ingredients', association_insertion_method: :append } do
+        .col-8
+          | Ingredientes Activos
+        .col-4.text-right
+          = link_to_add_association f, :active_ingredient_supplies, class: "btn btn-xs btn-success text-center px-2", data: { association_insertion_node: '#active_ingredients', association_insertion_method: :append } do
             svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-12 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
               path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
             span.ml-2 Agregar
-      #active_ingredients.ml-2
-        .row.bg-light-gray.mt-1
-          .col-lg-10
-            b.s-14 Nombre
-          .col-lg-2
-        .row.bg-light-gray
-          .col-lg-12
-            hr.my-0
-        .row.mt-1
-          .col-lg-12
-            = f.fields_for :active_ingredient_supplies do |active_ingredient|
-              = render 'active_ingredient_supply_fields', f: active_ingredient
+    .card-body#active_ingredients.ml-2
+      .row.bg-light-gray.mt-1
+        .col-lg-6
+          b.s-14 Nombre
+        .col-lg-4
+          b.s-14 Porcentaje
+      .row.bg-light-gray
+        .col-lg-12
+          hr.my-0
+      .row.mt-1
+        .col-lg-12
+          = f.fields_for :active_ingredient_supplies do |active_ingredient|
+            = render 'active_ingredient_supply_fields', f: active_ingredient
   hr
   .form-actions.text-right
     = link_to config_production_supplies_path, class: 'btn btn-default btn-sm pl-1 mr-2' do

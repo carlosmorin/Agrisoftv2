@@ -7,6 +7,58 @@ export default class extends Controller {
   initialize() {
     // $('#new_supply').on('submit', (e) => this.createTreatments(e))
     new SlimSelect({select: `.multiple-select`})
+
+    new SlimSelect({
+      select: '.sat_products_select',
+      searchingText: 'Buscando...', // Optional - Will show during ajax request
+      ajax: function (search, callback) {
+        // Check search value. If you dont like it callback(false) or callback('Message String')
+        if (search.length < 3) {
+          callback('Escriba almenos 3 caracteres')
+          return
+        }
+        fetch(`/api/services/sat_catalogs?query=${search}&catalog=products`)
+        .then(function (response) {
+          return response.json()
+        })
+        .then(function (json) {
+          let data = []
+          for (let i = 0; i < json.length; i++) {
+            data.push({value: json[i].key, text: `${json[i].key}-${json[i].name}`})
+          }
+          callback(data)
+        })
+        .catch(function(error) {
+          callback(false)
+        })
+      }
+    })
+
+    new SlimSelect({
+      select: '.sat_units_select',
+      searchingText: 'Buscando...', // Optional - Will show during ajax request
+      ajax: function (search, callback) {
+        // Check search value. If you dont like it callback(false) or callback('Message String')
+        if (search.length < 2) {
+          callback('Escriba almenos 3 caracteres')
+          return
+        }
+        fetch(`/api/services/sat_catalogs?query=${search}&catalog=units`)
+        .then(function (response) {
+          return response.json()
+        })
+        .then(function (json) {
+          let data = []
+          for (let i = 0; i < json.length; i++) {
+            data.push({value: json[i].key, text: `${json[i].key}-${json[i].name}`})
+          }
+          callback(data)
+        })
+        .catch(function(error) {
+          callback(false)
+        })
+      }
+    })
   }
   
   generateCode(e) {

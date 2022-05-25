@@ -1,0 +1,18 @@
+- presentation_path = "#{edit_config_production_supply_path(@supply)}#images"
+.card
+  .card-header.bg-light-gray 
+    .row
+      .col-8
+        | Imagenes
+      .col-4.text-right
+        = link_to presentation_path, class: 'btn btn-sm btn-default s-13' do
+          i.fas.fa-edit
+          '
+          | Administrar imagenes
+  .card-body.s-12#images
+    .row
+      - @supply.pictures.each do |picture|
+        .col-3
+          div.img_container_gallery style='background-image: url("#{picture.service_url}")'
+            a.open_img href=picture.service_url target="_blank" 
+              == external_link_icon

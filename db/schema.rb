@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_13_184156) do
+ActiveRecord::Schema.define(version: 2022_05_09_200552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -437,6 +437,7 @@ ActiveRecord::Schema.define(version: 2021_06_13_184156) do
     t.string "short_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "packing_code"
   end
 
   create_table "create_cicles_areas", force: :cascade do |t|
@@ -468,6 +469,7 @@ ActiveRecord::Schema.define(version: 2021_06_13_184156) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
+    t.string "lot_code"
   end
 
   create_table "crops_colors", force: :cascade do |t|
@@ -692,9 +694,13 @@ ActiveRecord::Schema.define(version: 2021_06_13_184156) do
     t.bigint "harvest_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status", default: 0
+    t.string "folio"
+    t.bigint "lot_id"
     t.index ["area_id"], name: "index_harvest_logs_on_area_id"
     t.index ["crop_id"], name: "index_harvest_logs_on_crop_id"
     t.index ["harvest_id"], name: "index_harvest_logs_on_harvest_id"
+    t.index ["lot_id"], name: "index_harvest_logs_on_lot_id"
     t.index ["production_unit_id"], name: "index_harvest_logs_on_production_unit_id"
   end
 
@@ -720,6 +726,17 @@ ActiveRecord::Schema.define(version: 2021_06_13_184156) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "lots", force: :cascade do |t|
+    t.string "folio"
+    t.datetime "date"
+    t.bigint "crop_id", null: false
+    t.bigint "area_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["area_id"], name: "index_lots_on_area_id"
+    t.index ["crop_id"], name: "index_lots_on_crop_id"
   end
 
   create_table "municipalities", force: :cascade do |t|
@@ -964,6 +981,20 @@ ActiveRecord::Schema.define(version: 2021_06_13_184156) do
     t.string "description"
   end
 
+  create_table "sat_products", force: :cascade do |t|
+    t.string "key"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "sat_unit_measures", force: :cascade do |t|
+    t.string "key"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "shipments", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.bigint "client_id", null: false
@@ -996,6 +1027,7 @@ ActiveRecord::Schema.define(version: 2021_06_13_184156) do
     t.datetime "to_collect_at"
     t.bigint "currency_id"
     t.integer "n_pallets", default: 0
+    t.integer "canceled"
     t.index ["client_id"], name: "index_shipments_on_client_id"
     t.index ["company_id"], name: "index_shipments_on_company_id"
     t.index ["contact_id"], name: "index_shipments_on_contact_id"
@@ -1101,6 +1133,9 @@ ActiveRecord::Schema.define(version: 2021_06_13_184156) do
     t.string "code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "stockable"
+    t.string "sat_product"
+    t.string "sat_unit"
     t.index ["category_id"], name: "index_supplies_on_category_id"
   end
 
@@ -1110,6 +1145,12 @@ ActiveRecord::Schema.define(version: 2021_06_13_184156) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
+  end
+
+  create_table "testings", force: :cascade do |t|
+    t.string "hola"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "treatment_supplies", force: :cascade do |t|
@@ -1277,7 +1318,10 @@ ActiveRecord::Schema.define(version: 2021_06_13_184156) do
   add_foreign_key "harvest_logs", "areas"
   add_foreign_key "harvest_logs", "crops"
   add_foreign_key "harvest_logs", "harvests"
+  add_foreign_key "harvest_logs", "lots"
   add_foreign_key "harvest_logs", "production_units"
+  add_foreign_key "lots", "areas"
+  add_foreign_key "lots", "crops"
   add_foreign_key "municipalities", "states"
   add_foreign_key "perforations", "ranches"
   add_foreign_key "pests_damages", "damages"

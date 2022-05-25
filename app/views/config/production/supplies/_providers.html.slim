@@ -1,0 +1,41 @@
+- providers_path = "#{edit_config_production_supply_path(@supply)}#providers"
+.card#providers
+  .card-header.bg-light-gray 
+    .row
+      .col-lg-8
+        | Proveedores
+      .col-lg-4.text-right
+        = link_to providers_path, class: 'btn btn-sm btn-default s-13' do
+          i.fas.fa-edit
+          '
+          | Administrar proveedores
+  .card-body
+    .row
+      .col-12
+        table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
+          thead
+            tr.bg-light-gray
+              th Nombre
+              th Categoria
+              th Dias de credito
+              th Dias de entrega
+              th Status
+          tbody#tbody.s-13
+            - providers = @supply.providers
+            - if providers.empty?
+              tr
+                td.text-center colspan="6"
+                  i Sin registros 
+            - else
+              - providers.each do |provider|
+                tr
+                  td 
+                    = link_to provider.name.upcase, commercial_provider_path(provider, tab: :general), target: :_blank
+                  td = provider.provider_category.name.upcase
+                  td = provider.credit_limit_days
+                  td = provider.delivery_days
+                  td
+                    - if provider.active?
+                      span.badge.badge-success.btn.btn-sm Activo
+                    - else
+                      span.badge.badge-danger.btn.btn-sm Inactivo

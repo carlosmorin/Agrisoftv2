@@ -1,0 +1,50 @@
+- sat_product = @supply.sat_product.present? ? sat_product_name(@supply.sat_product) : nil
+- sat_unit = @supply.sat_unit.present? ? sat_unit_name(@supply.sat_unit) : nil
+.card
+  .card-header.bg-light-gray Información general
+  .card-body
+    .form-group
+      .row
+        .col-lg-12
+          label Nombre:
+          br
+          h5 = @supply.name.upcase
+      .row.mt-3
+        .col-lg-4
+          label Categoria:
+          br
+          span = @supply.category_name.upcase
+        .col-lg-4
+          label Clave:
+          br
+          span = @supply.code.upcase
+        .col-lg-4
+          label Moneda:
+          br
+          span = @supply.currency.upcase
+      .row.mt-3
+        .col-lg-4
+          label IVA:
+          br
+          span = @supply.iva.to_f.to_s + " %"
+        .col-lg-4
+          label IEPS:
+          br
+          span = @supply.ieps.to_f.to_s + " %"
+        .col-lg-4
+          label Inventariable:
+          br
+          - if @supply.stockable
+            == check_icon
+          - else
+            == x_icon
+      .row.mt-3
+        .col-lg-6
+          label Producto de SAT:
+          br
+          span = sat_product
+        .col-lg-6
+          label Unidad de medida de SAT:
+          br
+          span = sat_unit
+

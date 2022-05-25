@@ -11,6 +11,7 @@ class Config::Production::SuppliesController < ApplicationController
 
     filter_by_stock if params[:stock].present?
     search if params[:q].present?
+    filter_by_category if params[:category].present?
   end
 
   def new
@@ -34,9 +35,8 @@ class Config::Production::SuppliesController < ApplicationController
       set_provider_relation
       if params[:create_treatment]
         return redirect_to new_config_production_supply_treatment_url(@supply.id, create: true), create: true
-       end
-
-      redirect_to config_production_supplies_url
+      end
+      redirect_to config_production_supply_url(@supply)
     else
       render :new
     end
@@ -50,7 +50,7 @@ class Config::Production::SuppliesController < ApplicationController
         return redirect_to new_config_production_supply_treatment_url(@supply.id, create: true), create: true
       end
 
-      redirect_to config_production_supplies_url
+      redirect_to config_production_supply_url(@supply)
     else
       render :edit
     end
@@ -58,6 +58,12 @@ class Config::Production::SuppliesController < ApplicationController
 
   def destroy
     @supply.destroy
+  end
+
+  def delete_image_attachment
+    @image = ActiveStorage::Attachment.find(params[:image_id])
+    @image.purge
+    redirect_to config_production_supply_path(params[:id])
   end
 
   private
@@ -76,12 +82,18 @@ class Config::Production::SuppliesController < ApplicationController
     @supplies = @supplies.where('name ~* ?', q)
   end
 
+  def filter_by_category
+    @supplies = @supplies.where(category_id: params[:category])
+  end
+
   def filter_by_stock
-    @supplies = @supplies.stock 
+    return @supplies = @supplies.stock if params[:stock].eql?('Inventariables')
+    return @supplies = @supplies.not_stock if params[:stock].eql?('No Inventariables')
+    @supplies
   end
 
   def supply_params
-    params.require(:supply).permit(:name, :currency, :iva, :ieps, :code, :category_id, :stockable,
+    params.require(:supply).permit(:name, :currency, :iva, :ieps, :code, :category_id, :stockable, :sat_product, :sat_unit, pictures: [],
                                    presentation_supplies_attributes: %i[id supply_id presentation_id price price_to_credit _destroy],
                                    active_ingredient_supplies_attributes: %i[id supply_id active_ingredient_id percentage _destroy])
   end
@@ -95,28 +107,26 @@ class Config::Production::SuppliesController < ApplicationController
   def find_supply
     # id = params[:id].present? ? params[:id] : params[:crop_id]
     @supply = Supply.find(params[:id])
-    if params[:tab] == 'treatments'
-      treatment_supplies = TreatmentSupply.where(supply_id: params[:id])
-      @treatments = []
-      treatment_supplies.each do |treatment_supply|
-        treatable_type = treatment_supply.treatment.treatable_type
-        id = treatment_supply.treatment.treatable_id
-        name = treatable_type == 'Desease' ? Desease.find(id).name : Pest.find(id).name
-        hash = {
-          id: treatment_supply.treatment.id,
-          foliar_quantity: treatment_supply.foliar_quantity,
-          foliar_unit: treatment_supply.foliar_unit,
-          irrigation_quantity: treatment_supply.irrigation_quantity,
-          irrigation_unit: treatment_supply.irrigation_unit,
-          crop_name: Crop.find(treatment_supply.treatment.crop_id).name,
-          crop_id: treatment_supply.treatment.crop_id,
-          treatable_id: treatment_supply.treatment.treatable_id,
-          treatable_type: name,
-          treatable_type_name: treatable_type,
-          supply_count: treatment_supply.treatment.supplies_count
-        }
-        @treatments.push(hash)
-      end
+    treatment_supplies = TreatmentSupply.where(supply_id: params[:id])
+    @treatments = []
+    treatment_supplies.each do |treatment_supply|
+      treatable_type = treatment_supply.treatment.treatable_type
+      id = treatment_supply.treatment.treatable_id
+      name = treatable_type == 'Desease' ? Desease.find(id).name : Pest.find(id).name
+      hash = {
+        id: treatment_supply.treatment.id,
+        foliar_quantity: treatment_supply.foliar_quantity,
+        foliar_unit: treatment_supply.foliar_unit,
+        irrigation_quantity: treatment_supply.irrigation_quantity,
+        irrigation_unit: treatment_supply.irrigation_unit,
+        crop_name: Crop.find(treatment_supply.treatment.crop_id).name,
+        crop_id: treatment_supply.treatment.crop_id,
+        treatable_id: treatment_supply.treatment.treatable_id,
+        treatable_type: name,
+        treatable_type_name: treatable_type,
+        supply_count: treatment_supply.treatment.supplies_count
+      }
+      @treatments.push(hash)
     end
   end
 end

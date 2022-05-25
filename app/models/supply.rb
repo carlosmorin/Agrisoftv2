@@ -7,6 +7,7 @@ class Supply < ApplicationRecord
   validates :code, uniqueness: :true
   enum currency: %i[mxn usd]
   scope :stock, -> { where(stockable: true) }
+  scope :not_stock, -> { where(stockable: false) }
 
   delegate :name, to: :category, prefix: 'category', allow_nil: :true
 
@@ -18,6 +19,9 @@ class Supply < ApplicationRecord
 
   has_many :treatment_supplies, dependent: :destroy
   has_many :providers_supplies, dependent: :destroy
+  has_many :providers, :through => :providers_supplies
+
+  has_many_attached :pictures
 
   accepts_nested_attributes_for :active_ingredient_supplies, allow_destroy: true
   accepts_nested_attributes_for :presentation_supplies, allow_destroy: true

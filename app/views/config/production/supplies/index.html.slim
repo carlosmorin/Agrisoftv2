@@ -4,8 +4,14 @@ section.content-header.pb-0
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
     .row.mb-2
-      .col-12
-        h5 = "gestión de insumos".upcase 
+      .col-10
+        h4 
+          b = "gestión de insumos".upcase
+      .col-2.text-right
+        = link_to new_config_production_supply_path, class: 'btn btn-success btn-sm s-12 mt-1' do 
+          svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
+            path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
+          span.pl-2 Nuevo insumo
 section.content
   .container-fluid
   	.row
@@ -16,19 +22,19 @@ section.content
         .card
           .card-header.p-2.pb-1.bg-light-gray
             .row
-              .col-md-6.col-sm-12
+              .col-md-10.col-sm-12
                 = render 'shared/search_form', search_path: config_production_supplies_path do
                   .row
-                    .col-10
+                    .col-6
+                      = label_tag :q, 'Busqueda por nombre:'
                       = text_field_tag(:q, params[:q], class: 'form-control form-control-sm', placeholder: 'Buscar por Nombre')
-                    .col-2
-                      = label_tag :stock, 'Inventariables'
-                      = check_box_tag :stock, 1, params[:stock]
-              .col-lg-4.text-right
-                = link_to new_config_production_supply_path, class: 'btn btn-success btn-sm s-12 mt-1' do 
-                    svg.svg-inline--fa.fa-plus-circle.fa-w-16.h-14 aria-hidden="true" data-icon="plus-circle" data-prefix="fas" focusable="false" role="img" viewbox=("0 0 512 512") xmlns="http://www.w3.org/2000/svg" 
-                      path d=("M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z") fill="currentColor" 
-                    span.pl-2 Nuevo insumo
+                    .col-3.text-left
+                      = label_tag :category, 'Categoria:'
+                      = select_tag :category, options_for_select(Category.all.pluck(:name, :id), params[:category]),class: 'form-control form-control-sm', include_blank: 'Todos'
+                    .col-3.text-left
+                      = label_tag :stock, 'Inventariables:'
+                      = select_tag :stock, options_for_select(["Todos", "Inventariables", "No Inventariables"], params[:stock]),class: 'form-control form-control-sm'
+  
           .card-body.table-responsive.p-0
             table.table.table-sm.table-hover.text-nowrap.table-bordered.s-14
               thead

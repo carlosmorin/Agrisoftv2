@@ -319,6 +319,8 @@ es:
         category_id: Categoria
         code: Clave
         stockable: Inventariable
+        sat_product: Producto de SAT
+        sat_unit: Unidad de medida de SAT
       treatment:
         application_instructions: Instrucciones de applicacion
       presentation_supply:

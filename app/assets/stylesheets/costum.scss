@@ -49,6 +49,7 @@ span.error ~ input.form-control{
 .c-withe{ color: #f9f9f9; }
 .c-red{ color: #881822; }
 .c-green{ color: #002400; }
+.c-light-green{ color: #34a745; }
 .bg-light-gray{ background: #f4f4f4 !important;}
 .bg-light-green{ background: #fff !important;}
 .bg-light-red{ background: #ffeaea !important; }
@@ -265,7 +266,15 @@ span.notificator{
 	border-bottom: 3px solid #293742 !important;
 	color: #0051a8 !important;
 }
-
+.img_container_gallery{
+	background-position: center;
+  background-size: cover;
+  height: 200px;
+  margin: 0 auto;
+  border-radius: 5px !important;
+  border: 3px solid #cccccc;
+  overflow: hidden;
+}
 li.line-divider > hr{
  background-color: #4d5e6c;
 }
@@ -499,4 +508,16 @@ label.error{
 }
 .dataTables_info, .paging_simple_numbers{
 	font-size: 12px !important;
+}
+.open_img{
+  background: #c1c1c17a;
+  padding: 8px 4px;
+}
+.delete_img{
+	position: absolute;
+  right: 0px;
+  background: red;
+  padding: 5px;
+  border-radius: 22px;
+  top: -6px;
 }

@@ -3,14 +3,17 @@ section.content-header.pb-0
     .row
       .col-12.text-left.pr-2.s-12
         = render "shared/breadcrumbs_nav"
-    .row.mb-2
-      .col-12
-        h5 = "Nuevo insumo".upcase 
-section.content
+    .row
+      .col-2
+      .col-8
+        h5 
+          b = "Agregar nuevo insumo".upcase 
+section.content.mt-3
   .container
-    = render "shared/form_info"
-  	.card
-  		.card-body
-  			.row
-					.col-lg-10
-						= render 'form'
+    .row
+      .col-2
+      .col-8
+        = render "shared/form_info"
+    .row
+      .offset-lg-2.col-8
+        = render 'form'

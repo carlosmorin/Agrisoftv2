@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :services do
       resources :supplies, only: %i[index]
+      resources :sat_catalogs, only: %i[index]
     end
   end
 
@@ -47,6 +48,9 @@ Rails.application.routes.draw do
       resources :active_ingredients
       resources :presentations
       resources :supplies do
+        member do
+          delete '/delete_image', to: 'supplies#delete_image_attachment'
+        end
         resources :treatments
         resources :presentations, only: %i[update edit show]
         resources :active_ingredients, only: %i[update edit show]
